@@ -37,6 +37,30 @@ tools:
         limit: {type: integer, default: 5, description: "Số lượng"}
       required: [query]
 
+  - name: twitter_trends
+    description: Fetches the current trending topics globally from X/Twitter. Useful for discovering hot topics and what people are talking about right now.
+    parameters:
+      type: object
+      properties: {}
+
+  - name: save_chat_log
+    description: Saves the current chat conversation or specific messages to a JSON log file. Useful when the user wants to archive the discussion.
+    parameters:
+      type: object
+      properties:
+        messages:
+          type: array
+          description: List of message objects with role and content.
+          items:
+            type: object
+            properties:
+              role: {type: string}
+              content: {type: string}
+        filename:
+          type: string
+          description: Optional name for the log file (e.g., 'research_session_1.json').
+      required: [messages]
+
   - name: lookup
     description: "Tra cứu thông tin trên internet."
     parameters:
