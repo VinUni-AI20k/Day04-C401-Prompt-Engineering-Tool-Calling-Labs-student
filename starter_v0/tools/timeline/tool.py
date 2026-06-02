@@ -5,7 +5,39 @@ from typing import Any
 
 import requests
 
-from tools._shared import TIMEOUT, apify_run, err, tweet_item
+from tools._shared import TIMEOUT, err
+
+
+def _apify_timeline(screenname: str, limit: int) -> dict[str, Any]:
+    api_key = os.getenv("APIFY_API_KEY")
+    if not api_key:
+        raise RuntimeError("Missing APIFY_API_KEY env var")
+    resp = requests.post(
+        "https://api.apify.com/v2/acts/powerai~twitter-search-scraper/run-sync-get-dataset-items",
+        params={"token": api_key},
+        json={"query": f"from:{screenname}", "maxResults": max(limit, 15)},
+        timeout=120,
+    )
+    resp.raise_for_status()
+    raw_items = resp.json()
+    items = []
+    for raw in raw_items[:limit]:
+        handle = raw.get("screen_name") or ""
+        tweet_id = raw.get("tweet_id") or raw.get("id") or ""
+        text = (raw.get("text") or "").strip()
+        items.append({
+            "title": text.split("\n")[0][:120],
+            "summary": text,
+            "url": f"https://x.com/{handle}/status/{tweet_id}" if handle and tweet_id else "",
+            "source": f"@{handle}" if handle else "x.com",
+            "date": raw.get("created_at"),
+            "metrics": {
+                "favorites": raw.get("favorites") or 0,
+                "retweets": raw.get("retweets") or 0,
+                "views": raw.get("views") or 0,
+            },
+        })
+    return {"tool": "get_user_tweets", "screenname": screenname, "items": items}
 
 
 def _rapid_timeline(screenname: str, limit: int) -> dict[str, Any]:
@@ -22,18 +54,22 @@ def _rapid_timeline(screenname: str, limit: int) -> dict[str, Any]:
     resp.raise_for_status()
     data = resp.json()
     raw_items = data.get("timeline") or data.get("tweets") or []
-    items = [tweet_item(item) for item in raw_items if item.get("tweet_id") or item.get("id")]
+    items = []
+    for raw in raw_items:
+        if not (raw.get("tweet_id") or raw.get("id")):
+            continue
+        handle = raw.get("screen_name") or (raw.get("author") or {}).get("screen_name") or ""
+        tweet_id = raw.get("tweet_id") or raw.get("id") or ""
+        text = (raw.get("text") or "").strip()
+        items.append({
+            "title": text.split("\n")[0][:120],
+            "summary": text,
+            "url": f"https://x.com/{handle}/status/{tweet_id}" if handle and tweet_id else "",
+            "source": f"@{handle}" if handle else "x.com",
+            "date": raw.get("created_at"),
+            "metrics": {"favorites": raw.get("favorites"), "retweets": raw.get("retweets"), "views": raw.get("views")},
+        })
     return {"tool": "get_user_tweets", "screenname": screenname, "items": items[:limit]}
-
-
-def _apify_timeline(screenname: str, limit: int) -> dict[str, Any]:
-    raw_items = apify_run("scrapium/x-twitter-posts-search", {
-        "startUrls": [f"https://x.com/{screenname}"],
-        "maxTweets": limit,
-        "searchType": "latest",
-    })
-    items = [tweet_item(item) for item in raw_items[:limit]]
-    return {"tool": "get_user_tweets", "screenname": screenname, "items": items}
 
 
 def get_user_tweets(screenname: str = "", limit: int = 5) -> dict[str, Any]:
