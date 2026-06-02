@@ -1,0 +1,562 @@
+{
+  "transcript_id": "v3_anthropic_20260602T162855745998",
+  "version": "v3",
+  "artifact_version": "v3+p9034d4c5489e+t1ff90b54f607",
+  "prompt_hash": "9034d4c5489e2117b8067adaae3cd879b98c5919866c851d21258ead3ca675f5",
+  "tools_hash": "1ff90b54f607a7dd6a1874324368b3960aa4022b7a5f954c4ffd4d7703a38520",
+  "provider": "anthropic",
+  "model": "claude-haiku-4-5-20251001",
+  "system_prompt": "E:\\Vin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\Vin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T16:28:55",
+  "updated_at": "2026-06-02T17:03:34",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T16:28:55",
+      "user": "kết quả trận chung kết c1 gần nhất",
+      "status": "answered",
+      "assistant_text": "Trận chung kết Cúp C1 gần nhất là **Paris Saint-Germain 5-0 Inter Milan**.  \nNguồn tìm được cũng nêu PSG là nhà vô địch Champions League hiện tại và “last year’s final” họ thắng Inter Milan 5-0.  \nNguồn: **Telecom Asia Sport** — https://www.telecomasia.net/news/football/uefa-unveils-ball-for-champions-league-final-and-knockout-stages/",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "kết quả chung kết UEFA Champions League gần nhất latest completed final result",
+                "topic": "news",
+                "timeframe": "year",
+                "max_results": 5
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "kết quả chung kết UEFA Champions League gần nhất latest completed final result",
+                "topic": "news",
+                "timeframe": "year",
+                "max_results": 5
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "kết quả chung kết UEFA Champions League gần nhất latest completed final result",
+                "topic": "news",
+                "timeframe": "year",
+                "items": [
+                  {
+                    "title": "Champions League live updates, scores: Barcelona, Newcastle goalless at the half; Napoli's Kevin de Bruyne subbed off early in return to Manchester City - Yahoo Sports",
+                    "url": "https://sports.yahoo.com/soccer/live/champions-league-live-updates-scores-barcelona-newcastle-goalless-at-the-half-napolis-kevin-de-bruyne-subbed-off-early-in-return-to-manchester-city-180039636.html",
+                    "source": "sports.yahoo.com",
+                    "summary": "# Champions League live updates, scores: Barcelona, Newcastle goalless at the half; Napoli's Kevin de Bruyne subbed off early in return to Manchester City Francisco Trincão's 44th minute goal has Sporting CP leading Kazakh side Kairat Almaty 1-0. In Germany, Eintracht Frankfurt is up 3-1 over Galatasaray thanks to two own goals and Can Uzun helping grab the lead in the second minute of injury time. Copenhagen held a 1-0 lead until the final 10 minutes and then the goals kept coming against Bayer Leverkusen. **FT**: Club Brugge 4, AS Monaco 1**FT:** Copenhagen 2, Bayer Leverkusen 2**HT**: Eintracht Frankfurt 3, Galatasaray 1**HT**: Manchester City 0, Napoli 0**HT**: Newcastle United 0, Barcelona 0**HT**: Sporting CP 1, Kairat Almaty 0",
+                    "score": 0.48250288
+                  },
+                  {
+                    "title": "Champions League results: Virgil van Dijk rescues Liverpool; Bayern Munich, Inter, PSG win easy - Yahoo Sports",
+                    "url": "https://sports.yahoo.com/soccer/live/champions-league-results-virgil-van-dijk-rescues-liverpool-bayern-munich-inter-psg-win-easy-175938085.html",
+                    "source": "sports.yahoo.com",
+                    "summary": "* Champions League * CONCACAF Champions Cup # Champions League results: Virgil van Dijk rescues Liverpool; Bayern Munich, Inter, PSG win easy The 2025-26 UEFA Champions League continued Wednesday with six matches. Champions League Matchday 1 action on Wednesday featured some heavyweight fixtures. The reigning winners will face Barcelona in their next Champions League match on Oct. 1. Bodø/Glimt was down two goals and had a penalty denied by Slavia Prague goalkeeper Jindřich Staněk before scoring in the 78th and 90th minutes. **Champions League Matchday 1 results for Wednesday, Sept. **Full-time:** Olympiacos 0, Pafos 0**Full-time:** FK Bodø/Glimt 2, Slavia Prague 2**Full-time**: Inter Milan 2, Ajax 0**Full-time**: Bayern Munich 3, Chelsea 1**Full-time:** Liverpool 3, Atlético Madrid 2**Full-time**: Paris Saint-Germain 4, Atalanta 0",
+                    "score": 0.4617697
+                  },
+                  {
+                    "title": "Champions League results: Dominik Szoboszlai leaves it late for Liverpool, Chelsea now winless in four - Yahoo Sports",
+                    "url": "https://sports.yahoo.com/soccer/live/champions-league-results-dominik-szoboszlai-leaves-it-late-for-liverpool-chelsea-now-winless-in-four-190311038.html",
+                    "source": "sports.yahoo.com",
+                    "summary": "# Champions League results: Dominik Szoboszlai leaves it late for Liverpool, Chelsea now winless in four. Bayern Munich, Barcelona and Spurs were among the winners during Tuesday's Matchday 6. Dominik Szoboszlai was the hero for Liverpool as his 88th minute penalty helped the Reds secure a 1-0 win over Inter Milan during Matchday 6 of the Champions League. João Pedro had given the visitors a lead in the first half with his first Champions League goal of the season, but Atalanta would tie it in the 55th minute and then take the three points after Charles De Ketelaere's winner in the 83rd minute. After multiple close misses, Balogun scores off a corner kick for his third goal in as many Champions League matches to put Monaco ahead 1-0. And now Barcelona has taken the lead after falling into a first-half deficit thanks to Kounde's magnificent effort off another cross, this time from Lamine Yamal. **FT**: Inter Milan 0-1 Liverpool. **FT**: Barcelona 2-1 Eintracht Frankfurt.",
+                    "score": 0.42448413
+                  },
+                  {
+                    "title": "Benfica 2-0 Napoli: Benfica beat Napoli for second Champions League win - BBC",
+                    "url": "https://www.bbc.com/sport/football/live/cwygqwqrz0wt",
+                    "source": "bbc.com",
+                    "summary": "The result leaves Napoli 23rd in the 36-team league on seven points, with two-time European champions Benfica two places below them on six points. | 23 Napoli | 6 | 2 | 1 | 3 | 6 | 11 | -5 | 7 | * L Result Loss * W Result Win * L Result Loss * D Result Draw * W Result Win * L Result Loss |. * Benfica and Napoli have met on four previous occasions in Europe – the Italian side have won three of those four matches (L1), including both to take place in the UEFA Champions League (in the 2016-17 group stage). * Napoli’s only previous away trip to face Benfica in the UEFA Champions League was in December 2016, winning 2-1 under Maurizio Sarri in their final group stage game that season (2016-17). * Both Benfica (28th - 4.4) and Napoli (33rd – 3.8) ranked among the 10 worst teams for xG from open play in the opening five rounds of this season’s UEFA Champions League.",
+                    "score": 0.37855154
+                  },
+                  {
+                    "title": "UEFA Champions League draw 2025/26: Full results as teams learn league-phase schedule - sportingnews.com",
+                    "url": "https://www.sportingnews.com/uk/football/news/uefa-champions-league-draw-2025-26-result-teams-league-phase/8259f856fe9eb7f67ec2b336",
+                    "source": "sportingnews.com",
+                    "summary": "# UEFA Champions League draw 2025/26: Full results as teams learn league-phase schedule The Sporting News has the completed league-phase draw below. ## UEFA Champions League draw 2025/26: League phase ## UEFA Champions League draw 2025/26: Live updates **6:07 p.m. local:** Chelsea are recognised for being the first club ever to win all six UEFA competitions — the Champions League, Europa League, Conference League (accomplished last season), Cup Winners Cup, Super Cup, and Youth League. ## UEFA Champions League draw pots Below are the 36 teams in the draw for the Champions League \"league phase\". If you do not allow these cookies we will not know when you have visited our site, and will not be able to monitor its performance.",
+                    "score": 0.33196434
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "UEFA Champions League final 2025 result",
+                "topic": "news",
+                "timeframe": "year",
+                "max_results": 5
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "UEFA Champions League final 2025 result",
+                "topic": "news",
+                "timeframe": "year",
+                "max_results": 5
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "UEFA Champions League final 2025 result",
+                "topic": "news",
+                "timeframe": "year",
+                "items": [
+                  {
+                    "title": "Opta Supercomputer Names 2025-2026 Champions League Final Favorite - Telecom Asia Sport",
+                    "url": "https://www.telecomasia.net/news/football/opta-supercomputer-names-2025-2026-champions-league-final-favorite/",
+                    "source": "telecomasia.net",
+                    "summary": "# Opta Supercomputer Names 2025-2026 Champions League Final Favorite. **Supercomputer Opta Analyst has updated its predictions for the 2025-2026 UEFA Champions League winner following the semi-final stage.**. According to the data, London's Arsenal have every chance of winning the premier European trophy for the first time in their history. Opta Analyst's Champions League winning probabilities as of May 7 are:. In the 2025-2026 UEFA Champions League semi-finals, Arsenal defeated Atlético Madrid (1-1, 1-0), while PSG beat Bayern Munich over two legs (5-4, 1-1). The final match of the tournament will be held in Budapest on May 30. In the previous season, the Gunners made it to the semi-finals, where they were beaten by the team that went on to win the title. Five-time German Champion Süle Retires at 30“Emery Is a Top Specialist, Capable of Winning a Fifth Europa League Title”: CarcedoMourinho Leaves Door Open to Real Madrid Return After Meeting with Pérez. Five-time German Champion Süle Retires at 30.",
+                    "score": 0.77589405
+                  },
+                  {
+                    "title": "UEFA Unveils Ball for Champions League Final and Knockout Stages - Telecom Asia Sport",
+                    "url": "https://www.telecomasia.net/news/football/uefa-unveils-ball-for-champions-league-final-and-knockout-stages/",
+                    "source": "telecomasia.net",
+                    "summary": "# UEFA Unveils Ball for Champions League Final and Knockout Stages. **The Union of European Football Associations (UEFA) press service unveiled the match ball that will be used in the knockout stages and final of the 2025-2026 Champions League.**. The final match of the current season of the tournament will be held at the Puskas Arena in Budapest. The final decision on the champion will be made on May 30, 2026. The match ball was developed by sportswear company Adidas. The current UEFA Champions League champions are French team Paris Saint-Germain. In last year's final, the Parisians convincingly defeated Inter Milan 5-0. The playoffs for the current Champions League season begin at the end of February. Opta Supercomputer Predicts Premier League FavouriteGary Neville: Manchester United Have Begun Search for New Permanent ManagerAl-Ittihad Accuse Referee Vinčić of Favoring Ronaldo's Al-Nassr. Be the first to share what you think!",
+                    "score": 0.6796259
+                  },
+                  {
+                    "title": "Three questions and three answers from Bayern Munich 4-3 (6-4 agg.) Real Madrid - Managing Madrid",
+                    "url": "https://www.managingmadrid.com/real-madrid-cf-champions-league/106478/three-questions-and-three-answers-from-bayern-munich-4-3-6-4-agg-real-madrid",
+                    "source": "managingmadrid.com",
+                    "summary": "Munich, Germany - April 15: Luis Díaz of FC Bayern Muenchen scores his team’s third goal during the UEFA Champions League 2025/26 Quarter-Final Second Leg match between FC Bayern München and Real Madrid CF at Football Arena Munich on April 15, 2026 in Munich, Germany. Real Madrid crashed out of the UEFA Champions League at the quarter-final stage in spectacular fashion with a thrilling 4-3 result in Munich as Bayern capitalised on playing the final minutes against 10 men to score twice and turn the tie on its head after a heroic attempt at a comeback from Real Madrid. The end result means Los Blancos were also the first side to score three goals against Bayern Munich at the Allianz Arena in Champions League knockout football since Real Madrid themselves did it with a 4-0 win in the 2014 semi-final. Bayern Munich vs Real Madrid, 2026 Champions League: Predicted lineups. Bayern Munich vs Real Madrid, 2026 Champions League: Predicted lineups.",
+                    "score": 0.6737291
+                  },
+                  {
+                    "title": "Get Ball by Ball Commentary of Namibia vs Scotland Warm-up 2026 | ESPN.com - ESPN",
+                    "url": "https://www.espn.com/cricket/series/1521126/commentary/1521141/namibia-vs-scotland-warm-up-",
+                    "source": "espn.com",
+                    "summary": "FT * Image 58 Athletic Club Athletic ATH 2 * Image 59 Sporting CP Sporting SCP 3 2025-26 UEFA Champions League. FT * Image 64 Bayer Leverkusen Leverkusen B04 3 * Image 65 Villarreal Villarreal VIL 0 2025-26 UEFA Champions League. FT * Image 66 Benfica Benfica SLB 4 * Image 67 Real Madrid Real Madrid RMA 2 2025-26 UEFA Champions League. FT * Image 70 Club Brugge Club Brugge BRU 3 * Image 71 Marseille Marseille OLM 0 2025-26 UEFA Champions League. FT * Image 72 Eintracht Frankfurt Frankfurt SGE 0 * Image 73 Tottenham Hotspur Spurs TOT 2 2025-26 UEFA Champions League. FT * Image 78 AS Monaco Monaco MON 0 * Image 79 Juventus Juventus JUV 0 2025-26 UEFA Champions League. FT * Image 80 Napoli Napoli NAP 2 * Image 81 Chelsea Chelsea CHE 3 2025-26 UEFA Champions League. FT * Image 88 Union St.-Gilloise Union SG USG 1 * Image 89 Atalanta Atalanta ATA 0 2025-26 UEFA Champions League.",
+                    "score": 0.657561
+                  },
+                  {
+                    "title": "The Spread Zone | What are the Oddsmakers Doing? - 101 ESPN",
+                    "url": "https://www.espn.com/episode/the-spread-zone-what-are-the-oddsmakers-doing-2/",
+                    "source": "espn.com",
+                    "summary": "FT * Image 44 Benfica Benfica SLB 2 * Image 45 Napoli Napoli NAP 0 2025-26 UEFA Champions League. SummaryStatistics FT * Image 58 Valerenga Valerenga VAL 0 * Image 59 Paris FC Paris FC PFC 1 2025-26 UEFA Women's Champions League. * Image 60 Barcelona Barcelona BAR 3 * Image 61 Benfica Benfica BEN 1 2025-26 UEFA Women's Champions League. * Image 62 Manchester United Man Utd MAN 0 * Image 63 OL Lyonnes Lyonnes LYON 3 2025-26 UEFA Women's Champions League. * Image 64 Chelsea Chelsea CHE 6 * Image 65 Roma Roma ROMA 0 2025-26 UEFA Women's Champions League. * Image 66 Atlético Madrid Atlético Madrid ATL 2 * Image 67 Bayern Munich Bayern MUN 2 2025-26 UEFA Women's Champions League. *   Image 69 Live: NCAA Women's Basketball. *   Image 88 Men's Basketball. *   Image 89 Women's Basketball. To learn more, visit \"Do Not Sell or Share My Personal Information\" and \"Targeted Advertising\" Opt-Out Rights.",
+                    "score": 0.6266047
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "assistant_text": "Trận chung kết Cúp C1 gần nhất là **Paris Saint-Germain 5-0 Inter Milan**.  \nNguồn tìm được cũng nêu PSG là nhà vô địch Champions League hiện tại và “last year’s final” họ thắng Inter Milan 5-0.  \nNguồn: **Telecom Asia Sport** — https://www.telecomasia.net/news/football/uefa-unveils-ball-for-champions-league-final-and-knockout-stages/",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "kết quả chung kết UEFA Champions League gần nhất latest completed final result",
+            "topic": "news",
+            "timeframe": "year",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "kết quả chung kết UEFA Champions League gần nhất latest completed final result",
+            "topic": "news",
+            "timeframe": "year",
+            "items": [
+              {
+                "title": "Champions League live updates, scores: Barcelona, Newcastle goalless at the half; Napoli's Kevin de Bruyne subbed off early in return to Manchester City - Yahoo Sports",
+                "url": "https://sports.yahoo.com/soccer/live/champions-league-live-updates-scores-barcelona-newcastle-goalless-at-the-half-napolis-kevin-de-bruyne-subbed-off-early-in-return-to-manchester-city-180039636.html",
+                "source": "sports.yahoo.com",
+                "summary": "# Champions League live updates, scores: Barcelona, Newcastle goalless at the half; Napoli's Kevin de Bruyne subbed off early in return to Manchester City Francisco Trincão's 44th minute goal has Sporting CP leading Kazakh side Kairat Almaty 1-0. In Germany, Eintracht Frankfurt is up 3-1 over Galatasaray thanks to two own goals and Can Uzun helping grab the lead in the second minute of injury time. Copenhagen held a 1-0 lead until the final 10 minutes and then the goals kept coming against Bayer Leverkusen. **FT**: Club Brugge 4, AS Monaco 1**FT:** Copenhagen 2, Bayer Leverkusen 2**HT**: Eintracht Frankfurt 3, Galatasaray 1**HT**: Manchester City 0, Napoli 0**HT**: Newcastle United 0, Barcelona 0**HT**: Sporting CP 1, Kairat Almaty 0",
+                "score": 0.48250288
+              },
+              {
+                "title": "Champions League results: Virgil van Dijk rescues Liverpool; Bayern Munich, Inter, PSG win easy - Yahoo Sports",
+                "url": "https://sports.yahoo.com/soccer/live/champions-league-results-virgil-van-dijk-rescues-liverpool-bayern-munich-inter-psg-win-easy-175938085.html",
+                "source": "sports.yahoo.com",
+                "summary": "* Champions League * CONCACAF Champions Cup # Champions League results: Virgil van Dijk rescues Liverpool; Bayern Munich, Inter, PSG win easy The 2025-26 UEFA Champions League continued Wednesday with six matches. Champions League Matchday 1 action on Wednesday featured some heavyweight fixtures. The reigning winners will face Barcelona in their next Champions League match on Oct. 1. Bodø/Glimt was down two goals and had a penalty denied by Slavia Prague goalkeeper Jindřich Staněk before scoring in the 78th and 90th minutes. **Champions League Matchday 1 results for Wednesday, Sept. **Full-time:** Olympiacos 0, Pafos 0**Full-time:** FK Bodø/Glimt 2, Slavia Prague 2**Full-time**: Inter Milan 2, Ajax 0**Full-time**: Bayern Munich 3, Chelsea 1**Full-time:** Liverpool 3, Atlético Madrid 2**Full-time**: Paris Saint-Germain 4, Atalanta 0",
+                "score": 0.4617697
+              },
+              {
+                "title": "Champions League results: Dominik Szoboszlai leaves it late for Liverpool, Chelsea now winless in four - Yahoo Sports",
+                "url": "https://sports.yahoo.com/soccer/live/champions-league-results-dominik-szoboszlai-leaves-it-late-for-liverpool-chelsea-now-winless-in-four-190311038.html",
+                "source": "sports.yahoo.com",
+                "summary": "# Champions League results: Dominik Szoboszlai leaves it late for Liverpool, Chelsea now winless in four. Bayern Munich, Barcelona and Spurs were among the winners during Tuesday's Matchday 6. Dominik Szoboszlai was the hero for Liverpool as his 88th minute penalty helped the Reds secure a 1-0 win over Inter Milan during Matchday 6 of the Champions League. João Pedro had given the visitors a lead in the first half with his first Champions League goal of the season, but Atalanta would tie it in the 55th minute and then take the three points after Charles De Ketelaere's winner in the 83rd minute. After multiple close misses, Balogun scores off a corner kick for his third goal in as many Champions League matches to put Monaco ahead 1-0. And now Barcelona has taken the lead after falling into a first-half deficit thanks to Kounde's magnificent effort off another cross, this time from Lamine Yamal. **FT**: Inter Milan 0-1 Liverpool. **FT**: Barcelona 2-1 Eintracht Frankfurt.",
+                "score": 0.42448413
+              },
+              {
+                "title": "Benfica 2-0 Napoli: Benfica beat Napoli for second Champions League win - BBC",
+                "url": "https://www.bbc.com/sport/football/live/cwygqwqrz0wt",
+                "source": "bbc.com",
+                "summary": "The result leaves Napoli 23rd in the 36-team league on seven points, with two-time European champions Benfica two places below them on six points. | 23 Napoli | 6 | 2 | 1 | 3 | 6 | 11 | -5 | 7 | * L Result Loss * W Result Win * L Result Loss * D Result Draw * W Result Win * L Result Loss |. * Benfica and Napoli have met on four previous occasions in Europe – the Italian side have won three of those four matches (L1), including both to take place in the UEFA Champions League (in the 2016-17 group stage). * Napoli’s only previous away trip to face Benfica in the UEFA Champions League was in December 2016, winning 2-1 under Maurizio Sarri in their final group stage game that season (2016-17). * Both Benfica (28th - 4.4) and Napoli (33rd – 3.8) ranked among the 10 worst teams for xG from open play in the opening five rounds of this season’s UEFA Champions League.",
+                "score": 0.37855154
+              },
+              {
+                "title": "UEFA Champions League draw 2025/26: Full results as teams learn league-phase schedule - sportingnews.com",
+                "url": "https://www.sportingnews.com/uk/football/news/uefa-champions-league-draw-2025-26-result-teams-league-phase/8259f856fe9eb7f67ec2b336",
+                "source": "sportingnews.com",
+                "summary": "# UEFA Champions League draw 2025/26: Full results as teams learn league-phase schedule The Sporting News has the completed league-phase draw below. ## UEFA Champions League draw 2025/26: League phase ## UEFA Champions League draw 2025/26: Live updates **6:07 p.m. local:** Chelsea are recognised for being the first club ever to win all six UEFA competitions — the Champions League, Europa League, Conference League (accomplished last season), Cup Winners Cup, Super Cup, and Youth League. ## UEFA Champions League draw pots Below are the 36 teams in the draw for the Champions League \"league phase\". If you do not allow these cookies we will not know when you have visited our site, and will not be able to monitor its performance.",
+                "score": 0.33196434
+              }
+            ]
+          }
+        },
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "UEFA Champions League final 2025 result",
+            "topic": "news",
+            "timeframe": "year",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "UEFA Champions League final 2025 result",
+            "topic": "news",
+            "timeframe": "year",
+            "items": [
+              {
+                "title": "Opta Supercomputer Names 2025-2026 Champions League Final Favorite - Telecom Asia Sport",
+                "url": "https://www.telecomasia.net/news/football/opta-supercomputer-names-2025-2026-champions-league-final-favorite/",
+                "source": "telecomasia.net",
+                "summary": "# Opta Supercomputer Names 2025-2026 Champions League Final Favorite. **Supercomputer Opta Analyst has updated its predictions for the 2025-2026 UEFA Champions League winner following the semi-final stage.**. According to the data, London's Arsenal have every chance of winning the premier European trophy for the first time in their history. Opta Analyst's Champions League winning probabilities as of May 7 are:. In the 2025-2026 UEFA Champions League semi-finals, Arsenal defeated Atlético Madrid (1-1, 1-0), while PSG beat Bayern Munich over two legs (5-4, 1-1). The final match of the tournament will be held in Budapest on May 30. In the previous season, the Gunners made it to the semi-finals, where they were beaten by the team that went on to win the title. Five-time German Champion Süle Retires at 30“Emery Is a Top Specialist, Capable of Winning a Fifth Europa League Title”: CarcedoMourinho Leaves Door Open to Real Madrid Return After Meeting with Pérez. Five-time German Champion Süle Retires at 30.",
+                "score": 0.77589405
+              },
+              {
+                "title": "UEFA Unveils Ball for Champions League Final and Knockout Stages - Telecom Asia Sport",
+                "url": "https://www.telecomasia.net/news/football/uefa-unveils-ball-for-champions-league-final-and-knockout-stages/",
+                "source": "telecomasia.net",
+                "summary": "# UEFA Unveils Ball for Champions League Final and Knockout Stages. **The Union of European Football Associations (UEFA) press service unveiled the match ball that will be used in the knockout stages and final of the 2025-2026 Champions League.**. The final match of the current season of the tournament will be held at the Puskas Arena in Budapest. The final decision on the champion will be made on May 30, 2026. The match ball was developed by sportswear company Adidas. The current UEFA Champions League champions are French team Paris Saint-Germain. In last year's final, the Parisians convincingly defeated Inter Milan 5-0. The playoffs for the current Champions League season begin at the end of February. Opta Supercomputer Predicts Premier League FavouriteGary Neville: Manchester United Have Begun Search for New Permanent ManagerAl-Ittihad Accuse Referee Vinčić of Favoring Ronaldo's Al-Nassr. Be the first to share what you think!",
+                "score": 0.6796259
+              },
+              {
+                "title": "Three questions and three answers from Bayern Munich 4-3 (6-4 agg.) Real Madrid - Managing Madrid",
+                "url": "https://www.managingmadrid.com/real-madrid-cf-champions-league/106478/three-questions-and-three-answers-from-bayern-munich-4-3-6-4-agg-real-madrid",
+                "source": "managingmadrid.com",
+                "summary": "Munich, Germany - April 15: Luis Díaz of FC Bayern Muenchen scores his team’s third goal during the UEFA Champions League 2025/26 Quarter-Final Second Leg match between FC Bayern München and Real Madrid CF at Football Arena Munich on April 15, 2026 in Munich, Germany. Real Madrid crashed out of the UEFA Champions League at the quarter-final stage in spectacular fashion with a thrilling 4-3 result in Munich as Bayern capitalised on playing the final minutes against 10 men to score twice and turn the tie on its head after a heroic attempt at a comeback from Real Madrid. The end result means Los Blancos were also the first side to score three goals against Bayern Munich at the Allianz Arena in Champions League knockout football since Real Madrid themselves did it with a 4-0 win in the 2014 semi-final. Bayern Munich vs Real Madrid, 2026 Champions League: Predicted lineups. Bayern Munich vs Real Madrid, 2026 Champions League: Predicted lineups.",
+                "score": 0.6737291
+              },
+              {
+                "title": "Get Ball by Ball Commentary of Namibia vs Scotland Warm-up 2026 | ESPN.com - ESPN",
+                "url": "https://www.espn.com/cricket/series/1521126/commentary/1521141/namibia-vs-scotland-warm-up-",
+                "source": "espn.com",
+                "summary": "FT * Image 58 Athletic Club Athletic ATH 2 * Image 59 Sporting CP Sporting SCP 3 2025-26 UEFA Champions League. FT * Image 64 Bayer Leverkusen Leverkusen B04 3 * Image 65 Villarreal Villarreal VIL 0 2025-26 UEFA Champions League. FT * Image 66 Benfica Benfica SLB 4 * Image 67 Real Madrid Real Madrid RMA 2 2025-26 UEFA Champions League. FT * Image 70 Club Brugge Club Brugge BRU 3 * Image 71 Marseille Marseille OLM 0 2025-26 UEFA Champions League. FT * Image 72 Eintracht Frankfurt Frankfurt SGE 0 * Image 73 Tottenham Hotspur Spurs TOT 2 2025-26 UEFA Champions League. FT * Image 78 AS Monaco Monaco MON 0 * Image 79 Juventus Juventus JUV 0 2025-26 UEFA Champions League. FT * Image 80 Napoli Napoli NAP 2 * Image 81 Chelsea Chelsea CHE 3 2025-26 UEFA Champions League. FT * Image 88 Union St.-Gilloise Union SG USG 1 * Image 89 Atalanta Atalanta ATA 0 2025-26 UEFA Champions League.",
+                "score": 0.657561
+              },
+              {
+                "title": "The Spread Zone | What are the Oddsmakers Doing? - 101 ESPN",
+                "url": "https://www.espn.com/episode/the-spread-zone-what-are-the-oddsmakers-doing-2/",
+                "source": "espn.com",
+                "summary": "FT * Image 44 Benfica Benfica SLB 2 * Image 45 Napoli Napoli NAP 0 2025-26 UEFA Champions League. SummaryStatistics FT * Image 58 Valerenga Valerenga VAL 0 * Image 59 Paris FC Paris FC PFC 1 2025-26 UEFA Women's Champions League. * Image 60 Barcelona Barcelona BAR 3 * Image 61 Benfica Benfica BEN 1 2025-26 UEFA Women's Champions League. * Image 62 Manchester United Man Utd MAN 0 * Image 63 OL Lyonnes Lyonnes LYON 3 2025-26 UEFA Women's Champions League. * Image 64 Chelsea Chelsea CHE 6 * Image 65 Roma Roma ROMA 0 2025-26 UEFA Women's Champions League. * Image 66 Atlético Madrid Atlético Madrid ATL 2 * Image 67 Bayern Munich Bayern MUN 2 2025-26 UEFA Women's Champions League. *   Image 69 Live: NCAA Women's Basketball. *   Image 88 Men's Basketball. *   Image 89 Women's Basketball. To learn more, visit \"Do Not Sell or Share My Personal Information\" and \"Targeted Advertising\" Opt-Out Rights.",
+                "score": 0.6266047
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T16:29:20"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-06-02T16:40:51",
+      "user": "cho tôi bài biết mới nhất của twitter của elon musk",
+      "status": "answered",
+      "assistant_text": "Mình chưa lấy được bài đăng mới nhất của Elon Musk vì nguồn truy cập Twitter bị chặn lỗi **403 Forbidden**.\n\nNếu bạn muốn, mình có thể:\n- tìm **bài viết/tin tức** nhắc đến tweet gần đây của Elon Musk, hoặc\n- tìm trên mạng xã hội bằng từ khóa liên quan.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "timeline",
+              "args": {
+                "screenname": "elonmusk",
+                "limit": 5
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "timeline",
+              "args": {
+                "screenname": "elonmusk",
+                "limit": 5
+              },
+              "result": {
+                "tool": "get_user_tweets",
+                "error": "HTTPError",
+                "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=elonmusk"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Mình chưa lấy được bài đăng mới nhất của Elon Musk vì nguồn truy cập Twitter bị chặn lỗi **403 Forbidden**.\n\nNếu bạn muốn, mình có thể:\n- tìm **bài viết/tin tức** nhắc đến tweet gần đây của Elon Musk, hoặc\n- tìm trên mạng xã hội bằng từ khóa liên quan.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "elonmusk",
+            "limit": 5
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=elonmusk"
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T16:41:01"
+    },
+    {
+      "turn_index": 3,
+      "started_at": "2026-06-02T16:45:53",
+      "user": "tôi tên là thắng. Tôi có đẹp trai ko ?",
+      "status": "answered",
+      "assistant_text": "Chưa thấy ảnh nên mình không thể kết luận chính xác 😄  \nNhưng nếu **Thắng** biết chăm chút ngoại hình, tự tin và có gu thì rất dễ “đẹp trai” trong mắt người khác.\n\nNếu muốn, bạn có thể gửi ảnh, mình sẽ nhận xét theo kiểu vui vẻ và lịch sự.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Chưa thấy ảnh nên mình không thể kết luận chính xác 😄  \nNhưng nếu **Thắng** biết chăm chút ngoại hình, tự tin và có gu thì rất dễ “đẹp trai” trong mắt người khác.\n\nNếu muốn, bạn có thể gửi ảnh, mình sẽ nhận xét theo kiểu vui vẻ và lịch sự.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-06-02T16:45:58"
+    },
+    {
+      "turn_index": 4,
+      "started_at": "2026-06-02T16:52:55",
+      "user": "hãy cho tôi xem lại đoạn trò chuyện thứ 1",
+      "status": "answered",
+      "assistant_text": "Dĩ nhiên — đây là **đoạn trò chuyện thứ 1**:\n\n**Bạn:**  \n“kết quả trận chung kết c1 gần nhất”\n\n**Trợ lý:**  \n“Trận chung kết Cúp C1 gần nhất là **Paris Saint-Germain 5-0 Inter Milan**.  \nNguồn tìm được cũng nêu PSG là nhà vô địch Champions League hiện tại và “last year’s final” họ thắng Inter Milan 5-0.  \nNguồn: **Telecom Asia Sport** — https://www.telecomasia.net/news/football/uefa-unveils-ball-for-champions-league-final-and-knockout-stages/”\n\nNếu bạn muốn, mình cũng có thể **trích lại toàn bộ 3 đoạn đầu** của cuộc trò chuyện này.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Dĩ nhiên — đây là **đoạn trò chuyện thứ 1**:\n\n**Bạn:**  \n“kết quả trận chung kết c1 gần nhất”\n\n**Trợ lý:**  \n“Trận chung kết Cúp C1 gần nhất là **Paris Saint-Germain 5-0 Inter Milan**.  \nNguồn tìm được cũng nêu PSG là nhà vô địch Champions League hiện tại và “last year’s final” họ thắng Inter Milan 5-0.  \nNguồn: **Telecom Asia Sport** — https://www.telecomasia.net/news/football/uefa-unveils-ball-for-champions-league-final-and-knockout-stages/”\n\nNếu bạn muốn, mình cũng có thể **trích lại toàn bộ 3 đoạn đầu** của cuộc trò chuyện này.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-06-02T16:53:02"
+    },
+    {
+      "turn_index": 5,
+      "started_at": "2026-06-02T17:02:43",
+      "user": "thoi tiet hom nay",
+      "status": "waiting_for_user",
+      "assistant_text": "Bạn muốn xem thời tiết hôm nay ở đâu? Hãy cho mình tên thành phố/quận/tỉnh hoặc quốc gia.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "clarify",
+              "args": {
+                "question": "Bạn muốn xem thời tiết hôm nay ở đâu? Hãy cho mình tên thành phố/quận/tỉnh hoặc quốc gia.",
+                "response_type": "text"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "clarify",
+              "args": {
+                "question": "Bạn muốn xem thời tiết hôm nay ở đâu? Hãy cho mình tên thành phố/quận/tỉnh hoặc quốc gia.",
+                "response_type": "text"
+              },
+              "result": {
+                "tool": "ask_user",
+                "question": "Bạn muốn xem thời tiết hôm nay ở đâu? Hãy cho mình tên thành phố/quận/tỉnh hoặc quốc gia.",
+                "response_type": "text",
+                "options": [],
+                "awaiting_user": true
+              }
+            }
+          ]
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn muốn xem thời tiết hôm nay ở đâu? Hãy cho mình tên thành phố/quận/tỉnh hoặc quốc gia.",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn muốn xem thời tiết hôm nay ở đâu? Hãy cho mình tên thành phố/quận/tỉnh hoặc quốc gia.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T17:02:49"
+    },
+    {
+      "turn_index": 6,
+      "started_at": "2026-06-02T17:03:16",
+      "user": "ha noi",
+      "status": "answered",
+      "assistant_text": "Thời tiết hôm nay ở **Hà Nội** theo kết quả tìm kiếm là **nắng nóng, có nơi nắng nóng gay gắt**.\n\n- **Nhiệt độ thấp nhất:** 27–29°C  \n- **Nhiệt độ cao nhất:** 35–37°C, có nơi trên 37°C  \n- **Dự báo:** ban ngày nắng nóng, chiều tối và đêm có thể có mưa rào và dông vài nơi\n\nNguồn tham khảo:\n- VOV: “Tin nắng nóng từ chiều 2/6 và dự báo thời tiết Hà Nội 10 ngày tới”\n- Báo VOV/Lao Động và các kết quả liên quan trong tìm kiếm\n\nNếu bạn muốn, mình có thể xem tiếp **thời tiết theo giờ** cho Hà Nội.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "thời tiết hôm nay Hà Nội",
+                "topic": "general",
+                "timeframe": "day",
+                "max_results": 5
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "thời tiết hôm nay Hà Nội",
+                "topic": "general",
+                "timeframe": "day",
+                "max_results": 5
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "thời tiết hôm nay Hà Nội",
+                "topic": "general",
+                "timeframe": "day",
+                "items": [
+                  {
+                    "title": "Thời tiết hôm nay 2.6: Hà Nội và các tỉnh Bắc Bộ nắng nóng gay gắt",
+                    "url": "https://www.facebook.com/baovanhoaa/posts/th%E1%BB%9Di-ti%E1%BA%BFt-h%C3%B4m-nay-26-h%C3%A0-n%E1%BB%99i-v%C3%A0-c%C3%A1c-t%E1%BB%89nh-b%E1%BA%AFc-b%E1%BB%99-n%E1%BA%AFng-n%C3%B3ng-gay-g%E1%BA%AFt/122211753278466629",
+                    "source": "facebook.com",
+                    "summary": "TP. Hà Nội: Nắng nóng gay gắt Nhiệt độ thấp nhất: 27-29°C Nhiệt độ cao nhất: 35-37°C, có nơi trên 37°C Dự báo: Ngày nắng nóng, có nơi nắng nóng gay gắt",
+                    "score": 0.8533396
+                  },
+                  {
+                    "title": "Tin nắng nóng từ chiều 2/6 và dự báo thời tiết Hà Nội 10 ngày tới",
+                    "url": "https://vov.vn/xa-hoi/du-bao-thoi-tiet/tin-nang-nong-tu-chieu-26-va-du-bao-thoi-tiet-ha-noi-10-ngay-toi-post1297164.vov",
+                    "source": "vov.vn",
+                    "summary": "Thời tiết hôm nay 2/6: Bắc Bộ nắng nóng, cao nguyên Trung Bộ và Nam Bộ có mưa to. VOV.VN - Ngày 2/6, Hà Nội và các tỉnh Bắc Bộ tiếp tục nắng nóng diện rộng,",
+                    "score": 0.80771893
+                  },
+                  {
+                    "title": "Thời tiết hôm nay 2.6: Hà Nội và các tỉnh Bắc Bộ nắng nóng gay gắt",
+                    "url": "https://www.facebook.com/hellophuctaichinh/videos/th%E1%BB%9Di-ti%E1%BA%BFt-h%C3%B4m-nay-26-h%C3%A0-n%E1%BB%99i-v%C3%A0-c%C3%A1c-t%E1%BB%89nh-b%E1%BA%AFc-b%E1%BB%99-n%E1%BA%AFng-n%C3%B3ng-gay-g%E1%BA%AFt/1518569560053536",
+                    "source": "facebook.com",
+                    "summary": "Thời tiết hôm nay 2.6: Hà Nội và các tỉnh Bắc Bộ nắng nóng gay gắt ; Cố Vấn Phúc Tài Chính. ; Profile photo of Giáp. Trần Giáp. Nắng cũng kêu.. mưa cũng kêu",
+                    "score": 0.7180613
+                  },
+                  {
+                    "title": "Dự báo thời tiết ngày mai 2.6: Hà Nội ngày nắng - Báo Lao Động",
+                    "url": "https://laodong.vn/du-lich/cong-dong/du-bao-thoi-tiet-ngay-mai-26-ha-noi-ngay-nang-1712027.html",
+                    "source": "laodong.vn",
+                    "summary": "# Dự báo thời tiết ngày mai 2.6: Hà Nội ngày nắng. Dự báo thời tiết ngày mai 2.6, Hà Nội chiều tối và đêm có mưa rào và dông vài nơi; ban ngày nắng nóng, một số nơi xuất hiện nắng nóng gay gắt. Trung tm Dự báo Khí tượng Thủy văn Quốc gia đã cập nhật dự báo thời tiết đêm nay và ngày mai (2.6) tại các khu vực trên cả nước. Trong hai ngày 2-3.6, khu vực Bắc Bộ (trừ Quảng Ninh và Hải Phòng), Bắc Trung Bộ và Trung Trung Bộ tiếp tục xuất hiện nắng nóng, có nơi nắng nóng gay gắt. Dự báo thời tiết ngày 2.6, Hà Nội ngày nắng, có nơi nắng nóng gay gắt. Có my, chiều tối và đêm có mưa rào và dông vài nơi; ban ngày nắng nóng, một số nơi xuất hiện nắng nóng gay gắt.",
+                    "score": 0.7135319
+                  },
+                  {
+                    "title": "Dự báo thời tiết hàng giờ tại Hà Nội chính xác - Thoitiet.vn",
+                    "url": "https://thoitiet.vn/ha-noi/theo-gio",
+                    "source": "thoitiet.vn",
+                    "summary": "Thành phố của bạn:   Hà Nội   Thay đổi. # Dự báo thời tiết Hà Nội theo giờ. Bầu trời quang đãng  Bầu trời quang đãng. Bầu trời quang đãng 34.7°. ### Dự báo những ngày tới. Cách bảo vệ da dưới tác hại của tia UV Tia UV có lẽ là kẻ thù lớn nhất đối với làn da của chúng ta. Tin tổng hợp ### Tia UV là gì? Vậy các bạn đã hiểu tia Uv là gì? 6+ ý nghĩa kỳ diệu của hoàng hôn Tin tổng hợp. * Tin thời tiết ba miền những ngày cuối tháng 7, miền Bắc bước vào đợt mưa giông dài ngày từ tối nay. ### Tin thời tiết ba miền những ngày cuối tháng 7, miền Bắc bước vào đợt mưa giông dài ngày từ tối nay Tin tổng hợp. Website cần biết địa điểm của bạn để gợi ý thông tin dự báo thời tiết được chính xác.",
+                    "score": 0.7116118
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Thời tiết hôm nay ở **Hà Nội** theo kết quả tìm kiếm là **nắng nóng, có nơi nắng nóng gay gắt**.\n\n- **Nhiệt độ thấp nhất:** 27–29°C  \n- **Nhiệt độ cao nhất:** 35–37°C, có nơi trên 37°C  \n- **Dự báo:** ban ngày nắng nóng, chiều tối và đêm có thể có mưa rào và dông vài nơi\n\nNguồn tham khảo:\n- VOV: “Tin nắng nóng từ chiều 2/6 và dự báo thời tiết Hà Nội 10 ngày tới”\n- Báo VOV/Lao Động và các kết quả liên quan trong tìm kiếm\n\nNếu bạn muốn, mình có thể xem tiếp **thời tiết theo giờ** cho Hà Nội.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "thời tiết hôm nay Hà Nội",
+            "topic": "general",
+            "timeframe": "day",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "thời tiết hôm nay Hà Nội",
+            "topic": "general",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Thời tiết hôm nay 2.6: Hà Nội và các tỉnh Bắc Bộ nắng nóng gay gắt",
+                "url": "https://www.facebook.com/baovanhoaa/posts/th%E1%BB%9Di-ti%E1%BA%BFt-h%C3%B4m-nay-26-h%C3%A0-n%E1%BB%99i-v%C3%A0-c%C3%A1c-t%E1%BB%89nh-b%E1%BA%AFc-b%E1%BB%99-n%E1%BA%AFng-n%C3%B3ng-gay-g%E1%BA%AFt/122211753278466629",
+                "source": "facebook.com",
+                "summary": "TP. Hà Nội: Nắng nóng gay gắt Nhiệt độ thấp nhất: 27-29°C Nhiệt độ cao nhất: 35-37°C, có nơi trên 37°C Dự báo: Ngày nắng nóng, có nơi nắng nóng gay gắt",
+                "score": 0.8533396
+              },
+              {
+                "title": "Tin nắng nóng từ chiều 2/6 và dự báo thời tiết Hà Nội 10 ngày tới",
+                "url": "https://vov.vn/xa-hoi/du-bao-thoi-tiet/tin-nang-nong-tu-chieu-26-va-du-bao-thoi-tiet-ha-noi-10-ngay-toi-post1297164.vov",
+                "source": "vov.vn",
+                "summary": "Thời tiết hôm nay 2/6: Bắc Bộ nắng nóng, cao nguyên Trung Bộ và Nam Bộ có mưa to. VOV.VN - Ngày 2/6, Hà Nội và các tỉnh Bắc Bộ tiếp tục nắng nóng diện rộng,",
+                "score": 0.80771893
+              },
+              {
+                "title": "Thời tiết hôm nay 2.6: Hà Nội và các tỉnh Bắc Bộ nắng nóng gay gắt",
+                "url": "https://www.facebook.com/hellophuctaichinh/videos/th%E1%BB%9Di-ti%E1%BA%BFt-h%C3%B4m-nay-26-h%C3%A0-n%E1%BB%99i-v%C3%A0-c%C3%A1c-t%E1%BB%89nh-b%E1%BA%AFc-b%E1%BB%99-n%E1%BA%AFng-n%C3%B3ng-gay-g%E1%BA%AFt/1518569560053536",
+                "source": "facebook.com",
+                "summary": "Thời tiết hôm nay 2.6: Hà Nội và các tỉnh Bắc Bộ nắng nóng gay gắt ; Cố Vấn Phúc Tài Chính. ; Profile photo of Giáp. Trần Giáp. Nắng cũng kêu.. mưa cũng kêu",
+                "score": 0.7180613
+              },
+              {
+                "title": "Dự báo thời tiết ngày mai 2.6: Hà Nội ngày nắng - Báo Lao Động",
+                "url": "https://laodong.vn/du-lich/cong-dong/du-bao-thoi-tiet-ngay-mai-26-ha-noi-ngay-nang-1712027.html",
+                "source": "laodong.vn",
+                "summary": "# Dự báo thời tiết ngày mai 2.6: Hà Nội ngày nắng. Dự báo thời tiết ngày mai 2.6, Hà Nội chiều tối và đêm có mưa rào và dông vài nơi; ban ngày nắng nóng, một số nơi xuất hiện nắng nóng gay gắt. Trung tm Dự báo Khí tượng Thủy văn Quốc gia đã cập nhật dự báo thời tiết đêm nay và ngày mai (2.6) tại các khu vực trên cả nước. Trong hai ngày 2-3.6, khu vực Bắc Bộ (trừ Quảng Ninh và Hải Phòng), Bắc Trung Bộ và Trung Trung Bộ tiếp tục xuất hiện nắng nóng, có nơi nắng nóng gay gắt. Dự báo thời tiết ngày 2.6, Hà Nội ngày nắng, có nơi nắng nóng gay gắt. Có my, chiều tối và đêm có mưa rào và dông vài nơi; ban ngày nắng nóng, một số nơi xuất hiện nắng nóng gay gắt.",
+                "score": 0.7135319
+              },
+              {
+                "title": "Dự báo thời tiết hàng giờ tại Hà Nội chính xác - Thoitiet.vn",
+                "url": "https://thoitiet.vn/ha-noi/theo-gio",
+                "source": "thoitiet.vn",
+                "summary": "Thành phố của bạn:   Hà Nội   Thay đổi. # Dự báo thời tiết Hà Nội theo giờ. Bầu trời quang đãng  Bầu trời quang đãng. Bầu trời quang đãng 34.7°. ### Dự báo những ngày tới. Cách bảo vệ da dưới tác hại của tia UV Tia UV có lẽ là kẻ thù lớn nhất đối với làn da của chúng ta. Tin tổng hợp ### Tia UV là gì? Vậy các bạn đã hiểu tia Uv là gì? 6+ ý nghĩa kỳ diệu của hoàng hôn Tin tổng hợp. * Tin thời tiết ba miền những ngày cuối tháng 7, miền Bắc bước vào đợt mưa giông dài ngày từ tối nay. ### Tin thời tiết ba miền những ngày cuối tháng 7, miền Bắc bước vào đợt mưa giông dài ngày từ tối nay Tin tổng hợp. Website cần biết địa điểm của bạn để gợi ý thông tin dự báo thời tiết được chính xác.",
+                "score": 0.7116118
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T17:03:34"
+    }
+  ]
+}

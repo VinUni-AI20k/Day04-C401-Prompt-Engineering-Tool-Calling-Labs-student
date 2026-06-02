@@ -1,0 +1,28 @@
+{
+  "transcript_id": "v3_anthropic_20260602T155606629154",
+  "version": "v3",
+  "artifact_version": "v3+pd24612a367a7+td76dcf3fd0d9",
+  "prompt_hash": "d24612a367a7288d4205dd364339017c63306a0aff7849af0bcd5a1cd6e7547a",
+  "tools_hash": "d76dcf3fd0d9e481d3d319567a4aeb765bd917eb9733ff00f713ce56a114a67c",
+  "provider": "anthropic",
+  "model": "claude-haiku-4-5-20251001",
+  "system_prompt": "E:\\Vin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\Vin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T15:56:06",
+  "updated_at": "2026-06-02T15:56:10",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T15:56:06",
+      "user": "kết quả trận chung kết c1",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u1ea1' in position 28: character maps to <undefined>",
+      "ended_at": "2026-06-02T15:56:10"
+    }
+  ]
+}

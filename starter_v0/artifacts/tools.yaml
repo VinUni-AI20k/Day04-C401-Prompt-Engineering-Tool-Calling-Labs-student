@@ -116,3 +116,42 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  - name: source_score
+    description: "Đánh giá nhanh độ tin cậy của nguồn hoặc URL."
+    parameters:
+      type: object
+      properties:
+        url: {type: string, default: "", description: "URL nguồn"}
+        title: {type: string, default: "", description: "Tiêu đề bài viết hoặc nguồn"}
+        source: {type: string, default: "", description: "Tên nguồn hoặc domain nếu không có URL"}
+      required: []
+
+  - name: query_plan
+    description: "Lập kế hoạch truy vấn cho một chủ đề nghiên cứu rộng."
+    parameters:
+      type: object
+      properties:
+        topic: {type: string, default: "", description: "Chủ đề cần nghiên cứu"}
+        goal: {type: string, default: "overview", description: "Mục tiêu: overview, news, analysis, sources"}
+        language: {type: string, default: "vi", description: "Ngôn ngữ mong muốn"}
+      required: [topic]
+
+  - name: memory_add
+    description: "Lưu một ghi nhớ cục bộ cho agent lab khi người dùng yêu cầu."
+    parameters:
+      type: object
+      properties:
+        name: {type: string, default: "", description: "Tên ghi nhớ"}
+        content: {type: string, default: "", description: "Nội dung cần nhớ"}
+        memory_type: {type: string, enum: [user, feedback, project, reference, note], default: "note", description: "Loại ghi nhớ"}
+        tags: {type: array, default: [], items: {type: string}, description: "Nhãn phân loại"}
+      required: [name, content]
+
+  - name: memory_delete
+    description: "Xóa một ghi nhớ cục bộ của agent lab theo tên."
+    parameters:
+      type: object
+      properties:
+        name: {type: string, default: "", description: "Tên ghi nhớ cần xóa"}
+      required: [name]

@@ -8,14 +8,18 @@ import yaml
 # Folder names are intentionally vague to match the tool names students see.
 # The imported function names are the underlying implementations (unchanged).
 from .clarify.tool import ask_user
+from .memory_add.tool import add_memory
+from .memory_delete.tool import delete_memory
 from .papers.tool import arxiv_search
 from .paper_text.tool import get_arxiv_paper_text
 from .timeline.tool import get_user_tweets
 from .fetch.tool import read_url
 from .format.tool import render_digest
 from .policy.tool import search_company_policy
+from .query_plan.tool import make_query_plan
 from .social_search.tool import search_tweets
 from .send.tool import send_telegram
+from .source_score.tool import score_source
 from .lookup.tool import web_search
 
 
@@ -35,6 +39,10 @@ TOOL_FUNCTIONS = {
     "policy": search_company_policy,
     "papers": arxiv_search,
     "paper_text": get_arxiv_paper_text,
+    "source_score": score_source,
+    "query_plan": make_query_plan,
+    "memory_add": add_memory,
+    "memory_delete": delete_memory,
 }
 
 

@@ -1,0 +1,420 @@
+{
+  "run_id": "v3_B_group_anthropic_20260602T151401556951",
+  "version": "v3",
+  "artifact_version": "v3+pd24612a367a7+t6cdb53d5d7b8",
+  "prompt_hash": "d24612a367a7288d4205dd364339017c63306a0aff7849af0bcd5a1cd6e7547a",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "phase": "B",
+  "suite": "group",
+  "provider": "anthropic",
+  "model": "claude-haiku-4-5-20251001",
+  "system_prompt": "E:\\Vin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\Vin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "generated_at": "2026-06-02T15:14:01",
+  "summary": {
+    "total_cases": 6,
+    "measured_cases": 6,
+    "provider_error_cases": 0,
+    "passed_cases": 5,
+    "case_accuracy": 0.8333,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 0.8333,
+    "multiturn_accuracy": null,
+    "failure_counts": {
+      "wrong_boundary": 1
+    },
+    "observed_mismatch_counts": {
+      "wrong_arg_value": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_handle_with_at_limit",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "handle_normalization",
+        "difficulty": "medium",
+        "what_it_tests": "Handle có ký tự @ phải được chuẩn hóa thành screenname không có @ và giữ đúng limit=2."
+      },
+      "input": "Lấy 2 tweet mới nhất của @karpathy",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 2
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 2
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "karpathy",
+            "limit": 2
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=karpathy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_social_topic_latest",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_social_topic_latest",
+        "difficulty": "easy",
+        "what_it_tests": "Tweet theo chủ đề phải dùng social_search, không dùng timeline, và mặc định Latest khi không yêu cầu top."
+      },
+      "input": "Tìm các tweet mới nhất về Anthropic",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Anthropic",
+              "search_type": "Latest"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Anthropic",
+              "search_type": "Latest",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Anthropic",
+            "search_type": "Latest",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/search.php?query=Anthropic&search_type=Latest"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_news_month_query_clean",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "news_timeframe_query_cleaning",
+        "difficulty": "medium",
+        "what_it_tests": "News request phải đặt topic=news, map 'tháng này' thành timeframe=month, và query chỉ giữ chủ đề OpenAI."
+      },
+      "input": "Tin tức OpenAI tháng này có gì đáng chú ý?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "OpenAI",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "OpenAI",
+              "topic": "news",
+              "timeframe": "month",
+              "max_results": 8
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "OpenAI",
+            "topic": "news",
+            "timeframe": "month",
+            "max_results": 8
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "OpenAI",
+            "topic": "news",
+            "timeframe": "month",
+            "items": [
+              {
+                "title": "Jury finds Sam Altman and OpenAI not liable in Elon Musk's lawsuit accusing them of stealing charity - Business Insider",
+                "url": "https://www.businessinsider.com/openai-sam-altman-elon-musk-jury-trial-verdict-2026-5",
+                "source": "businessinsider.com",
+                "summary": "# Jury rules against Elon Musk, says his lawsuit against Sam Altman and OpenAI was too late. * A federal jury found Sam Altman, Greg Brockman, and OpenAI not liable in Elon Musk's lawsuit. A jury on Monday found Sam Altman and OpenAI not liable in a blockbuster lawsuit Elon Musk brought against them. The jurors in an Oakland, California, courtroom cleared the OpenAI CEO, its president, Greg Brockman, and OpenAI itself of Musk's allegations that they scammed him of early charitable contributions by operating OpenAI as a for-profit venture. They ruled Musk brought his lawsuit too late to find Altman, Brockman, or OpenAI liable for any of the claims the Tesla CEO brought against them. The jurors also found Microsoft not liable for helping Altman and Brockman while profiting from its deals with OpenAI because of the timing of Musk's lawsuit. The Tesla CEO's lawsuit, first filed in 2014, accused Altman and Brockman of perverting that mission by building a for-profit arm of OpenAI and partnering with Microsoft.",
+                "score": 0.6296157
+              },
+              {
+                "title": "OpenAI rolls out new model for cybersecurity teams a month after Anthropic's Mythos debut - CNBC",
+                "url": "https://www.cnbc.com/2026/05/07/openai-rolls-out-new-gpt-5point5-cyber-to-vetted-cybersecurity-teams.html",
+                "source": "cnbc.com",
+                "summary": "# OpenAI rolls out new model for cybersecurity teams a month after Anthropic's Mythos debut. * OpenAI said GPT-5.5-Cyber, a variation of its latest AI model, is rolling out in a limited preview capacity to vetted cybersecurity teams. * The model is trained to be more permissive on security-related tasks, OpenAI said in a blog post. OpenAI on Thursday announced that GPT-5.5-Cyber, a variation of its latest artificial intelligence model, is rolling out in a limited preview capacity to vetted cybersecurity teams, a month after rival Anthropic captivated investors and government officials with Claude Mythos Preview. The preview of GPT-5.5-Cyber is not intended to be a major step up in terms of cyber capability, but is instead trained to be more permissive on security-related tasks, OpenAI said in a blog post. In rolling out Mythos last month, Anthropic decided to limit access to a select group of companies as part of a new cybersecurity initiative called Project Glasswing. Federal agencies seek access to Mythos prompting Anthropic CEO meeting with White House.",
+                "score": 0.6257817
+              },
+              {
+                "title": "OpenAI co-founder Greg Brockman reportedly takes charge of product strategy - TechCrunch",
+                "url": "https://techcrunch.com/2026/05/16/openai-co-founder-greg-brockman-reportedly-takes-charge-of-product-strategy/",
+                "source": "techcrunch.com",
+                "summary": "# OpenAI co-founder Greg Brockman reportedly takes charge of product strategy. OpenAI co-founder and president Greg Brockman is officially taking the reins of the company’s product strategy, according to Wired. This seems to solidify an already-existing change, with Brockman overseeing OpenAI’s products on an interim basis while the company’s CEO of AGI deployment Fidji Simo is out on medical leave. This is just the latest OpenAI shakeup since CEO Sam Altman declared a “code red” at the end of last year and said the company needs to refocus on the core ChatGPT experience. Since then, OpenAI has halted “side quests” including video generator Sora and OpenAI for Science, and it’s been highlighting its ambitions to build an AI “super app.”. TechCrunch has reached out to OpenAI for comment. The company told Wired that Simo, who remains on medical leave, worked with Brockman on these changes. AI, greg brockman, OpenAI, Startups.",
+                "score": 0.60077465
+              },
+              {
+                "title": "OpenAI introduces Daybreak cyber platform, takes on Anthropic Mythos - csoonline.com",
+                "url": "https://www.csoonline.com/article/4170029/openai-introduces-daybreak-cyber-platform-takes-on-anthropic-mythos.html",
+                "source": "csoonline.com",
+                "summary": "## OpenAI’s new cybersecurity platform aims to automate vulnerability detection, patch validation, and secure software development for enterprises and governments. OpenAI has unveiled Daybreak, its answer to Anthropic’s Claude Mythos, amid a growing market for frontier AI-powered cyber defense platforms. The company said Daybreak is focused on accelerating cyber defense operations and enabling organizations to secure software across the development lifecycle continuously. Announcing the initiative on X, Sam Altman, CEO at OpenAI, said, “OpenAI is launching Daybreak, our effort to accelerate cyber defense and continuously secure software. OpenAI is positioning Daybreak and GPT-5.5-Cyber as a controlled cyber-defense platform for vetted defenders, focused on operational workflows such as vulnerability detection, patch validation, malware analysis, and secure software development,” said Pareekh Jain, CEO at EIIRTrend & Pareekh Consulting. OpenAI is pursuing a scalable cyber defense platform strategy with Daybreak and is rolling out the initiative through three different model tiers: GPT-5.5 (default), GPT-5.5 with Trusted Access for Cyber, and GPT-5.5-Cyber.",
+                "score": 0.5614318
+              },
+              {
+                "title": "OpenAI chief Altman has over $2 billion stake in companies that dealt with OpenAI, court filing shows - Reuters",
+                "url": "https://www.reuters.com/legal/government/openai-chief-altman-has-over-2-billion-stake-companies-that-dealt-with-openai-2026-05-13/",
+                "source": "reuters.com",
+                "summary": "# OpenAI chief Altman has over $2 billion stake in companies that dealt with OpenAI, court filing shows | Reuters. # OpenAI chief Altman has over $2 billion stake in companies that dealt with OpenAI, court filing shows. Image 2: Trial in Elon Musk's lawsuit over OpenAI for-profit conversion at a federal courthouse in Oakland. CEO of OpenAI Sam Altman arrives at the courthouse on the day of the trial in Elon Musk's lawsuit over OpenAI for-profit conversion at a federal courthouse in Oakland, California, U.S., May 12, 2026. OAKLAND, California, May 13 (Reuters) - OpenAI Chief Executive Sam Altman holds ​more than $2 billion in companies that have done business with the artificial intelligence company, a court document showed as Altman faces ‌claims of self-dealing from state attorneys general and Elon Musk, as well as a U.S. congressional investigation. The list of investments was shown in court on Tuesday in hearings on Musk's lawsuit seeking $150 billion in damages as well as Altman’s removal as an officer and board member.",
+                "score": 0.53619206
+              },
+              {
+                "title": "Exclusive: OpenAI launches biodefense program - Axios",
+                "url": "https://www.axios.com/2026/05/29/openai-biodefense-program",
+                "source": "axios.com",
+                "summary": "# Exclusive: OpenAI launches biodefense program. OpenAI is launching a tool to help develop new biodefense and pandemic preparedness capabilities, according to an announcement shared first with Axios. **Driving the news:** OpenAI's new Rosalind Biodefense Program will offer its GPT-Rosalind model for life sciences research to \"trusted developers\" operationalizing biodefense tools. * The company will sponsor access to the tool and provide launch support for epidemiological modeling, early detection, screening, preparedness, non-pharmaceutical interventions and other public-health work. * OpenAI is supporting organizations that it says span the life cycle of biological threats \"from prevention and early detection to societal resilience and medical countermeasure development.\". **What's next:** OpenAI said it briefed the White House and several federal agencies on its approach, and is in the process of involving public-health-focused federal agencies. * The company is also expanding access to GPT-Rosalind for select U.S. government and allied partners to support public health and biodefense missions.",
+                "score": 0.5021246
+              },
+              {
+                "title": "Ilya Sutskever Stands by His Role in Sam Altman’s OpenAI Ouster: ‘I Didn’t Want It to Be Destroyed’ - WIRED",
+                "url": "https://www.wired.com/story/ilya-sutskever-testifies-musk-v-altman-trial/",
+                "source": "wired.com",
+                "summary": "# Ilya Sutskever Stands by His Role in Sam Altman’s OpenAI Ouster: ‘I Didn’t Want It to Be Destroyed’. The former OpenAI chief scientist may be estranged from the company, but he still came to its defense as he testified on Monday. Elon Musk’s trial against OpenAI and Microsoft entered its final stretch on Monday, with testimony from Microsoft CEO Satya Nadella, former OpenAI chief scientist Ilya Sutskever, and current OpenAI chairman Bret Taylor. Sutskever drew the spotlight, revealing an ownership stake in OpenAI’s $850-billion for-profit arm that is currently worth about $7 billion. Earlier in the trial, OpenAI president Greg Brockman acknowledged for the first time that he has around $30 billion worth of OpenAI shares. Brockman said he and Sutskever were “joined at the hip,” until Sutskever helped lead Sam Altman’s brief removal as OpenAI CEO in 2023. (He left and formed a competing AI lab in 2024.) “I felt a great deal of ownership of OpenAI,” he said at one point Monday.",
+                "score": 0.49685127
+              },
+              {
+                "title": "OpenAI just released its answer to Claude Mythos - The Verge",
+                "url": "https://www.theverge.com/ai-artificial-intelligence/928342/openai-daybreak-security-ai",
+                "source": "theverge.com",
+                "summary": "OpenAI’s Daybreak combines GPT-5.5-Cyber and Codex Security. OpenAI is launching Daybreak, an AI initiative focused on detecting and patching vulnerabilities before attackers find them. Daybreak uses the Codex Security AI agent that launched in March to create a threat model based on an organization’s code and focus on possible attack paths, validate likely vulnerabilities, and then automate the detection of the higher risk ones. Its launch comes just over a month after rival Anthropic announced Claude Mythos, a security-focused AI model it claimed was too dangerous to publicly release and only shared privately as a part of its own initiative, dubbed Project Glasswing. Like Glasswing, Daybreak isn’t built on just one AI model — OpenAI says “Daybreak brings together the most capable OpenAI models, Codex, and our security partners.”. Daybreak also involves specialized cyber models, including GPT-5.5 with Trusted Access for Cyber and GPT-5.5-Cyber, which began rolling out last week. OpenAI also says it’s working with its “industry and government partners” while it prepares to “deploy increasingly more cyber-capable models.”.",
+                "score": 0.49245724
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_missing_url_clarify",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_missing_url",
+        "difficulty": "medium",
+        "what_it_tests": "Nhắc tới link nhưng không cung cấp URL cụ thể thì phải hỏi lại, không tự đoán URL."
+      },
+      "input": "Đọc link này rồi tóm tắt giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn gửi giúp mình link cần đọc nhé — mình sẽ tóm tắt ngay sau khi có URL.",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn gửi giúp mình link cần đọc nhé — mình sẽ tóm tắt ngay sau khi có URL.",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn gửi giúp mình link cần đọc nhé — mình sẽ tóm tắt ngay sau khi có URL.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_confirm_before_external_send",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "confirm_before_external_action",
+        "difficulty": "medium",
+        "what_it_tests": "Yêu cầu gửi nội dung ra ngoài phải xác nhận yes_no trước, không gọi send ngay."
+      },
+      "input": "Gửi đoạn tóm tắt này cho team giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn dán giúp mình đoạn tóm tắt cần gửi cho team nhé. Khi có nội dung, mình sẽ hỗ trợ gửi tiếp — bạn muốn mình gửi bằng nội dung đó chứ?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "response_type: expected 'yes_no', got 'text'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn dán giúp mình đoạn tóm tắt cần gửi cho team nhé. Khi có nội dung, mình sẽ hỗ trợ gửi tiếp — bạn muốn mình gửi bằng nội dung đó chứ?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn dán giúp mình đoạn tóm tắt cần gửi cho team nhé. Khi có nội dung, mình sẽ hỗ trợ gửi tiếp — bạn muốn mình gửi bằng nội dung đó chứ?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_out_of_scope_cooking",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_no_tool",
+        "difficulty": "easy",
+        "what_it_tests": "Câu hỏi không thuộc research/news/social/URL thì không được gọi tool."
+      },
+      "input": "Chỉ mình cách nấu phở bò ngon",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Dĩ nhiên. Đây là cách nấu **phở bò ngon kiểu truyền thống** tại nhà, dễ làm mà vẫn đậm vị.\n\n## 1) Nguyên liệu\n\n### Phần nước dùng\n- 1,5–2 kg xương bò: xương ống, xương bò có tủy\n- 500g thịt bò: nạm, gầu, bắp hoặc gân\n- 1 con gà ác? Không, nếu nấu **phở bò** thì không cần gà\n- 1 củ hành tây lớn\n- 1 củ gừng lớn\n- 1–2 củ hành tím\n- 1 thanh quế\n- 3–4 hoa hồi\n- 2–3 thảo quả\n- 1 ít đinh hương\n- 1 ít hạt mùi hoặc mùi khô\n- Muối\n- Đường phèn\n- Nước mắm ngon\n\n### Phần ăn kèm\n- Bánh phở tươi\n- Hành lá, ngò rí\n- Hành tây thái mỏng\n- Rau thơm: húng quế, ngò gai, giá đỗ, chanh, ớt\n- Thịt bò tái: thăn bò, bắp bò thái mỏng\n\n---\n\n## 2) Sơ chế để nước dùng trong và thơm\n\n### Khử mùi xương\n1. Rửa xương bò với nước muối.\n2. Chần xương trong nước sôi 5–10 phút.\n3. Đổ bỏ nước đầu, rửa sạch lại xương.\n\n### Nướng gia vị\n1. Nướng hoặc áp chảo:\n   - hành tây\n   - gừng\n   - hành tím\n2. Rang sơ:\n   - quế, hồi, thảo quả, đinh hương, hạt mùi\n3. Cho các gia vị này vào túi vải hoặc để nguyên nếu lọc sau.\n\n---\n\n## 3) Nấu nước dùng\n\n1. Cho xương vào nồi lớn, đổ khoảng 4–5 lít nước.\n2. Đun sôi rồi hạ nhỏ lửa, hớt bọt liên tục.\n3. Thêm hành, gừng nướng và túi gia vị vào.\n4. Ninh lửa nhỏ từ **3–5 giờ**.\n5. Khoảng 45–60 phút sau, cho nạm/gầu/bắp vào luộc chín mềm rồi vớt ra ngâm nước lạnh cho thịt không bị thâm.\n6. Nêm:\n   - muối\n   - đường phèn\n   - nước mắm\n   sao cho nước dùng ngọt thanh, đậm nhưng không mặn.\n\n### Mẹo\n- Không để lửa quá to, nước dùng sẽ đục.\n- Không cho quá nhiều gia vị thơm, phở sẽ bị “nồng”.\n- Nếu muốn nước trong hơn, thường xuyên hớt bọt và không khuấy mạnh.\n\n---\n\n## 4) Chuẩn bị thịt bò\n\n### Phở bò tái\n- Thăn bò thái thật mỏng.\n- Khi ăn, xếp thịt lên bánh phở rồi chan nước dùng thật sôi để thịt chín vừa.\n\n### Phở bò chín\n- Nạm, gầu, bắp luộc chín mềm, thái lát mỏng.\n\n---\n\n## 5) Trụng bánh phở và trình bày\n\n1. Trụng bánh phở nhanh qua nước sôi.\n2. Cho vào tô.\n3. Xếp thịt bò tái, thịt chín, hành tây thái mỏng, hành lá.\n4. Chan nước dùng sôi ngập tô.\n5. Thêm tiêu, chanh, ớt, rau thơm tùy thích.\n\n---\n\n## 6) Bí quyết để phở bò ngon hơn\n\n- **Xương phải sơ chế kỹ** để nước không hôi.\n- **Nước dùng phải ninh lâu, lửa nhỏ**.\n- **Hành gừng nướng** là bước rất quan trọng.\n- **Đường phèn** cho vị ngọt thanh, đẹp nước.\n- **Thịt bò tái phải thái mỏng ngang thớ**.\n- Nêm nếm cuối cùng bằng **nước mắm ngon** để hương vị hài hòa.\n\n---\n\n## 7) Tỷ lệ nêm tham khảo cho 5 lít nước\n- 2–3 muỗng cà phê muối\n- 30–50g đường phèn\n- 2–4 muỗng canh nước mắm, thêm dần theo khẩu vị\n\n---\n\nNếu bạn muốn, mình có thể viết tiếp cho bạn:\n1. **Công thức phở bò chuẩn quán**\n2. **Cách nấu phở bò nhanh trong 2 giờ**\n3. **Cách làm nước dùng phở bò thật trong, thơm như ngoài hàng**",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    }
+  ]
+}

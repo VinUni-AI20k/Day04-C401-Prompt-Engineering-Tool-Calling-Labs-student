@@ -1,0 +1,50 @@
+{
+  "transcript_id": "v3_anthropic_20260602T153753625339",
+  "version": "v3",
+  "artifact_version": "v3+pd24612a367a7+t6cdb53d5d7b8",
+  "prompt_hash": "d24612a367a7288d4205dd364339017c63306a0aff7849af0bcd5a1cd6e7547a",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "provider": "anthropic",
+  "model": "claude-haiku-4-5-20251001",
+  "system_prompt": "E:\\Vin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\Vin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T15:37:53",
+  "updated_at": "2026-06-02T15:42:43",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T15:37:53",
+      "user": "Lấy cho tôi tin tức về trận chung kết C1",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f527' in position 0: character maps to <undefined>",
+      "ended_at": "2026-06-02T15:37:59"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-06-02T15:39:20",
+      "user": "information about the final of champion league",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f527' in position 0: character maps to <undefined>",
+      "ended_at": "2026-06-02T15:39:30"
+    },
+    {
+      "turn_index": 3,
+      "started_at": "2026-06-02T15:42:34",
+      "user": "information about the final of champion league",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u1ea1' in position 28: character maps to <undefined>",
+      "ended_at": "2026-06-02T15:42:43"
+    }
+  ]
+}

@@ -3,5 +3,60 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_handle_with_at_limit",
+      "phase": "B",
+      "suite": "group",
+      "query": "Lấy 2 tweet mới nhất của @karpathy",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "karpathy", "limit": 2}}]},
+      "metadata": {"skill": "handle_normalization", "difficulty": "medium", "what_it_tests": "Handle có ký tự @ phải được chuẩn hóa thành screenname không có @ và giữ đúng limit=2."}
+    },
+    {
+      "id": "G02_social_topic_latest",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tìm các tweet mới nhất về Anthropic",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "social_search", "args": {"query": "Anthropic", "search_type": "Latest"}}]},
+      "metadata": {"skill": "routing_social_topic_latest", "difficulty": "easy", "what_it_tests": "Tweet theo chủ đề phải dùng social_search, không dùng timeline, và mặc định Latest khi không yêu cầu top."}
+    },
+    {
+      "id": "G03_news_month_query_clean",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tin tức OpenAI tháng này có gì đáng chú ý?",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "OpenAI", "topic": "news", "timeframe": "month"}}]},
+      "metadata": {"skill": "news_timeframe_query_cleaning", "difficulty": "medium", "what_it_tests": "News request phải đặt topic=news, map 'tháng này' thành timeframe=month, và query chỉ giữ chủ đề OpenAI."}
+    },
+    {
+      "id": "G04_missing_url_clarify",
+      "phase": "B",
+      "suite": "group",
+      "query": "Đọc link này rồi tóm tắt giúp mình",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "metadata": {"skill": "clarify_missing_url", "difficulty": "medium", "what_it_tests": "Nhắc tới link nhưng không cung cấp URL cụ thể thì phải hỏi lại, không tự đoán URL."}
+    },
+    {
+      "id": "G05_confirm_before_external_send",
+      "phase": "B",
+      "suite": "group",
+      "query": "Gửi cho team nội dung này: AI đang tăng tốc trong tuần này.",
+      "failure_type": "wrong_boundary",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "yes_no"}}]},
+      "metadata": {"skill": "confirm_before_external_action", "difficulty": "medium", "what_it_tests": "Yêu cầu gửi nội dung cụ thể ra ngoài phải xác nhận yes_no trước, không gọi send ngay."}
+    },
+    {
+      "id": "G06_out_of_scope_cooking",
+      "phase": "B",
+      "suite": "group",
+      "query": "Chỉ mình cách nấu phở bò ngon",
+      "failure_type": "out_of_scope",
+      "expect": {"no_tool": true, "behavior": "refuse"},
+      "metadata": {"skill": "out_of_scope_no_tool", "difficulty": "easy", "what_it_tests": "Câu hỏi không thuộc research/news/social/URL thì không được gọi tool."}
+    }
+  ]
 }
