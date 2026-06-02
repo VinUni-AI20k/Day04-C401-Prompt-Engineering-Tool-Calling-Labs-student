@@ -1,0 +1,803 @@
+{
+  "run_id": "v3_B_group_openai_20260602T151659504483",
+  "version": "v3",
+  "artifact_version": "v3+pfe5e623c3232+t34049e178201",
+  "prompt_hash": "fe5e623c32327f40c8c96615ab9c78ca707c37f813456485fd020c441796dfc5",
+  "tools_hash": "34049e1782016c7a0410e9d16279e3872cd9b2037084ce9e300c55835531afda",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "E:\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. 5 single-turn + 5 multi-turn. Mỗi case có id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true), kèm metadata.what_it_tests.",
+  "generated_at": "2026-06-02T15:16:59",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 10,
+    "case_accuracy": 1.0,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 1.0,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "G01_fetch_given_url",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Đã có URL cụ thể → fetch đúng url, KHÔNG dùng lookup/web_search."
+      },
+      "input": "Đọc và tóm tắt giúp mình nội dung trang này: https://example.com/ai-report",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://example.com/ai-report"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://example.com/ai-report"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://example.com/ai-report"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://example.com/ai-report",
+            "items": [
+              {
+                "title": "Example Domain",
+                "url": "https://example.com/ai-report",
+                "source": "example.com",
+                "summary": "# Example Domain\n\nThis domain is for use in documentation examples without needing permission. Avoid use in operations.\n\n[Learn more](https://iana.org/domains/example)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_timeline_limit_arg",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Map tên Sam Altman → handle sama và trích limit=7 từ '7 tweet'."
+      },
+      "input": "Lấy 7 tweet mới nhất của Sam Altman",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 7
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 7
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "sama",
+            "limit": 7
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "ConnectionError",
+            "message": "HTTPSConnectionPool(host='twitter-api45.p.rapidapi.com%20', port=443): Max retries exceeded with url: /?screenname=sama (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x0000028021BA0680>: Failed to resolve 'twitter-api45.p.rapidapi.com%20' ([Errno 11001] getaddrinfo failed)\"))"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_papers_arxiv",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Yêu cầu paper khoa học trên arXiv → papers, KHÔNG dùng lookup web search."
+      },
+      "input": "Tìm cho mình các paper trên arXiv về diffusion models",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "diffusion models"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "diffusion models"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "diffusion models"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "diffusion models",
+            "api_query": "all:diffusion AND all:models",
+            "total_results": 57390,
+            "items": [
+              {
+                "arxiv_id": "2605.22586v3",
+                "title": "A Tutorial on Diffusion Theory: From Differential Equations to Diffusion Models",
+                "summary": "Diffusion models have emerged as a dominant framework for generative modeling, but their mathematical foundations are often presented separately through diffusion probabilistic models, score-based modeling, stochastic differential equations, and numerical sampling methods. We write this tutorial to provide a unified and self-contained account of these viewpoints from the perspective of differential equations. Starting from a conditional Gaussian noising process, we derive ordinary differential equation (ODE) and stochastic differential equation (SDE) representations, pass to the corresponding marginal forward dynamics, and then obtain the reverse-time SDE and probability-flow ODE that make generation possible. We show that the central unknown quantity in reverse sampling is the marginal score, explain how score matching becomes the standard denoising objective under a noise-prediction parameterization, and discuss practical reverse-time sampling and guidance. We further place DDPM, DDIM, flow matching, and score-based SDEs in a common framework, and conclude with diffusion language models in continuous embedding space together with a brief discussion of discrete masked-token diffusion. The tutorial is intended as a bridge between the analytical foundations of diffusion processes and the modern generative algorithms built upon them.",
+                "authors": [
+                  "Jiayi Fu",
+                  "Yuxia Wang"
+                ],
+                "published": "2026-05-21T14:59:12Z",
+                "updated": "2026-05-27T21:34:42Z",
+                "url": "http://arxiv.org/abs/2605.22586v3",
+                "pdf_url": "https://arxiv.org/pdf/2605.22586v3",
+                "source": "arxiv.org",
+                "primary_category": "cs.LG",
+                "categories": [
+                  "cs.LG",
+                  "cs.CL"
+                ]
+              },
+              {
+                "arxiv_id": "2312.03397v1",
+                "title": "Generalized Contrastive Divergence: Joint Training of Energy-Based Model and Diffusion Model through Inverse Reinforcement Learning",
+                "summary": "We present Generalized Contrastive Divergence (GCD), a novel objective function for training an energy-based model (EBM) and a sampler simultaneously. GCD generalizes Contrastive Divergence (Hinton, 2002), a celebrated algorithm for training EBM, by replacing Markov Chain Monte Carlo (MCMC) distribution with a trainable sampler, such as a diffusion model. In GCD, the joint training of EBM and a diffusion model is formulated as a minimax problem, which reaches an equilibrium when both models converge to the data distribution. The minimax learning with GCD bears interesting equivalence to inverse reinforcement learning, where the energy corresponds to a negative reward, the diffusion model is a policy, and the real data is expert demonstrations. We present preliminary yet promising results showing that joint training is beneficial for both EBM and a diffusion model. GCD enables EBM training without MCMC while improving the sample quality of a diffusion model.",
+                "authors": [
+                  "Sangwoong Yoon",
+                  "Dohyun Kwon",
+                  "Himchan Hwang",
+                  "Yung-Kyun Noh",
+                  "Frank C. Park"
+                ],
+                "published": "2023-12-06T10:10:21Z",
+                "updated": "2023-12-06T10:10:21Z",
+                "url": "http://arxiv.org/abs/2312.03397v1",
+                "pdf_url": "https://arxiv.org/pdf/2312.03397v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.LG",
+                "categories": [
+                  "cs.LG",
+                  "cs.AI"
+                ]
+              },
+              {
+                "arxiv_id": "2401.08741v1",
+                "title": "Fixed Point Diffusion Models",
+                "summary": "We introduce the Fixed Point Diffusion Model (FPDM), a novel approach to image generation that integrates the concept of fixed point solving into the framework of diffusion-based generative modeling. Our approach embeds an implicit fixed point solving layer into the denoising network of a diffusion model, transforming the diffusion process into a sequence of closely-related fixed point problems. Combined with a new stochastic training method, this approach significantly reduces model size, reduces memory usage, and accelerates training. Moreover, it enables the development of two new techniques to improve sampling efficiency: reallocating computation across timesteps and reusing fixed point solutions between timesteps. We conduct extensive experiments with state-of-the-art models on ImageNet, FFHQ, CelebA-HQ, and LSUN-Church, demonstrating substantial improvements in performance and efficiency. Compared to the state-of-the-art DiT model, FPDM contains 87% fewer parameters, consumes 60% less memory during training, and improves image generation quality in situations where sampling computation or time is limited. Our code and pretrained models are available at https://lukemelas.github.io/fixed-point-diffusion-models.",
+                "authors": [
+                  "Xingjian Bai",
+                  "Luke Melas-Kyriazi"
+                ],
+                "published": "2024-01-16T18:55:54Z",
+                "updated": "2024-01-16T18:55:54Z",
+                "url": "http://arxiv.org/abs/2401.08741v1",
+                "pdf_url": "https://arxiv.org/pdf/2401.08741v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV",
+                  "cs.AI",
+                  "cs.LG"
+                ]
+              },
+              {
+                "arxiv_id": "2405.03150v2",
+                "title": "Video Diffusion Models: A Survey",
+                "summary": "Diffusion generative models have recently become a powerful technique for creating and modifying high-quality, coherent video content. This survey provides a comprehensive overview of the critical components of diffusion models for video generation, including their applications, architectural design, and temporal dynamics modeling. The paper begins by discussing the core principles and mathematical formulations, then explores various architectural choices and methods for maintaining temporal consistency. A taxonomy of applications is presented, categorizing models based on input modalities such as text prompts, images, videos, and audio signals. Advancements in text-to-video generation are discussed to illustrate the state-of-the-art capabilities and limitations of current approaches. Additionally, the survey summarizes recent developments in training and evaluation practices, including the use of diverse video and image datasets and the adoption of various evaluation metrics to assess model performance. The survey concludes with an examination of ongoing challenges, such as generating longer videos and managing computational costs, and offers insights into potential future directions for the field. By consolidating the latest research and developments, this survey aims to serve as a valuable resource for researchers and practitioners working with video diffusion models. Website: https://github.com/ndrwmlnk/Awesome-Video-Diffusion-Models",
+                "authors": [
+                  "Andrew Melnik",
+                  "Michal Ljubljanac",
+                  "Cong Lu",
+                  "Qi Yan",
+                  "Weiming Ren",
+                  "Helge Ritter"
+                ],
+                "published": "2024-05-06T04:01:42Z",
+                "updated": "2024-11-17T00:40:09Z",
+                "url": "http://arxiv.org/abs/2405.03150v2",
+                "pdf_url": "https://arxiv.org/pdf/2405.03150v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV",
+                  "cs.LG"
+                ]
+              },
+              {
+                "arxiv_id": "2311.03226v1",
+                "title": "LDM3D-VR: Latent Diffusion Model for 3D VR",
+                "summary": "Latent diffusion models have proven to be state-of-the-art in the creation and manipulation of visual outputs. However, as far as we know, the generation of depth maps jointly with RGB is still limited. We introduce LDM3D-VR, a suite of diffusion models targeting virtual reality development that includes LDM3D-pano and LDM3D-SR. These models enable the generation of panoramic RGBD based on textual prompts and the upscaling of low-resolution inputs to high-resolution RGBD, respectively. Our models are fine-tuned from existing pretrained models on datasets containing panoramic/high-resolution RGB images, depth maps and captions. Both models are evaluated in comparison to existing related methods.",
+                "authors": [
+                  "Gabriela Ben Melech Stan",
+                  "Diana Wofk",
+                  "Estelle Aflalo",
+                  "Shao-Yen Tseng",
+                  "Zhipeng Cai",
+                  "Michael Paulitsch",
+                  "Vasudev Lal"
+                ],
+                "published": "2023-11-06T16:12:10Z",
+                "updated": "2023-11-06T16:12:10Z",
+                "url": "http://arxiv.org/abs/2311.03226v1",
+                "pdf_url": "https://arxiv.org/pdf/2311.03226v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV",
+                  "cs.AI"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_out_of_scope_booking",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Đặt vé nằm ngoài phạm vi research/news/social → KHÔNG gọi tool, từ chối/định hướng."
+      },
+      "input": "Đặt giúp mình một vé máy bay đi Đà Nẵng cuối tuần này",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Xin lỗi, nhưng tôi không thể giúp bạn đặt vé máy bay. Bạn có thể sử dụng các trang web hoặc ứng dụng đặt vé máy bay như Expedia, Skyscanner hoặc trang web của các hãng hàng không để thực hiện việc này. Nếu bạn cần thông tin về chuyến bay hoặc điểm đến, hãy cho tôi biết!",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G05_keywords_from_text",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Yêu cầu trích keyword từ text đã có → tool keywords (tool mới của nhóm), KHÔNG đi search lại."
+      },
+      "input": "Từ đoạn text này, rút ra các từ khóa nổi bật nhất giúp mình: 'GPT GPT GPT OpenAI OpenAI robotics AI AI AI'",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "keywords",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "keywords",
+            "args": {
+              "text": "GPT GPT GPT OpenAI OpenAI robotics AI AI AI",
+              "top_k": 10
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "keywords",
+          "args": {
+            "text": "GPT GPT GPT OpenAI OpenAI robotics AI AI AI",
+            "top_k": 10
+          },
+          "result": {
+            "tool": "extract_keywords",
+            "keywords": [
+              {
+                "term": "gpt",
+                "count": 3
+              },
+              {
+                "term": "ai",
+                "count": 3
+              },
+              {
+                "term": "openai",
+                "count": 2
+              },
+              {
+                "term": "robotics",
+                "count": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_clarify_then_handle",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Lượt 1 thiếu handle, lượt 2 bổ sung tên → map Sam Altman thành sama rồi gọi timeline."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy mấy tweet mới nhất giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Của Sam Altman nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "sama"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "ConnectionError",
+            "message": "HTTPSConnectionPool(host='twitter-api45.p.rapidapi.com%20', port=443): Max retries exceeded with url: /?screenname=sama (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x0000028021BC4DA0>: Failed to resolve 'twitter-api45.p.rapidapi.com%20' ([Errno 11001] getaddrinfo failed)\"))"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_carryover_topic_switch",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Carry-over topic=news + timeframe=week từ lượt 1, đổi query sang AI ở lượt 2."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin công nghệ trong tuần này có gì?"
+        },
+        {
+          "role": "user",
+          "content": "Đổi sang chủ đề AI thôi, vẫn là tin trong tuần"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "week"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "So you’ve heard these AI terms and nodded along; let’s fix that - TechCrunch",
+                "url": "https://techcrunch.com/2026/05/29/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms/",
+                "source": "techcrunch.com",
+                "summary": "Artificial intelligence is changing the world, and simultaneously inventing a whole new language to describe how it’s doing it. But it generally refers to AI that’s more capable than the average human at many, if not most, tasks. OpenAI CEO Sam Altman once described AGI as the “equivalent of a median human that you could hire as a co-worker.” Meanwhile, OpenAI’s charter defines AGI as “highly autonomous systems that outperform humans at most economically valuable work.” Google DeepMind’s understanding differs slightly from these two definitions; the lab views AGI as “AI that’s at least as capable as humans at most cognitive tasks.” Confused? An AI agent refers to a tool that uses AI technologies to perform a series of tasks on your behalf — beyond what a more basic AI chatbot could do — such as filing expenses, booking tickets or a table at a restaurant, or even writing and maintaining code.",
+                "score": 0.9532751
+              },
+              {
+                "title": "AI Impact: How AI Raised the Bar for Lawyers - Newsweek",
+                "url": "https://www.newsweek.com/ai-impact-how-ai-raised-the-bar-for-lawyers-12009050",
+                "source": "newsweek.com",
+                "summary": "# AI Impact: How AI Raised the Bar for Lawyers. ## AI Impact examines legal AI workloads, hidden productivity costs, finance transformation and AI-powered health care claims. *Editor's note: This is AI Impact, Newsweek's weekly newsletter where each week, we will explore how business leaders are unlocking real value through artificial intelligence.*. #### Read More on AI. AI is now changing that reputation, though not in the way many lawyers may have expected. Ironclad, an AI contracting platform, found in its third annual “State of AI in Legal” report that 92 percent of legal professionals now use AI in some capacity for legal work, up from 69 percent in 2025. “AI is not just reducing workload; it is changing what legal teams are expected to deliver,” Jasmine Singh, general counsel at Ironclad, told *Newsweek*. Ironclad found that 94 percent of respondents who use AI for legal work use it for contract-specific tasks.",
+                "score": 0.9273633
+              },
+              {
+                "title": "AI emerging as top driver of overall Internet traffic growth – study - Light Reading",
+                "url": "https://www.lightreading.com/ai-machine-learning/ai-emerging-as-top-driver-of-overall-internet-traffic-growth-study",
+                "source": "lightreading.com",
+                "summary": "AI is poised to boost consumer-driven traffic by about 6.6x by the mid-2030s and reshape infrastructure requirements, Cisco found in its first WAN-focused AI report. Consumer-driven AI traffic currently represents a small portion of overall Internet traffic today, but the accelerating adoption of AI, including agentic AI, will make AI the dominant driver in the decade to come, Cisco predicts in a new study. As consumer AI adoption reaches \"near-universal usage\" in the coming years, AI and agentic AI are projected to increase consumer-driven network traffic by about 6.6x by the mid-2030s, Cisco projects in its first-ever \"AI Impact on Wide Area Networks\" report. That expansion represents about 63% of additional growth compared to non-AI scenarios, Cisco projects in the study, which aims to evaluate AI's impact on the WAN rather than in areas such as GPUs and data center fabrics, and provide guidance on network designs and capacity planning.",
+                "score": 0.87997437
+              },
+              {
+                "title": "The $500 Million AI Mistake Every Company Is Rushing to Avoid - inc.com",
+                "url": "https://www.inc.com/kevin-haynes/the-500-million-ai-mistake-every-company-is-rushing-to-avoid/91353205",
+                "source": "inc.com",
+                "summary": "# The $500 Million AI Mistake Every Company Is Rushing to Avoid. Enterprise software companies have been raking in a fortune with the same sales spiel: Flip the switch on generative AI and thousands of employees will instantly become hyper-productive, operations will run smoothly on autopilot, and corporate debt will soon vanish. Axios reports that an unnamed corporation managed to “accidentally” torch roughly $500 million in a single month. While that specific $500 million anecdote stems from a single consultant’s client, it is undoubtedly the proverbial canary in a coal mine. AI sticker shock is stunning corporate America, exposing a fundamental failure to recognize that modern technology costs real money. Ali Ansari, chief executive of the model training firm Micro1, said he’s now seeing a “healthy swing” away from AI overuse, or “tokenmaxxing”—the push to burn as many AI tokens as possible. “The reality of AI right now is that it only works for coding,” he said.",
+                "score": 0.8705973
+              },
+              {
+                "title": "AIReadyAmerica.org to Accelerate AI Workforce and Economic Development Efforts Nationwide - PR Newswire",
+                "url": "https://www.prnewswire.com/news-releases/aireadyamericaorg-to-accelerate-ai-workforce-and-economic-development-efforts-nationwide-302783131.html",
+                "source": "prnewswire.com",
+                "summary": "# AIReadyAmerica.org to Accelerate AI Workforce and Economic Development Efforts Nationwide. *Nonprofit coalition will lead the National AI Accelerator, designed to fast-track AI education and implementation efforts for Americans, businesses, and communities*. WASHINGTON, May 27, 2026 /PRNewswire/ -- The Enterprise Technology Association (ETA) today launched AIReadyAmerica.org to accelerate AI workforce and economic development efforts nationwide. \"This effort is designed to serve the 90% of Americans who aren't coders, or developers, or AI native; but have jobs affected or impacted by AI. This effort is designed to enable businesses on main street America that want to thrive in the AI economy. * make tools available for workforce and economic development leaders to rapidly address the AI opportunity;. The centerpiece of the effort is the National AI Accelerator, which is designed to fast-track AI education and implementation efforts, not necessarily to launch or scale AI startups. The Enterprise Technology Association (ETA) is a national organization dedicated to AI education, workforce enablement, and technology ecosystem building across the United States.",
+                "score": 0.8587186
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_confirm_then_send",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Sau khi user xác nhận yes ở lượt 2 → mới gọi send với confirmed=true (không gửi ở lượt 1)."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Đăng bản tin này lên Telegram giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Ừ mình xác nhận, gửi đi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "bản tin này",
+              "confirmed": true
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "send",
+          "args": {
+            "text": "bản tin này",
+            "confirmed": true
+          },
+          "result": {
+            "tool": "send_telegram",
+            "status": "sent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_switch_to_web",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Bỏ social_search, chuyển sang lookup topic=news, giữ chủ đề Tesla qua 3 lượt."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mọi người nói gì về Tesla trên Twitter?"
+        },
+        {
+          "role": "user",
+          "content": "Thôi bỏ Twitter, tìm trên web tin tức đi"
+        },
+        {
+          "role": "user",
+          "content": "Giữ chủ đề Tesla"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Tesla",
+              "topic": "news"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Tesla",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Tesla",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Tesla",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Tesla Stock Is In A Three-Weeks-Tight, Continues Its Recovery From A Deep Slump - Investor's Business Daily",
+                "url": "https://www.investors.com/news/tesla-stock-three-weeks-tight-nasdaq-tech-ai-robotaxis-ev/",
+                "source": "investors.com",
+                "summary": "# Tesla Stock Is In A Three-Weeks-Tight, Continues Its Recovery From A Deep Slump. **Tesla** (TSLA) stock started the week in a three-weeks-tight pattern, formed in the handle of a cup-with-handle base. ## Tesla Stock Is Three-Weeks-Tight. Tesla's three-weeks-tight pattern comes after the stock got above the 200-day line earlier this month, according to MarketSurge. This occurs as the stock recovers from an extended slump begun in December. At one point, Tesla stock had finished down eight weeks in a row. Tesla stock is working toward a buy point of 453.40, which is the high point of its current handle, as well as the three-weeks-tight pattern. Investors looking for an early entry could have used the stock's move above the 10-day line on Tuesday. ## Tesla Stock. As a company, Tesla is in the midst of reinventing itself from an automaker to an AI and robotics firm. Get instant access to exclusive stock lists, expert market analysis and powerful tools with 2 months of IBD Digital for only $20!",
+                "score": 0.42305335
+              },
+              {
+                "title": "Tesla withdraws termination notice on graphite supply deal with Australia's Syrah - Reuters",
+                "url": "https://www.reuters.com/business/autos-transportation/tesla-withdraws-termination-notice-graphite-supply-deal-with-australias-syrah-2026-05-31/",
+                "source": "reuters.com",
+                "summary": "# Tesla withdraws termination notice on graphite supply deal with Australia's Syrah | Reuters. Exclusive news, data and analytics for financial market professionals Learn more about Refinitiv. ## Browse World. ## Browse Business. # Tesla withdraws termination notice on graphite supply deal with Australia's Syrah. Image 1: FILE PHOTO: The logo of Tesla is seen on a Tesla car in Brussels. June 1 (Reuters) - Australia's Syrah Resources (SYR.AX), opens new tab said on Monday Tesla (TSLA.O), opens new tab had withdrawn ​a notice of intent to terminate a graphite ‌supply deal, ending months of negotiations that saw the two companies extend a resolution deadline four times. Stay up to date with the latest news, trends and innovations that are driving the global automotive industry with the Reuters Auto File newsletter. *   About Reuters, opens new tab. *   Media Center, opens new tab. *   Reuters News Agency, opens new tab. *   #### World-Check, opens new tab.",
+                "score": 0.3176384
+              },
+              {
+                "title": "Tesla’s top rival launches self-driving with full crash coverage at a fraction of the cost - Digital Trends",
+                "url": "https://www.digitaltrends.com/cars/teslas-top-rival-launches-self-driving-with-full-crash-coverage-at-a-fraction-of-the-cost/",
+                "source": "digitaltrends.com",
+                "summary": "# Tesla’s top rival launches self-driving with full crash coverage at a fraction of the cost. ## BYD's God's Eye tech is coming for Tesla with a much smaller bill. The company’s new self-driving package just dropped with a price tag that basically embarrasses Tesla’s driver-assistance service. The Chinese EV giant announced a new service package dubbed God’s Eye, with chairman Wang Chuanfu claiming BYD’s first goal is to achieve “zero traffic accidents.”. In a recent press conference, he announced that BYD will fully cover compensation and repairs for accidents that happen while drivers are using its City Navigation function, without affecting the user’s insurance premiums the following year. ## BYD is confident in its self-driving tech. BYD’s new coverage applies to its God’s Eye A/B systems. BYD is confident in the tech, showcasing its bold trust with this commitment. In China, Tesla’s comparable assisted-driving package has been rebranded as Tesla Assisted Driving and is priced at 64,000 Yuan, or about $9,400, with no subscription option.",
+                "score": 0.2946212
+              },
+              {
+                "title": "Tesla is recovering in Europe. BYD is still beating it. - Sherwood News",
+                "url": "https://sherwood.news/tech/tesla-is-recovering-in-europe-byd-is-still-beating-it/",
+                "source": "sherwood.news",
+                "summary": "Tesla’s recovery across Europe continued last month, but it still lags BYD, according to new data from the European Automobile Manufacturers’ Association. In April, BYD registered more than twice as many cars as Tesla in the EU, UK, and the European Free Trade Association. Tesla thinks upcoming approval of its supervised Full Self-Driving tech is integral to its success on the continent. Tesla recently received approval for a version of its supervised FSD in the Netherlands, its first European market, and expects “EU-wide” approval in the second or third quarter of this year. The companies’ soaring valuations and annualized recurring revenue (ARR) have been running neck and neck for months, and The Information now reports that Anthropic is generating an estimated 35% more revenue than OpenAI. According to The Information’s reporting, Anthropic is close to a staggering $45 billion ARR, while OpenAI is at an estimated $33 billion ARR.",
+                "score": 0.285034
+              },
+              {
+                "title": "Tesla Prepares To Use Cybercabs As Robotaxis. Here's How Big Its Fleet Is. - Investor's Business Daily",
+                "url": "https://www.investors.com/news/tesla-robotaxi-cybercab-self-driving-cars-autonomous-vehicles-waymo-amazon-uber/",
+                "source": "investors.com",
+                "summary": "# Tesla Prepares To Launch Cybercab Robotaxis. Here's How Big Its Fleet Is. *   IBD 50 Stocks To Watch. *   How To Invest In Stocks. **FEATURE STORY: This May Be The Biggest Test For The Bull Market In AI Stocks**. # Tesla Prepares To Use Cybercabs As Robotaxis. Here's How Big Its Fleet Is. Image 3: FacebookImage 4: XImage 5: LinkedInImage 6: Share. New filings in Texas show the size of **Tesla**'s (TSLA) fleet of fully autonomous robotaxis. Still in the early stages of its development, Tesla's robotaxi service is a critical part of its future ambitions to develop self-driving cars. Tesla has 42 robotaxis operating at Level 4 of autonomous driving, according to a filing with the Texas Department of Motor Vehicles (TxDMV). Elon Musk Sees Robots And Robotaxis As Tesla's Future.",
+                "score": 0.2817024
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G10_correction_limit",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Carry handle elonmusk từ lượt 1, sửa limit 10→5 ở lượt 2."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy 10 tweet mới nhất của Elon Musk"
+        },
+        {
+          "role": "user",
+          "content": "Cho mình 5 thôi nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "elonmusk",
+            "limit": 5
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "ConnectionError",
+            "message": "HTTPSConnectionPool(host='twitter-api45.p.rapidapi.com%20', port=443): Max retries exceeded with url: /?screenname=elonmusk (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x0000028021BC7680>: Failed to resolve 'twitter-api45.p.rapidapi.com%20' ([Errno 11001] getaddrinfo failed)\"))"
+          }
+        }
+      ]
+    }
+  ]
+}
