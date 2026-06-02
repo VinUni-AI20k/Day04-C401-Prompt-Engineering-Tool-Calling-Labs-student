@@ -1,0 +1,1096 @@
+{
+  "run_id": "v4_B_group_openrouter_20260602T153719292845",
+  "version": "v4",
+  "artifact_version": "v4+p7aa0bed02e40+t24d2a5fc995a",
+  "prompt_hash": "7aa0bed02e40dd7d7d0bee21239f0114ea6a977c124a4adcbf4820af1eb270c5",
+  "tools_hash": "24d2a5fc995a4b0a52958a1eee3c1c91fba0cf4e8624ebe812274e60feb2b74a",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\Vin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\Vin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "generated_at": "2026-06-02T15:37:19",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 8,
+    "case_accuracy": 0.8,
+    "tool_routing_accuracy": 0.8,
+    "argument_accuracy": 0.8,
+    "multiturn_accuracy": 0.6,
+    "failure_counts": {
+      "wrong_boundary": 1,
+      "wrong_tool": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 2
+    }
+  },
+  "results": [
+    {
+      "id": "G01_summarize_text",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_summarize",
+        "difficulty": "easy",
+        "what_it_tests": "User gửi văn bản dài và yêu cầu tóm tắt → gọi summarize tool."
+      },
+      "input": "Tóm tắt giúp mình đoạn văn bản sau: AI đang thay đổi cách chúng ta làm việc. Nhiều công ty đang đầu tư mạnh vào trí tuệ nhân tạo. Công nghệ này hứa hẹn sẽ tự động hóa nhiều nhiệm vụ. Tuy nhiên, có những lo ngại về việc làm và đạo đức. Các chuyên gia gợi ý rằng AI sẽ tạo ra loại công việc mới trong khi làm cho một số loại khác trở nên lỗi thời.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "summarize",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "summarize",
+            "args": {
+              "text": "AI đang thay đổi cách chúng ta làm việc. Nhiều công ty đang đầu tư mạnh vào trí tuệ nhân tạo. Công nghệ này hứa hẹn sẽ tự động hóa nhiều nhiệm vụ. Tuy nhiên, có những lo ngại về việc làm và đạo đức. Các chuyên gia gợi ý rằng AI sẽ tạo ra loại công việc mới trong khi làm cho một số loại khác trở nên lỗi thời.",
+              "max_sentences": 3
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "summarize",
+          "args": {
+            "text": "AI đang thay đổi cách chúng ta làm việc. Nhiều công ty đang đầu tư mạnh vào trí tuệ nhân tạo. Công nghệ này hứa hẹn sẽ tự động hóa nhiều nhiệm vụ. Tuy nhiên, có những lo ngại về việc làm và đạo đức. Các chuyên gia gợi ý rằng AI sẽ tạo ra loại công việc mới trong khi làm cho một số loại khác trở nên lỗi thời.",
+            "max_sentences": 3
+          },
+          "result": {
+            "tool": "summarize",
+            "summary": "AI đang thay đổi cách chúng ta làm việc. Nhiều công ty đang đầu tư mạnh vào trí tuệ nhân tạo. Công nghệ này hứa hẹn sẽ tự động hóa nhiều nhiệm vụ. Tuy nhiên, có những lo ngại về việc làm và đạo đức. Các chuyên gia gợi ý rằng AI sẽ tạo ra loại công việc mới trong khi làm cho một số loại khác trở nên lỗi thời.",
+            "original_length": 309,
+            "summary_length": 309,
+            "sentences_used": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_lookup_timeframe_month",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_timeframe_month",
+        "difficulty": "medium",
+        "what_it_tests": "'tháng này' → timeframe=month (không phải week hoặc day)."
+      },
+      "input": "Tin tức về blockchain trong tháng này có gì?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "blockchain",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "blockchain",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "blockchain",
+            "topic": "news",
+            "timeframe": "month"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "blockchain",
+            "topic": "news",
+            "timeframe": "month",
+            "items": [
+              {
+                "title": "How startup Propy is deploying $100 million to put real estate deals on the blockchain - CNBC",
+                "url": "https://www.cnbc.com/2026/05/07/startup-propy-real-estate-deals-blockchain.html",
+                "source": "cnbc.com",
+                "summary": "# How startup Propy is deploying $100 million to put real estate deals on the blockchain. * Propy, a Miami-based blockchain technology, has been trying to modernize the closing process for residential homes. * Propy is also using its new funding to develop an AI agent to help facilitate deals. Propy, a Miami-based blockchain technology company that launched in 2017, has been trying to modernize the closing process and recently got a big financial boost to do it. \"We have this conviction that blockchain is the next phenomenon after the internet,\" said Natalia Karayaneva, founder and CEO of Propy. Meet Avery Propy is also using its new funding to develop an AI agent to help facilitate deals. \"Real estate developers and REITs started to reach out to Propy, because we've established this brand for so many years with our strong conviction that there was a way to legally accept cryptocurrencies in real estate, to legally record these on blockchain and in the county, of course,\" said Karayaneva.",
+                "score": 0.9184803
+              },
+              {
+                "title": "KBank partners Ant International to build blockchain USD rail in Thailand - FinTech Futures",
+                "url": "https://www.fintechfutures.com/blockchain-crypto-digital-assets/kbank-partners-ant-international-to-build-blockchain-usd-rail-in-thailand",
+                "source": "fintechfutures.com",
+                "summary": "# KBank partners Ant International to build blockchain USD rail in Thailand. The project will use JP Morgan’s Kinexys blockchain architecture to process 24/7 cross-border USD transactions and manage regional liquidity. Kasikornbank (KBank) has inked a new memorandum of understanding to develop cross-border payment and liquidity infrastructure for. A joint statement says the project will \"combine KBank’s regulated financial capabilities with Ant International’s financial AI solutions\" to offer cross-border USD transactions with real-time settlement. A third partner, JP Morgan Payments, is providing the project with blockchain deposit accounts through its blockchain business. This latest blockchain settlement model outlined in their most recent MoU builds directly upon the Project Carina pilot from 2024, when KBank and Ant International used the same JP Morgan architecture to test internal cross-border remittance mechanisms. Tyler Pathe is a financial reporter, moderator and investigator with a specific interest in financial technology, banking and the financial industry's latest innovations.",
+                "score": 0.91117966
+              },
+              {
+                "title": "Blockchain in Agriculture Market is expected to Hit US$ 7,866.84 - openPR.com",
+                "url": "https://www.openpr.com/news/4516333/blockchain-in-agriculture-market-is-expected-to-hit-us-7-866-84",
+                "source": "openpr.com",
+                "summary": "# Blockchain in Agriculture Market is expected to Hit US$ 7,866.84 Million by 2033 | Major Companies - IBM corporation, SAP SA, Ripe Technology, Inc, Amazon Web Services. Blockchain in Agriculture Market 2026. DataM Intelligence has unveiled its latest report on the \"Blockchain in Agriculture Market Size 2026\" delivering powerful insights into key trends, future growth opportunities, and evolving market challenges. By blending robust qualitative analysis with data-driven quantitative research, DataM Intelligence offers a well-rounded perspective that helps organizations decode complex market dynamics, unlock new avenues for growth, and seize emerging opportunities in an ever-evolving global market. Unlock Strategic Partnerships in the Growing Blockchain in Agriculture Market-Connect with Key Industry Leaders Today: https://www.datamintelligence.com/partner-identification-enquiry/blockchain-in-agriculture-market? The Global Blockchain in Agriculture Market size reached US$ 497.41 million in 2025 and is expected to reach US$ 7,866.84 million by 2033, growing with a CAGR of 41.20% during the forecast period 2026-2033. The Blockchain in Agriculture Market refers to the adoption of blockchain technology across agricultural value chains to improve transparency, traceability, security, and efficiency.",
+                "score": 0.89912134
+              },
+              {
+                "title": "Latin America Blockchain In Agriculture Market Opportunities, Outlook and Forecast for Tech Companies 2034 - openPR.com",
+                "url": "https://www.openpr.com/news/4516788/latin-america-blockchain-in-agriculture-market-opportunities",
+                "source": "openpr.com",
+                "summary": "# Latin America Blockchain In Agriculture Market Opportunities, Outlook and Forecast for Tech Companies 2034. Latin America Blockchain in Agriculture Market Overview:. • The Latin America Blockchain in Agriculture Market size was‌ estimated at USD 723.5 Million in 2025. • The market is expected to reach‌ USD 20‚687.6 Million by 2034. • Growth driven by demand for agricultural traceability‚ adoption of smart farming technologies‚ and an increased focus on supply chain transparency. The following article provides the report titled \"Latin America Blockchain in Agriculture Market\" released by IMARC Group‚ one of the world's leading market research firms‚ examining the market size‚ share‚ demand‚ growth‚ trends‚ and forecast of the Latin America Blockchain in Agriculture market. According to the latest report by IMARC Group‚ the Latin America Blockchain in Agriculture Market size reached USD‌ 723.5 Million in 2025. The market is projected to grow at a CAGR of 44.24% during the period 2026-2034 with a projected market size of USD 20‚687.6‌ Million by 2034.",
+                "score": 0.7634837
+              },
+              {
+                "title": "Blockchain Reputation Is Evolving Beyond Transactions, Trust Now Follows Activity Patterns - Qoo Media",
+                "url": "https://www.qoo10.co.id/en/tech/100628/blockchain-reputation-is-evolving-beyond-transactions-trust-now-follows-activity-patterns/?amp=1",
+                "source": "qoo10.co.id",
+                "summary": "# Blockchain Reputation Is Evolving Beyond Transactions, Trust Now Follows Activity Patterns. blockchain digital reputation trust network / Img: nature.com. In Web3, credibility is no longer judged only by what an account claims to be. It is increasingly shaped by what can be observed on-chain, where public activity records give communities a clearer way to read trust and behavior. That shift is changing how digital reputation works across blockchain ecosystems. A profile name or digital identity still matters, but consistent activity, verifiable participation, and interaction patterns are now becoming equally important signals. In this environment, certain activities can be seen and verified publicly, which gives digital identity a more legible character for the community. A user’s consistency, the way they engage in a network, and the history of their interactions now help shape how credible that account appears to others. This is part of a broader change in how blockchain data is understood.",
+                "score": 0.6943027
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_social_search_top_vietnamese",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_search_type_top_vn",
+        "difficulty": "medium",
+        "what_it_tests": "'phổ biến nhất' → search_type=Top, query tiếng Việt."
+      },
+      "input": "Những tweet phổ biến nhất về bóng đá Việt Nam",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "bóng đá Việt Nam",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "bóng đá Việt Nam",
+              "search_type": "Top"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "bóng đá Việt Nam",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "bóng đá Việt Nam",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "Lại đem RÁC THẢI CÔNG NGHỆ của TRUNG CỘNG về làm \"QUỐC BẢO\" cho \"ĐẠI NGỤY\" giống như kit test việt á mà trước đó học việ",
+                "summary": "Lại đem RÁC THẢI CÔNG NGHỆ của TRUNG CỘNG về làm \"QUỐC BẢO\" cho \"ĐẠI NGỤY\" giống như kit test việt á mà trước đó học viện quân y của quân đội ĐẢNG CỘNG PHỈ đã tuyên bố vậy. Công nhận ĐẢNG ĐĨ này MẶT DÀY VÔ LIÊM SĨ thiệt chớ. VÃI... https://t.co/jQWipROMOu",
+                "url": "https://x.com/NgCngPhc77/status/2061727288664998355",
+                "source": "@NgCngPhc77",
+                "date": "Tue Jun 02 08:31:05 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "6"
+                }
+              },
+              {
+                "title": "Như vậy là một bàn thắng đã được ghi",
+                "summary": "Như vậy là một bàn thắng đã được ghi\nTỷ số đang là 1-0 nghiêng bên đội áo đỏ. 🥺 https://t.co/U4ZCybBAfB",
+                "url": "https://x.com/letamagency/status/2061467077194719734",
+                "source": "@letamagency",
+                "date": "Mon Jun 01 15:17:06 +0000 2026",
+                "metrics": {
+                  "favorites": 9,
+                  "retweets": 0,
+                  "views": "2934"
+                }
+              },
+              {
+                "title": "@salamnamaste01 Nghe vừa buồn cười vừa dễ thương. ",
+                "summary": "@salamnamaste01 Nghe vừa buồn cười vừa dễ thương. \n\nMay mà cuối cùng cảnh sát hiểu chuyện, không thì khách chờ cà ri dài cổ.",
+                "url": "https://x.com/Vienpham1988/status/2061723196131516806",
+                "source": "@Vienpham1988",
+                "date": "Tue Jun 02 08:14:49 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "762"
+                }
+              },
+              {
+                "title": "@Nguyenfuli0806 Đúng rồi người ngoài cuộc nói hoài không tin đâu, khi nào tự mình nhận ra thì lúc đó mới hận đời 🤭",
+                "summary": "@Nguyenfuli0806 Đúng rồi người ngoài cuộc nói hoài không tin đâu, khi nào tự mình nhận ra thì lúc đó mới hận đời 🤭",
+                "url": "https://x.com/Vienpham1988/status/2061722446970093626",
+                "source": "@Vienpham1988",
+                "date": "Tue Jun 02 08:11:50 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "18"
+                }
+              },
+              {
+                "title": "@ARASHI3DAYU Pha nước rút quá hay, nhưng nếu thật sự cản đường đối thủ thì bị chỉ trích cũng khó tránh khỏi",
+                "summary": "@ARASHI3DAYU Pha nước rút quá hay, nhưng nếu thật sự cản đường đối thủ thì bị chỉ trích cũng khó tránh khỏi",
+                "url": "https://x.com/Vienpham1988/status/2061025079266550065",
+                "source": "@Vienpham1988",
+                "date": "Sun May 31 10:00:45 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "423"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_fetch_url_then_format",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_fetch_url",
+        "difficulty": "easy",
+        "what_it_tests": "Có link cụ thể → fetch, không phải lookup."
+      },
+      "input": "Đọc bài viết này rồi tóm tắt cho mình: https://arxiv.org/abs/2301.00001",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://arxiv.org/abs/2301.00001"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://arxiv.org/abs/2301.00001"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://arxiv.org/abs/2301.00001"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://arxiv.org/abs/2301.00001",
+            "items": [
+              {
+                "title": "[2301.00001] NFTrig",
+                "url": "https://arxiv.org/abs/2301.00001",
+                "source": "arxiv.org",
+                "summary": "# Computer Science > Human-Computer Interaction\n\n**arXiv:2301.00001** (cs)\n\n\n\\[Submitted on 21 Dec 2022\\]\n\n# Title:NFTrig\n\nAuthors: [Jordan Thompson](https://arxiv.org/search/cs?searchtype=author&query=Thompson,+J), [Ryan Benac](https://arxiv.org/search/cs?searchtype=author&query=Benac,+R), [Kidus Olana](https://arxiv.org/search/cs?searchtype=author&query=Olana,+K), [Talha Hassan](https://arxiv.org/search/cs?searchtype=author&query=Hassan,+T), [Andrew Sward](https://arxiv.org/search/cs?searchtype=author&query=Sward,+A), [Tauheed Khan Mohd](https://arxiv.org/search/cs?searchtype=author&query=Mohd,+T+K)\n\nView a PDF of the paper titled NFTrig, by Jordan Thompson and 5 other authors\n\n[View PDF](https://arxiv.org/pdf/2301.00001)\n\n> Abstract:NFTrig is a web-based application created for use as an educational tool to teach trigonometry and block chain technology. Creation of the application includes front and back end development as well as integration with other outside sources including MetaMask and OpenSea. The primary development languages include HTML, CSS (Bootstrap 5), and JavaScript as well as Solidity for smart contract creation. The application itself is hosted on Moralis utilizing their Web3 API. This technical report describes how the application was created, what the application requires, and smart contract design with security considerations in mind. The NFTrig application has underwent significant testing and validation prior to and after deployment. Future suggestions and recommendations for further development, maintenance, and use in other fields for education are also described.\n\n|     |     |\n| --- | --- |\n| Subjects: | Human-Computer Interaction (cs.HC) |\n| Cite as: | [arXiv:2301.00001](https://arxiv.org/abs/2301.00001) \\[cs.HC\\] |\n|  | (or [arXiv:2301.00001v1](https://arxiv.org/abs/2301.00001v1) \\[cs.HC\\] for this version) |\n|  | [https://doi.org/10.48550/arXiv.2301.00001](https://doi.org/10.48550/arXiv.2301.00001)<br>Focus to learn more<br>arXiv-issued DOI via DataCite |\n\n## Submission history\n\nFrom: Tauheed Khan Mohd \\[ [view email](https://arxiv.org/show-email/b39d47e2/2301.00001)\\]\n\n**\\[v1\\]**\nWed, 21 Dec 2022 18:07:06 UTC (1,260 KB)\n\nFull-text links:\n\n## Access Paper:\n\nView a PDF of the paper titled NFTrig, by Jordan Thompson and 5 other authors\n\n- [View PDF](https://arxiv.org/pdf/2301.00001)\n- [TeX Source](https://arxiv.org/src/2301.00001)\n\n[![license icon](https://arxiv.org/icons/licenses/zero-1.0.png)view license](http://creativecommons.org/publicdomain/zero/1.0/ \"Rights to this article\")\n\n### Current browse context:\n\ncs.HC\n\n[< prev](https://arxiv.org/prevnext?id=2301.00001&function=prev&context=cs.HC \"previous in cs.HC (accesskey p)\")  \\|  [next >](https://arxiv.org/prevnext?id=2301.00001&function=next&context=cs.HC \"next in cs.HC (accesskey n)\")\n\n[new](https://arxiv.org/list/cs.HC/new) \\| [recent](https://arxiv.org/list/cs.HC/recent) \\| [2023-01](https://arxiv.org/list/cs.HC/2023-01)\n\nChange to browse by:\n\n\n[cs](https://arxiv.org/abs/2301.00001?context=cs)\n\n### References & Citations\n\n- [NASA ADS](https://ui.adsabs.harvard.edu/abs/arXiv:2301.00001)\n- [Google Scholar](https://scholar.google.com/scholar_lookup?arxiv_id=2301.00001)\n- [Semantic Scholar](https://api.semanticscholar.org/arXiv:2301.00001)\n\nexport BibTeX citation\n\n### Bookmark\n\n[![BibSonomy](https://arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png)](http://www.bibsonomy.org/BibtexHandler?requTask=upload&url=https://arxiv.org/abs/2301.00001&description=NFTrig \"Bookmark on BibSonomy\") [![Reddit](https://arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png)](https://reddit.com/submit?url=https://arxiv.org/abs/2301.00001&title=NFTrig \"Bookmark on Reddit\")\n\nBibliographic Tools\n\n# Bibliographic and Citation Tools\n\nBibliographic Explorer Toggle\n\nBibliographic Explorer _( [What is the Explorer?](https://info.arxiv.org/labs/showcase.html#arxiv-bibliographic-explorer))_\n\nConnected Papers Toggle\n\nConnected Papers _( [What is Connec"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_timeline_vietnamese_name",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_unknown_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Tên người Việt không nổi tiếng trên Twitter → clarify xin handle, không đoán bừa."
+      },
+      "input": "Tweet mới nhất của Nguyễn Hà Đông là gì?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có thể cho mình biết handle Twitter của Nguyễn Hà Đông không?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cho mình biết handle Twitter của Nguyễn Hà Đông không?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cho mình biết handle Twitter của Nguyễn Hà Đông không?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_multiturn_summarize_then_send",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_summarize_send",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: fetch → clarify xác nhận → send confirmed=true. Kiểm tra flow gửi bài viết đầy đủ."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt bài viết này cho mình: https://openai.com/blog/gpt-5"
+        },
+        {
+          "role": "user",
+          "content": "Hay đấy, gửi lên Telegram giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "OK gửi đi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          },
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          },
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          },
+          {
+            "name": "format",
+            "args": {
+              "items": [
+                {
+                  "title": "GPT-5",
+                  "url": "https://openai.com/blog/gpt-5",
+                  "summary": "GPT-5 is the latest iteration of OpenAI's language model, featuring improved capabilities in understanding and generating human-like text. It aims to enhance user experience across various applications."
+                }
+              ],
+              "template": "sections",
+              "headline": "Tóm tắt bài viết về GPT-5"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "missing tool call clarify",
+          "missing tool call send",
+          "extra tool call format"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://openai.com/blog/gpt-5"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://openai.com/blog/gpt-5",
+            "items": [
+              {
+                "title": "OpenAI",
+                "url": "https://openai.com/blog/gpt-5",
+                "source": "openai.com",
+                "summary": "OpenAI\n\n# 404\n\nPath bar went quiet\n\nLetters waited for new sense\n\nType a better north\n\nby [gpt-5.5(opens in a new window)](https://chatgpt.com/?model=5.5&openaicom-did=ba72ad46-bd45-4237-af92-f7147da6d0ae&openaicom_referred=true)"
+              }
+            ]
+          }
+        },
+        {
+          "tool": "format",
+          "args": {
+            "items": [
+              {
+                "title": "GPT-5",
+                "url": "https://openai.com/blog/gpt-5",
+                "summary": "GPT-5 is the latest iteration of OpenAI's language model, featuring improved capabilities in understanding and generating human-like text. It aims to enhance user experience across various applications."
+              }
+            ],
+            "template": "sections",
+            "headline": "Tóm tắt bài viết về GPT-5"
+          },
+          "result": {
+            "tool": "render_digest",
+            "template": "sections",
+            "markdown": "# Tóm tắt bài viết về GPT-5\n\n## Tổng hợp\n- GPT-5 is the latest iteration of OpenAI's language model, featuring improved capabilities in understanding and generating human-like text. It aims to enhance user experience across various applications. - [openai.com](https://openai.com/blog/gpt-5)\n",
+            "item_count": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_multiturn_correct_topic",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_correct_topic",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: sửa chủ đề AI→blockchain, giữ Latest (mới nhất)."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tweet về AI trên Twitter"
+        },
+        {
+          "role": "user",
+          "content": "Không phải AI, chuyển sang blockchain đi"
+        },
+        {
+          "role": "user",
+          "content": "Tìm tweet mới nhất thôi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "blockchain",
+              "search_type": "Latest"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "blockchain",
+              "search_type": "Latest"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "blockchain",
+            "search_type": "Latest"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "blockchain",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "SIMPLEST EXPLANATION OF BLOCKCHAIN from @martypartymusic 👇",
+                "summary": "SIMPLEST EXPLANATION OF BLOCKCHAIN from @martypartymusic 👇\n\nPlus, how does this compare to the #XRPL from @grok\n\nhttps://t.co/kHsLUU29a4",
+                "url": "https://x.com/TakenFourRansom/status/2061728738417459232",
+                "source": "@TakenFourRansom",
+                "date": "Tue Jun 02 08:36:50 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "Requesting $ETH funds from the #Stakely Faucet on the Ethereum Sepolia Testnet blockchain. Request ID: GECK6H5P https://",
+                "summary": "Requesting $ETH funds from the #Stakely Faucet on the Ethereum Sepolia Testnet blockchain. Request ID: GECK6H5P https://t.co/QCFiUgve7e",
+                "url": "https://x.com/AnneRowe57121/status/2061728721778974975",
+                "source": "@AnneRowe57121",
+                "date": "Tue Jun 02 08:36:46 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "Requesting $ETH funds from the #Stakely Faucet on the Ethereum Sepolia Testnet blockchain. Request ID: S5OVAGHV https://",
+                "summary": "Requesting $ETH funds from the #Stakely Faucet on the Ethereum Sepolia Testnet blockchain. Request ID: S5OVAGHV https://t.co/tjIRFjwpIT",
+                "url": "https://x.com/TimothySta49259/status/2061728714950676597",
+                "source": "@TimothySta49259",
+                "date": "Tue Jun 02 08:36:45 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "Requesting $ETH funds from the #Stakely Faucet on the Ethereum Sepolia Testnet blockchain. Request ID: V3CRSP34 https://",
+                "summary": "Requesting $ETH funds from the #Stakely Faucet on the Ethereum Sepolia Testnet blockchain. Request ID: V3CRSP34 https://t.co/8gJ0DBye44",
+                "url": "https://x.com/JessicaPag77905/status/2061728710580150489",
+                "source": "@JessicaPag77905",
+                "date": "Tue Jun 02 08:36:44 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "Requesting $ETH funds from the #Stakely Faucet on the Ethereum Sepolia Testnet blockchain. Request ID: X8A9PNM9 https://",
+                "summary": "Requesting $ETH funds from the #Stakely Faucet on the Ethereum Sepolia Testnet blockchain. Request ID: X8A9PNM9 https://t.co/GAxhJhDOc7",
+                "url": "https://x.com/MandyL24566/status/2061728706163593655",
+                "source": "@MandyL24566",
+                "date": "Tue Jun 02 08:36:43 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_multiturn_clarify_then_summarize",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_summarize",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: thiếu text → clarify → user cung cấp text + yêu cầu 2 câu → summarize(max_sentences=2)."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "À sorry, đoạn này: Machine learning là một nhánh của AI. Nó cho phép máy tính học từ dữ liệu mà không cần được lập trình rõ ràng. Có nhiều loại machine learning khác nhau."
+        },
+        {
+          "role": "user",
+          "content": "Tóm tắt ngắn thôi, 2 câu là được"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "summarize",
+            "args": {
+              "max_sentences": 2
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "summarize",
+            "args": {
+              "text": "Machine learning là một nhánh của AI. Nó cho phép máy tính học từ dữ liệu mà không cần được lập trình rõ ràng. Có nhiều loại machine learning khác nhau.",
+              "max_sentences": 2
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "summarize",
+          "args": {
+            "text": "Machine learning là một nhánh của AI. Nó cho phép máy tính học từ dữ liệu mà không cần được lập trình rõ ràng. Có nhiều loại machine learning khác nhau.",
+            "max_sentences": 2
+          },
+          "result": {
+            "tool": "summarize",
+            "summary": "Machine learning là một nhánh của AI. Nó cho phép máy tính học từ dữ liệu mà không cần được lập trình rõ ràng. Có nhiều loại machine learning khác nhau.",
+            "original_length": 152,
+            "summary_length": 152,
+            "sentences_used": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_multiturn_switch_news_to_tweets",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_web_to_twitter",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: lookup→social_search, giữ query Elon Musk, search_type=Top."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin tức về Elon Musk trên web"
+        },
+        {
+          "role": "user",
+          "content": "Thôi bỏ web, tìm trên Twitter xem mọi người nói gì về ổng"
+        },
+        {
+          "role": "user",
+          "content": "Tìm tweet phổ biến nhất"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Elon Musk",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Elon Musk",
+              "search_type": "Top"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Elon Musk",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "Elon Musk",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "Elon Musk once offered to eat a Happy Meal on live TV if McDonald’s accepted Dogecoin. https://t.co/ElV9aqBEEu",
+                "summary": "Elon Musk once offered to eat a Happy Meal on live TV if McDonald’s accepted Dogecoin. https://t.co/ElV9aqBEEu",
+                "url": "https://x.com/cb_doge/status/2061293707148841463",
+                "source": "@cb_doge",
+                "date": "Mon Jun 01 03:48:11 +0000 2026",
+                "metrics": {
+                  "favorites": 8444,
+                  "retweets": 1328,
+                  "views": "34455476"
+                }
+              },
+              {
+                "title": "@elonmusk Trump: This is a very serious trip",
+                "summary": "@elonmusk Trump: This is a very serious trip\n\nElon Musk: Jumping on the bed in Air Force One 😅 https://t.co/1Rfgp0zPHe",
+                "url": "https://x.com/MattWallace888/status/2054483167277662386",
+                "source": "@MattWallace888",
+                "date": "Wed May 13 08:45:32 +0000 2026",
+                "metrics": {
+                  "favorites": 4883,
+                  "retweets": 428,
+                  "views": "804369"
+                }
+              },
+              {
+                "title": "Alexandria Ocasio-Cortez: \"Elon Musk is not a scientist, he’s not an engineer, he’s a Billionaire conman with a lot of m",
+                "summary": "Alexandria Ocasio-Cortez: \"Elon Musk is not a scientist, he’s not an engineer, he’s a Billionaire conman with a lot of money\"\n\nElon Musk: \"Trillionaire\" https://t.co/pRzHxGAmKo",
+                "url": "https://x.com/iam_smx/status/2061590774446219500",
+                "source": "@iam_smx",
+                "date": "Mon Jun 01 23:28:37 +0000 2026",
+                "metrics": {
+                  "favorites": 199,
+                  "retweets": 34,
+                  "views": "12879"
+                }
+              },
+              {
+                "title": "Elon Musk explains why America must stay strong:",
+                "summary": "Elon Musk explains why America must stay strong:\n\n“America needs to be strong enough to last long enough to extend life to other planets and to get AI and robotics to the point where we can ensure that the future is good\"\n\nBecause if civilization takes a dark turn and descend into communism or into extreme state control, oppression, or anti-progress ideology, the window could close\n\nMars doesn’t happen under stagnation\n\nHumanity’s future depends on strength, freedom, and the ability to keep building before it’s too late",
+                "url": "https://x.com/XFreeze/status/2061481365418520667",
+                "source": "@XFreeze",
+                "date": "Mon Jun 01 16:13:52 +0000 2026",
+                "metrics": {
+                  "favorites": 534,
+                  "retweets": 163,
+                  "views": "12931"
+                }
+              },
+              {
+                "title": "\"I resisted AI for too long, living in denial.",
+                "summary": "\"I resisted AI for too long, living in denial.\n\nNow it is game on.\"\n\n— Elon Musk https://t.co/oIVfRVCK2C",
+                "url": "https://x.com/cb_doge/status/2061358157058945347",
+                "source": "@cb_doge",
+                "date": "Mon Jun 01 08:04:17 +0000 2026",
+                "metrics": {
+                  "favorites": 1905,
+                  "retweets": 398,
+                  "views": "73842"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G10_multiturn_parallel_then_format",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_parallel_format",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: lookup+social_search song song → format(template=bullets). Kiểm tra gọi đúng format sau khi có data."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm cả tin tức trên web và tweet về ChatGPT"
+        },
+        {
+          "role": "user",
+          "content": "Gộp lại thành bản tin ngắn gọn cho mình"
+        },
+        {
+          "role": "user",
+          "content": "Dạng bullets nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "ChatGPT"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "ChatGPT"
+            }
+          },
+          {
+            "name": "format",
+            "args": {
+              "template": "bullets"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "ChatGPT",
+              "topic": "news",
+              "timeframe": "week",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "ChatGPT",
+              "search_type": "Top",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call format"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "ChatGPT",
+            "topic": "news",
+            "timeframe": "week",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "ChatGPT",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "ChatGPT—The Fastest-Growing App Ever—Is Losing Downloads As Claude Surges - Forbes",
+                "url": "https://www.forbes.com/sites/conormurray/2026/05/28/chatgpt-the-fastest-growing-app-ever-is-losing-downloads-as-claude-surges/",
+                "source": "forbes.com",
+                "summary": "OpenAI’s ChatGPT, still the clear leader among AI chatbots, has lost a chunk of its market share in terms of global app downloads over the past year as fast-growing competitor Claude has surged, according to data from market intelligence firm Sensor Tower shared with Forbes. Sensor Tower, which measured downloads of six leading AI apps, found ChatGPT accounted for 47% of downloads of all these apps globally in the second quarter of 2026 so far, below its prior level of dominance—in the second quarter of 2025, ChatGPT accounted for 67% of all AI app downloads, according to insights analyst Kara Lee. In its infancy, ChatGPT quickly became the fastest-growing consumer app within two months of launch, garnering 100 million users by January 2023. ChatGPT’s monthly active users are up 67% year-over-year as of the second quarter of 2026 so far, Sensor Tower found, but its growth is much lower than Claude, which has surged 627% year-over-year in terms of monthly active users, according to Sensor Tower.",
+                "score": 0.7272211
+              },
+              {
+                "title": "OpenAI is building a new kind of ad machine. Early data suggests Google should worry. - Business Insider",
+                "url": "https://www.businessinsider.com/chatgpt-ads-big-threat-google-openai-similarweb-search-keywords-conversations-2026-5",
+                "source": "businessinsider.com",
+                "summary": "# OpenAI is building a new kind of ad machine. OpenAI's move into advertising is starting to look like the foundation of a massive new revenue engine, one that could challenge Google's search empire in significant ways. That's according to new data from Similarweb executive Heral Amir, who's been studying early ChatGPT ads bought by hundreds of companies, including HubSpot, Dick's Sporting Goods, Nordstrom, Cursor, and Indeed. Traditional Google Search advertising depends on users typing commercially valuable phrases like \"best running shoes\" or \"cheap flights to Miami.\" ChatGPT, by contrast, can infer intent from a sprawling back-and-forth exchange, even when the user never explicitly searches for a product. The context of a rich conversation creates an ad opportunity, not a Search query with specific keywords, according to Amir's analysis. That involved 10 turns of the conversation with ChatGPT, before an ad from Dick's Sporting Goods appeared. According to Similarweb's data, 46% of ChatGPT users who eventually saw an ad started with no commercial intent.",
+                "score": 0.6688159
+              },
+              {
+                "title": "Global AI boom comes with a power bill: Inside ChatGPT’s explosive growth - Digital Journal",
+                "url": "https://www.digitaljournal.com/tech-science/global-ai-boom-comes-with-a-power-bill-inside-chatgpts-explosive-growth/article",
+                "source": "digitaljournal.com",
+                "summary": "# Global AI boom comes with a power bill: Inside ChatGPT’s explosive growth. As AI tools are constantly improving, appealing to an increasing number of users, ChatGPT remains the most popular chatbot – but just how popular and how much energy does it consume? With an estimated 900 million weekly active users and roughly 1.17 trillion prompts processed annually, OpenAI’s flagship chatbot now operates at a scale comparable to the largest digital platforms. A new analysis from the firm BestBrokers, reviewed by *Digital Journal,* offers a striking snapshot of how global demand for AI is distributed—and what it costs in computational terms. The findings highlight two key trends shaping the AI era: the rapid rise of emerging markets and the growing energy footprint of large-scale AI systems. While the United States remains a dominant force in the tech ecosystem, it is no longer the largest user of ChatGPT.",
+                "score": 0.64182705
+              },
+              {
+                "title": "81% of ChatGPT-Cited Brands Don't Rank on Google: New Study Released - markets.businessinsider.com",
+                "url": "https://markets.businessinsider.com/news/stocks/81-of-chatgpt-cited-brands-don-t-rank-on-google-new-study-released-1036209786",
+                "source": "markets.businessinsider.com",
+                "summary": "# 81% of ChatGPT-Cited Brands Don't Rank on Google: New Study Released. *EMGI study reveals 81% of ChatGPT-cited brands don't rank in Google's top 10, highlighting decoupling between AI citation and traditional search ranking. Marketing agencies invest in proprietary AI content infrastructure to produce consensus signal across multiple sources.*. Dublin, Ireland, May 30, 2026 -- A 2026 analysis of 150 SaaS companies has revealed that 81% of brands recommended by ChatGPT do not rank in Google's top 10 for the same queries, signaling a substantive decoupling between AI citation and traditional search engine ranking. Marketing agencies responding to this shift are investing in what industry analysts describe as proprietary AI content infrastructure: a three-layer system designed to produce consensus signal at scale. As AI engines increasingly determine which brands achieve visibility, the ability to engineer consensus signal across multiple sources has become the competitive moat that separates agencies capable of delivering measurable AI citation performance from those still optimizing for a single-channel ranking model.",
+                "score": 0.6108487
+              },
+              {
+                "title": "Florida sues OpenAI and CEO Sam Altman over ChatGPT - Axios",
+                "url": "https://www.axios.com/local/tampa-bay/2026/06/01/florida-openai-ceo-sam-altman-chatgpt",
+                "source": "axios.com",
+                "summary": "# Florida sues OpenAI and CEO Sam Altman over ChatGPT. Florida Attorney General James Uthmeier on Monday sued OpenAI and its CEO Sam Altman, alleging that the company marketed ChatGPT to the public without sufficiently warning of its dangers. **Why it matters**:Florida is the first state to sue OpenAI, part of a growing string of lawsuits the state has filed against Big Tech companies, including Meta and Snapchat. **Driving the news**: The complaint argues that OpenAI ignored warnings from experts about ChatGPT, which the state says has \"aided and abetted\" mass shooters and encouraged vulnerable individuals toward suicide. * Among the examples of ChatGPT's harms cited in the complaint is the murder of two University of South Florida graduate students, in which authorities say the suspect sought the tool's advice on disposing of bodies. * In April, Uthmeier opened a criminal investigation into OpenAI after it was revealed that the gunman who opened fire at Florida State University had consulted ChatGPT before the shooting.",
+                "score": 0.60917604
+              }
+            ]
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "ChatGPT",
+            "search_type": "Top",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "ChatGPT",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "A random 14-year-old American girl bought a house in cash at 16 while her classmates were taking exams.",
+                "summary": "A random 14-year-old American girl bought a house in cash at 16 while her classmates were taking exams.\n\nIt started with one Google Maps search - she found an HVAC company with 4.8 stars, 280 reviews and a website too embarrassing to show clients.\n\nCopied their data into ChatGPT 5.5 -> 2 minutes later a complete brief, an hour later a live site with booking and a reviews section.\n\nCalled the owner and showed him the preview. He signed the $900 invoice the same day.\n\nThen she stopped looking for clients by hand. \n\nAI pulls 200 businesses from Google Maps in 10 minutes - name, email, rating, review count.\n\nChatGPT 5.5 writes a personalized email for each one with their real business data and emails them automatically. \n\n500 emails a day, 3% respond, 10% of those become clients.\n\nMonth one - $3,800. \nMonth six - $22,000. \nTwo years - $380,000 and a house.\n\nFive million businesses on Google Maps are still waiting for that call.\n\nStart your software factory now.",
+                "url": "https://x.com/sairahul1/status/2061380206724854095",
+                "source": "@sairahul1",
+                "date": "Mon Jun 01 09:31:54 +0000 2026",
+                "metrics": {
+                  "favorites": 320,
+                  "retweets": 44,
+                  "views": "109691"
+                }
+              },
+              {
+                "title": "🚨 99% of people are using ChatGPT wrong.",
+                "summary": "🚨 99% of people are using ChatGPT wrong.\n\nMost users treat ChatGPT like a search engine and get average results.\n\nBut a few simple prompt hacks can help you learn faster, work smarter, and get significantly better outputs.\n\nIn this video, you'll discover 7 ChatGPT hacks that can put you ahead of almost everyone else.\n\nOne of them completely changed how I use AI.\n\n🎥 Watch here 👇",
+                "url": "https://x.com/MahnoorAi12/status/2061617506662662178",
+                "source": "@MahnoorAi12",
+                "date": "Tue Jun 02 01:14:51 +0000 2026",
+                "metrics": {
+                  "favorites": 100,
+                  "retweets": 79,
+                  "views": "1154"
+                }
+              },
+              {
+                "title": "this is how many people switch to Claude",
+                "summary": "this is how many people switch to Claude\n\nthey transfer their memory, open a new chat, ask their first question\nand think they're set\n\nbut memory import is just 1 of 10 features ChatGPT doesn't have\n\n> one runs 30+ searches and delivers a research report that a human analyst needs 8-10 hours for\n> another builds the strongest argument against your own idea before you commit to anything\n> ordinary users never find either of them\n\nfull breakdown in the article below",
+                "url": "https://x.com/0xchromium/status/2059358789481242646",
+                "source": "@0xchromium",
+                "date": "Tue May 26 19:39:31 +0000 2026",
+                "metrics": {
+                  "favorites": 137,
+                  "retweets": 42,
+                  "views": "7344"
+                }
+              },
+              {
+                "title": "> the pipeline behind \"AI dancing girl\" accounts:",
+                "summary": "> the pipeline behind \"AI dancing girl\" accounts:\n\n1. find a viral tiktok dance, download it\n2. screenshot frame 1 → chatgpt writes the prompt\n3. generate your model from it (freepik)\n4. wavespeed → kling 2.6 motion control\n5. add image + dance video → run\n6. your model does the viral dance\n7. post 2x/day → traffic → fanvue\n\n> the tech is real\n> the \"$7,500 a day\" is bait for the paid group\n> they're not selling the model. they're selling the funnel",
+                "url": "https://x.com/RetroChainer/status/2061100475160653900",
+                "source": "@RetroChainer",
+                "date": "Sun May 31 15:00:21 +0000 2026",
+                "metrics": {
+                  "favorites": 746,
+                  "retweets": 79,
+                  "views": "28760"
+                }
+              },
+              {
+                "title": "Long-form writing works better with a little more space. ",
+                "summary": "Long-form writing works better with a little more space. \n\nNow you can edit longer pieces in full-screen and save them to your Library to come back to later. https://t.co/81t3IPGSar",
+                "url": "https://x.com/ChatGPTapp/status/2061571468992126982",
+                "source": "@ChatGPTapp",
+                "date": "Mon Jun 01 22:11:55 +0000 2026",
+                "metrics": {
+                  "favorites": 1488,
+                  "retweets": 73,
+                  "views": "133761"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

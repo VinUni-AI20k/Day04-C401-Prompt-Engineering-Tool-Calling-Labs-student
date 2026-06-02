@@ -1,1 +1,7 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_before,metric_after,run_file
+v1,team,system_prompt.md,v1+peb1c8179815b+t6cdb53d5d7b8,eb1c8179815b,6cdb53d5d7b8,Sửa lại prompt từ đầu,,0.65,runs/v1_B_base_openrouter_20260602T145713396666.json
+v2,team,system_prompt.md+tools.yaml,v2+pa0ce08d3c6d1+tceabfb587f7b,a0ce08d3c6d1,ceabfb587f7b,Sửa prompt + tools.yaml,Chạy lại với tools.yaml đã sửa,0.65,0.85,runs/v2_B_base_openrouter_20260602T151723334358.json
+v3,team,system_prompt.md,v3+p7aa0bed02e40+t6cdb53d5d7b8,7aa0bed02e40,6cdb53d5d7b8,Sửa prompt giữ nguyên tools,Mong cải thiện từ 0.85 lên ~0.95+,0.85,0.95,runs/v3_B_base_openrouter_20260602T151820652586.json
+v4,team,tools.yaml+eval_group.json,v4+p7aa0bed02e40+t24d2a5fc995a,7aa0bed02e40,24d2a5fc995a,Thêm tool summarize + 10 eval case group,Chạy eval group với tool mới,,0.80,runs/v4_B_group_openrouter_20260602T153719292845.json
+v5,team,system_prompt.md,v5+p3b673f965231+t24d2a5fc995a,p3b673f965231,24d2a5fc995a,Sửa prompt cho send flow + parallel format,Mong G06 và G10 pass,0.80,0.80,runs/v5_B_group_openrouter_20260602T154250671110.json
+v6,team,system_prompt.md,v6+pc5a92b29e2b9+t24d2a5fc995a,c5a92b29e2b9,24d2a5fc995a,Sửa prompt bắt buộc clarify+send cùng lúc + thêm summarize tool description,Base 20/20, Group 9/10 (G10 pass),0.80,0.90,runs/v6_B_group_openrouter_20260602T154628164545.json

@@ -27,6 +27,8 @@ Nhiệm vụ bắt buộc:
 - Nộp run JSON, transcript JSON, report.
 - Bắt buộc có UI chạy được bằng Streamlit hoặc Vercel.
 - Hoàn thành `artifacts/REPORT.md`: Phần A (giới thiệu agent: tool gì, làm được gì, câu hỏi mẫu) xong **trước 16:30** làm tài liệu phụ trợ khi demo; Phần B (chi tiết) hoàn thiện sau để nộp bài.
+- Bắt buộc có UI chạy được bằng Streamlit hoặc Vercel.
+- Hoàn thành `artifacts/REPORT.md`: Phần A (giới thiệu agent: tool gì, làm được gì, câu hỏi mẫu) xong **trước 16:30** làm tài liệu phụ trợ khi demo; Phần B (chi tiết) hoàn thiện sau để nộp bài.
 
 Bonus:
 
@@ -34,6 +36,8 @@ Bonus:
 - Extra tools: `policy`, `papers`, `paper_text`.
 
 
+
+**Điểm thưởng (bonus point):** team nào làm **CẢ HAI** — dựng được UI **và** tự viết thêm hơn 3 tool mới (ngoài các tool có sẵn, kèm `TOOL.md` + đăng ký trong `tools/__init__.py` + `tools.yaml`) — sẽ được cộng điểm thưởng.
 **Điểm thưởng (bonus point):** team nào làm **CẢ HAI** — dựng được UI **và** tự viết thêm hơn 3 tool mới (ngoài các tool có sẵn, kèm `TOOL.md` + đăng ký trong `tools/__init__.py` + `tools.yaml`) — sẽ được cộng điểm thưởng.
 
 ## Folder Map
@@ -48,6 +52,7 @@ starter_v0/
     system_prompt.md          # student edits
     tools.yaml                # student edits
     version_log.csv           # student fills
+    REPORT.md                 # report: Phần A debate poster + Phần B chi tiết
     REPORT.md                 # report: Phần A debate poster + Phần B chi tiết
   data/
     eval_base.json            # fixed base eval, do not edit the cases
@@ -66,6 +71,7 @@ starter_v0/
 
 ## Tool Tracks
 
+Phần mô tả dưới đây tóm tắt mỗi tool *làm gì*. Việc xác định *khi nào dùng* tool nào là phần nhóm tự định nghĩa trong prompt và tool declaration.
 Phần mô tả dưới đây tóm tắt mỗi tool *làm gì*. Việc xác định *khi nào dùng* tool nào là phần nhóm tự định nghĩa trong prompt và tool declaration.
 
 Core tools:
@@ -279,6 +285,45 @@ Hoàn thành `artifacts/REPORT.md`. File này có 2 phần với deadline khác 
 
 **Format Phần A:** nộp tối thiểu bản markdown trong `REPORT.md`. Khuyến khích biến Phần A thành **poster HTML/SVG 1 trang** để show trực tiếp cho team cùng zone (ví dụ `artifacts/poster.html` hoặc `artifacts/poster.svg`) — cùng nội dung, dễ nhìn hơn. Poster HTML/SVG là tùy chọn, không thay thế bản markdown.
 
+## Deploy nhanh để team khác dùng thử (khuyến nghị: Cloudflare Tunnel)
+
+Để team cùng zone tự thử agent trong Team showdown, expose UI đang chạy local ra một link public. Cách nhanh nhất, không cần đăng ký domain hay deploy lên cloud, là **Cloudflare Tunnel** (`cloudflared`).
+
+1. Chạy UI local trước (ví dụ Streamlit mặc định cổng `8501`):
+
+   ```bash
+   streamlit run app.py            # → http://localhost:8501
+   ```
+
+2. Cài `cloudflared`:
+
+   ```bash
+   brew install cloudflared                          # macOS
+   winget install --id Cloudflare.cloudflared        # Windows (hoặc: scoop install cloudflared)
+   # Linux: xem https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/
+   ```
+
+   Windows: nếu báo `cloudflared not recognized`, mở terminal mới rồi chạy lại.
+
+3. Mở tunnel trỏ vào cổng UI — lệnh trả về ngay một URL `https://<random>.trycloudflare.com`:
+
+   ```bash
+   cloudflared tunnel --url http://localhost:8501
+   ```
+
+4. Copy URL đó, dán vào `REPORT.md` Phần A (mục "Link dùng thử") để team khác mở thử.
+
+Lưu ý: link `trycloudflare.com` là tạm thời, sống theo phiên `cloudflared` (tắt lệnh là mất). Giữ lệnh chạy trong suốt buổi showdown. Nếu team deploy hẳn lên Vercel/Streamlit Cloud thì dùng link đó thay cho tunnel.
+
+## Step 6 — Report + Debate Poster
+
+Hoàn thành `artifacts/REPORT.md`. File này có 2 phần với deadline khác nhau:
+
+- **Phần A — Giới thiệu agent** (ngắn gọn 1 trang) — **phải xong trước 16:30**, làm tài liệu phụ trợ để team khác hiểu nhanh khi demo. Chỉ cần: (1) agent làm được gì, (2) agent có những tool gì và mỗi tool làm được gì, (3) vài câu hỏi mẫu để team khác tự thử.
+- **Phần B — Chi tiết / Bằng chứng** — **có thể hoàn thiện sau Team showdown để nộp bài**. Bảng đầy đủ v0–v3, failure analysis, eval cases, live chat, reflection — dựa trên log thật (run JSON, version_log).
+
+**Format Phần A:** nộp tối thiểu bản markdown trong `REPORT.md`. Khuyến khích biến Phần A thành **poster HTML/SVG 1 trang** để show trực tiếp cho team cùng zone (ví dụ `artifacts/poster.html` hoặc `artifacts/poster.svg`) — cùng nội dung, dễ nhìn hơn. Poster HTML/SVG là tùy chọn, không thay thế bản markdown.
+
 ## Submit
 
 Submit `starter_v0/` with:
@@ -286,6 +331,8 @@ Submit `starter_v0/` with:
 - `artifacts/system_prompt.md`
 - `artifacts/tools.yaml`
 - `artifacts/version_log.csv` with at least `v0`, `v1`, `v2`, `v3`
+- `artifacts/REPORT.md` (Phần A debate poster — xong trước 16:30; Phần B chi tiết — nộp sau)
+- `artifacts/poster.html` hoặc `artifacts/poster.svg` nếu team làm poster để debate (tùy chọn)
 - `artifacts/REPORT.md` (Phần A debate poster — xong trước 16:30; Phần B chi tiết — nộp sau)
 - `artifacts/poster.html` hoặc `artifacts/poster.svg` nếu team làm poster để debate (tùy chọn)
 - `data/eval_group.json` with at least 5 team cases
@@ -296,6 +343,7 @@ Submit `starter_v0/` with:
 
 Do not submit `.env` or API keys.
 
+## Checkpoint 4h
 ## Checkpoint 4h
 
 - 15:00 - Run baseline + build UI
