@@ -218,3 +218,24 @@ tools:
           default: 8000
           description: "Maximum characters to return."
       required: [arxiv_url]
+
+  - name: weather_by_region
+    description: "Get current weather and short-term forecasts for a specified location. Uses clarify if the location is missing."
+    parameters:
+      type: object
+      properties:
+        region:
+          type: string
+          default: ""
+          description: "The specific location/region (e.g., city name, state, or country) to get weather and forecast for."
+      required: [region]
+
+  - name: trend_analyzer
+    description: "Analyze posts or articles to identify trending topics, keywords, and sentiment. Can process data collected from social_search, timeline, lookup, or fetch."
+    parameters:
+      type: object
+      properties:
+        data:
+          description: "The collected data payload (from lookup, fetch, timeline, or social_search) to analyze."
+      required: [data]
+
