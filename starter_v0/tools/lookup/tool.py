@@ -5,7 +5,7 @@ from typing import Any
 
 import requests
 
-from tools._shared import TIMEOUT, domain, err
+from tools._shared import TIMEOUT, domain, err, sanitize_tool_output
 
 
 def web_search(query: str = "", topic: str = "general", timeframe: str | None = "week", max_results: int = 5) -> dict[str, Any]:
@@ -28,10 +28,11 @@ def web_search(query: str = "", topic: str = "general", timeframe: str | None = 
             "title": item.get("title"),
             "url": item.get("url"),
             "source": domain(item.get("url", "")),
-            "summary": item.get("content"),
+            "summary": sanitize_tool_output(item.get("content", "")),
             "score": item.get("score"),
         } for item in data.get("results", [])]
         return {"tool": "web_search", "query": query, "topic": topic, "timeframe": timeframe, "items": items}
     except Exception as exc:
         return err("web_search", exc)
+
 
