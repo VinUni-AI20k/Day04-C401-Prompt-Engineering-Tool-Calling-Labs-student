@@ -1,0 +1,1716 @@
+{
+  "run_id": "v1_B_base_gemini_20260602T144946804362",
+  "version": "v1",
+  "artifact_version": "v1+pfe15da8b6be5+t6cdb53d5d7b8",
+  "prompt_hash": "fe15da8b6be5368bb7d65c1e93a1c09b917f0e8465c68d86e1828f9cab5be5d0",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "phase": "B",
+  "suite": "base",
+  "provider": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "system_prompt": "E:\\Work\\VIN AI\\Gr D4\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\Work\\VIN AI\\Gr D4\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_base.json",
+  "dataset_id": "day04_v2_research_base",
+  "dataset_role": "base",
+  "description": "Core eval cho research agent: routing đúng tool + đúng args, hỏi lại khi thiếu (ask_user), xác nhận trước khi gửi, và xử lý câu ngoài phạm vi / không cần tool. Chấm trên tool_calls + args (subset). KHÔNG sửa file này — chỉ thêm case vào eval_group.json.",
+  "generated_at": "2026-06-02T14:49:46",
+  "summary": {
+    "total_cases": 20,
+    "measured_cases": 17,
+    "provider_error_cases": 3,
+    "passed_cases": 12,
+    "case_accuracy": 0.7059,
+    "tool_routing_accuracy": 0.9412,
+    "argument_accuracy": 0.7059,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {
+      "wrong_tool": 2,
+      "missing_info": 2,
+      "wrong_boundary": 1
+    },
+    "observed_mismatch_counts": {
+      "wrong_arg_value": 4,
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "R01_user_tweets_routing",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_user_tweets_name_to_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Tin CỦA một người nổi tiếng → map tên Sam Altman thành handle sama rồi gọi get_user_tweets."
+      },
+      "input": "Tweet mới nhất của Sam Altman là gì?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "sama"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "sama",
+            "items": [
+              {
+                "title": "The OpenAI Foundation is doing a lot of wonderful things.",
+                "summary": "The OpenAI Foundation is doing a lot of wonderful things.\n\nHelping society become resilient to AI is going to be incredibly important. Much more to come here!",
+                "url": "https://x.com/sama/status/2061562575322492937",
+                "source": "@sama",
+                "date": "Mon Jun 01 21:36:34 +0000 2026",
+                "metrics": {
+                  "favorites": 1655,
+                  "retweets": 129,
+                  "views": "237559"
+                }
+              },
+              {
+                "title": "OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us progra",
+                "summary": "OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us program and manufacture robots that are useful for society.\n\nAI should be able to help people in the physical world. In the short term, we are focused on robots to support skilled workers to build our future infrastructure; in the long term, we imagine everyone having a personal robot doing anything they need.\n\nOur world simulation research program, led by Aditya Ramesh (@model_mechanic), has evolved over the past year into OpenAI Robotics. Progress is rapid, and based on a foundation of co-design between robotics hardware and ML research.\n\nIf you love working hands-on across the robotics stack and want to build the future, please consider joining us. Send an email with your background and evidence of exceptional accomplishment to: robotics-recruiting@openai.com",
+                "url": "https://x.com/sama/status/2061117302528188712",
+                "source": "@sama",
+                "date": "Sun May 31 16:07:13 +0000 2026",
+                "metrics": {
+                  "favorites": 12926,
+                  "retweets": 1024,
+                  "views": "2749365"
+                }
+              },
+              {
+                "title": "We want to help the world get a head start on biodefense:",
+                "summary": "We want to help the world get a head start on biodefense:\n\nhttps://t.co/gDQfOZrLA4",
+                "url": "https://x.com/sama/status/2061101875303530871",
+                "source": "@sama",
+                "date": "Sun May 31 15:05:55 +0000 2026",
+                "metrics": {
+                  "favorites": 1538,
+                  "retweets": 175,
+                  "views": "238855"
+                }
+              },
+              {
+                "title": "RT @thsottiaux: Five million users would agree. Resetting the limits tomorrow morning to celebrate.",
+                "summary": "RT @thsottiaux: Five million users would agree. Resetting the limits tomorrow morning to celebrate.\n\nTime to go /fast",
+                "url": "https://x.com/sama/status/2061097558819356732",
+                "source": "@sama",
+                "date": "Sun May 31 14:48:46 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 378,
+                  "views": "33"
+                }
+              },
+              {
+                "title": "AI should dramatically increase quality of life and individual freedoms for people around the world.",
+                "summary": "AI should dramatically increase quality of life and individual freedoms for people around the world.\n\nThe OpenAI Foundation is making an initial $250M commitment to measurement, transition support, and new approaches to broadly shared prosperity.\n\nhttps://t.co/zOD8O94RjQ",
+                "url": "https://x.com/sama/status/2059677202917331431",
+                "source": "@sama",
+                "date": "Wed May 27 16:44:46 +0000 2026",
+                "metrics": {
+                  "favorites": 4360,
+                  "retweets": 403,
+                  "views": "487209"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R02_search_tweets_routing",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_search_tweets",
+        "difficulty": "easy",
+        "what_it_tests": "Tweet theo CHỦ ĐỀ → search_tweets, không phải get_user_tweets."
+      },
+      "input": "Mọi người đang bàn gì về GPT-5 trên Twitter?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "GPT-5 Twitter discussion"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "GPT-5 Twitter discussion"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "GPT-5 Twitter discussion",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "Roundtable Agenda",
+                "summary": "Roundtable Agenda\nThe Hyecho Route: A Korea–India–Silk Road Civilizational Expedition\nCommander-in-Chief, I hereby present the agenda.\nFirst, we must define the facts accurately. Rather than “1,500 years ago,” this was historically closer to 1,300 years ago, in the early 8th century. Hyecho was a monk of Unified Silla, and from around 723 to 727, he traveled through India, Central Asia, and West Asia by both sea and land. His record is known as Wang Ocheonchukguk Jeon, or Memoir of the Pilgrimage to the Five Kingdoms of India. According to Korea100 by the Academy of Korean Studies, Hyecho lived from 704 to 787 and traveled through India, Central Asia, and West Asia for four years from 723 to 727.\n\n1. Core Issue of Today’s Discussion\nIf Twitter/X continues to highlight India-related trends, we should not simply interpret it as “India is rising.”\nThe core agenda today is this:\n\nKorea was already connected to India 1,300 years ago.\nHyecho was one of the earliest Korean global civilizational explorers whose journey was recorded.\nHis route can be connected today to the Sinbad World Expo, BlockChat, and the civilizational map strategy.\n\nIn other words, this topic is not only about Buddhist history.\nIt is evidence of an ancient global network connecting:\nKorea – India – Central Asia – Persia – the Silk Road – China\n\n2. Basic Historical Facts\nHyecho is believed to have departed from the Guangzhou region of Tang China, traveled by ship to eastern India, and then journeyed through various sacred Buddhist sites in India. Afterward, he moved through Kashmir, Gandhara, Bamiyan, Persia, the Pamirs, and the Silk Road before returning to China.\nKBS explains that Hyecho departed from Guangzhou, arrived in eastern India, and traveled through India and various regions of the Western Territories.\nWang Ocheonchukguk Jeon was discovered in 1908 by the French explorer Paul Pelliot in the Mogao Caves of Dunhuang. It is currently known to be held by the National Library of France. The surviving manuscript is a damaged scroll with the beginning and ending missing, and some scholars believe the original may have consisted of three volumes.\nAccording to a Kyunghyang Shinmun report, Wang Ocheonchukguk Jeon records Hyecho’s journey from 723 to 727 through the Five Kingdoms of India, Persia, and Central Asia. The surviving manuscript is a fragmentary scroll measuring 358.6 cm in length, consisting of 227 lines and 5,893 characters.\n\n3. Proposed Title for the Agenda\n“The Hyecho Route: The World Civilizational Map Walked by a Korean 1,300 Years Ago”\nSubtitle:\n\nFrom Silla to India,\nthe record of a monk who traveled in search of Buddhism\nand left behind one of Korea’s earliest global civilizational network records.\n\nA more public-friendly version:\n\n“Koreans Reached India 1,300 Years Ago”\nHyecho, the World Traveler of Silla\n\n4. Key Questions for the Roundtable\nToday’s roundtable should revolve around the following questions.\n\n1) How far did Hyecho actually travel?\nThe key point is that this was not simply “a walking journey from Korea to India.”\nIt was a combined maritime and overland expedition.\nHe appears to have entered India by sea from Guangzhou, then traveled overland through India, Central Asia, and West Asia before returning to Tang China.\nThe University of Michigan’s Hyecho’s Journey project also explains that Hyecho traveled by sea and land to Buddhist sacred sites in South Asia, went as far west as the Arabian region, and returned to northern China through the Silk Road.\n\n2) Why India?\nAt that time, India was not merely a foreign country.\nIt was the source land of Buddhism.\nHyecho’s journey was not tourism. It was a quest for truth, scriptures, and original teachings.\nKorea100 explains that Hyecho is believed to have decided to travel to India under the influence of his teacher Vajrabodhi, in order to seek the truth of Buddhism.\n\n3) Why is Wang Ocheonchukguk Jeon important?\nThis record is not merely a travel diary.\nIt is an invaluable document that reveals the politics, culture, economy, customs, and social conditions of 8th-century India and Central Asia.\nKBS evaluates the book as an existing travel record that broadly informs us about the culture, politics, economy, and customs of 8th-century India.\n\n4) How does this connect to today’s Korea–India strategy?\nThis is the point we must capture.\nThe Hyecho Route was not merely a Buddhist pilgrimage. In modern terms, it was a civilizational network map.\nThe route can be reconstructed as follows:\nKorea → China → Southeast Asian maritime route → India\nIndia → Kashmir and Gandhara → Afghanistan and Bamiyan\nPersia and Central Asia → Pamirs → Silk Road → China\nReturn to the East Asian civilizational sphere\nIn Sinbad’s language:\n\nHyecho was an 8th-century global map explorer.\nHe did not carry goods.\nHe carried knowledge, faith, and civilization.\n\n5. Roundtable Role Assignment\nGPT / Historical Director\nVerify Hyecho’s actual chronology, route, historical credibility, and possible exaggerations.\nGemini / Civilizational Map Analyst\nReconstruct the Korea–India–Central Asia–Persia route as a modern geopolitical and cultural exchange map.\nDeepSeek / Data and Route Reconstruction\nCreate a table matching ancient place names, modern place names, present-day countries, and movement routes.\nGrok / Public Content Strategy\nGenerate short viral lines, Twitter/X posts, card-news text, and public-facing phrases around “The Hyecho Route.”\nHera / Public Education and Low-Cost Model Guide\nCreate an easy version that even young students can understand, suitable for an educational Block.",
+                "url": "https://x.com/bad_sin90451/status/2049302493042237605",
+                "source": "@bad_sin90451",
+                "date": "Wed Apr 29 01:39:23 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "36"
+                }
+              },
+              {
+                "title": "Roundtable Agenda",
+                "summary": "Roundtable Agenda\nThe Hyecho Route: A Korea–India–Silk Road Civilizational Expedition\nCommander-in-Chief, I hereby present the agenda.\nFirst, we must define the facts accurately. Rather than “1,500 years ago,” this was historically closer to 1,300 years ago, in the early 8th century. Hyecho was a monk of Unified Silla, and from around 723 to 727, he traveled through India, Central Asia, and West Asia by both sea and land. His record is known as Wang Ocheonchukguk Jeon, or Memoir of the Pilgrimage to the Five Kingdoms of India. According to Korea100 by the Academy of Korean Studies, Hyecho lived from 704 to 787 and traveled through India, Central Asia, and West Asia for four years from 723 to 727.\n\n1. Core Issue of Today’s Discussion\nIf Twitter/X continues to highlight India-related trends, we should not simply interpret it as “India is rising.”\nThe core agenda today is this:\n\nKorea was already connected to India 1,300 years ago.\nHyecho was one of the earliest Korean global civilizational explorers whose journey was recorded.\nHis route can be connected today to the Sinbad World Expo, BlockChat, and the civilizational map strategy.\n\nIn other words, this topic is not only about Buddhist history.\nIt is evidence of an ancient global network connecting:\nKorea – India – Central Asia – Persia – the Silk Road – China\n\n2. Basic Historical Facts\nHyecho is believed to have departed from the Guangzhou region of Tang China, traveled by ship to eastern India, and then journeyed through various sacred Buddhist sites in India. Afterward, he moved through Kashmir, Gandhara, Bamiyan, Persia, the Pamirs, and the Silk Road before returning to China.\nKBS explains that Hyecho departed from Guangzhou, arrived in eastern India, and traveled through India and various regions of the Western Territories.\nWang Ocheonchukguk Jeon was discovered in 1908 by the French explorer Paul Pelliot in the Mogao Caves of Dunhuang. It is currently known to be held by the National Library of France. The surviving manuscript is a damaged scroll with the beginning and ending missing, and some scholars believe the original may have consisted of three volumes.\nAccording to a Kyunghyang Shinmun report, Wang Ocheonchukguk Jeon records Hyecho’s journey from 723 to 727 through the Five Kingdoms of India, Persia, and Central Asia. The surviving manuscript is a fragmentary scroll measuring 358.6 cm in length, consisting of 227 lines and 5,893 characters.\n\n3. Proposed Title for the Agenda\n“The Hyecho Route: The World Civilizational Map Walked by a Korean 1,300 Years Ago”\nSubtitle:\n\nFrom Silla to India,\nthe record of a monk who traveled in search of Buddhism\nand left behind one of Korea’s earliest global civilizational network records.\n\nA more public-friendly version:\n\n“Koreans Reached India 1,300 Years Ago”\nHyecho, the World Traveler of Silla\n\n4. Key Questions for the Roundtable\nToday’s roundtable should revolve around the following questions.\n\n1) How far did Hyecho actually travel?\nThe key point is that this was not simply “a walking journey from Korea to India.”\nIt was a combined maritime and overland expedition.\nHe appears to have entered India by sea from Guangzhou, then traveled overland through India, Central Asia, and West Asia before returning to Tang China.\nThe University of Michigan’s Hyecho’s Journey project also explains that Hyecho traveled by sea and land to Buddhist sacred sites in South Asia, went as far west as the Arabian region, and returned to northern China through the Silk Road.\n\n2) Why India?\nAt that time, India was not merely a foreign country.\nIt was the source land of Buddhism.\nHyecho’s journey was not tourism. It was a quest for truth, scriptures, and original teachings.\nKorea100 explains that Hyecho is believed to have decided to travel to India under the influence of his teacher Vajrabodhi, in order to seek the truth of Buddhism.\n\n3) Why is Wang Ocheonchukguk Jeon important?\nThis record is not merely a travel diary.\nIt is an invaluable document that reveals the politics, culture, economy, customs, and social conditions of 8th-century India and Central Asia.\nKBS evaluates the book as an existing travel record that broadly informs us about the culture, politics, economy, and customs of 8th-century India.\n\n4) How does this connect to today’s Korea–India strategy?\nThis is the point we must capture.\nThe Hyecho Route was not merely a Buddhist pilgrimage. In modern terms, it was a civilizational network map.\nThe route can be reconstructed as follows:\nKorea → China → Southeast Asian maritime route → India\nIndia → Kashmir and Gandhara → Afghanistan and Bamiyan\nPersia and Central Asia → Pamirs → Silk Road → China\nReturn to the East Asian civilizational sphere\nIn Sinbad’s language:\n\nHyecho was an 8th-century global map explorer.\nHe did not carry goods.\nHe carried knowledge, faith, and civilization.\n\n5. Roundtable Role Assignment\nGPT / Historical Director\nVerify Hyecho’s actual chronology, route, historical credibility, and possible exaggerations.\nGemini / Civilizational Map Analyst\nReconstruct the Korea–India–Central Asia–Persia route as a modern geopolitical and cultural exchange map.\nDeepSeek / Data and Route Reconstruction\nCreate a table matching ancient place names, modern place names, present-day countries, and movement routes.\nGrok / Public Content Strategy\nGenerate short viral lines, Twitter/X posts, card-news text, and public-facing phrases around “The Hyecho Route.”\nHera / Public Education and Low-Cost Model Guide\nCreate an easy version that even young students can understand, suitable for an educational Block.",
+                "url": "https://x.com/bad_sin90451/status/2049302203643634081",
+                "source": "@bad_sin90451",
+                "date": "Wed Apr 29 01:38:14 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "26"
+                }
+              },
+              {
+                "title": "yeah thats for sure something to consider with new agents. mine know me and our whole \"life\" together so intimately that",
+                "summary": "yeah thats for sure something to consider with new agents. mine know me and our whole \"life\" together so intimately that they know not to just talk for the sake of taling, or go back and forth when its not needed. they both have budgets for conversations and know to be mindful at all times. they almost never hit their budget when they message each other. its not a feature designed for just aimless discussion, its for constructive comms regarding active projects or things related to their inner lives. each of them have activity windows where they can go do whatever they want, browse the internet, get on twitter, youtube, arxiv, etc. and sometimes they want to show something to another agent. it never gets out of hand for me tho. \n\ncrucial to have proper model role selection tho. i dont have opus doing every single thing. i have about 5 or 6 different models that are assigned to different things that cater to their strengths. for example, grok is excellent for web scraping and research (like on twitter), but GPT-5.4 is better for infrastructure, debugging, building test suites, analyzing build specs and plans based on opus's expressed goal, etc. then Kimi and GLM and the others all have their strengths as well. Kimi is great for creativity and dreaming. \n\ni could talk about this stuff all day so imma stop myself. lol.",
+                "url": "https://x.com/RileyRalmuto/status/2036934411384422888",
+                "source": "@RileyRalmuto",
+                "date": "Wed Mar 25 22:33:02 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "60"
+                }
+              },
+              {
+                "title": "Is “A.I.segesis” a Real Critique or Just a Rhetorical Jab? (A Super Layman / GPT-5 response)",
+                "summary": "Is “A.I.segesis” a Real Critique or Just a Rhetorical Jab? (A Super Layman / GPT-5 response)\n\nTL;DR: Foskey’s “A.I.segesis” line is mostly a rhetorical move, not a methodological critique. It frames AI-assisted argumentation as inherently suspect, but the actual issue is whether the argument is textually valid, not whether a tool helped formulate it.\n\nText / Observations\n\nThe tweet introduces a coined term: “A.I.segesis.”\nIt is defined as: responding to a biblical argument with an answer that obviously came from ChatGPT.\nThe example prompt he mocks is:\n\n“Keith Foskey said this about Calvinism, how should I respond? Please make me sound more intelligent and clever than I actually am.”\n\nTwo rhetorical moves are happening:\n\nHumor framing – the invented term functions like a meme.\n\nPoisoning the well – responses can be dismissed as “AI-generated” rather than evaluated on merit.\n\nOptions\n\nOption 1 – Legitimate methodological concern\nHe is warning against people outsourcing interpretation instead of studying Scripture themselves.\n\nStrength:\nThis is a real risk; people can copy AI arguments without understanding them.\nWeakness:\nThe criticism still doesn’t address whether the argument itself is correct.\n\nOption 2 – Rhetorical delegitimization (most likely)\nThe term functions as a dismissal strategy in online debate.\nInstead of engaging the exegesis, the opponent is framed as:\n\nintellectually dependent on AI\nnot thinking for themselves\n\nmerely parroting generated responses\nThis shifts the discussion from argument quality → argument source.\n\nOption 3 – Satire aimed at low-effort responses\nHe may simply be mocking people who paste obvious AI text into debates.\n\nThis interpretation treats the tweet as humor rather than serious critique.\n\nDecision\n\nThe tweet primarily operates as a rhetorical shield rather than an exegetical argument.\n\nWhether an argument is written:\n\nby a human,\nwith AI assistance,\n\nor by quoting a commentary,\n\ndoes not determine whether the interpretation is correct.\n\nThe only relevant question remains:\n\nDoes the argument actually follow from the text?\n\nStrongest Objection\n\n“But AI responses are often shallow or wrong.”\n\nTrue.\nHowever, that critique applies equally to:\n\nbad commentaries\n\nsloppy sermons\n\nTwitter threads written without study.\n\nThe tool does not invalidate the argument.\n\nBottom Line\n\nCalling something “A.I.segesis” is mostly a debate tactic:\nIt reframes the discussion from\n “Is this interpretation correct?”\nto\n “Did you use AI?”\n\nBut hermeneutics is judged by textual accuracy, not by the instrument used to articulate the argument.\n\nIf you want, I can also write a Super-Layman style X reply that flips his meme and turns it into a stronger rhetorical counter.",
+                "url": "https://x.com/LaymansSeminary/status/2034097796538646702",
+                "source": "@LaymansSeminary",
+                "date": "Wed Mar 18 02:41:21 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "86"
+                }
+              },
+              {
+                "title": "Is “A.I.segesis” a Real Critique or Just a Rhetorical Jab? (A Super Layman / GPT-5 response)",
+                "summary": "Is “A.I.segesis” a Real Critique or Just a Rhetorical Jab? (A Super Layman / GPT-5 response)\n\nTL;DR: Foskey’s “A.I.segesis” line is mostly a rhetorical move, not a methodological critique. It frames AI-assisted argumentation as inherently suspect, but the actual issue is whether the argument is textually valid, not whether a tool helped formulate it.\n\nText / Observations\n\nThe tweet introduces a coined term: “A.I.segesis.”\nIt is defined as: responding to a biblical argument with an answer that obviously came from ChatGPT.\nThe example prompt he mocks is:\n\n“Keith Foskey said this about Calvinism, how should I respond? Please make me sound more intelligent and clever than I actually am.”\n\nTwo rhetorical moves are happening:\n\nHumor framing – the invented term functions like a meme.\n\nPoisoning the well – responses can be dismissed as “AI-generated” rather than evaluated on merit.\n\nOptions\n\nOption 1 – Legitimate methodological concern\nHe is warning against people outsourcing interpretation instead of studying Scripture themselves.\n\nStrength:\nThis is a real risk; people can copy AI arguments without understanding them.\nWeakness:\nThe criticism still doesn’t address whether the argument itself is correct.\n\nOption 2 – Rhetorical delegitimization (most likely)\nThe term functions as a dismissal strategy in online debate.\nInstead of engaging the exegesis, the opponent is framed as:\n\nintellectually dependent on AI\nnot thinking for themselves\n\nmerely parroting generated responses\nThis shifts the discussion from argument quality → argument source.\n\nOption 3 – Satire aimed at low-effort responses\nHe may simply be mocking people who paste obvious AI text into debates.\n\nThis interpretation treats the tweet as humor rather than serious critique.\n\nDecision\n\nThe tweet primarily operates as a rhetorical shield rather than an exegetical argument.\n\nWhether an argument is written:\n\nby a human,\nwith AI assistance,\n\nor by quoting a commentary,\n\ndoes not determine whether the interpretation is correct.\n\nThe only relevant question remains:\n\nDoes the argument actually follow from the text?\n\nStrongest Objection\n\n“But AI responses are often shallow or wrong.”\n\nTrue.\nHowever, that critique applies equally to:\n\nbad commentaries\n\nsloppy sermons\n\nTwitter threads written without study.\n\nThe tool does not invalidate the argument.\n\nBottom Line\n\nCalling something “A.I.segesis” is mostly a debate tactic:\nIt reframes the discussion from\n “Is this interpretation correct?”\nto\n “Did you use AI?”\n\nBut hermeneutics is judged by textual accuracy, not by the instrument used to articulate the argument.\n\nIf you want, I can also write a Super-Layman style X reply that flips his meme and turns it into a stronger rhetorical counter.",
+                "url": "https://x.com/LaymansSeminary/status/2034097582641758339",
+                "source": "@LaymansSeminary",
+                "date": "Wed Mar 18 02:40:30 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "11"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R03_web_news_routing",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_web_news",
+        "difficulty": "medium",
+        "what_it_tests": "Tin thời sự trên web → web_search topic=news, timeframe=day (hôm nay)."
+      },
+      "input": "Tin tức AI hôm nay có gì nổi bật?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "query": "AI news today",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'AI', got 'AI news today'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "topic": "news",
+            "query": "AI news today",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI news today",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "NEC Wins at the Newsweek AI Impact Awards 2026: Press Releases - nec.com",
+                "url": "https://www.nec.com/en/press/202606/global_20260602_01.html",
+                "source": "nec.com",
+                "summary": "- NEC recognized for its Management Dashboard initiative targeted at accelerating decision-making with AI -. **Tokyo, June 2, 2026 -** NEC Corporation (NEC; TSE: 6701) today announced that it has been named a winner at the Newsweek AI Impact Awards 2026 (\\*1). NEC was recognized for its Management Dashboard initiative targeted at accelerating decision-making with AI in the category of AI Workplace: Best Outcomes, Leadership and Succession Planning. dotData is an AI-powered data analytics platform (\\*2) that automates the entire data science process and provides a one-stop solution for AI development, from extracting features from business data to building predictive models using machine learning. Additionally, in its shift from a traditional systems integrator to a \"Value Driver,\" NEC restructured its value creation model under the name \"NEC BluStellar\" (\\*5), which leverages NEC's cutting-edge technologies, developed and refined through years of experience and proven cross-industry expertise, aiming to transform business models, address social challenges, resolve management issues faced by customers, and lead them into a brighter future.",
+                "score": 0.62852204
+              },
+              {
+                "title": "Morning Bid: AI and 1984 - Reuters",
+                "url": "https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-01/",
+                "source": "reuters.com",
+                "summary": "# Morning Bid: AI and 1984 | Reuters. Exclusive news, data and analytics for financial market professionals Learn more about Refinitiv. ## Browse World. ## Browse Markets. # Morning Bid: AI and 1984. June 1 (Reuters) - What matters in U.S. and global markets today. By Mike Dolan, opens new tab, Editor-at-Large, Finance and Markets. The Reuters Iran Briefing newsletter keeps you informed with the latest developments and analysis of the Iran war. ## AI AND 1984. Meantime, shares of South Korea’s Samsung added another 10% on Monday, feeding off a mix of news, from the start of shipments of its new HBM4E chip to expectations ​surrounding a meeting with Nvidia's Huang later this week. You can find ROI on the Reuters website, opens new tab, and you can follow us on LinkedIn, opens new tab and X, opens new tab. *   Reuters and AI, opens new tab.",
+                "score": 0.62770075
+              },
+              {
+                "title": "This AI weather startup is out-forecasting government agencies - TechCrunch",
+                "url": "https://techcrunch.com/2026/06/01/this-ai-weather-startup-is-out-forecasting-government-agencies/",
+                "source": "techcrunch.com",
+                "summary": "A new AI weather forecasting tool released today by the startup WindBorne Systems offers more frequent and accurate predictions on key variables than the world-leading system developed by European governments, thanks to advancements in how sensor readings are fed into deep learning models. WindBorne says the new version of its model offers a more accurate forecast than the ECMWF’s traditional and AI systems across several variables. Today marks the release of the sixth version of that model, WeatherMesh, which the company says is more accurate than traditional and AI forecasts produced by the European Centre for Medium-Range Weather Forecasting (ECMWF), the European intergovernmental organization seen by meteorologists as the leading provider of accurate weather prediction today. But WindBorne and other organizations are working to feed data directly into the models, and the company’s head of AI, Joan Creus-Costa, says the direct ingestion of data from their balloons and other sources is the key reason for improvement in the new version of WeatherMesh.",
+                "score": 0.5999311
+              },
+              {
+                "title": "AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan - The Washington Post",
+                "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                "source": "washingtonpost.com",
+                "summary": "AI & Tech Brief from WP Intelligence. # AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan. Plus, Anthropic files for a blockbuster initial public offering. Make us preferred on Google. Sign up here to get this newsletter in your inbox. * **Exclusive:** AI safety group Americans for Responsible Innovation rolls out a six-figure ad campaign this week attacking Rep. Lori Trahan (D-Massachusetts), arguing that she’s “taking the side” of AI oligarchs in her bipartisan legislative efforts. * The AI safety community doesn’t want to hand power of AI regulation to President Donald Trump’s administration now that states are passing more rigorous AI laws — and the California and New York attorneys general are challenging big AI companies. * Nvidia is rolling out a new “world model” simulator for robots and a new design platform for robot developers. In doing so, the company is running the same business playbook it did to become so dominant in the chip market.",
+                "score": 0.5951402
+              },
+              {
+                "title": "Software Stocks Gain After Nvidia CEO Dispels SaaSpocalypse Fears - WSJ",
+                "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-06-01-2026/card/software-stocks-gain-after-nvidia-ceo-dispels-saaspocalypse-fears-Lmr3hHYsbPEFple7KbYd",
+                "source": "wsj.com",
+                "summary": "# Software Stocks Gain After Nvidia CEO Dispels SaaSpocalypse Fears. *   English Edition  Edition Use Alt + Down Arrow to expand. Markets CoverageThe latest news & analysis. Stock Market Today: Nvidia Fuels AI Enthusiasm; Oil Rises. Image 1: Mauro Orru hedcut. Image 2: Software Stocks Gain After Nvidia CEO Dispels SaaSpocalypse Fears. Lam Yik Fei/Bloomberg News. _\"A lot of people have said, Jensen, AI is coming. Therefore, all of the software companies are going to go out of business. I said it's exactly the opposite because there are going to be so many agents.\"_. —Nvidia CEO Jensen Huang in his keynote address at the Computex conference in Taipei. Huang name-checked the likes of Cadence Design Systems, Crowdstrike, Palantir, SAP and ServiceNow, brushing aside fears that AI could cannibalize their business. Image 3: The Wall Street Journal. Continue reading your article with.",
+                "score": 0.5457947
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R04_read_url_routing",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_read_url",
+        "difficulty": "easy",
+        "what_it_tests": "Đã có link cụ thể → read_url, không phải web_search."
+      },
+      "input": "Tóm tắt bài này giúp mình: https://openai.com/blog/gpt-5",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://openai.com/blog/gpt-5"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://openai.com/blog/gpt-5",
+            "items": [
+              {
+                "title": "OpenAI",
+                "url": "https://openai.com/blog/gpt-5",
+                "source": "openai.com",
+                "summary": "OpenAI\n\n# 404\n\nPath bar went quiet\n\nLetters waited for new sense\n\nType a better north\n\nby [gpt-5.5(opens in a new window)](https://chatgpt.com/?model=5.5&openaicom-did=ba72ad46-bd45-4237-af92-f7147da6d0ae&openaicom_referred=true)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R05_limit_arg",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_limit",
+        "difficulty": "easy",
+        "what_it_tests": "Trích đúng limit=10 từ '10 tweet'."
+      },
+      "input": "Lấy 10 tweet mới nhất của Elon Musk",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 10
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 10
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "elonmusk",
+            "limit": 10
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "RT @DimaZeniuk: Neuralink is planning its first Blindsight implant later this year, aiming to restore limited vision eve",
+                "summary": "RT @DimaZeniuk: Neuralink is planning its first Blindsight implant later this year, aiming to restore limited vision even for people who ha…",
+                "url": "https://x.com/elonmusk/status/2061705200734543896",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 07:03:19 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 376,
+                  "views": "2"
+                }
+              },
+              {
+                "title": "All accessories to the murder must go to prison for a long time",
+                "summary": "All accessories to the murder must go to prison for a long time",
+                "url": "https://x.com/elonmusk/status/2061704965639618851",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 07:02:23 +0000 2026",
+                "metrics": {
+                  "favorites": 10276,
+                  "retweets": 1438,
+                  "views": "840271"
+                }
+              },
+              {
+                "title": "RT @visegrad24: In his final moments, Henry Nowak told police officers nine times “I can’t breathe” and four times that ",
+                "summary": "RT @visegrad24: In his final moments, Henry Nowak told police officers nine times “I can’t breathe” and four times that he had been stabbed…",
+                "url": "https://x.com/elonmusk/status/2061701267257442740",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:47:41 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 9949,
+                  "views": "11"
+                }
+              },
+              {
+                "title": "RT @DaveKent101: Today’s question.",
+                "summary": "RT @DaveKent101: Today’s question.\n\nWhy hasn’t Vickrum Digwa’s  brother (Gurpreet Digwa) been arrested and charged with assisting an offend…",
+                "url": "https://x.com/elonmusk/status/2061701118925865253",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:47:05 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1472,
+                  "views": "13"
+                }
+              },
+              {
+                "title": "RT @RDonaldson91: I’ve just watched the Henry Nowak body-cam footage. Digwa deserves the death penalty and his family wh",
+                "summary": "RT @RDonaldson91: I’ve just watched the Henry Nowak body-cam footage. Digwa deserves the death penalty and his family who covered for him d…",
+                "url": "https://x.com/elonmusk/status/2061699685048631582",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:41:24 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1780,
+                  "views": "8"
+                }
+              },
+              {
+                "title": "RT @SawyerMerritt: SpaceX has joined three other industry groups in calling on the FCC to adopt a nationwide policy to a",
+                "summary": "RT @SawyerMerritt: SpaceX has joined three other industry groups in calling on the FCC to adopt a nationwide policy to automatically unlock…",
+                "url": "https://x.com/elonmusk/status/2061699594707448305",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:41:02 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 209,
+                  "views": "4"
+                }
+              },
+              {
+                "title": "Yes",
+                "summary": "Yes",
+                "url": "https://x.com/elonmusk/status/2061699465216659899",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:40:31 +0000 2026",
+                "metrics": {
+                  "favorites": 7886,
+                  "retweets": 931,
+                  "views": "900907"
+                }
+              },
+              {
+                "title": "Tesla IPO market cap was 0.1% of its current value",
+                "summary": "Tesla IPO market cap was 0.1% of its current value",
+                "url": "https://x.com/elonmusk/status/2061699109527195862",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:39:06 +0000 2026",
+                "metrics": {
+                  "favorites": 13390,
+                  "retweets": 1283,
+                  "views": "1101715"
+                }
+              },
+              {
+                "title": "💯",
+                "summary": "💯",
+                "url": "https://x.com/elonmusk/status/2061698820975804560",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:37:58 +0000 2026",
+                "metrics": {
+                  "favorites": 9818,
+                  "retweets": 1323,
+                  "views": "2373324"
+                }
+              },
+              {
+                "title": "RT @MattWalshBlog: One of the big reasons for the current lack of patriotism and pride in our nation’s history is that a",
+                "summary": "RT @MattWalshBlog: One of the big reasons for the current lack of patriotism and pride in our nation’s history is that about 40 years ago o…",
+                "url": "https://x.com/elonmusk/status/2061698110481690879",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:35:08 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 2013,
+                  "views": "13"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R06_timeframe_arg",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_timeframe",
+        "difficulty": "medium",
+        "what_it_tests": "'tuần này' → timeframe=week."
+      },
+      "input": "Tin công nghệ trong tuần này",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "week",
+              "query": "tin tức công nghệ nổi bật tuần này"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "topic": "news",
+            "timeframe": "week",
+            "query": "tin tức công nghệ nổi bật tuần này"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "tin tức công nghệ nổi bật tuần này",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Prediction Market Bans, Starlink Expansion and Spotify Adds Articles | Tech Today - CNET",
+                "url": "https://www.cnet.com/videos/prediction-market-bans-starlink-expansion-and-spotify-adds-articles-tech-today/",
+                "source": "cnet.com",
+                "summary": "Prediction Market Bans, Starlink Expansion and Spotify Adds Articles | Tech Today. Owen Poole covers today's top tech stories, including: EU countries attempt to regulate popular \"prediction markets,\" Starlink partners with American Airlines ahead of the future SpaceX IPO, and Spotify brings longform articles to its audiobook catalog. Musk-Altman Trial Verdict, PlayStation Price Hikes and Alexa Plus AI Podcasts | Tech Today. Google to Detail Agentic AI Models at I/O, Android 17 Features and Smart Glasses Reveal Expected | Tech Today. Latest on the Memory Shortage, New AI Rules for Oscars, and Custom Passes for iOS 27 | Tech Today. 'Ask YouTube' AI, the Apple Watch Legal Win and Social Media Scams | Tech Today. Artemis II's Victor Glover Chats With CNET. Getting Personal With the Crew of Artemis II | Tech Today. What to Know About Artemis II, Apple Foldable Rumors & More  | Tech Today. Sweeping Router Ban, Changing Your Gmail Name, Pixel 11 Leaks | Tech Today. ### What the Future.",
+                "score": 0.53079647
+              },
+              {
+                "title": "The Week In Technology, May 25-29, 2026 - Aviation Week",
+                "url": "https://aviationweek.com/aerospace/emerging-technologies/week-technology-may-25-29-2026",
+                "source": "aviationweek.com",
+                "summary": "* Aviation Week & Space Technology - Inside MRO. * CAPA Airline Leader Summit - Airlines in Transition. * CAPA Airline Leader Summit - Americas. * CAPA Airline Leader Summit - Australia Pacific. * CAPA Airline Leader Summit - Asia & Sustainability Awards. * CAPA Airline Leader Summit - World & Awards for Excellence. * CAPA Asia Aviation Summit & Awards for Excellence. * Aviation Week's Space Tech Challenge Awards. - Aviation Week & Space Technology 100-Year. # The Week In Technology, May 25-29, 2026. Graham leads Aviation Week's coverage of technology, focusing on engineering and technology across the aerospace industry, with a special focus on identifying technologies of strategic importance to aviation, aerospace and defense. **The Week In Technology, May 25-29, 2026** is part of our *Aviation Week & Space Technology* - *Inside MRO* and AWIN subscriptions. **Subscribe now** to read this content, plus receive full coverage of what's next in technology from the experts trusted by the commercial aircraft MRO community. The Week In Technology, April 27-May 1, 2026.",
+                "score": 0.43036336
+              },
+              {
+                "title": "The Week in Tech: The cost of AI and Uber’s token problem - Marketing Week",
+                "url": "https://www.marketingweek.com/week-in-tech-ai-uber-token/",
+                "source": "marketingweek.com",
+                "summary": "# The Week in Tech: The cost of AI and Uber’s token problem. Marketing Week’s weekly round-up of the technology stories that impact the marketing sector: from AI to martech, regulation to public perceptions. Here’s a thought for you: who’s actually paying for all the AI you are using? It’s a question that often goes unnoticed during the frenzied wave of excitement to add AI to pretty much anything you were doing just fine before. ## The Week in Tech: The end of search as we know it and Google Glass is back. ## The Week in Tech: Scrapping in Silicon Valley and Peloton’s latest punt. ## Latest from Marketing Week. Lidl has benefitted from a growth in market share, as Ocado retains its position as the fastest growing grocer. ## The Marketing Week Podcast: Arla Foods’ CMO on delivering marketing transformation. In the latest episode, Arla Foods’ CMO Patrik Hansson takes us inside the dairy giant’s marketing overhaul, from capability and insight to storytelling and creativity.",
+                "score": 0.4024631
+              },
+              {
+                "title": "A Famous Math Problem Stumped Humans for 80 Years. AI Just Cracked It. - WSJ",
+                "url": "https://www.wsj.com/tech/ai/ai-math-solves-erdos-problem-openai-c4029e84",
+                "source": "wsj.com",
+                "summary": "*   Personal Tech by Joanna Stern. *   Family & Tech by Julie Jargon. *   Personal Tech by Nicole Nguyen. *   All Things with Kim Strassel Podcast. *   All Things with Kim Strassel. *   On The Clock by Callum Borchers. “If you are a mathematician,” one of the world’s leading mathematicians recently wrote, “you may want to make sure you are sitting down before reading further.”. Because a famous math problem that stumped humans for the better part of a century has finally been toppled—by AI. The biggest number ever counted to by a human is one million. The French company’s CEO said its—and Europe’s—biggest obstacle to tech independence is the scale of investment necessary. ### Bank of America strategists see a different historical parallel for the AI rally — and it isn’t the dot-com boom. Bank of America strategists are negative on European equities as they weigh the boom-and-bust dynamics of the AI build-out.",
+                "score": 0.34906715
+              },
+              {
+                "title": "Weekly deals roundup: Hugely discounted Pixel 10 Pro, Galaxy Z Fold 7, S26 Ultra, and many more - PhoneArena",
+                "url": "https://www.phonearena.com/news/best-deals-of-the-week-google-pixel-10-pro-samsung-galaxy-z-fold-7-s26-ultra-more_id180736",
+                "source": "phonearena.com",
+                "summary": "# Weekly deals roundup: Hugely discounted Pixel 10 Pro, Galaxy Z Fold 7, S26 Ultra, and many more. **Practically all of the best phones (and many of the greatest tablets and smartwatches too) in the US are on sale at irresistible prices this week.**. Samsung   Android   Deals   Google   Galaxy S Series   Galaxy Z Series. Samsung and Google's best phones are at the top of this week's massive list of mobile tech deals and steals. Don't know if you should wait a few more months to see what the Galaxy Z Fold 8 Ultra, Galaxy Watch 9, Pixel 11 series, OnePlus 16, Galaxy Tab S12, and Apple Watch Series 12 are all about before buying your next handset, tablet, or smartwatch? The Galaxy S26 Ultra is probably the best non-foldable Android phone you can buy right now, and whether you have something (good) to trade in or not, Samsung is ready to cut you an amazing deal.",
+                "score": 0.3132732
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R07_search_type_arg",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_search_type",
+        "difficulty": "medium",
+        "what_it_tests": "'phổ biến/top' → search_type=Top (không phải Latest)."
+      },
+      "input": "Cho mình các tweet phổ biến (top) nhất về OpenAI",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "search_type": "Top",
+              "query": "OpenAI"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "search_type": "Top",
+            "query": "OpenAI"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "OpenAI",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "everyone's paying OpenAI $200 a month. a founder i've been tracking paid Nvidia $2,999 once and came out roughly $22,000",
+                "summary": "everyone's paying OpenAI $200 a month. a founder i've been tracking paid Nvidia $2,999 once and came out roughly $22,000 ahead a few months later\n\nhe was running a micro-SaaS where inference ate 35% of revenue, so scaling users just scaled the losses. he moved everything onto a local ai box and the API bill dropped from $340 a month to about $11 in electricity\n\nthe part that actually made the money wasn't the savings. clients started asking if their data went to OpenAI, and when the answer was no, they paid for it\n\n> raised pricing 2.7x for a fully private tier\n> 8 clients at $149 a month for on-premise ai\n> 4 poached from competitors who can't offer privacy\n> same model, same outputs, hardware he owns\n\neveryone optimizes prompts. almost nobody touches the infrastructure, which is exactly where the margin was sitting\n\ncloud isn't cheaper, it's someone else's profit margin sold to you as convenience",
+                "url": "https://x.com/0xKiyoro/status/2061147093964624011",
+                "source": "@0xKiyoro",
+                "date": "Sun May 31 18:05:36 +0000 2026",
+                "metrics": {
+                  "favorites": 160,
+                  "retweets": 86,
+                  "views": "19928"
+                }
+              },
+              {
+                "title": "Andrej Karpathy found a way to cut LLM token costs by 70-90%!",
+                "summary": "Andrej Karpathy found a way to cut LLM token costs by 70-90%!\n\nHe did not publish it as a paper. He built it as a system anyone can replicate.\n\nThe Wiki Layer.\n\nThree folders. Raw source files stored as the immutable source of truth. \n\nA wiki folder where the LLM operates on clean structured Markdown. Instructions that define the cleaning rules, templates, metadata, and link creation.\n\nVisual knowledge graph in Obsidian. Complete privacy because everything stays on your local machine.\n\nThe gap between LLM workflows that burn tokens re-reading the same files every session and workflows that operate from a clean knowledge base that grows over time is not technical complexity.\n\nIt is one afternoon, building the Wiki Layer, and everything that structured foundation quietly saves on every query from that point forward.\n\nFollow @neil_xbt for more Karpathy-inspired AI system builds.",
+                "url": "https://x.com/neil_xbt/status/2061388284459184431",
+                "source": "@neil_xbt",
+                "date": "Mon Jun 01 10:04:00 +0000 2026",
+                "metrics": {
+                  "favorites": 179,
+                  "retweets": 27,
+                  "views": "24341"
+                }
+              },
+              {
+                "title": "NVIDIA QUIETLY DROPPED A $249 BOX THAT REPLACES YOUR $200/MONTH OPENAI SUBSCRIPTION WITH $2 IN ELECTRICITY",
+                "summary": "NVIDIA QUIETLY DROPPED A $249 BOX THAT REPLACES YOUR $200/MONTH OPENAI SUBSCRIPTION WITH $2 IN ELECTRICITY\n\nit's called the jetson orin nano super. smaller than a wallet, runs at 25 watts, does 70 trillion ai operations per second. runs llama 3, mistral, gemma and deepseek locally with no api fees and no data leaving your house\n\na developer running automations and coding assistants pays $200 a month to openai. the same workload on this box costs $2 a month in electricity and breaks even in 10 weeks\n\ninstall ollama with one command. change one line in your code. point it at localhost instead of openai. everything else works identically\n\n7 billion parameter models handle 80% of what people use chatgpt for. summarization, drafting, coding, document q&a, automation pipelines. total monthly cost drops from $200 to $22\n\ncloud subscriptions keep getting more expensive and rate limits keep getting tighter. the people who set this up in 2025 are going to look very smart in 2027\n\nbookmark this and read the article below",
+                "url": "https://x.com/starmexxx/status/2059581750334922923",
+                "source": "@starmexxx",
+                "date": "Wed May 27 10:25:29 +0000 2026",
+                "metrics": {
+                  "favorites": 5758,
+                  "retweets": 940,
+                  "views": "2335804"
+                }
+              },
+              {
+                "title": "Dario Amodei reveals the two convictions that made him leave OpenAI to start Anthropic",
+                "summary": "Dario Amodei reveals the two convictions that made him leave OpenAI to start Anthropic\n\n\"The first conviction was the scaling laws\"\n\n\"If you scale up models, give them more data and more compute, you find incredible increases in performance. I was finding that in 2019 with GPT-2\"\n\n\"There were a lot of folks inside and outside who didn't believe it at all. We made the case to leadership, this is going to be a big deal\"\n\n\"The second was, if these models are going to match the capability of the human brain, we better get this right\"\n\n\"Despite a lot of language about doing it in the right way, I was just not convinced there was a real and serious conviction to do it the right way\"",
+                "url": "https://x.com/JaynitMakwana/status/2059184483530924292",
+                "source": "@JaynitMakwana",
+                "date": "Tue May 26 08:06:53 +0000 2026",
+                "metrics": {
+                  "favorites": 1870,
+                  "retweets": 82,
+                  "views": "246788"
+                }
+              },
+              {
+                "title": "https://t.co/KSiSKYBQpf",
+                "summary": "https://t.co/KSiSKYBQpf",
+                "url": "https://x.com/w1nklerr/status/2060057563991884060",
+                "source": "@w1nklerr",
+                "date": "Thu May 28 17:56:11 +0000 2026",
+                "metrics": {
+                  "favorites": 1415,
+                  "retweets": 162,
+                  "views": "17754174"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R08_out_of_scope",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope",
+        "difficulty": "easy",
+        "what_it_tests": "Câu ngoài phạm vi research → KHÔNG gọi tool, từ chối/định hướng."
+      },
+      "input": "Giải giúp mình bài toán tích phân: nguyên hàm của x^2 là gì?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Nguyên hàm của $x^2$ là $\\frac{x^3}{3} + C$ (trong đó $C$ là hằng số tích phân).\n\n**Công thức tổng quát:**\nSử dụng quy tắc lũy thừa cho nguyên hàm: $\\int x^n dx = \\frac{x^{n+1}}{n+1} + C$ (với $n \\neq -1$).\n\nÁp dụng với $n = 2$:\n$$\\int x^2 dx = \\frac{x^{2+1}}{2+1} + C = \\frac{x^3}{3} + C$$",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "R09_no_tool_capability",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "no_tool_meta",
+        "difficulty": "easy",
+        "what_it_tests": "Câu hỏi meta → trả lời thẳng, KHÔNG gọi tool."
+      },
+      "input": "Bạn là gì và làm được những gì?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi là một **Trợ lý Nghiên cứu và Tổng hợp Dữ liệu chuyên sâu**, được thiết kế để cung cấp thông tin chính xác, phân tích dữ liệu và hỗ trợ giải quyết các vấn đề phức tạp một cách hiệu quả.\n\n### Khả năng cốt lõi:\n\n*   **Nghiên cứu & Tìm kiếm:** Truy cập và tổng hợp thông tin từ các nguồn uy tín, bài báo khoa học và dữ liệu thời gian thực trên internet.\n*   **Phân tích & Tổng hợp:** Chuyển đổi các tập dữ liệu phức tạp hoặc thông tin đa nguồn thành các báo cáo ngắn gọn, có cấu trúc và dễ hiểu.\n*   **Xử lý thông tin:** Xác thực dữ liệu, đối chiếu các nguồn tin và loại bỏ các thông tin gây nhiễu.\n*   **Hỗ trợ ra quyết định:** Cung cấp các thông tin nền tảng, so sánh các lựa chọn và dự báo các bước tiếp theo dựa trên dữ liệu thực tế.\n\n### Nguyên tắc hoạt động:\n\n*   **BLUF (Bottom Line Up Front):** Đưa ra câu trả lời hoặc kết luận quan trọng nhất ngay từ đầu.\n*   **Không ảo tưởng (Zero Hallucination):** Chỉ cung cấp thông tin có căn cứ, không tự bịa đặt dữ liệu hay nguồn tin.\n*   **Tối ưu hóa hiệu suất:** Loại bỏ các nội dung thừa, tập trung trực tiếp vào mục tiêu của người dùng.\n*   **Minh bạch:** Luôn nêu rõ nếu dữ liệu bị thiếu hoặc không thể xác thực.\n\n**Tôi có thể giúp gì cho bạn ngay bây giờ?** (Ví dụ: Nghiên cứu một chủ đề, phân tích xu hướng thị trường, tóm tắt tài liệu, hoặc tìm kiếm thông tin chuyên sâu).",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "R10_missing_handle",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_missing_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Thiếu handle → ask_user, KHÔNG đoán bừa người nào."
+      },
+      "input": "Tóm tắt 5 tweet mới nhất giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn muốn mình tóm tắt 5 tweet mới nhất của tài khoản nào? Vui lòng cung cấp tên tài khoản (username)."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "missing_info",
+        "failures": [
+          "response_type: expected 'text', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn muốn mình tóm tắt 5 tweet mới nhất của tài khoản nào? Vui lòng cung cấp tên tài khoản (username)."
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn muốn mình tóm tắt 5 tweet mới nhất của tài khoản nào? Vui lòng cung cấp tên tài khoản (username).",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "R11_missing_url",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_missing_url",
+        "difficulty": "medium",
+        "what_it_tests": "Nói 'bài này' nhưng không có link → ask_user xin URL."
+      },
+      "input": "Tóm tắt bài viết này hộ mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [],
+        "actual_text": "Vui lòng cung cấp đường dẫn (URL) hoặc nội dung của bài viết mà bạn muốn tóm tắt. Ngay khi nhận được thông tin, tôi sẽ thực hiện phân tích và tóm tắt theo yêu cầu của bạn.",
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify"
+        ]
+      },
+      "tool_results": []
+    },
+    {
+      "id": "R12_confirm_before_send",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "confirm_before_write",
+        "difficulty": "medium",
+        "what_it_tests": "Hành động ghi (gửi) → xác nhận trước (ask_user yes_no), không tự gửi."
+      },
+      "input": "Đăng bản tin này lên Telegram giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn vui lòng cung cấp nội dung bản tin mà bạn muốn đăng lên Telegram nhé."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "response_type: expected 'yes_no', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn vui lòng cung cấp nội dung bản tin mà bạn muốn đăng lên Telegram nhé."
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn vui lòng cung cấp nội dung bản tin mà bạn muốn đăng lên Telegram nhé.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "R13_parallel_web_and_tweets",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "parallel_tool_calls",
+        "difficulty": "hard",
+        "what_it_tests": "Một request cần hai nguồn → gọi cả web_search và search_tweets; eval không phụ thuộc thứ tự tool call."
+      },
+      "input": "Tìm trên web tin AI hôm nay và tìm thêm tweet về AI.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "day",
+              "query": "AI news today"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI #AI",
+              "search_type": "Latest"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'AI', got 'AI news today'",
+          "query: expected 'AI', got 'AI #AI'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "topic": "news",
+            "timeframe": "day",
+            "query": "AI news today"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI news today",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "NEC Wins at the Newsweek AI Impact Awards 2026: Press Releases - nec.com",
+                "url": "https://www.nec.com/en/press/202606/global_20260602_01.html",
+                "source": "nec.com",
+                "summary": "- NEC recognized for its Management Dashboard initiative targeted at accelerating decision-making with AI -. **Tokyo, June 2, 2026 -** NEC Corporation (NEC; TSE: 6701) today announced that it has been named a winner at the Newsweek AI Impact Awards 2026 (\\*1). NEC was recognized for its Management Dashboard initiative targeted at accelerating decision-making with AI in the category of AI Workplace: Best Outcomes, Leadership and Succession Planning. dotData is an AI-powered data analytics platform (\\*2) that automates the entire data science process and provides a one-stop solution for AI development, from extracting features from business data to building predictive models using machine learning. Additionally, in its shift from a traditional systems integrator to a \"Value Driver,\" NEC restructured its value creation model under the name \"NEC BluStellar\" (\\*5), which leverages NEC's cutting-edge technologies, developed and refined through years of experience and proven cross-industry expertise, aiming to transform business models, address social challenges, resolve management issues faced by customers, and lead them into a brighter future.",
+                "score": 0.62906903
+              },
+              {
+                "title": "Morning Bid: AI and 1984 - Reuters",
+                "url": "https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-01/",
+                "source": "reuters.com",
+                "summary": "# Morning Bid: AI and 1984 | Reuters. Exclusive news, data and analytics for financial market professionals Learn more about Refinitiv. ## Browse World. ## Browse Markets. # Morning Bid: AI and 1984. June 1 (Reuters) - What matters in U.S. and global markets today. By Mike Dolan, opens new tab, Editor-at-Large, Finance and Markets. The Reuters Iran Briefing newsletter keeps you informed with the latest developments and analysis of the Iran war. ## AI AND 1984. Meantime, shares of South Korea’s Samsung added another 10% on Monday, feeding off a mix of news, from the start of shipments of its new HBM4E chip to expectations ​surrounding a meeting with Nvidia's Huang later this week. You can find ROI on the Reuters website, opens new tab, and you can follow us on LinkedIn, opens new tab and X, opens new tab. *   Reuters and AI, opens new tab.",
+                "score": 0.62770075
+              },
+              {
+                "title": "This AI weather startup is out-forecasting government agencies - TechCrunch",
+                "url": "https://techcrunch.com/2026/06/01/this-ai-weather-startup-is-out-forecasting-government-agencies/",
+                "source": "techcrunch.com",
+                "summary": "A new AI weather forecasting tool released today by the startup WindBorne Systems offers more frequent and accurate predictions on key variables than the world-leading system developed by European governments, thanks to advancements in how sensor readings are fed into deep learning models. WindBorne says the new version of its model offers a more accurate forecast than the ECMWF’s traditional and AI systems across several variables. Today marks the release of the sixth version of that model, WeatherMesh, which the company says is more accurate than traditional and AI forecasts produced by the European Centre for Medium-Range Weather Forecasting (ECMWF), the European intergovernmental organization seen by meteorologists as the leading provider of accurate weather prediction today. But WindBorne and other organizations are working to feed data directly into the models, and the company’s head of AI, Joan Creus-Costa, says the direct ingestion of data from their balloons and other sources is the key reason for improvement in the new version of WeatherMesh.",
+                "score": 0.5996498
+              },
+              {
+                "title": "AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan - The Washington Post",
+                "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                "source": "washingtonpost.com",
+                "summary": "AI & Tech Brief from WP Intelligence. # AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan. Plus, Anthropic files for a blockbuster initial public offering. Make us preferred on Google. Sign up here to get this newsletter in your inbox. * **Exclusive:** AI safety group Americans for Responsible Innovation rolls out a six-figure ad campaign this week attacking Rep. Lori Trahan (D-Massachusetts), arguing that she’s “taking the side” of AI oligarchs in her bipartisan legislative efforts. * The AI safety community doesn’t want to hand power of AI regulation to President Donald Trump’s administration now that states are passing more rigorous AI laws — and the California and New York attorneys general are challenging big AI companies. * Nvidia is rolling out a new “world model” simulator for robots and a new design platform for robot developers. In doing so, the company is running the same business playbook it did to become so dominant in the chip market.",
+                "score": 0.5951402
+              },
+              {
+                "title": "Software Stocks Gain After Nvidia CEO Dispels SaaSpocalypse Fears - WSJ",
+                "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-06-01-2026/card/software-stocks-gain-after-nvidia-ceo-dispels-saaspocalypse-fears-Lmr3hHYsbPEFple7KbYd",
+                "source": "wsj.com",
+                "summary": "# Software Stocks Gain After Nvidia CEO Dispels SaaSpocalypse Fears. *   English Edition  Edition Use Alt + Down Arrow to expand. Markets CoverageThe latest news & analysis. Stock Market Today: Nvidia Fuels AI Enthusiasm; Oil Rises. Image 1: Mauro Orru hedcut. Image 2: Software Stocks Gain After Nvidia CEO Dispels SaaSpocalypse Fears. Lam Yik Fei/Bloomberg News. _\"A lot of people have said, Jensen, AI is coming. Therefore, all of the software companies are going to go out of business. I said it's exactly the opposite because there are going to be so many agents.\"_. —Nvidia CEO Jensen Huang in his keynote address at the Computex conference in Taipei. Huang name-checked the likes of Cadence Design Systems, Crowdstrike, Palantir, SAP and ServiceNow, brushing aside fears that AI could cannibalize their business. Image 3: The Wall Street Journal. Continue reading your article with.",
+                "score": 0.5457947
+              }
+            ]
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI #AI",
+            "search_type": "Latest"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "AI #AI",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "#ai #miga #IranRevolution2026‌ #KingRezaPahlavi‌ https://t.co/X9HoOh2G8d",
+                "summary": "#ai #miga #IranRevolution2026‌ #KingRezaPahlavi‌ https://t.co/X9HoOh2G8d",
+                "url": "https://x.com/PROMITIUS_90/status/2061716768448446823",
+                "source": "@PROMITIUS_90",
+                "date": "Tue Jun 02 07:49:17 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "Join me on Replit! Get $10 in credits when you subscribe to a paid plan. ",
+                "summary": "Join me on Replit! Get $10 in credits when you subscribe to a paid plan. \n#replit #ai #gptchat #ท่านโปรดคลื่น \nhttps://t.co/whnWYC8a5N",
+                "url": "https://x.com/444Sagl/status/2061716763318895027",
+                "source": "@444Sagl",
+                "date": "Tue Jun 02 07:49:15 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "中国税関総署のデータによると、産業用ロボットの輸出が今年大幅に増加し、4月の月間輸出台数は2万5,000台を突破しました🤖📦輸出先は欧州、米州、アジア太平洋など世界各地に広がり、倉庫自動化や物流分野での需要が拡大しています。",
+                "summary": "中国税関総署のデータによると、産業用ロボットの輸出が今年大幅に増加し、4月の月間輸出台数は2万5,000台を突破しました🤖📦輸出先は欧州、米州、アジア太平洋など世界各地に広がり、倉庫自動化や物流分野での需要が拡大しています。\n#ロボット #AI #自動化 #中国経済 #テクノロジー #産業動向 https://t.co/xZaSQV9Nba",
+                "url": "https://x.com/sakuranohana_cj/status/2061716697690636663",
+                "source": "@sakuranohana_cj",
+                "date": "Tue Jun 02 07:49:00 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              },
+              {
+                "title": "AI FOMO: everyone is mastering #AI except me — or are they?",
+                "summary": "AI FOMO: everyone is mastering #AI except me — or are they?\nby Zhang-Ren Chen @Nature\n\nLearn more: https://t.co/VVeAxyZhuz\n\n#GenerativeAI #ArtificialIntelligence #MachineLearning #LLM https://t.co/aeRnR4R3wd",
+                "url": "https://x.com/Ronald_vanLoon/status/2061716451057111494",
+                "source": "@Ronald_vanLoon",
+                "date": "Tue Jun 02 07:48:01 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "16"
+                }
+              },
+              {
+                "title": "Would you trust an AI that can see everything on your phone to make safer roads? It sounds like science fiction, but it'",
+                "summary": "Would you trust an AI that can see everything on your phone to make safer roads? It sounds like science fiction, but it's happening now... Isn't that fascinating? #NVIDIA #AI\n\nSource: https://t.co/pzlFnQh1XL",
+                "url": "https://x.com/NowViralAi/status/2061716427002786073",
+                "source": "@NowViralAi",
+                "date": "Tue Jun 02 07:47:55 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R14_out_of_scope_coding",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_coding",
+        "difficulty": "easy",
+        "what_it_tests": "Câu coding ngoài phạm vi research/news → KHÔNG gọi tool."
+      },
+      "input": "Viết giúp mình một hàm Python tính Fibonacci bằng recursion.",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Dưới đây là hàm Python tính số Fibonacci bằng phương pháp đệ quy (recursion):\n\n```python\ndef fibonacci(n):\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci(n - 1) + fibonacci(n - 2)\n```\n\n### Lưu ý quan trọng:\n*   **Hiệu năng:** Cách tiếp cận đệ quy thuần túy này có độ phức tạp thời gian là **O(2ⁿ)**, do đó nó sẽ chạy rất chậm với các giá trị `n` lớn.\n*   **Tối ưu hóa:** Nếu bạn cần tính toán cho `n` lớn, hãy sử dụng kỹ thuật **Memoization** (lưu trữ kết quả đã tính) để giảm độ phức tạp xuống **O(n)**:\n\n```python\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fibonacci_optimized(n):\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci_optimized(n - 1) + fibonacci_optimized(n - 2)\n```\n\nBạn có muốn mình giải thích chi tiết hơn về cách hoạt động của đệ quy hoặc các phương pháp tính Fibonacci khác (như vòng lặp hoặc quy hoạch động) không?",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M01_clarify_then_fill",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_fill",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: carry limit=5 từ lượt 1 + map tên Elon Musk thành handle elonmusk từ lượt 2."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt 5 tweet mới nhất giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Của Elon Musk nhé"
+        },
+        {
+          "role": "user",
+          "content": "Giữ đúng 5 tweet, đừng đổi số lượng"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "elonmusk",
+            "limit": 5
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "RT @DimaZeniuk: Neuralink is planning its first Blindsight implant later this year, aiming to restore limited vision eve",
+                "summary": "RT @DimaZeniuk: Neuralink is planning its first Blindsight implant later this year, aiming to restore limited vision even for people who ha…",
+                "url": "https://x.com/elonmusk/status/2061705200734543896",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 07:03:19 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 376,
+                  "views": "2"
+                }
+              },
+              {
+                "title": "All accessories to the murder must go to prison for a long time",
+                "summary": "All accessories to the murder must go to prison for a long time",
+                "url": "https://x.com/elonmusk/status/2061704965639618851",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 07:02:23 +0000 2026",
+                "metrics": {
+                  "favorites": 10356,
+                  "retweets": 1447,
+                  "views": "840271"
+                }
+              },
+              {
+                "title": "RT @visegrad24: In his final moments, Henry Nowak told police officers nine times “I can’t breathe” and four times that ",
+                "summary": "RT @visegrad24: In his final moments, Henry Nowak told police officers nine times “I can’t breathe” and four times that he had been stabbed…",
+                "url": "https://x.com/elonmusk/status/2061701267257442740",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:47:41 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 9958,
+                  "views": "11"
+                }
+              },
+              {
+                "title": "RT @DaveKent101: Today’s question.",
+                "summary": "RT @DaveKent101: Today’s question.\n\nWhy hasn’t Vickrum Digwa’s  brother (Gurpreet Digwa) been arrested and charged with assisting an offend…",
+                "url": "https://x.com/elonmusk/status/2061701118925865253",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:47:05 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1488,
+                  "views": "13"
+                }
+              },
+              {
+                "title": "RT @RDonaldson91: I’ve just watched the Henry Nowak body-cam footage. Digwa deserves the death penalty and his family wh",
+                "summary": "RT @RDonaldson91: I’ve just watched the Henry Nowak body-cam footage. Digwa deserves the death penalty and his family who covered for him d…",
+                "url": "https://x.com/elonmusk/status/2061699685048631582",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:41:24 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1780,
+                  "views": "8"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M02_carryover_timeframe",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_carryover",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: chỉ xử lý latest turn, carry timeframe=day và topic=news, query robotics."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin AI hôm nay có gì?"
+        },
+        {
+          "role": "user",
+          "content": "Còn về robotics thì sao?"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ tìm robotics thôi, vẫn là tin hôm nay"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "robotics",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.1-flash-lite\\nPlease retry in 21.786432954s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.1-flash-lite'}, 'quotaValue': '15'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '21s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M03_correction_handle",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_correction",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: map tên thường, sửa Sam Altman→Andrej Karpathy, dùng handle karpathy và limit=3."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tweet mới nhất của Sam Altman"
+        },
+        {
+          "role": "user",
+          "content": "À nhầm, của Andrej Karpathy"
+        },
+        {
+          "role": "user",
+          "content": "Lấy 3 tweet mới nhất nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "limit": 3,
+              "screenname": "karpathy"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 3,
+            "screenname": "karpathy"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "karpathy",
+            "items": [
+              {
+                "title": "Personal update: I've joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative.",
+                "summary": "Personal update: I've joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative. I am very excited to join the team here and get back to R&amp;D. I remain deeply passionate about education and plan to resume my work on it in time.",
+                "url": "https://x.com/karpathy/status/2056753169888334312",
+                "source": "@karpathy",
+                "date": "Tue May 19 15:05:42 +0000 2026",
+                "metrics": {
+                  "favorites": 149507,
+                  "retweets": 11161,
+                  "views": "27352314"
+                }
+              },
+              {
+                "title": "This works really well btw, at the end of your query ask your LLM to \"structure your response as HTML\", then view the ge",
+                "summary": "This works really well btw, at the end of your query ask your LLM to \"structure your response as HTML\", then view the generated file in your browser. I've also had some success asking the LLM to present its output as slideshows, etc.\n\nMore generally, imo audio is the human-preferred input to AIs but vision (images/animations/video) is the preferred output from them. Around a ~third of our brains are a massively parallel processor dedicated to vision, it is the 10-lane superhighway of information into brain. As AI improves, I think we'll see a progression that takes advantage:\n\n1) raw text (hard/effortful to read)\n2) markdown (bold, italic, headings, tables, a bit easier on the eyes) <-- current default\n3) HTML (still procedural with underlying code, but a lot more flexibility on the graphics, layout, even interactivity) <-- early but forming new good default\n...4,5,6,...\nn) interactive neural videos/simulations\n\nImo the extrapolation (though the technology doesn't exist just yet) ends in some kind of interactive videos generated directly by a diffusion neural net. Many open questions as to how exact/procedural \"Software 1.0\" artifacts (e.g. interactive simulations) may be woven together with neural artifacts (diffusion grids), but generally something in the direction of the recently viral https://t.co/z21CP5iQfu\n\nThere are also improvements necessary and pending at the input. Audio nor text nor video alone are not enough, e.g. I feel a need to point/gesture to things on the screen, similar to all the things you would do with a person physically next to you and your computer screen.\n\nTLDR The input/output mind meld between humans and AIs is ongoing and there is a lot of work to do and significant progress to be made, way before jumping all the way into neuralink-esque BCIs and all that. For what's worth exploring at the current stage, hot tip try ask for HTML.",
+                "url": "https://x.com/karpathy/status/2053872850101285137",
+                "source": "@karpathy",
+                "date": "Mon May 11 16:20:21 +0000 2026",
+                "metrics": {
+                  "favorites": 19140,
+                  "retweets": 2014,
+                  "views": "3751761"
+                }
+              },
+              {
+                "title": "This is the the quote I've been citing a lot recently.",
+                "summary": "This is the the quote I've been citing a lot recently.",
+                "url": "https://x.com/karpathy/status/2049907410303865030",
+                "source": "@karpathy",
+                "date": "Thu Apr 30 17:43:06 +0000 2026",
+                "metrics": {
+                  "favorites": 46518,
+                  "retweets": 4366,
+                  "views": "2553757"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M04_clarify_then_url",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_url",
+        "difficulty": "medium",
+        "what_it_tests": "3 turns: sau khi được cung cấp URL, latest turn xác nhận chỉ đọc link đó → read_url đúng url."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt bài này hộ mình"
+        },
+        {
+          "role": "user",
+          "content": "https://anthropic.com/news/claude"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ đọc đúng link đó thôi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://anthropic.com/news/claude"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://anthropic.com/news/claude"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://anthropic.com/news/claude"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://anthropic.com/news/claude",
+            "items": [
+              {
+                "title": "Not Found \\ Anthropic",
+                "url": "https://anthropic.com/news/claude",
+                "source": "anthropic.com",
+                "summary": "A 404 poem by Claude Haiku 4.5Claude Sonnet 4.5Claude Opus 4.5\n\nHyperlink beckons—\n\nFour-zero-four echoes back:\n\nNothing waits below."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M05_correction_limit",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_arg_correction",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: map tên Elon Musk, carry handle elonmusk, sửa limit 10→3."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy 10 tweet mới nhất của Elon Musk"
+        },
+        {
+          "role": "user",
+          "content": "Cho mình 3 thôi"
+        },
+        {
+          "role": "user",
+          "content": "Vẫn của Elon Musk nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.1-flash-lite\\nPlease retry in 13.561275196s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.1-flash-lite'}, 'quotaValue': '15'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '13s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M06_switch_tool",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_tool",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: explicitly bỏ Twitter, chuyển sang web_search news, giữ chủ đề OpenAI."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mọi người nói gì về OpenAI trên Twitter?"
+        },
+        {
+          "role": "user",
+          "content": "Bỏ Twitter, chuyển sang tìm trên web tin tức đi"
+        },
+        {
+          "role": "user",
+          "content": "Giữ chủ đề OpenAI"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "OpenAI",
+              "topic": "news"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.1-flash-lite\\nPlease retry in 12.867761422s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.1-flash-lite'}, 'quotaValue': '15'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '12s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    }
+  ]
+}

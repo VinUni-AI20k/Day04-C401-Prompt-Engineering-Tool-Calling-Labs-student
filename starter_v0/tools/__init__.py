@@ -31,10 +31,10 @@ TOOL_FUNCTIONS = {
     "lookup": web_search,
     "fetch": read_url,
     "format": render_digest,
-    "send": send_telegram,
-    "policy": search_company_policy,
-    "papers": arxiv_search,
-    "paper_text": get_arxiv_paper_text,
+    "send_telegram_message": send_telegram,
+    "search_company_policy": search_company_policy,
+    "search_arxiv_papers": arxiv_search,
+    "extract_arxiv_paper_text": get_arxiv_paper_text,
 }
 
 

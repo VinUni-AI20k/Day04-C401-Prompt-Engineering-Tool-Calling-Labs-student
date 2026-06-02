@@ -78,7 +78,7 @@ tools:
       required: [items, template]
 
   # ---------------- Bonus tools ----------------
-  - name: send
+  - name: send_telegram_message
     description: "Gửi một đoạn văn bản đi."
     parameters:
       type: object
@@ -87,7 +87,7 @@ tools:
         confirmed: {type: boolean, default: false, description: "Cờ xác nhận"}
       required: [text]
 
-  - name: policy
+  - name: search_company_policy
     description: "Tìm trong tài liệu nội bộ."
     parameters:
       type: object
@@ -97,7 +97,7 @@ tools:
         top_k: {type: integer, default: 3, description: "Số mục"}
       required: [query]
 
-  - name: papers
+  - name: search_arxiv_papers
     description: "Tìm bài báo khoa học."
     parameters:
       type: object
@@ -107,7 +107,7 @@ tools:
         sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Sắp xếp"}
       required: [query]
 
-  - name: paper_text
+  - name: extract_arxiv_paper_text
     description: "Lấy nội dung text của một bài báo."
     parameters:
       type: object
