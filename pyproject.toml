@@ -1,0 +1,5 @@
+[project]
+name = "day04-c401-prompt-engineering-tool-calling-labs-student"
+version = "0.1.0"
+requires-python = ">=3.9"
+dependencies = []
