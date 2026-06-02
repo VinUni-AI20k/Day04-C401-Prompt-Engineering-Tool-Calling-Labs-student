@@ -1,0 +1,288 @@
+{
+  "run_id": "v1_B_group_openrouter_20260602T155130531731",
+  "version": "v1",
+  "artifact_version": "v1+p28b14f27a342+t25b0fd228a32",
+  "prompt_hash": "28b14f27a34224b4f3da981e48ff37276d9507d42aa70ab000b4f6a21b4e0ae4",
+  "tools_hash": "25b0fd228a3206a250ce3bcb45325ff062ddf1c323076c4b0c1f4fedab4154f0",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\Project\\Vin_AI\\Lab 4\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\Project\\Vin_AI\\Lab 4\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "starter_v0\\data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Custom test cases for weather_by_region and trend_analyzer.",
+  "generated_at": "2026-06-02T15:51:30",
+  "summary": {
+    "total_cases": 3,
+    "measured_cases": 3,
+    "provider_error_cases": 0,
+    "passed_cases": 2,
+    "case_accuracy": 0.6667,
+    "tool_routing_accuracy": 0.6667,
+    "argument_accuracy": 0.6667,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {
+      "missing_info": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_weather_routing",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "weather_routing",
+        "difficulty": "easy",
+        "what_it_tests": "Check if agent calls weather_by_region for a specified location"
+      },
+      "input": "Thời tiết Hà Nội hôm nay thế nào?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather_by_region",
+            "args": {
+              "region": "Hà Nội"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather_by_region",
+            "args": {
+              "region": "Hà Nội"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather_by_region",
+          "args": {
+            "region": "Hà Nội"
+          },
+          "result": {
+            "tool": "weather_by_region",
+            "region": "Hà Nội",
+            "temperature": "N/A",
+            "condition": "{'location': {'name': 'Province De Hà Tĩnh', 'region': '', 'country': 'Vietnam', 'lat': 18.3333, 'lon': 105.9, 'tz_id': 'Asia/Bangkok', 'localtime_epoch': 1780390287, 'localtime': '2026-06-02 15:51'}, 'current': {'last_updated_epoch': 1780389000, 'last_updated': '2026-06-02 15:30', 'temp_c': 34.1, 'temp_f': 93.4, 'is_day': 1, 'condition': {'text': 'Sunny', 'icon': '//cdn.weatherapi.com/weather/64x64/day/113.png', 'code': 1000}, 'wind_mph': 11.2, 'wind_kph': 18.0, 'wind_degree': 86, 'wind_dir': 'E', 'pressure_mb': 1002.0, 'pressure_in': 29.59, 'precip_mm': 0.0, 'precip_in': 0.0, 'humidity': 58, 'cloud': 10, 'feelslike_c': 41.6, 'feelslike_f': 106.9, 'windchill_c': 34.1, 'windchill_f': 93.4, 'heatindex_c': 41.8, 'heatindex_f': 107.3, 'dewpoint_c': 24.6, 'dewpoint_f': 76.4, 'vis_km': 10.0, 'vis_miles': 6.0, 'uv': 5.4, 'gust_mph': 12.9, 'gust_kph': 20.7, 'will_it_rain': 0, 'chance_of_rain': 1, 'will_it_snow': 0, 'chance_of_snow': 0}}",
+            "web_search_results": [
+              {
+                "title": "Weather in Hà Nội",
+                "url": "https://www.weatherapi.com/",
+                "source": "weatherapi.com",
+                "summary": "{'location': {'name': 'Province De Hà Tĩnh', 'region': '', 'country': 'Vietnam', 'lat': 18.3333, 'lon': 105.9, 'tz_id': 'Asia/Bangkok', 'localtime_epoch': 1780390287, 'localtime': '2026-06-02 15:51'}, 'current': {'last_updated_epoch': 1780389000, 'last_updated': '2026-06-02 15:30', 'temp_c': 34.1, 'temp_f': 93.4, 'is_day': 1, 'condition': {'text': 'Sunny', 'icon': '//cdn.weatherapi.com/weather/64x64/day/113.png', 'code': 1000}, 'wind_mph': 11.2, 'wind_kph': 18.0, 'wind_degree': 86, 'wind_dir': 'E', 'pressure_mb': 1002.0, 'pressure_in': 29.59, 'precip_mm': 0.0, 'precip_in': 0.0, 'humidity': 58, 'cloud': 10, 'feelslike_c': 41.6, 'feelslike_f': 106.9, 'windchill_c': 34.1, 'windchill_f': 93.4, 'heatindex_c': 41.8, 'heatindex_f': 107.3, 'dewpoint_c': 24.6, 'dewpoint_f': 76.4, 'vis_km': 10.0, 'vis_miles': 6.0, 'uv': 5.4, 'gust_mph': 12.9, 'gust_kph': 20.7, 'will_it_rain': 0, 'chance_of_rain': 1, 'will_it_snow': 0, 'chance_of_snow': 0}}",
+                "score": 0.9999945
+              },
+              {
+                "title": "Dự báo thời tiết sáng | 02/06/2026 - Hanoionline.vn",
+                "url": "https://hanoionline.vn/du-bao-thoi-tiet-sang-02062026-401633.htm",
+                "source": "hanoionline.vn",
+                "summary": "Chiều tối và đêm nay, Hà Nội và Bắc Bộ chủ yếu ít mưa. Nhiệt độ giảm nhẹ còn 27-29 độ. Độ ẩm từ 73-91%. Dự báo thời tiết sáng | 01/06/2026 · Dự báo thời tiết",
+                "score": 0.9999918
+              },
+              {
+                "title": "Weather forecast for June 2nd: Horrific 45-degree heat in Hanoi",
+                "url": "https://www.youtube.com/watch?v=G6b9VH2bid8",
+                "source": "youtube.com",
+                "summary": "Vấn đề hôm nay | Dự báo thời tiết 2/6: Kinh hoàng nóng 45 độ ở Hà Nội; biển Đông cuộn trào dữ dội trong tháng 6 Nắng nóng đã quay lại Hà Nội sau khi “tạm",
+                "score": 0.9999517
+              }
+            ],
+            "source": "Tavily Web Search (Fallback)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_weather_missing_region",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "weather_missing_region",
+        "difficulty": "medium",
+        "what_it_tests": "Check if agent calls clarify when region is missing"
+      },
+      "input": "Thời tiết hôm nay thế nào?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "weather_by_region",
+            "args": {
+              "region": "today"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call weather_by_region"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "weather_by_region",
+          "args": {
+            "region": "today"
+          },
+          "result": {
+            "tool": "weather_by_region",
+            "region": "today",
+            "temperature": "N/A",
+            "condition": "{'location': {'name': 'Current', 'region': 'Harbour Island', 'country': 'Bahamas', 'lat': 25.4333, 'lon': -76.7833, 'tz_id': 'America/Nassau', 'localtime_epoch': 1780390144, 'localtime': '2026-06-02 04:49'}, 'current': {'last_updated_epoch': 1780389000, 'last_updated': '2026-06-02 04:30', 'temp_c': 26.5, 'temp_f': 79.8, 'is_day': 0, 'condition': {'text': 'Patchy rain nearby', 'icon': '//cdn.weatherapi.com/weather/64x64/night/176.png', 'code': 1063}, 'wind_mph': 13.0, 'wind_kph': 20.9, 'wind_degree': 230, 'wind_dir': 'SW', 'pressure_mb': 1014.0, 'pressure_in': 29.93, 'precip_mm': 0.01, 'precip_in': 0.0, 'humidity': 89, 'cloud': 77, 'feelslike_c': 26.8, 'feelslike_f': 80.2, 'windchill_c': 26.5, 'windchill_f': 79.8, 'heatindex_c': 30.6, 'heatindex_f': 87.1, 'dewpoint_c': 24.6, 'dewpoint_f': 76.2, 'vis_km': 10.0, 'vis_miles': 6.0, 'uv': 0.0, 'gust_mph': 18.1, 'gust_kph': 29.2, 'will_it_rain': 0, 'chance_of_rain': 20, 'will_it_snow': 0, 'chance_of_snow': 0}}",
+            "web_search_results": [
+              {
+                "title": "Weather in current location",
+                "url": "https://www.weatherapi.com/",
+                "source": "weatherapi.com",
+                "summary": "{'location': {'name': 'Current', 'region': 'Harbour Island', 'country': 'Bahamas', 'lat': 25.4333, 'lon': -76.7833, 'tz_id': 'America/Nassau', 'localtime_epoch': 1780390144, 'localtime': '2026-06-02 04:49'}, 'current': {'last_updated_epoch': 1780389000, 'last_updated': '2026-06-02 04:30', 'temp_c': 26.5, 'temp_f': 79.8, 'is_day': 0, 'condition': {'text': 'Patchy rain nearby', 'icon': '//cdn.weatherapi.com/weather/64x64/night/176.png', 'code': 1063}, 'wind_mph': 13.0, 'wind_kph': 20.9, 'wind_degree': 230, 'wind_dir': 'SW', 'pressure_mb': 1014.0, 'pressure_in': 29.93, 'precip_mm': 0.01, 'precip_in': 0.0, 'humidity': 89, 'cloud': 77, 'feelslike_c': 26.8, 'feelslike_f': 80.2, 'windchill_c': 26.5, 'windchill_f': 79.8, 'heatindex_c': 30.6, 'heatindex_f': 87.1, 'dewpoint_c': 24.6, 'dewpoint_f': 76.2, 'vis_km': 10.0, 'vis_miles': 6.0, 'uv': 0.0, 'gust_mph': 18.1, 'gust_kph': 29.2, 'will_it_rain': 0, 'chance_of_rain': 20, 'will_it_snow': 0, 'chance_of_snow': 0}}",
+                "score": 0.9951537
+              },
+              {
+                "title": "Weather - National Center for Hydrometeorological Forecasting",
+                "url": "https://nchmf.gov.vn/KttvsiteE/en-US/2/index.html",
+                "source": "nchmf.gov.vn",
+                "summary": "Weather for Location - Update 13h - 02/06/2026 ; Regional climate characteristics in Hanoi · 16°C · 20°C · 24°C · 28°C ; Regional climate characteristics in Sơn La",
+                "score": 0.9951325
+              },
+              {
+                "title": "Today's Observations - RMC Nagpur",
+                "url": "https://imdnagpur.gov.in/pages/observations.php",
+                "source": "imdnagpur.gov.in",
+                "summary": "Local (City) Weather Forecast · City Weather Forecast · Agromet Advisories ... Observed On 02-06-2026. AKOLA, 42.5, 2.2, +0.7, 24.2, -5.5, -4.3, 53, 3.2. AMRAVATI",
+                "score": 0.99486035
+              }
+            ],
+            "source": "Tavily Web Search (Fallback)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_trend_analyzer_routing",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "trend_analyzer_routing",
+        "difficulty": "hard",
+        "what_it_tests": "Check if agent calls trend_analyzer for analyzing tweets context"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm kiếm các bài đăng trên Twitter nói về OpenAI"
+        },
+        {
+          "role": "assistant",
+          "content": "Tôi đã tìm thấy một số bài đăng nói về OpenAI trên Twitter."
+        },
+        {
+          "role": "user",
+          "content": "Hãy phân tích xu hướng, từ khóa và sentiment của các bài đăng này."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "trend_analyzer",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "trend_analyzer",
+            "args": {
+              "data": "Tôi đã tìm thấy một số bài đăng nói về OpenAI trên Twitter."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "trend_analyzer",
+          "args": {
+            "data": "Tôi đã tìm thấy một số bài đăng nói về OpenAI trên Twitter."
+          },
+          "result": {
+            "tool": "trend_analyzer",
+            "trend_analysis": {
+              "trending_topics": [
+                "tim",
+                "thay",
+                "bai",
+                "ang",
+                "noi",
+                "openai",
+                "tren",
+                "twitter"
+              ],
+              "keywords": [
+                "tim",
+                "thay",
+                "bai",
+                "ang",
+                "noi",
+                "openai",
+                "tren",
+                "twitter"
+              ],
+              "sentiment": "Neutral",
+              "sentiment_score": {
+                "positive": 0,
+                "negative": 0
+              },
+              "summary": "Main keywords/topics: 'tim', 'thay', 'bai', 'ang', 'noi'. Sentiment is Neutral (positive: 0, negative: 0)."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
