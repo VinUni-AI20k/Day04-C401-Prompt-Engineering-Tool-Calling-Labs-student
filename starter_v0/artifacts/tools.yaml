@@ -37,6 +37,12 @@ tools:
         limit: {type: integer, default: 5, description: "Số lượng"}
       required: [query]
 
+  - name: twitter_trends
+    description: Fetches the current trending topics globally from X/Twitter. Useful for discovering hot topics and what people are talking about right now.
+    parameters:
+      type: object
+      properties: {}
+
   - name: lookup
     description: "Tra cứu thông tin trên internet."
     parameters:

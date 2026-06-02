@@ -15,6 +15,7 @@ from .fetch.tool import read_url
 from .format.tool import render_digest
 from .policy.tool import search_company_policy
 from .social_search.tool import search_tweets
+from .twitter_trends.tool import get_twitter_trends
 from .send.tool import send_telegram
 from .lookup.tool import web_search
 from .current_time.tool import get_current_time
@@ -32,6 +33,7 @@ TOOL_FUNCTIONS = {
     "clarify": ask_user,
     "timeline": get_user_tweets,
     "social_search": search_tweets,
+    "twitter_trends": get_twitter_trends,
     "lookup": web_search,
     "fetch": read_url,
     "format": render_digest,
