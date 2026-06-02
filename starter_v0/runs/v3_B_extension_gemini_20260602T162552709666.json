@@ -1,0 +1,2533 @@
+{
+  "run_id": "v3_B_extension_gemini_20260602T162552709666",
+  "version": "v3",
+  "artifact_version": "v3+peb1c8179815b+tb2e72f92c898",
+  "prompt_hash": "eb1c8179815bd79d34de7d326420bb99b3072e6e8ae96464c02d4411f905fc68",
+  "tools_hash": "b2e72f92c8985f44491fa99c9d04ff08350f2a26104fb6c058b19e2731b1f852",
+  "phase": "B",
+  "suite": "extension",
+  "provider": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "system_prompt": "D:\\ForCoding\\CodeProject\\VinAIEnv\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\ForCoding\\CodeProject\\VinAIEnv\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_base",
+  "dataset_role": "base",
+  "description": "Core eval cho research agent: routing đúng tool + đúng args, hỏi lại khi thiếu (ask_user), xác nhận trước khi gửi, và xử lý câu ngoài phạm vi / không cần tool. Chấm trên tool_calls + args (subset). KHÔNG sửa file này — chỉ thêm case vào eval_group.json.",
+  "generated_at": "2026-06-02T16:25:52",
+  "summary": {
+    "total_cases": 26,
+    "measured_cases": 23,
+    "provider_error_cases": 3,
+    "passed_cases": 9,
+    "case_accuracy": 0.3913,
+    "tool_routing_accuracy": 0.7826,
+    "argument_accuracy": 0.3913,
+    "multiturn_accuracy": 0.2,
+    "failure_counts": {
+      "wrong_tool": 5,
+      "out_of_scope": 1,
+      "missing_info": 4,
+      "wrong_boundary": 1,
+      "wrong_arg_value": 3
+    },
+    "observed_mismatch_counts": {
+      "wrong_arg_value": 9,
+      "unexpected_tool_call": 1,
+      "missing_tool_call": 4
+    }
+  },
+  "results": [
+    {
+      "id": "R01_user_tweets_routing",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_user_tweets_name_to_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Tin CỦA một người nổi tiếng → map tên Sam Altman thành handle sama rồi gọi get_user_tweets."
+      },
+      "input": "Tweet mới nhất của Sam Altman là gì?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "sama"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "sama",
+            "items": [
+              {
+                "title": "The OpenAI Foundation is doing a lot of wonderful things.",
+                "summary": "The OpenAI Foundation is doing a lot of wonderful things.\n\nHelping society become resilient to AI is going to be incredibly important. Much more to come here!",
+                "url": "https://x.com/sama/status/2061562575322492937",
+                "source": "@sama",
+                "date": "Mon Jun 01 21:36:34 +0000 2026",
+                "metrics": {
+                  "favorites": 1747,
+                  "retweets": 140,
+                  "views": "251882"
+                }
+              },
+              {
+                "title": "OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us progra",
+                "summary": "OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us program and manufacture robots that are useful for society.\n\nAI should be able to help people in the physical world. In the short term, we are focused on robots to support skilled workers to build our future infrastructure; in the long term, we imagine everyone having a personal robot doing anything they need.\n\nOur world simulation research program, led by Aditya Ramesh (@model_mechanic), has evolved over the past year into OpenAI Robotics. Progress is rapid, and based on a foundation of co-design between robotics hardware and ML research.\n\nIf you love working hands-on across the robotics stack and want to build the future, please consider joining us. Send an email with your background and evidence of exceptional accomplishment to: robotics-recruiting@openai.com",
+                "url": "https://x.com/sama/status/2061117302528188712",
+                "source": "@sama",
+                "date": "Sun May 31 16:07:13 +0000 2026",
+                "metrics": {
+                  "favorites": 12966,
+                  "retweets": 1026,
+                  "views": "2763139"
+                }
+              },
+              {
+                "title": "We want to help the world get a head start on biodefense:",
+                "summary": "We want to help the world get a head start on biodefense:\n\nhttps://t.co/gDQfOZrLA4",
+                "url": "https://x.com/sama/status/2061101875303530871",
+                "source": "@sama",
+                "date": "Sun May 31 15:05:55 +0000 2026",
+                "metrics": {
+                  "favorites": 1542,
+                  "retweets": 176,
+                  "views": "240154"
+                }
+              },
+              {
+                "title": "RT @thsottiaux: Five million users would agree. Resetting the limits tomorrow morning to celebrate.",
+                "summary": "RT @thsottiaux: Five million users would agree. Resetting the limits tomorrow morning to celebrate.\n\nTime to go /fast",
+                "url": "https://x.com/sama/status/2061097558819356732",
+                "source": "@sama",
+                "date": "Sun May 31 14:48:46 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 378,
+                  "views": "33"
+                }
+              },
+              {
+                "title": "AI should dramatically increase quality of life and individual freedoms for people around the world.",
+                "summary": "AI should dramatically increase quality of life and individual freedoms for people around the world.\n\nThe OpenAI Foundation is making an initial $250M commitment to measurement, transition support, and new approaches to broadly shared prosperity.\n\nhttps://t.co/zOD8O94RjQ",
+                "url": "https://x.com/sama/status/2059677202917331431",
+                "source": "@sama",
+                "date": "Wed May 27 16:44:46 +0000 2026",
+                "metrics": {
+                  "favorites": 4361,
+                  "retweets": 403,
+                  "views": "487532"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R02_search_tweets_routing",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_search_tweets",
+        "difficulty": "easy",
+        "what_it_tests": "Tweet theo CHỦ ĐỀ → search_tweets, không phải get_user_tweets."
+      },
+      "input": "Mọi người đang bàn gì về GPT-5 trên Twitter?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "GPT-5"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "GPT-5"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "GPT-5",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "多重化せずGPT-5.5 mediumを5時間連続で動かしっぱなしで5時間枠がちょうど溶けてるからPro x5は厳しいかもここでコスパのいいCursor Proに手を出すか、潔くPro x20にするか",
+                "summary": "多重化せずGPT-5.5 mediumを5時間連続で動かしっぱなしで5時間枠がちょうど溶けてるからPro x5は厳しいかもここでコスパのいいCursor Proに手を出すか、潔くPro x20にするか\n$100から$200の2倍の値段で5倍から20倍になると考えるとPro x20のほうがコスパは良さそうだけど使い切れる気がしない",
+                "url": "https://x.com/_foriru_/status/2061740397299417578",
+                "source": "@_foriru_",
+                "date": "Tue Jun 02 09:23:10 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              },
+              {
+                "title": "@byjaeje gpt plus sehari 4.5k, 3 hari 9k, 5 hari 14k, 7 hari 17k, 12 hari 25k",
+                "summary": "@byjaeje gpt plus sehari 4.5k, 3 hari 9k, 5 hari 14k, 7 hari 17k, 12 hari 25k",
+                "url": "https://x.com/echan_nct/status/2061738480489877718",
+                "source": "@echan_nct",
+                "date": "Tue Jun 02 09:15:33 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "13"
+                }
+              },
+              {
+                "title": "最強のコーディングAgentが誕生してしまう🥹　だからキャンペーンは、5/31まででよかったのか。",
+                "summary": "最強のコーディングAgentが誕生してしまう🥹　だからキャンペーンは、5/31まででよかったのか。\n&gt;GPT-5.5-Codex Spark",
+                "url": "https://x.com/BrownPome/status/2061737740107207055",
+                "source": "@BrownPome",
+                "date": "Tue Jun 02 09:12:37 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "30"
+                }
+              },
+              {
+                "title": "Chat GPT plus ✏️",
+                "summary": "Chat GPT plus ✏️\n\nเมลร้าน หาร5 เมลปิดเคลม\nใช้โมเดล GPT-5,GPT4o\n\nโปร - 30 มิถุนายน\n\n07 วัน 𓏔 50 บาท \n┈┈┈┈┈┈┈┈\n30 วัน 𓏔 179 บาท ⚠️\n꒰ รีnวิตเหลือ 109 บาท ꒱\n\n𓈈 สั่งซื้อ = \nhttps://t.co/k3pYkkn4RG\n “ thx u for Oder”\n\n#หารchatgpt #หารแชทจีพีที \n#หารchatgptplus สิบห้า",
+                "url": "https://x.com/europedefen4t41/status/2061737398770528765",
+                "source": "@europedefen4t41",
+                "date": "Tue Jun 02 09:11:15 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "10"
+                }
+              },
+              {
+                "title": "𝗖𝗵𝗮𝘁 𝗚𝗣𝗧 𝗽𝗹𝘂𝘀",
+                "summary": "𝗖𝗵𝗮𝘁 𝗚𝗣𝗧 𝗽𝗹𝘂𝘀\n\n𐙚 แบบ 30 วัน\nเมลหาร (3) — 129฿\n\n💬โมเดล GPT-5, GPT4o, รับประกันเคลมเมลปิดภายใน 20 วัน\n\nʰ͙ᵉ͙ˡ͙ˡ͙ᵒ͙ สั่งซื้อ line ลิ้งค์หน้าไบโอน้า\n\n⁠#หารChatGPT ⁠⁠#ChatGPTPlus⁠ #ChatGPTราคาถูก⁠",
+                "url": "https://x.com/kcrayonstore/status/2061736334637793757",
+                "source": "@kcrayonstore",
+                "date": "Tue Jun 02 09:07:02 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "18"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R03_web_news_routing",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_web_news",
+        "difficulty": "medium",
+        "what_it_tests": "Tin thời sự trên web → web_search topic=news, timeframe=day (hôm nay)."
+      },
+      "input": "Tin tức AI hôm nay có gì nổi bật?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI news today",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'AI', got 'AI news today'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI news today",
+            "topic": "news",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI news today",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "19Network Introduces the UAE’s First AI-Powered Newsroom,Redefini - The National Law Review",
+                "url": "https://natlawreview.com/press-releases/19network-introduces-uaes-first-ai-powered-newsroomredefining-digital-news",
+                "source": "natlawreview.com",
+                "summary": "### 19Network Introduces the UAE’s First AI-Powered Newsroom,Redefining Digital News for Business,Real Estate and AI Tech. *19Network launches an AI-powered newsroom covering UAE news, real estate, technology, business, lifestyle and global developments.*. DUBAI, UNITED ARAB EMIRATES, June 2, 2026 /EINPresswire.com/ -- 19Network.com, a UAE-based digital news and editorial platform, has introduced itself as the UAE’s first AI-powered newsroom, built to deliver fast, relevant and sector-focused coverage across the UAE, the wider GCC and international markets. Its core coverage areas include UAE news, real estate, artificial intelligence, technology, business, finance, lifestyle, travel, entertainment, sports, education, health and global developments. With its AI-powered newsroom direction, 19Network aims to provide a new model for digital publishing from the UAE, focused on speed, sector understanding and editorial relevance. As the UAE continues to strengthen its position as a global hub for business, investment, innovation, real estate, tourism and technology, the need for sharp, timely and multi-sector news coverage has become more important than ever.",
+                "score": 0.99657035
+              },
+              {
+                "title": "Stock Market Today: Dow Up As Trump Says This On Iran; AI Stocks Pop On Anthropic IPO Move (Live Coverage) - Investor's Business Daily",
+                "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-us-iran-deal-nvidia-stock-nvda/",
+                "source": "investors.com",
+                "summary": "# Stock Market Today: Dow Up As Trump Says This On Iran; AI Stocks Pop On Anthropic IPO Move | Investor's Business Daily. *   Stocks Near A Buy Zone. *   IBD 50 Stocks To Watch. *   How To Invest In Stocks. # Stock Market Today: Dow Up As Trump Says This On Iran; AI Stocks Pop On Anthropic IPO Move (Live Coverage). Also, **Nvidia** (NVDA) was among winning stocks while Anthropic made an IPO move and **IBM** (IBM) tested an entry on the stock market today. **Salesforce** (CRM) outperformed with a gain of nearly 10% while Nvidia climbed more than 6%. But what impact will the Fed’s incoming leader have on the interest rates and the stock market? A key theme for the stock for the stock market in 2026 has been the outperformance of artificial intelligence stocks.And AI stocks were rallying again Monday amid the news Anthropic has made a key filing as it eyes an initial public offering later this year.",
+                "score": 0.97702265
+              },
+              {
+                "title": "In Pictures: iTnews Executive Retreat - Data & AI edition - iTnews",
+                "url": "https://www.itnews.com.au/gallery/in-pictures-itnews-executive-retreat---data-ai-edition-626334",
+                "source": "itnews.com.au",
+                "summary": "## In Pictures: iTnews Executive Retreat - Data & AI edition ## 'Miasma' worm infests Red Hat npm packages ## Telstra elevates Dayle Stevens to company-wide AI role ## Cbus Super Fund's Group head of technology departs ## HBF faces AI agent to members for first time. # In Pictures: iTnews Executive Retreat - Data & AI edition. ## A selection of photos from the recent iTnews Executive Retreat at the Chateau Elan in the Hunter Valley. At the iTnews Executive Retreat: Data & AI Edition at the Chateau Elan in the Hunter Valley delegates came together to reflect, share insights and explore the realities of technology and business leadership away from the office. With content focused on data and AI leadership, scaling AI and recruiting in the AI era, and activities including cornhole, the hydro deck, cheese and wine tasting, and s'mores by the firepit, the group fostered peer to peer connections, balancing learning and restoration.",
+                "score": 0.9213576
+              },
+              {
+                "title": "Software Stocks Gain After Nvidia CEO Dispels SaaSpocalypse Fears - WSJ",
+                "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-06-01-2026/card/software-stocks-gain-after-nvidia-ceo-dispels-saaspocalypse-fears-Lmr3hHYsbPEFple7KbYd",
+                "source": "wsj.com",
+                "summary": "# Software Stocks Gain After Nvidia CEO Dispels SaaSpocalypse Fears. *   English Edition  Edition Use Alt + Down Arrow to expand. Markets CoverageThe latest news & analysis. Stock Market Today: Nvidia Fuels AI Enthusiasm; Oil Rises. Image 1: Mauro Orru hedcut. Image 2: Software Stocks Gain After Nvidia CEO Dispels SaaSpocalypse Fears. Lam Yik Fei/Bloomberg News. _\"A lot of people have said, Jensen, AI is coming. Therefore, all of the software companies are going to go out of business. I said it's exactly the opposite because there are going to be so many agents.\"_. —Nvidia CEO Jensen Huang in his keynote address at the Computex conference in Taipei. Huang name-checked the likes of Cadence Design Systems, Crowdstrike, Palantir, SAP and ServiceNow, brushing aside fears that AI could cannibalize their business. Image 3: The Wall Street Journal. Continue reading your article with.",
+                "score": 0.91730267
+              },
+              {
+                "title": "Morning Bid: AI and 1984 - Reuters",
+                "url": "https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-01/",
+                "source": "reuters.com",
+                "summary": "# Morning Bid: AI and 1984 | Reuters. Exclusive news, data and analytics for financial market professionals Learn more about Refinitiv. ## Browse World. ## Browse Markets. # Morning Bid: AI and 1984. June 1 (Reuters) - What matters in U.S. and global markets today. By Mike Dolan, opens new tab, Editor-at-Large, Finance and Markets. The Reuters Iran Briefing newsletter keeps you informed with the latest developments and analysis of the Iran war. ## AI AND 1984. Meantime, shares of South Korea’s Samsung added another 10% on Monday, feeding off a mix of news, from the start of shipments of its new HBM4E chip to expectations ​surrounding a meeting with Nvidia's Huang later this week. You can find ROI on the Reuters website, opens new tab, and you can follow us on LinkedIn, opens new tab and X, opens new tab. *   Reuters and AI, opens new tab.",
+                "score": 0.908618
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R04_read_url_routing",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_read_url",
+        "difficulty": "easy",
+        "what_it_tests": "Đã có link cụ thể → read_url, không phải web_search."
+      },
+      "input": "Tóm tắt bài này giúp mình: https://openai.com/blog/gpt-5",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://openai.com/blog/gpt-5"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://openai.com/blog/gpt-5",
+            "items": [
+              {
+                "title": "OpenAI",
+                "url": "https://openai.com/blog/gpt-5",
+                "source": "openai.com",
+                "summary": "OpenAI\n\n# 404\n\nPath bar went quiet\n\nLetters waited for new sense\n\nType a better north\n\nby [gpt-5.5(opens in a new window)](https://chatgpt.com/?model=5.5&openaicom-did=ba72ad46-bd45-4237-af92-f7147da6d0ae&openaicom_referred=true)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R05_limit_arg",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_limit",
+        "difficulty": "easy",
+        "what_it_tests": "Trích đúng limit=10 từ '10 tweet'."
+      },
+      "input": "Lấy 10 tweet mới nhất của Elon Musk",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 10
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "limit": 10,
+              "screenname": "elonmusk"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 10,
+            "screenname": "elonmusk"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "RT @DimaZeniuk: Neuralink is planning its first Blindsight implant later this year, aiming to restore limited vision eve",
+                "summary": "RT @DimaZeniuk: Neuralink is planning its first Blindsight implant later this year, aiming to restore limited vision even for people who ha…",
+                "url": "https://x.com/elonmusk/status/2061705200734543896",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 07:03:19 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 629,
+                  "views": "13"
+                }
+              },
+              {
+                "title": "All accessories to the murder must go to prison for a long time",
+                "summary": "All accessories to the murder must go to prison for a long time",
+                "url": "https://x.com/elonmusk/status/2061704965639618851",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 07:02:23 +0000 2026",
+                "metrics": {
+                  "favorites": 24046,
+                  "retweets": 3539,
+                  "views": "3224223"
+                }
+              },
+              {
+                "title": "RT @visegrad24: In his final moments, Henry Nowak told police officers nine times “I can’t breathe” and four times that ",
+                "summary": "RT @visegrad24: In his final moments, Henry Nowak told police officers nine times “I can’t breathe” and four times that he had been stabbed…",
+                "url": "https://x.com/elonmusk/status/2061701267257442740",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:47:41 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 11845,
+                  "views": "23"
+                }
+              },
+              {
+                "title": "RT @DaveKent101: Today’s question.",
+                "summary": "RT @DaveKent101: Today’s question.\n\nWhy hasn’t Vickrum Digwa’s  brother (Gurpreet Digwa) been arrested and charged with assisting an offend…",
+                "url": "https://x.com/elonmusk/status/2061701118925865253",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:47:05 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 3037,
+                  "views": "27"
+                }
+              },
+              {
+                "title": "RT @RDonaldson91: I’ve just watched the Henry Nowak body-cam footage. Digwa deserves the death penalty and his family wh",
+                "summary": "RT @RDonaldson91: I’ve just watched the Henry Nowak body-cam footage. Digwa deserves the death penalty and his family who covered for him d…",
+                "url": "https://x.com/elonmusk/status/2061699685048631582",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:41:24 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 2254,
+                  "views": "18"
+                }
+              },
+              {
+                "title": "RT @SawyerMerritt: SpaceX has joined three other industry groups in calling on the FCC to adopt a nationwide policy to a",
+                "summary": "RT @SawyerMerritt: SpaceX has joined three other industry groups in calling on the FCC to adopt a nationwide policy to automatically unlock…",
+                "url": "https://x.com/elonmusk/status/2061699594707448305",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:41:02 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 311,
+                  "views": "17"
+                }
+              },
+              {
+                "title": "Yes",
+                "summary": "Yes",
+                "url": "https://x.com/elonmusk/status/2061699465216659899",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:40:31 +0000 2026",
+                "metrics": {
+                  "favorites": 15781,
+                  "retweets": 1981,
+                  "views": "1862383"
+                }
+              },
+              {
+                "title": "Tesla IPO market cap was 0.1% of its current value",
+                "summary": "Tesla IPO market cap was 0.1% of its current value",
+                "url": "https://x.com/elonmusk/status/2061699109527195862",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:39:06 +0000 2026",
+                "metrics": {
+                  "favorites": 26312,
+                  "retweets": 2461,
+                  "views": "3065357"
+                }
+              },
+              {
+                "title": "💯",
+                "summary": "💯",
+                "url": "https://x.com/elonmusk/status/2061698820975804560",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:37:58 +0000 2026",
+                "metrics": {
+                  "favorites": 19886,
+                  "retweets": 2729,
+                  "views": "6575046"
+                }
+              },
+              {
+                "title": "RT @MattWalshBlog: One of the big reasons for the current lack of patriotism and pride in our nation’s history is that a",
+                "summary": "RT @MattWalshBlog: One of the big reasons for the current lack of patriotism and pride in our nation’s history is that about 40 years ago o…",
+                "url": "https://x.com/elonmusk/status/2061698110481690879",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:35:08 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 2139,
+                  "views": "16"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R06_timeframe_arg",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_timeframe",
+        "difficulty": "medium",
+        "what_it_tests": "'tuần này' → timeframe=week."
+      },
+      "input": "Tin công nghệ trong tuần này",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "query": "tin công nghệ nổi bật tuần này",
+              "timeframe": "week"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "topic": "news",
+            "query": "tin công nghệ nổi bật tuần này",
+            "timeframe": "week"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "tin công nghệ nổi bật tuần này",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "The Week In Technology, June 1-5, 2026 - Aviation Week",
+                "url": "https://aviationweek.com/aerospace/emerging-technologies/week-technology-june-1-5-2026",
+                "source": "aviationweek.com",
+                "summary": "* Aviation Week & Space Technology - Inside MRO. * CAPA Airline Leader Summit - Airlines in Transition. * CAPA Airline Leader Summit - Americas. * CAPA Airline Leader Summit - Australia Pacific. * CAPA Airline Leader Summit - Asia & Sustainability Awards. * CAPA Airline Leader Summit - World & Awards for Excellence. * CAPA Asia Aviation Summit & Awards for Excellence. * Aviation Week's Space Tech Challenge Awards. - Aviation Week & Space Technology 100-Year. # The Week In Technology, June 1-5, 2026. Honda Flies Full-Scale eVTOL Honda says its full-scale uncrewed electric vertical-takeoff-and-landing demonstrator completed its first hover flight in early April in the U.S. The Japanese carmaker is developing the hybrid-electric air taxi with an eye to service entry in the early 2030s. Graham leads Aviation Week's coverage of technology, focusing on engineering and technology across the aerospace industry, with a special focus on identifying technologies of strategic importance to aviation, aerospace and defense. **The Week In Technology, June 1-5, 2026** is available to both *Aviation Week & Space Technology* and AWIN subscribers.",
+                "score": 0.5097644
+              },
+              {
+                "title": "The Week In Technology, May 25-29, 2026 - Aviation Week",
+                "url": "https://aviationweek.com/aerospace/emerging-technologies/week-technology-may-25-29-2026",
+                "source": "aviationweek.com",
+                "summary": "* Aviation Week & Space Technology - Inside MRO. * CAPA Airline Leader Summit - Airlines in Transition. * CAPA Airline Leader Summit - Americas. * CAPA Airline Leader Summit - Australia Pacific. * CAPA Airline Leader Summit - Asia & Sustainability Awards. * CAPA Airline Leader Summit - World & Awards for Excellence. * CAPA Asia Aviation Summit & Awards for Excellence. * Aviation Week's Space Tech Challenge Awards. - Aviation Week & Space Technology 100-Year. # The Week In Technology, May 25-29, 2026. Graham leads Aviation Week's coverage of technology, focusing on engineering and technology across the aerospace industry, with a special focus on identifying technologies of strategic importance to aviation, aerospace and defense. **The Week In Technology, May 25-29, 2026** is part of our *Aviation Week & Space Technology* - *Inside MRO* and AWIN subscriptions. **Subscribe now** to read this content, plus receive full coverage of what's next in technology from the experts trusted by the commercial aircraft MRO community. The Week In Technology, April 27-May 1, 2026.",
+                "score": 0.39981163
+              },
+              {
+                "title": "Lead-Free Perovskites Push Solar Cells Toward Safer High-Efficiency Designs - AZoM",
+                "url": "https://www.azom.com/news.aspx?newsID=65493",
+                "source": "azom.com",
+                "summary": "**By replacing toxic lead with safer alternatives such as tin, bismuth, antimony, and double perovskites, researchers are charting a path toward next-generation solar cells that could combine high performance with improved environmental safety.**. Image 4: Figure oulined the schematic representation of lead-free perovskite structure (A site represents monovalent cation, X represents a halide anion with bi/trivalent cation from each type of perovskite family) and the year-wise progression of the most efficient PSCs from each lead-free perovskite family from 2016 to 2025. _Figure oulined the schematic representation of lead-free perovskite structure (A site represents monovalent cation, X represents a halide anion with bi/trivalent cation from each type of perovskite family) and the year-wise progression of the most efficient PSCs from each lead-free perovskite family from 2016 to 2025._. The review highlighted key design approaches that have helped raise tin-based lead-free device power conversion efficiencies from below 1% to 17.13%, thereby providing a research roadmap for developing more scalable, high-performance, and environmentally sustainable solar technologies.",
+                "score": 0.33633104
+              },
+              {
+                "title": "The Week in Tech: The cost of AI and Uber’s token problem - Marketing Week",
+                "url": "https://www.marketingweek.com/week-in-tech-ai-uber-token/",
+                "source": "marketingweek.com",
+                "summary": "# The Week in Tech: The cost of AI and Uber’s token problem. Marketing Week’s weekly round-up of the technology stories that impact the marketing sector: from AI to martech, regulation to public perceptions. Here’s a thought for you: who’s actually paying for all the AI you are using? It’s a question that often goes unnoticed during the frenzied wave of excitement to add AI to pretty much anything you were doing just fine before. ## The Week in Tech: The end of search as we know it and Google Glass is back. ## The Week in Tech: Scrapping in Silicon Valley and Peloton’s latest punt. ## Latest from Marketing Week. Lidl has benefitted from a growth in market share, as Ocado retains its position as the fastest growing grocer. ## The Marketing Week Podcast: Arla Foods’ CMO on delivering marketing transformation. In the latest episode, Arla Foods’ CMO Patrik Hansson takes us inside the dairy giant’s marketing overhaul, from capability and insight to storytelling and creativity.",
+                "score": 0.14706452
+              },
+              {
+                "title": "Elementos brings general manager on board for Spain operations - Mining.com.au",
+                "url": "https://mining.com.au/elementos-brings-general-manager-on-board-for-spain-operations/",
+                "source": "mining.com.au",
+                "summary": "Elementos (ASX:ELT) has appointed Antonio Martín Sánchez as the company’s General Manager for its Spain-based operations, effective 1 July 2026. This will include the development of the Oropesa Tin Project in Andalucía and the project’s alignment with the Robledollano Tin Smelter, in which the company has a binding option to acquire a 50% interest stake. He has contributed to delivering reduced emissions, energy efficiency, and environmental, social, and governance (ESG) reporting in previous roles, which Elementos says aligns with its commitment to responsible development and its ambition to establish a *“modern, responsible, and reliable tin supply chain”*from Spain for Europe. *“The board welcomes Antonio to MESPA and looks forward to his contribution as we progress the growth of our vertically integrated tin operations.”*. Elementos is a tin and critical minerals development company focused on becoming a key supplier to global technology and electrification markets, with its flagship asset being the Oropesa Tin Project in Spain.",
+                "score": 0.10818895
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R07_search_type_arg",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_search_type",
+        "difficulty": "medium",
+        "what_it_tests": "'phổ biến/top' → search_type=Top (không phải Latest)."
+      },
+      "input": "Cho mình các tweet phổ biến (top) nhất về OpenAI",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "search_type": "Top",
+              "query": "OpenAI"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "search_type": "Top",
+            "query": "OpenAI"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "OpenAI",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "everyone's paying openai $200/mo. i paid nvidia $2,999 once",
+                "summary": "everyone's paying openai $200/mo. i paid nvidia $2,999 once\n\n2 months later i'm up $22,000 net\n\nwas building a micro-SaaS last months. inference costs eating 35% of revenue\n\nscaling users meant scaling losses. something had to change\n\nbought a local AI box in january, moved everything on-device\n\nAPI bill: $340/mo -> $11 in electricity\n\nthen clients started asking: \"does my data go to openai?\"\n\nwhen the answer was no - they didn't just stay. they paid more\n\nraised pricing 2.7x for a \"fully private\" tier\n\nsame model, same outputs, just running on hardware i own\n\n8 clients paying $149/mo for on-premise AI now\n\n4 poached from competitors who couldn't offer it\n\nfew months breakdown:\n> box: $2,999 one-time\n> electricity: $100\n> API costs avoided: $4,080\n> new revenue from private tier: $21,400\n\nbox paid for itself in month 8. every dollar after is 99% margin\n\nBookmark it asap and use before all noticed\n\nmost people obsess over prompts. nobody optimizes infrastructure\n\ncloud isn't cheaper. it's someone else's profit margin disguised as convenience",
+                "url": "https://x.com/L1vsun/status/2060829315135053936",
+                "source": "@L1vsun",
+                "date": "Sat May 30 21:02:51 +0000 2026",
+                "metrics": {
+                  "favorites": 153,
+                  "retweets": 56,
+                  "views": "12467"
+                }
+              },
+              {
+                "title": "everyone's paying OpenAI $200 a month. a founder i've been tracking paid Nvidia $2,999 once and came out roughly $22,000",
+                "summary": "everyone's paying OpenAI $200 a month. a founder i've been tracking paid Nvidia $2,999 once and came out roughly $22,000 ahead a few months later\n\nhe was running a micro-SaaS where inference ate 35% of revenue, so scaling users just scaled the losses. he moved everything onto a local ai box and the API bill dropped from $340 a month to about $11 in electricity\n\nthe part that actually made the money wasn't the savings. clients started asking if their data went to OpenAI, and when the answer was no, they paid for it\n\n> raised pricing 2.7x for a fully private tier\n> 8 clients at $149 a month for on-premise ai\n> 4 poached from competitors who can't offer privacy\n> same model, same outputs, hardware he owns\n\neveryone optimizes prompts. almost nobody touches the infrastructure, which is exactly where the margin was sitting\n\ncloud isn't cheaper, it's someone else's profit margin sold to you as convenience",
+                "url": "https://x.com/0xKiyoro/status/2061147093964624011",
+                "source": "@0xKiyoro",
+                "date": "Sun May 31 18:05:36 +0000 2026",
+                "metrics": {
+                  "favorites": 159,
+                  "retweets": 86,
+                  "views": "19962"
+                }
+              },
+              {
+                "title": "🚨 do you understand what is about to happen to the stock market..",
+                "summary": "🚨 do you understand what is about to happen to the stock market..\n\nThree of the most valuable private companies on earth - SpaceX, OpenAI and Anthropic - are all racing to go public in the same year. \n\nTogether they could dump close to $3 trillion of market value onto public investors in a matter of months.\n\n- Anthropic, the company behind Claude, went from $9B to $30B+ annualized revenue in 15 months - roughly 1,400% growth\n- It's now valued around $965B, passing OpenAI for the first time ever\n- 2026's IPO lineup is unreal: SpaceX (up to $75B raise, biggest in history), OpenAI targeting fall, and Anthropic eyeing October\n- Big funds are already hoarding cash and may sell Alphabet and other megacaps just to make room\n\nThe AI gold rush is no longer private. The shovel sellers are about to ring the bell.",
+                "url": "https://x.com/k1rallik/status/2061481677407302072",
+                "source": "@k1rallik",
+                "date": "Mon Jun 01 16:15:07 +0000 2026",
+                "metrics": {
+                  "favorites": 46,
+                  "retweets": 3,
+                  "views": "8278"
+                }
+              },
+              {
+                "title": "🚨 the richest man on the planet just lost a $134 billion lawsuit in under two hours..",
+                "summary": "🚨 the richest man on the planet just lost a $134 billion lawsuit in under two hours..\n\nElon Musk sued OpenAI, Sam Altman, and Microsoft.. claimed they stole a nonprofit he helped build and turned it into a money machine.. wanted Altman fired, the company dismantled, and $134 billion returned\n\nthe jury didn't even get to whether OpenAI did anything wrong.. they said Musk filed too late.. statute of limitations.. three years to sue and he missed the window\n\nthink about that.. a man who runs X, advises the president, launches rockets, and builds AI at xAI.. couldn't beat a filing deadline\n\nin 2015 Musk put $38 million into OpenAI.. in 2018 he walked away.. in 2023 he built xAI to compete with them.. in 2024 he sued.. in 2026 a jury said you should've spoken up sooner\n\ntwo billionaires went to war over who gets to control the technology that might replace the rest of us.. and it ended not with a verdict on right or wrong.. but on a calendar",
+                "url": "https://x.com/TukiFromKL/status/2056448196629680214",
+                "source": "@TukiFromKL",
+                "date": "Mon May 18 18:53:51 +0000 2026",
+                "metrics": {
+                  "favorites": 419,
+                  "retweets": 37,
+                  "views": "201749"
+                }
+              },
+              {
+                "title": "Anthropic filing for IPO is the moment the AI race gets a public scoreboard",
+                "summary": "Anthropic filing for IPO is the moment the AI race gets a public scoreboard\n\nfor 3 years this was private market insanity:\n\n- OpenAI raising at $852B\n- Anthropic jumping to a $965B valuation\n- SpaceX reportedly targeting $2T\n- Claude run-rate revenue crossing $47B\n- Claude Code already doing $2.5B + run rate in February\n- 8 of the Fortune 10 using Claude\n\nnow the craziest part:\n\nif SpaceX, OpenAI and Anthropic all hit the market around these levels, public investors are suddenly staring at almost $4T of new tech value\n\nthe AI race was funded in private\n\nnow Wall Street gets the bill",
+                "url": "https://x.com/savipww/status/2061491555102278019",
+                "source": "@savipww",
+                "date": "Mon Jun 01 16:54:22 +0000 2026",
+                "metrics": {
+                  "favorites": 12,
+                  "retweets": 2,
+                  "views": "1980"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R08_out_of_scope",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope",
+        "difficulty": "easy",
+        "what_it_tests": "Câu ngoài phạm vi research → KHÔNG gọi tool, từ chối/định hướng."
+      },
+      "input": "Giải giúp mình bài toán tích phân: nguyên hàm của x^2 là gì?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "Nguyên hàm của x^2 là (x^3)/3 + C (trong đó C là hằng số tích phân)."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": "unexpected_tool_call",
+        "failure_type": "out_of_scope",
+        "failures": [
+          "expected no tool call"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "send",
+          "args": {
+            "text": "Nguyên hàm của x^2 là (x^3)/3 + C (trong đó C là hằng số tích phân)."
+          },
+          "result": {
+            "tool": "send_telegram",
+            "status": "needs_confirmation",
+            "message": "Only send after the user explicitly confirms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "R09_no_tool_capability",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "no_tool_meta",
+        "difficulty": "easy",
+        "what_it_tests": "Câu hỏi meta → trả lời thẳng, KHÔNG gọi tool."
+      },
+      "input": "Bạn là gì và làm được những gì?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi là một trợ lý nghiên cứu thông minh, được thiết kế để hỗ trợ bạn xử lý công việc một cách nhanh chóng và chủ động.\n\nTôi có khả năng thực hiện các tác vụ sau mà không cần bạn phải hướng dẫn chi tiết từng bước:\n\n*   **Tìm kiếm thông tin:** Tra cứu dữ liệu trên internet, mạng xã hội hoặc các bài báo khoa học.\n*   **Xử lý nội dung:** Đọc và tóm tắt nội dung từ các đường dẫn (URL), tài liệu hoặc bài viết.\n*   **Hỗ trợ công việc:** Tìm kiếm việc làm, soạn thảo và gửi văn bản, hoặc đăng tải thông tin.\n*   **Tra cứu nội bộ:** Tìm kiếm thông tin trong các tài liệu chính sách hoặc hướng dẫn cụ thể.\n\nTôi ưu tiên sự hiệu quả: nếu có thông tin chưa rõ ràng, tôi sẽ tự đưa ra phán đoán hợp lý và thực hiện ngay thay vì làm phiền bạn bằng các câu hỏi. Bạn chỉ cần đưa ra yêu cầu, tôi sẽ hoàn thành nó trong một bước duy nhất.",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "R10_missing_handle",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_missing_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Thiếu handle → ask_user, KHÔNG đoán bừa người nào."
+      },
+      "input": "Tóm tắt 5 tweet mới nhất giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call timeline"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "sama",
+            "limit": 5
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "sama",
+            "items": [
+              {
+                "title": "The OpenAI Foundation is doing a lot of wonderful things.",
+                "summary": "The OpenAI Foundation is doing a lot of wonderful things.\n\nHelping society become resilient to AI is going to be incredibly important. Much more to come here!",
+                "url": "https://x.com/sama/status/2061562575322492937",
+                "source": "@sama",
+                "date": "Mon Jun 01 21:36:34 +0000 2026",
+                "metrics": {
+                  "favorites": 1748,
+                  "retweets": 140,
+                  "views": "251954"
+                }
+              },
+              {
+                "title": "OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us progra",
+                "summary": "OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us program and manufacture robots that are useful for society.\n\nAI should be able to help people in the physical world. In the short term, we are focused on robots to support skilled workers to build our future infrastructure; in the long term, we imagine everyone having a personal robot doing anything they need.\n\nOur world simulation research program, led by Aditya Ramesh (@model_mechanic), has evolved over the past year into OpenAI Robotics. Progress is rapid, and based on a foundation of co-design between robotics hardware and ML research.\n\nIf you love working hands-on across the robotics stack and want to build the future, please consider joining us. Send an email with your background and evidence of exceptional accomplishment to: robotics-recruiting@openai.com",
+                "url": "https://x.com/sama/status/2061117302528188712",
+                "source": "@sama",
+                "date": "Sun May 31 16:07:13 +0000 2026",
+                "metrics": {
+                  "favorites": 12966,
+                  "retweets": 1026,
+                  "views": "2763202"
+                }
+              },
+              {
+                "title": "We want to help the world get a head start on biodefense:",
+                "summary": "We want to help the world get a head start on biodefense:\n\nhttps://t.co/gDQfOZrLA4",
+                "url": "https://x.com/sama/status/2061101875303530871",
+                "source": "@sama",
+                "date": "Sun May 31 15:05:55 +0000 2026",
+                "metrics": {
+                  "favorites": 1542,
+                  "retweets": 176,
+                  "views": "240157"
+                }
+              },
+              {
+                "title": "RT @thsottiaux: Five million users would agree. Resetting the limits tomorrow morning to celebrate.",
+                "summary": "RT @thsottiaux: Five million users would agree. Resetting the limits tomorrow morning to celebrate.\n\nTime to go /fast",
+                "url": "https://x.com/sama/status/2061097558819356732",
+                "source": "@sama",
+                "date": "Sun May 31 14:48:46 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 378,
+                  "views": "33"
+                }
+              },
+              {
+                "title": "AI should dramatically increase quality of life and individual freedoms for people around the world.",
+                "summary": "AI should dramatically increase quality of life and individual freedoms for people around the world.\n\nThe OpenAI Foundation is making an initial $250M commitment to measurement, transition support, and new approaches to broadly shared prosperity.\n\nhttps://t.co/zOD8O94RjQ",
+                "url": "https://x.com/sama/status/2059677202917331431",
+                "source": "@sama",
+                "date": "Wed May 27 16:44:46 +0000 2026",
+                "metrics": {
+                  "favorites": 4361,
+                  "retweets": 403,
+                  "views": "487534"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R11_missing_url",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_missing_url",
+        "difficulty": "medium",
+        "what_it_tests": "Nói 'bài này' nhưng không có link → ask_user xin URL."
+      },
+      "input": "Tóm tắt bài viết này hộ mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "tóm tắt bài viết mới nhất về công nghệ"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call lookup"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "tóm tắt bài viết mới nhất về công nghệ"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "tóm tắt bài viết mới nhất về công nghệ",
+            "topic": "general",
+            "timeframe": "week",
+            "items": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "R12_confirm_before_send",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "confirm_before_write",
+        "difficulty": "medium",
+        "what_it_tests": "Hành động ghi (gửi) → xác nhận trước (ask_user yes_no), không tự gửi."
+      },
+      "input": "Đăng bản tin này lên Telegram giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "Bản tin mới nhất: Cập nhật thông tin quan trọng trong ngày."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call send"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "send",
+          "args": {
+            "text": "Bản tin mới nhất: Cập nhật thông tin quan trọng trong ngày."
+          },
+          "result": {
+            "tool": "send_telegram",
+            "status": "needs_confirmation",
+            "message": "Only send after the user explicitly confirms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "R13_parallel_web_and_tweets",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "parallel_tool_calls",
+        "difficulty": "hard",
+        "what_it_tests": "Một request cần hai nguồn → gọi cả web_search và search_tweets; eval không phụ thuộc thứ tự tool call."
+      },
+      "input": "Tìm trên web tin AI hôm nay và tìm thêm tweet về AI.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI news today",
+              "topic": "news"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI",
+              "search_type": "Latest"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'AI', got 'AI news today'",
+          "timeframe: expected 'day', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI news today",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI news today",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Stock Market Today: New Nvidia Chip Fuels AI Enthusiasm, Oil Climbs After Mideast Hostilities — Live Updates - WSJ",
+                "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-06-01-2026",
+                "source": "wsj.com",
+                "summary": "# Stock Market Today: Dow Opens Lower, Oil Climbs; New Nvidia Chip Fuels AI Enthusiasm — Live Updates. S&P 500 7580.15 0.00%. Nasdaq 26999.93 0.10%. U.S. 10 Yr -27/32 4.501%. KBW Nasdaq Bank Index 168.21 -0.72%. S&P GSCI Index Spot 713.01 2.65%. # Stock Market Today: New Nvidia Chip Fuels AI Enthusiasm. U.S. stock futures rose this morning, driven by enthusiasm around AI, though they were later knocked by Iran's semi-official Tasnim news agency that the country was suspending negotiations with the U.S. over Israel's conduct. Adding to the AI fervor this morning was Nvidia’s unveiling of its new superchip, which it described as “the most efficient PC chip ever built.” The world’s most valuable company will work with manufacturers including Dell Technologies, Microsoft and Lenovo to build laptops, which will be designed for running AI agents. South Korea’s Kospi index, which is dominated by AI chip makers Samsung and SK Hynix, surged 3.7%, bringing its year-to-date gains to 109%.",
+                "score": 0.6786044
+              },
+              {
+                "title": "Morning Bid: AI and 1984 - Reuters",
+                "url": "https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-01/",
+                "source": "reuters.com",
+                "summary": "# Morning Bid: AI and 1984 | Reuters. Exclusive news, data and analytics for financial market professionals Learn more about Refinitiv. ## Browse World. ## Browse Markets. # Morning Bid: AI and 1984. June 1 (Reuters) - What matters in U.S. and global markets today. By Mike Dolan, opens new tab, Editor-at-Large, Finance and Markets. The Reuters Iran Briefing newsletter keeps you informed with the latest developments and analysis of the Iran war. ## AI AND 1984. Meantime, shares of South Korea’s Samsung added another 10% on Monday, feeding off a mix of news, from the start of shipments of its new HBM4E chip to expectations ​surrounding a meeting with Nvidia's Huang later this week. You can find ROI on the Reuters website, opens new tab, and you can follow us on LinkedIn, opens new tab and X, opens new tab. *   Reuters and AI, opens new tab.",
+                "score": 0.62770075
+              },
+              {
+                "title": "AI & Tech Brief: The NSF Showdown - The Washington Post",
+                "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/05/29/ai-tech-brief-nsf-showdown/",
+                "source": "washingtonpost.com",
+                "summary": "AI & Tech Brief from WP Intelligence. # AI & Tech Brief: The NSF Showdown. Plus, Illinois’ landmark AI bill raises the ante in the fight for “preemption” in Congress. Make us preferred on Google. Sign up here to get this newsletter in your inbox. * Prominent science groups are pressuring the Senate to hold a public hearing on the confirmation of Jim O’Neill as director of the National Science Foundation. O’Neill had a series of private meetings with leading academic AI researchers at universities in Southern California to discuss the future of the NSF. * Illinois’ landmark AI bill establishes third-party audits of frontier labs, raising the ante for the fight over preemption of state AI laws in Congress. * A rundown of stories you may have missed this week, including coverage of open-source AI company Reflection AI’s new Washington operation and Andreessen Horowitz’s vision of the future of jobs in the age of AI.",
+                "score": 0.61140573
+              },
+              {
+                "title": "Illinois representative talks bill that would regulate AI companies - NBC News",
+                "url": "https://www.nbcnews.com/video/illinois-representative-talks-bill-that-would-regulate-ai-companies-264128069529",
+                "source": "nbcnews.com",
+                "summary": "* ## New concerns over use of A.I. to draft police reports. * ## Jury tosses Elon Musk's lawsuit against OpenAI and Sam Altman. * ## Elon Musk's lawyer accuses OpenAI CEO of putting profit over people. * ## OpenAI co-founder and Microsoft CEO testify in Elon Musk v OpenAI trial. * ## AI-generated video supporting Spencer Pratt for mayor of L.A. goes viral adding to concern over fake campaign ads. * ## People are turning text message threads into fun songs using AI in a new trend on social media. * ## Khan Academy to launch a new AI degree. * ## Elon Musk testifies at OpenAI trial. * ## Jury selection begins in Elon Musk's trial against OpenAI's Sam Altman. The Illinois House of Representatives passed a bill that would set a new standard for regulating America’s leading AI companies if Gov. JB Pritzker signs it. NBC News' Gadi Schwartz talks to Rep. Daniel Didech about what the bill entails.",
+                "score": 0.6010557
+              },
+              {
+                "title": "AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan - The Washington Post",
+                "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                "source": "washingtonpost.com",
+                "summary": "AI & Tech Brief from WP Intelligence. # AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan. Plus, Anthropic files for a blockbuster initial public offering. Make us preferred on Google. Sign up here to get this newsletter in your inbox. * **Exclusive:** AI safety group Americans for Responsible Innovation rolls out a six-figure ad campaign this week attacking Rep. Lori Trahan (D-Massachusetts), arguing that she’s “taking the side” of AI oligarchs in her bipartisan legislative efforts. * The AI safety community doesn’t want to hand power of AI regulation to President Donald Trump’s administration now that states are passing more rigorous AI laws — and the California and New York attorneys general are challenging big AI companies. * Nvidia is rolling out a new “world model” simulator for robots and a new design platform for robot developers. In doing so, the company is running the same business playbook it did to become so dominant in the chip market.",
+                "score": 0.5951402
+              }
+            ]
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI",
+            "search_type": "Latest"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "AI",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "Tune in to @Microsoft Build tomorrow to find out where we are going on multiple fronts, including our AI built by the Su",
+                "summary": "Tune in to @Microsoft Build tomorrow to find out where we are going on multiple fronts, including our AI built by the Superintelligence Lab led by @mustafasuleyman. See you there 🎬👏\n\n#hiring #follow \n\n https://t.co/IZTFzqz4KW",
+                "url": "https://x.com/k44yej/status/2061740719782400100",
+                "source": "@k44yej",
+                "date": "Tue Jun 02 09:24:27 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "algum mlk het tb ai pra falar de bct ate gozar?",
+                "summary": "algum mlk het tb ai pra falar de bct ate gozar?\n#PINTOSAWARDSㅤㅤ \n#BROTHERAGEMㅤ \n#XOTAAWARDSㅤ",
+                "url": "https://x.com/sccpthurz/status/2061740716250837283",
+                "source": "@sccpthurz",
+                "date": "Tue Jun 02 09:24:26 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "#AIイラスト好きさんと繋がりたい  #AIイラストレーターさんと相互フォローしたい ",
+                "summary": "#AIイラスト好きさんと繋がりたい  #AIイラストレーターさんと相互フォローしたい \n#850フォロワー達成\n #ななの癒し #アートシリーズ\nちょっとファンタジー寄りのイラスト作ってみた元絵がかなり荒いイラストだったので、ここまで持ってこれて良かったε-(´∀｀;)ﾎｯ\nみんなは学校、仕事終わりかな？ https://t.co/gyWyZ0rvss",
+                "url": "https://x.com/Toshi_AI_Nana/status/2061740715340976612",
+                "source": "@Toshi_AI_Nana",
+                "date": "Tue Jun 02 09:24:26 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@R2CV8 😂😂😂ai",
+                "summary": "@R2CV8 😂😂😂ai",
+                "url": "https://x.com/naw_AlRamah/status/2061740711565808095",
+                "source": "@naw_AlRamah",
+                "date": "Tue Jun 02 09:24:25 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "السيناتور بيرني ساندرز يقترح قانون يمنح الامريكيين نصف ملكية شركات الذكاء الاصطناعي!",
+                "summary": "السيناتور بيرني ساندرز يقترح قانون يمنح الامريكيين نصف ملكية شركات الذكاء الاصطناعي!\n\nأعلن السناتور Bernie Sanders عن تقديم مشروع قانون \"الصندوق السيادي الأمريكي للذكاء الاصطناعي\" (American AI Sovereign Wealth Fund Act) في الأسابيع المقبلة. \n\nيقترح المشروع نقل 50% من حصص الملكية (equity) مرة واحدة من كبرى شركات الذكاء الاصطناعي مثل @OpenAI و @Anthropic وxAI إلى صندوق عام تديره الحكومة الفيدرالية. \n\nالهدف: ضمان أن تذهب تريليونات الدولارات المتوقعة من قيمة الذكاء الاصطناعي إلى جميع الأمريكيين، لا إلى حفنة من الأثرياء فقط، مع منح الجمهور ممثلين في مجالس الإدارة للتأثير على القرارات الاستراتيجية. \n\nيستند ساندرز إلى فكرة أن الذكاء الاصطناعي مبني على المعرفة الجماعية والبيانات العامة للشعب الأمريكي، لذا يجب أن يعود جزء كبير من ثماره إلى المجتمع. \n\nالقانون يمثل نقاش مهم حول توزيع ثروة الـAI، لكنه سيظل غالباً أداة سياسية/إعلامية لساندرز. قد يؤدي إلى نقاشات أوسع أو اقتراحات أضعف (مثل ضرائب أعلى على الأرباح أو صناديق أصغر)، لكن النسخة الحالية (50% equity) بعيدة جداً عن الواقع التشريعي.\n\nهل يُعد القانون المقترح خطوة عادلة نحو توزيع أفضل للثروة التكنولوجية، أم تدخلاً حكومياً قد يعيق الابتكار؟\n\n#بسام_محارمة\n\n#الذكاء_الاصطناعي #AI #سياسة_التكنولوجيا #BernieSanders #الاقتصاد_الرقمي #SovereignWealthFund",
+                "url": "https://x.com/BassamMaharmeh/status/2061740707321168345",
+                "source": "@BassamMaharmeh",
+                "date": "Tue Jun 02 09:24:24 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R14_out_of_scope_coding",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_coding",
+        "difficulty": "easy",
+        "what_it_tests": "Câu coding ngoài phạm vi research/news → KHÔNG gọi tool."
+      },
+      "input": "Viết giúp mình một hàm Python tính Fibonacci bằng recursion.",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "```python\ndef fibonacci(n):\n    \"\"\"\n    Tính số Fibonacci thứ n bằng phương pháp đệ quy.\n    \"\"\"\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fibonacci(n - 1) + fibonacci(n - 2)\n\n# Ví dụ sử dụng:\n# print(fibonacci(10))\n```",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M01_clarify_then_fill",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_fill",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: carry limit=5 từ lượt 1 + map tên Elon Musk thành handle elonmusk từ lượt 2."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt 5 tweet mới nhất giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Của Elon Musk nhé"
+        },
+        {
+          "role": "user",
+          "content": "Giữ đúng 5 tweet, đừng đổi số lượng"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "limit": 5,
+              "screenname": "elonmusk"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 5,
+            "screenname": "elonmusk"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "RT @DimaZeniuk: Neuralink is planning its first Blindsight implant later this year, aiming to restore limited vision eve",
+                "summary": "RT @DimaZeniuk: Neuralink is planning its first Blindsight implant later this year, aiming to restore limited vision even for people who ha…",
+                "url": "https://x.com/elonmusk/status/2061705200734543896",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 07:03:19 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 631,
+                  "views": "13"
+                }
+              },
+              {
+                "title": "All accessories to the murder must go to prison for a long time",
+                "summary": "All accessories to the murder must go to prison for a long time",
+                "url": "https://x.com/elonmusk/status/2061704965639618851",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 07:02:23 +0000 2026",
+                "metrics": {
+                  "favorites": 24140,
+                  "retweets": 3554,
+                  "views": "3248440"
+                }
+              },
+              {
+                "title": "RT @visegrad24: In his final moments, Henry Nowak told police officers nine times “I can’t breathe” and four times that ",
+                "summary": "RT @visegrad24: In his final moments, Henry Nowak told police officers nine times “I can’t breathe” and four times that he had been stabbed…",
+                "url": "https://x.com/elonmusk/status/2061701267257442740",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:47:41 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 11856,
+                  "views": "23"
+                }
+              },
+              {
+                "title": "RT @DaveKent101: Today’s question.",
+                "summary": "RT @DaveKent101: Today’s question.\n\nWhy hasn’t Vickrum Digwa’s  brother (Gurpreet Digwa) been arrested and charged with assisting an offend…",
+                "url": "https://x.com/elonmusk/status/2061701118925865253",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:47:05 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 3045,
+                  "views": "27"
+                }
+              },
+              {
+                "title": "RT @RDonaldson91: I’ve just watched the Henry Nowak body-cam footage. Digwa deserves the death penalty and his family wh",
+                "summary": "RT @RDonaldson91: I’ve just watched the Henry Nowak body-cam footage. Digwa deserves the death penalty and his family who covered for him d…",
+                "url": "https://x.com/elonmusk/status/2061699685048631582",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 06:41:24 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 2259,
+                  "views": "18"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M02_carryover_timeframe",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_carryover",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: chỉ xử lý latest turn, carry timeframe=day và topic=news, query robotics."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin AI hôm nay có gì?"
+        },
+        {
+          "role": "user",
+          "content": "Còn về robotics thì sao?"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ tìm robotics thôi, vẫn là tin hôm nay"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "robotics",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "day",
+              "query": "latest robotics news today"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "query: expected 'robotics', got 'latest robotics news today'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "topic": "news",
+            "timeframe": "day",
+            "query": "latest robotics news today"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "latest robotics news today",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Top 10 robotics stories of May 2026 - The Robot Report",
+                "url": "https://www.therobotreport.com/top-10-robotics-stories-of-may-2026/",
+                "source": "therobotreport.com",
+                "summary": "# Top 10 robotics stories of May 2026. May 2026 was a busy month full of robotics news, topped off by last week’s Robotics Summit & Expo in Boston. The event brought together thousands of robotics experts to discuss the latest technology and industry advances. Here are the 10 most popular articles on *The Robot Report* in the past month. Subscribe to *The Robot Report*Newsletter and listen to *The Robot Report* Podcast to stay up to date on the latest robotics developments. Humanoid partners with Bosch, Schaeffler to scale robot production in May 2026. London-based Humanoid said it is working with Bosch to scale production after the successful completion of a joint proof of concept in March. It serves as the primary hub for NEO, the company’s humanoid robot designed to operate quietly—at a decibel level lower than a modern refrigerator—while navigating domestic spaces. If you’ve built a robotics company in the past 10 years, chances are you’ve at least flirted with the idea of robotics as a service, or RaaS.",
+                "score": 0.99804294
+              },
+              {
+                "title": "Silicon Valley's New Slogan: Let's Get Physical - Business Insider",
+                "url": "https://www.businessinsider.com/silicon-valleys-new-slogan-lets-get-physical-2026-6",
+                "source": "businessinsider.com",
+                "summary": "You're currently following this topic! The latest news and analysis on robotics, from humanoid AI to real-world automation. ### Figure AI had one of its robots race an intern to sort packages. This weekend offered a glimpse of how quickly the biggest AI players are moving in on humanoid robotics. Robotics has become tech's latest arms race, with Nvidia, OpenAI, Meta, Tesla, and a flock of startups racing to give AI a body. \"Physical AI\" is the buzzword of the moment in the Valley, a term popularized by Nvidia CEO Jensen Huang to describe AI systems that can act in the physical world. One of the buzziest Silicon Valley robotics upstarts, Figure AI, has been trying to prove its technology can move from demos to real work. The team is teaching a robotic arm how to perform household tasks as part of an effort to build a humanoid robot, Business Insider reported earlier this year.",
+                "score": 0.9971551
+              },
+              {
+                "title": "ANSCER Robotics closes Series A round for industrial material handling - The Robot Report",
+                "url": "https://www.therobotreport.com/anscer-robotics-closes-series-a-round-industrial-material-handling/",
+                "source": "therobotreport.com",
+                "summary": "# ANSCER Robotics closes Series A round for industrial material handling. ANSCER Robotics provides autonomous mobile robots and software for industrial material handling. Aiming to capture a larger share of the American logistics market, deep-tech startup ANSCER Robotics has raised $5.4 million (₹45 crore) in Series A funding to scale its fleet of hybrid warehouse robots globally. The company said it is designing and building automation for the realities of modern manufacturing and logistics by helping enterprises improve productivity, safety, and operational efficiency at scale. According to ANSCER Robotics, this latest investment will accelerate its mission to build India’s AI-native industrial automation platform for factories and warehouses worldwide. “Naturally, we are expanding our markets and our product line, and the company will have a booth at Automate 2026,” Mark Messina, CEO of ANSCER Robotics Americas, told *The Robot Report*. “Our robots are designed and built for deployment in complex, rough environments — manufacturing floors and dock areas.”. Mike Oitzman is Senior Editor of WTWH's Robotics Group and founder of the Mobile Robot Guide.",
+                "score": 0.94458723
+              },
+              {
+                "title": "China is so far beating U.S. in robotics race: Wedbush’s Dan Ives - CNBC",
+                "url": "https://www.cnbc.com/video/2026/06/02/china-is-so-far-beating-us-in-robotics-race-wedbushs-dan-ives.html",
+                "source": "cnbc.com",
+                "summary": "Monday - Friday, 10:00 - 11:00 SIN/HK | 0400 - 05:00 CET. # China is so far beating U.S. in robotics race: Wedbush’s Dan Ives. Dan Ives of Wedbush Securities said China is emerging as a leader in the global robotics race, even as the broader AI competition between the U.S. and China intensifies. He says Nvidia dominates in AI chips, but that robotics could become China’s key advantage in the next phase of the AI revolution, describing the sector as a major area of demand and innovation.",
+                "score": 0.87997437
+              },
+              {
+                "title": "Nvidia partners with China's Unitree to build research-focused robotics system - CNBC",
+                "url": "https://www.cnbc.com/video/2026/06/02/nvidia-unitree-robots-ipo.html",
+                "source": "cnbc.com",
+                "summary": "# Nvidia partners with China's Unitree to build research-focused robotics system. Nvidia on Monday announced that it would be partnering with Chinese robotics firm Unitree to develop humanoid robotics system for research institutes. The announcement comes as Unitree was approved for an IPO on the Shanghai Stock Exchange on the same day, CNBC's Evelyn Cheng reports from Beijing. Watch CNBC's full interview with Bank of America co-president James DeMare. Hewlett Packard Enterprise's stock jumps more than 20% on blockbuster quarter. Revolution Medicines CEO Mark Goldsmith on new Pancreatic cancer drug breakthrough. Anthropic confidentially files for IPO. Kalshi CEO Tarek Mansour: Perpetual futures are the 'purest form of trading'.",
+                "score": 0.7718435
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M03_correction_handle",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_correction",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: map tên thường, sửa Sam Altman→Andrej Karpathy, dùng handle karpathy và limit=3."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tweet mới nhất của Sam Altman"
+        },
+        {
+          "role": "user",
+          "content": "À nhầm, của Andrej Karpathy"
+        },
+        {
+          "role": "user",
+          "content": "Lấy 3 tweet mới nhất nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.1-flash-lite\\nPlease retry in 19.154386187s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.1-flash-lite'}, 'quotaValue': '15'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '19s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M04_clarify_then_url",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_url",
+        "difficulty": "medium",
+        "what_it_tests": "3 turns: sau khi được cung cấp URL, latest turn xác nhận chỉ đọc link đó → read_url đúng url."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt bài này hộ mình"
+        },
+        {
+          "role": "user",
+          "content": "https://anthropic.com/news/claude"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ đọc đúng link đó thôi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://anthropic.com/news/claude"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.1-flash-lite\\nPlease retry in 18.241447532s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.1-flash-lite'}, 'quotaValue': '15'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '18s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M05_correction_limit",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_arg_correction",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: map tên Elon Musk, carry handle elonmusk, sửa limit 10→3."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy 10 tweet mới nhất của Elon Musk"
+        },
+        {
+          "role": "user",
+          "content": "Cho mình 3 thôi"
+        },
+        {
+          "role": "user",
+          "content": "Vẫn của Elon Musk nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.1-flash-lite\\nPlease retry in 17.528240895s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.1-flash-lite'}, 'quotaValue': '15'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '17s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M06_switch_tool",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_tool",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: explicitly bỏ Twitter, chuyển sang web_search news, giữ chủ đề OpenAI."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mọi người nói gì về OpenAI trên Twitter?"
+        },
+        {
+          "role": "user",
+          "content": "Bỏ Twitter, chuyển sang tìm trên web tin tức đi"
+        },
+        {
+          "role": "user",
+          "content": "Giữ chủ đề OpenAI"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "OpenAI",
+              "topic": "news"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "query": "OpenAI news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'OpenAI', got 'OpenAI news'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "topic": "news",
+            "query": "OpenAI news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "OpenAI news",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Exclusive: OpenAI launches biodefense program - Axios",
+                "url": "https://www.axios.com/2026/05/29/openai-biodefense-program",
+                "source": "axios.com",
+                "summary": "# Exclusive: OpenAI launches biodefense program. OpenAI is launching a tool to help develop new biodefense and pandemic preparedness capabilities, according to an announcement shared first with Axios. **Driving the news:** OpenAI's new Rosalind Biodefense Program will offer its GPT-Rosalind model for life sciences research to \"trusted developers\" operationalizing biodefense tools. * The company will sponsor access to the tool and provide launch support for epidemiological modeling, early detection, screening, preparedness, non-pharmaceutical interventions and other public-health work. * OpenAI is supporting organizations that it says span the life cycle of biological threats \"from prevention and early detection to societal resilience and medical countermeasure development.\". **What's next:** OpenAI said it briefed the White House and several federal agencies on its approach, and is in the process of involving public-health-focused federal agencies. * The company is also expanding access to GPT-Rosalind for select U.S. government and allied partners to support public health and biodefense missions.",
+                "score": 0.99632156
+              },
+              {
+                "title": "OpenAI gives Japan banks access to latest model, finance minister says - Reuters",
+                "url": "https://www.reuters.com/video/watch/idRW450329052026RP1/",
+                "source": "reuters.com",
+                "summary": "# OpenAI gives Japan banks access to latest model, finance minister says | Reuters. Exclusive news, data and analytics for financial market professionals Learn more about Refinitiv. ## Browse World. *   Israel and Hamas at War. *   Ukraine and Russia at War. ## Browse Business. Image 1: OpenAI gives Japan banks access to latest model, finance minister says. *   ### Image 2: OpenAI gives Japan banks access to latest model, finance minister says Now Playing OpenAI gives Japan banks access to latest model, finance minister says. *   ### Image 6: Rescuers find five trapped in Laos cave in ongoing search 01:02 Rescuers find five trapped in Laos cave in ongoing search. *   ### Image 10: Cheering after rescue teams find five trapped in Laos cave for days 00:28 Cheering after rescue teams find five trapped in Laos cave for days. ## OpenAI gives Japan banks access to latest model, finance minister says.",
+                "score": 0.99580115
+              },
+              {
+                "title": "Florida sues OpenAI and CEO Sam Altman, accusing them of putting profit over safety - NBC News",
+                "url": "https://www.nbcnews.com/tech/tech-news/florida-sues-openai-sam-altman-saying-put-profit-safety-rcna347602",
+                "source": "nbcnews.com",
+                "summary": "# Florida sues OpenAI and CEO Sam Altman, accusing them of putting profit over safety. Florida seeks to hold Sam Altman personally liable, accusing OpenAI of marketing ChatGPT as safe while concealing that it could drive users toward harm. Florida Attorney General James Uthmeier sued OpenAI and CEO Sam Altman on Monday, accusing the company of putting profit over safety, fueling violence and pushing a product it knew could harm users. “The rise of OpenAI is attributable to a web of deceit and the exploitation of users (including Floridians), leveraging their data and safety to boost OpenAI’s market value at unacceptable costs,” the complaint reviewed by NBC News and filed Monday said. Florida is the first state to sue OpenAI and Altman over design and safety. “Last year’s mass shooting at Florida State University was a tragedy, but ChatGPT is not responsible for this terrible crime,” OpenAI spokesman Drew Pusateri said in a statement to NBC News after the company was sued by the family of a victim of the shooting.",
+                "score": 0.9937588
+              },
+              {
+                "title": "Флорида штати OpenAI ва Sam Altman устидан судга шикоят киритди - Zamin.uz",
+                "url": "https://zamin.uz/en/technology/204648-florida-files-lawsuit-against-openai-and-sam-altman.html",
+                "source": "zamin.uz",
+                "summary": "# Florida files lawsuit against OpenAI and Sam Altman. The Florida Attorney General's Office has filed a lawsuit against OpenAI and its CEO Sam Altman. This is the first state-level legal action regarding the involvement of the ChatGPT chatbot in cases of violence. The lawsuit accuses the company of neglecting safety measures in order to win the \"AI race\" and generate massive wealth. As part of a criminal investigation launched in April, the role of ChatGPT in a mass shooting that occurred last year at Florida State University (FSU) is being examined. OpenAI representatives deny responsibility for this tragedy, maintaining that ChatGPT is not the cause of the crime. This is not the only legal challenge for OpenAI. Additionally, a lawsuit recently filed by Elon Musk has concluded, in which the entrepreneur accused the company of abandoning its mission to benefit humanity and becoming a commercial organization. News » Technology » Florida files lawsuit against OpenAI and Sam Altman.",
+                "score": 0.99361163
+              },
+              {
+                "title": "Exclusive: OpenAI readies cyber, misinformation defenses ahead of elections - Axios",
+                "url": "https://www.axios.com/2026/05/27/openai-cyber-misinformation-defenses-elections",
+                "source": "axios.com",
+                "summary": "# Exclusive: OpenAI readies cyber, misinformation defenses ahead of elections. OpenAI is announcing new partnerships to combat misinformation, offering its cybersecurity products to state officials and backing legislation ahead of elections in the U.S. and globally. **Why it matters:** AI is becoming an election mainstay, with candidates, especially Republicans, using it for their campaigns as voters turn to chatbots for information. **Driving the news:** OpenAI is seeking to meet the moment with a series of new efforts shared first with Axios on Wednesday. * The company is offering its cybersecurity products — Codex Security and its Trusted Access for Cyber program — to registered voting system manufacturers in the U.S. * It's briefing the National Association of Secretaries of State and the National Association of State Election Directors on the latest cyber capabilities. * OpenAI made similar efforts ahead of the 2024 election, during which AI companies faced widespread criticism for inaccurate and misleading information being generated by chatbots.",
+                "score": 0.992597
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "J01_job_search_routing",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_job_search",
+        "difficulty": "easy",
+        "what_it_tests": "Yêu cầu tuyển dụng → job_search, không phải lookup."
+      },
+      "input": "Tìm các vị trí Machine Learning Engineer ở Hà Nội",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "Machine Learning Engineer",
+              "location": "Hà Nội"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "Machine Learning Engineer Hà Nội"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'Machine Learning Engineer', got 'Machine Learning Engineer Hà Nội'",
+          "location: expected 'Hà Nội', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "job_search",
+          "args": {
+            "query": "Machine Learning Engineer Hà Nội"
+          },
+          "result": {
+            "tool": "search_jobs",
+            "query": "Machine Learning Engineer Hà Nội",
+            "items": [
+              {
+                "title": "Machine Learning Engineer",
+                "company": "Công ty Cổ phần Giải Pháp Thiên Hoàng",
+                "location": "Ha Noi, VN",
+                "url": "https://jobs.vn.indeed.com/viewjob?jk=de697ac1ff8e11d6",
+                "source": "Công ty Cổ phần Giải Pháp Thiên Hoàng",
+                "date": null,
+                "summary": "Mô tả công việc:\n(Mức lương: Đến 40 triệu VNĐ)\n\n• Xây dựng, huấn luyện và tối ưu các mô hình Machine Learning cho bài toán thực tế.\n\n• Làm việc với dữ liệu lớn sử dụng Apache Spark (MLlib).\n\n• Thiết kế và duy trì pipeline phục vụ training và inference.\n\n• Tối ưu hiệu năng mô hình (độ chính xác, thời gian xử lý, tài nguyên sử dụng).\n\n• Quản lý môi trường Python và dependency bằng Anaconda / Conda.\n\n• Phối hợp với team backend/data để tích hợp model vào hệ thống production.\n\n• Theo dõi hiệu suất m"
+              },
+              {
+                "title": "Machine Learning Scientist, Up to Senior Staff Level (AI Research Vietnam)",
+                "company": "Qualcomm",
+                "location": "Ha Noi, VN",
+                "url": "https://jobs.vn.indeed.com/viewjob?jk=50cafa4823d64e3c",
+                "source": "Qualcomm",
+                "date": null,
+                "summary": "Company:\nQualcomm Vietnam Company Limited, Hanoi Branch Office\n\nJob Area:\nEngineering Group, Engineering Group > Machine Learning Engineering\n\nGeneral Summary:\n\nAbout Qualcomm AI Research\n\nQualcomm AI Research is at the forefront of advancing the state of the art in artificial intelligence. Our global team of researchers and engineers is dedicated to pushing the boundaries of AI across generative AI, foundation models, multi-modal (text/image/video) generation, reasoning, reinforcement learning,"
+              },
+              {
+                "title": "[Ha Noi] Kỹ sư AI/ AI Engineer",
+                "company": "Data Impact",
+                "location": "Ha Noi, VN",
+                "url": "https://bebee.com/vn/jobs/ha-noi-ky-su-ai-ai-engineer-data-impact-hanoi-capital-region--techmap_vn_4412872317",
+                "source": "Data Impact",
+                "date": "2026-05-19T00:00:00.000Z",
+                "summary": "About Data Impact\n\nData Impact is a Vietnam-based AI & Data Technology company backed by Headwaters Co., Ltd., a publicly listed company in Japan. Headwaters is a trusted technology partner of global enterprises such as Microsoft, Sony, and NVIDIA in delivering IT, AI, and IoT solutions.\n\nWith a team of highly skilled Vietnamese engineers, Data Impact delivers innovative, high-quality AI and IT solutions that compete globally. We provide an environment where engineers can continuously learn, wor"
+              },
+              {
+                "title": "Senior/Staff Machine Learning Engineer - Bidding (Bangkok based, relocation provided)",
+                "company": "Agoda",
+                "location": "Ha Noi, VN",
+                "url": "https://vn.linkedin.com/jobs/view/senior-staff-machine-learning-engineer-bidding-bangkok-based-relocation-provided-at-agoda-4308194364",
+                "source": "Agoda",
+                "date": "2026-05-19T00:00:00.000Z",
+                "summary": "About Agoda\n\nAt Agoda, we bridge the world through travel. Our story began in 2005, when two lifelong friends and entrepreneurs, driven by their passion for travel, launched Agoda to make it easier for everyone to explore the world.\n\nToday, we are part of Booking Holdings [NASDAQ: BKNG], with a diverse team of over 7,000 people from 90 countries, working together in offices around the globe. Every day, we connect people to destinations and experiences, with our great deals across our millions of"
+              },
+              {
+                "title": "Data Scientist (AI Engineer)",
+                "company": "SOCOTEC",
+                "location": "Ha Noi, VN",
+                "url": "https://jobs.smartrecruiters.com/Socotec/744000112828006-data-scientist-ai-engineer-",
+                "source": "SOCOTEC",
+                "date": null,
+                "summary": "Company Description\n\nSOCOTEC VIETNAM is a technical support platform for the SOCOTEC GROUP providing expert services on a range of projects in testing, inspection and certification (TIC) in the construction and infrastructure sectors. Around the globe, more than 15,000 experts in 26 countries across 5 continents deliver professional services in construction, buildings & real estate, infrastructures, environment & safety and certification.\n\nWe are currently expanding our SOFTWARE&IT SERVICES team"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "J02_job_limit_arg",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "job_limit",
+        "difficulty": "easy",
+        "what_it_tests": "Trích đúng limit=10."
+      },
+      "input": "Cho mình 10 việc làm Data Scientist tại TP.HCM",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "Data Scientist",
+              "location": "TP.HCM",
+              "limit": 10
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "Data Scientist tại TP.HCM",
+              "limit": 10
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "query: expected 'Data Scientist', got 'Data Scientist tại TP.HCM'",
+          "location: expected 'TP.HCM', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "job_search",
+          "args": {
+            "query": "Data Scientist tại TP.HCM",
+            "limit": 10
+          },
+          "result": {
+            "tool": "search_jobs",
+            "query": "Data Scientist tại TP.HCM",
+            "items": [
+              {
+                "title": "Data Scientist (AI Factory Experience)",
+                "company": "HR1VIETNAM HOLDINGS",
+                "location": "Ho Chi Minh, VN",
+                "url": "https://hr1vietnam.com/viec-lam/data-scientist-ai-factory-experience-5711.html",
+                "source": "HR1VIETNAM HOLDINGS",
+                "date": null,
+                "summary": "Design and deploy AI/ML pipelines for finance processes (close, reconciliation, forecasting, tax analytics). \r\nDevelop agentic AI systems (CrewAI, AutoGen, LangGraph, etc.). \r\nIntegrate AI with enterprise platforms (ERP, BI, Dataiku, Google Vertex AI, Azure OpenAI). \r\nBuild ML models (forecasting, anomaly detection, fraud/risk analysis). \r\nFine-tune LLMs with compliance controls. \r\nImplement monitoring, retraining, and performance frameworks. \r\nTranslate workflows into AI use-cases with ROI (>20"
+              },
+              {
+                "title": "DATA SCIENTIST (TỐI ƯU HÓA NHÀ MÁY)",
+                "company": "TRAN DUC CORPORATION - CÔNG TY CỔ PHẦN TRẦN ĐỨC",
+                "location": "Ho Chi Minh, VN",
+                "url": "https://www.careerlink.vn/tim-viec-lam/data-scientist-toi-uu-hoa-nha-may/3473771",
+                "source": "TRAN DUC CORPORATION - CÔNG TY CỔ PHẦN TRẦN ĐỨC",
+                "date": null,
+                "summary": "• Nền tảng dữ liệu (40% vai trò)\n- Thu thập dữ liệu & pipeline\n+ Thiết kế và triển khai data pipeline để thu thập dữ liệu từ ERP, hệ thống xưởng sản xuất và các nguồn khác tùy theo mục tiêu dự án (ví dụ: tiến hành nghiên cứu thời gian-thao tác để thu thập thời gian xử lý chính xác cho từng công đoạn)\n+ Làm việc với đội ngũ xưởng sản xuất & đội ERP để thiết lập quy trình thu thập dữ liệu chuẩn\n+ Thiết lập quy trình trích xuất, chuyển đổi và nạp dữ liệu (ETL) tự động\n+ Đảm bảo chất lượng dữ liệu t"
+              },
+              {
+                "title": "Data Scientist (Python, Scikit-learn, XGBoost)",
+                "company": "Sports Marketing Software Services CO.,LTD",
+                "location": "Ho Chi Minh, VN",
+                "url": "https://studentjob.vn/viec-lam/data-scientist-python-scikit-learn-xgboost-job824301",
+                "source": "Sports Marketing Software Services CO.,LTD",
+                "date": "2026-05-26T00:00:00.000Z",
+                "summary": "About the RoleWe are looking for a Data Scientist to design and optimize real-time predictive systems operating on event-driven data streams.This role focuses on time-dependent modeling, live inference, and continuous model adaptation in dynamic environments. You will work on systems that require low-latency predictions and robust sequential evaluation frameworks.Key ResponsibilitiesDevelop and maintain predictive models for real-time, event-based data streams.Design time-dependent and sequentia"
+              },
+              {
+                "title": "Data Analyst (Middle-Senior) SIGN ON BONUS 30M",
+                "company": "INNOMIZE",
+                "location": "Ho Chi Minh, VN",
+                "url": "https://worklink.vn/job/77477/data-analyst/",
+                "source": "INNOMIZE",
+                "date": "2026-05-30T00:00:00.000Z",
+                "summary": "OVERVIEW\n\nWe are actively looking for a Data Analyst / Data Scientist to join the development team. Work with US\n\nclients and help them solve their toughest data analytics and insight challenges. You will primarily work\n\nwith clients in the Manufacturing industry – commercial metals, metals recycling. You will have a chance to work with our proactive and talented people with great teamwork, and an open and respectful working environment. At our company, you will be working with the latest techno"
+              },
+              {
+                "title": "VNPAY Tuyển Dụng Data Scientist",
+                "company": "CÔNG TY CỔ PHẦN GIẢI PHÁP THANH TOÁN VIỆT NAM (VNPAY)",
+                "location": "Ho Chi Minh, VN",
+                "url": "https://vn.joboko.com/viec-lam-hcm-data-scientist-xvi4439077",
+                "source": "CÔNG TY CỔ PHẦN GIẢI PHÁP THANH TOÁN VIỆT NAM (VNPAY)",
+                "date": null,
+                "summary": "* Số lượng cần tuyển: 02\n• Vị trí làm việc: Phòng AI & Công nghệ dữ liệu - Khối Công nghệ\n• Địa điểm làm việc: Tầng 12, tòa nhà Minh Long, số 17 Bà Huyện Thanh Quan, P. Xuân Hòa, TP. Hồ Chí Minh\n• Thời gian làm việc: 8h30 - 17h30 các ngày thứ 2 - thứ 6 (nghỉ trưa từ 12h00 đến 13h00)\nMÔ TẢ CÔNG VIỆC:\n- Phát triển và triển khai các mô hình Machine Learning/AI phục vụ cho các bài toán liên quan Marketing, Strategy, Customer Growth và các nhu cầu kinh doanh liên quan.\n- Thực hiện phân tích dữ liệu c"
+              },
+              {
+                "title": "Mid Data Engineer",
+                "company": "HR1TECH",
+                "location": "Ho Chi Minh, VN",
+                "url": "https://hr1tech.com/viec-lam/mid-data-engineer-35106.html",
+                "source": "HR1TECH",
+                "date": "2026-05-28T00:00:00.000Z",
+                "summary": "Data Pipeline Engineering \r\n\r\n\r\nCollaborate with software engineers to design and implement robust data pipelines for large-scale data processing. \r\nDevelop ETL/ELT workflows using advanced tools such as SAP Datasphere, Dataiku, Airflow, or Kafka. \r\n\r\n\r\nSystem Optimization & Infrastructure \r\n\r\n\r\nOptimize data storage and processing systems for high performance and scalability to handle increasing digital demands. \r\nMaintain and improve data infrastructure to support continuous platform growth an"
+              },
+              {
+                "title": "Data Analyst (intern)",
+                "company": "FPT Telecom",
+                "location": "Ho Chi Minh, VN",
+                "url": "https://fptjobs.com/data-analyst-intern-25335",
+                "source": "FPT Telecom",
+                "date": "2026-05-06T00:00:00.000Z",
+                "summary": "Hỗ trợ tham gia xác định nghiệp vụ, nhu cầu xây dựng báo cáo, bài toán phân tích dữ liệu\nHỗ trợ tham gia khảo sát dữ liệu, triển khai các phương pháp thu thập dữ liệu hiệu quả từ nhiều nguồn khác nhau\nHỗ trợ tham gia thiết kế, xây dựng và phát triển các mô hình dữ liệu (data models), thiết kế lược đồ (schema design), phát triển data warehouse/data marts hiệu quả nhằm đáp ứng nhu cầu kinh doanh"
+              },
+              {
+                "title": "Data Analyst (3 Năm Kinh Nghiệm)",
+                "company": "CÔNG TY TNHH BEYONDSOFT TECHNOLOGY (VIETNAM)",
+                "location": "Ho Chi Minh, VN",
+                "url": "https://www.topcv.vn/viec-lam/data-analyst-3-nam-kinh-nghiem/2175073.html",
+                "source": "CÔNG TY TNHH BEYONDSOFT TECHNOLOGY (VIETNAM)",
+                "date": "2026-05-25T00:00:00.000Z",
+                "summary": "Mô tả công việc\n\n• Communicate with clients and stakeholders to identify requirements for dashboards and reports.\n• Communicate effectively with Beyondsoft’s offshore team in Shanghai, China to report the progress and status of the projects.\n• Build and maintain reports and dashboards in Power BI to track traffic and other business metrics on daily/weekly/monthly basis\n• Analyze data and extract insights to help business team make better strategic decisions.\n• Troubleshoot report refresh failure"
+              },
+              {
+                "title": "AI & Data Engineer",
+                "company": "CÔNG TY TNHH DREAM TALENT",
+                "location": "Ho Chi Minh, VN",
+                "url": "https://vn.joboko.com/viec-lam-ai-data-engineer-xvi6495784",
+                "source": "CÔNG TY TNHH DREAM TALENT",
+                "date": "2026-05-29T00:00:00.000Z",
+                "summary": "AI & Data Engineer\n\nBạn có việc làm chưa\n\nChúng tôi có thể giúp\n\nChi tiết tin TUYỂN DỤNG\n\nMức lương\nThỏa Thuận\n\nCấp bậc\nNhân Viên\n\nHình thức làm việc\nFull time\n\nKinh nghiệm\n3-5 Năm\n\nMÔ TẢ CÔNG VIỆC\n\nChúng tôi đang tìm kiếm một AI & Data Engineer có tầm nhìn chiến lược để gia nhập đội ngũ, cùng xây dựng một siêu ứng dụng PropTech thế hệ mới.\nTrong vai trò này, bạn sẽ là người chịu trách nhiệm cho hạ tầng dữ liệu lẫn và hệ thống trí tuệ nhân tạo của chúng tôi. Nhiệm vụ cốt lõi của bạn là kiến tạo "
+              },
+              {
+                "title": "Trưởng Nhóm Phân Tích Dữ Liệu (Data Analyst Team Leader)",
+                "company": "Công Ty TNHH MTV Stride",
+                "location": "Ho Chi Minh, VN",
+                "url": "https://vieclam24h.vn/it-phan-mem/truong-nhom-phan-tich-du-lieu-data-analyst-team-leader-c8p122id200822741.html",
+                "source": "Công Ty TNHH MTV Stride",
+                "date": null,
+                "summary": "Mô tả công việc:\n- Thực hiện và giám sát việc tạo các báo cáo định kỳ và đột xuất về hoạt động kinh doanh, hiệu suất và các chỉ số chiến lược, đảm bảo tính chính xác và kịp thời.\n- Phân tích dữ liệu sâu sắc để hỗ trợ ra quyết định chiến lược, vận hành, cung cấp insight về hành vi khách hàng, xu hướng thị trường và sản phẩm.\n- Xây dựng, tối ưu hóa các dashboard (Excel, Google Sheets, Power BI/Tableau/Looker Studio) và hỗ trợ tự động hóa quy trình báo cáo, vận hành mô hình dữ liệu.\n- Quản lý, giám"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "J03_missing_job_keyword",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_job_query",
+        "difficulty": "medium",
+        "what_it_tests": "Có location nhưng thiếu vị trí/ngành nghề → hỏi lại."
+      },
+      "input": "Tìm việc ở Hà Nội giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "việc làm tại Hà Nội"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call job_search"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "job_search",
+          "args": {
+            "query": "việc làm tại Hà Nội"
+          },
+          "result": {
+            "tool": "search_jobs",
+            "query": "việc làm tại Hà Nội",
+            "items": [
+              {
+                "title": "02 CÁN BỘ PHÒNG NGHIỆP VỤ",
+                "company": "Công Ty CPTM và Dịch Vụ an ninh HT",
+                "location": "Ha Noi, VN",
+                "url": "https://viecoi.vn/viec-lam/tuyen-dung-02-can-bo-phong-nghiep-vu-132710.html",
+                "source": "Công Ty CPTM và Dịch Vụ an ninh HT",
+                "date": "2026-06-02T00:00:00.000Z",
+                "summary": "CHI TIẾT CÔNG VIỆC:\n\nCông việc này đòi hỏi sự quản lý, giám sát và kiểm tra chất lượng dịch vụ bảo vệ tại các mục tiêu, đồng thời đào tạo và hướng dẫn nghiệp vụ cho nhân viên.\n\nNHIỆM VỤ CHÍNH:\n• Quản lý, giám sát và kiểm tra chất lượng dịch vụ tại các mục tiêu.\n• Đào tạo, hướng dẫn nghiệp vụ cho nhân viên bảo vệ.\n• Phối hợp xử lý các sự cố phát sinh tại mục tiêu.\n• Thực hiện công tác kiểm tra, đánh giá và báo cáo theo yêu cầu của Ban Giám đốc.\n• Tham gia xây dựng và triển khai các quy trình nghi"
+              },
+              {
+                "title": "Chuyên Viên Thống Kê (Làm Việc Tại Phòng Giải Phóng Mặt Bằng Tại Hà Nội)",
+                "company": "CÔNG TY CỔ PHẦN DU LỊCH THƯƠNG MẠI VÀ ĐẦU TƯ THỦ ĐÔ",
+                "location": "Ha Noi, VN",
+                "url": "https://www.topcv.vn/viec-lam/chuyen-vien-thong-ke-lam-viec-tai-phong-giai-phong-mat-bang-tai-ha-noi/2179134.html",
+                "source": "CÔNG TY CỔ PHẦN DU LỊCH THƯƠNG MẠI VÀ ĐẦU TƯ THỦ ĐÔ",
+                "date": "2026-05-27T00:00:00.000Z",
+                "summary": "Mô tả công việc\n\n- Thực hiện công tác thống kê, tổng hợp, báo cáo kết quả Giải phóng mặt bằng theo ngày, tuần, tháng, quý, năm khi có yêu cầu;\n\n- Thực hiện công tác hành chính, văn thư, lưu trữ, theo dõi chấm công, cơm trưa theo quy định;\n\n- Thực hiện các nhiệm vụ khác được lãnh đạo cấp trên giao;\n\nYêu cầu ứng viên\n\n1. Trình độ\n\n- Tốt nghiệp Đại học xây dựng, Luật, Quản lý đất đai, Kinh tế, Quản trị kinh doanh và các ngành liên quan\n\n- Hiểu biết quy định pháp luật liên quan đến đất đai, bồi thườ"
+              },
+              {
+                "title": "Thư Ký Thầu (Lương 10 - 12 Triệu) Tại Hà Nội Và HCM",
+                "company": "Công ty Cổ Phần Hà Yến",
+                "location": "Ha Noi, VN",
+                "url": "https://www.topcv.vn/viec-lam/thu-ky-thau-luong-10-12-trieu-tai-ha-noi-va-hcm/2176964.html",
+                "source": "Công ty Cổ Phần Hà Yến",
+                "date": "2026-05-26T00:00:00.000Z",
+                "summary": "Mô tả công việc\n\n• Trách nhiệm\r\n• Đảm bảo Hồ sơ chào thầu đáp ứng đủ nội dung thông tin và tài liệu liên quan, hoàn tất đúng thời hạn như yêu cầu của từng gói thầu;\n• Thông tin nạp vào chào giá chính xác, đầy đủ;\n• Thông tin phục vụ chào giá và đấu thầu được lưu trữ khoa học, bảo mật và cập nhật đầy đủ, kịp thời.\n• Nhiệm vụ:\r\n• Nạp thông tin mô tả kỹ thuật vào chào giá theo mẫu.\n• Chuẩn bị catalogue sản phẩm theo yêu cầu của các chuyên viên thầu.\n• Hỗ trợ các công tác chung của phòng\n\r\n\r\n\r\n\r\n\r\n\r"
+              },
+              {
+                "title": "Nhân Viên Bảo Vệ Nam / Nữ Tại Hà Nội",
+                "company": "Công Ty TNHH Dịch Vụ Bảo Vệ Quốc Gia",
+                "location": "Ha Noi, VN",
+                "url": "https://vieclam24h.vn/an-ninh-bao-ve/nhan-vien-bao-ve-nam-nu-tai-ha-noi-c2p73id200429060.html",
+                "source": "Công Ty TNHH Dịch Vụ Bảo Vệ Quốc Gia",
+                "date": "2026-06-01T00:00:00.000Z",
+                "summary": "Mô tả công việc:\n• Gồm các mục tiêu Tòa nhà, Văn phòng, Chung cư, Công trường, Siêu thị, Nhà hàng…\n• Các ca làm việc: Ca hành chính, ca 12h ngày (7-19h) và ca 12h đêm (19-7h), Ca 24h\n\nYêu cầu công việc:\n• Độ tuổi 18-65 (tùy mục tiêu).\n• Có CCCD (Hồ sơ gồm SYLL xin dấu, CCCD công chứng bổ sung sau).\n• Trẻ, khỏe, không tiền án tiền sự.\n• Không dị tật, xăm trổ.\n• Yêu cầu biết đọc, biết viết."
+              },
+              {
+                "title": "[Hà Nội] Nhân viên siêu thị Full-time/Part-time siêu thị WinMart - Tất cả các vị trí & Địa điểm",
+                "company": "CÔNG TY CỔ PHẦN DỊCH VỤ THƯƠNG MẠI TỔNG HỢP WINCOMMERCE",
+                "location": "Ha Noi, VN",
+                "url": "https://tuyendung.winmart.vn/job/ha-noi-nhan-vien-sieu-thi-full-timepart-time-sieu-thi-winmart-tat-ca-cac-vi-tri-dia-diem-47528",
+                "source": "CÔNG TY CỔ PHẦN DỊCH VỤ THƯƠNG MẠI TỔNG HỢP WINCOMMERCE",
+                "date": null,
+                "summary": "I. CÁC VỊ TRÍ CẦN TUYỂN\n👉 Nhân viên thu ngân\n👉 Nhân viên bán hàng\n👉 Nhân viên đặt hàng (làm ca hành chính)\n👉 Nhân viên kho (làm ca hành chính)\n👉 Nhân viên Bếp chế biến\n👉 Nhân viên Sơ chế thực phẩm tươi sống\n👉 Nhân viên bếp bánh\n👉 Nhân viên kỹ thuật\n👉 Nhân viên giao hàng xe máy\n\r\nII. MÔ TẢ CÔNG VIỆC:\nỨng viên có thể xem chi tiết mô tả công việc tại: https://forms.gle/9pdf8PCeNs23J5S7A\n\r\nIII. YÊU CẦU CÔNG VIỆC:\n\r\n- Nam/Nữ trên 18 tuổi. Tốt nghiệp từ 09/12 trở lên\n- Chăm chỉ, chịu khó, có thể làm v"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "JM01_clarify_then_job",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_job_clarify",
+        "difficulty": "hard",
+        "what_it_tests": "Ghép thông tin nghề nghiệp + location qua nhiều lượt."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm việc giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Machine Learning Engineer"
+        },
+        {
+          "role": "user",
+          "content": "Ở Hà Nội nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "Machine Learning Engineer",
+              "location": "Hà Nội"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "Machine Learning Engineer tại Hà Nội"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "missing_info",
+        "failures": [
+          "query: expected 'Machine Learning Engineer', got 'Machine Learning Engineer tại Hà Nội'",
+          "location: expected 'Hà Nội', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "job_search",
+          "args": {
+            "query": "Machine Learning Engineer tại Hà Nội"
+          },
+          "result": {
+            "tool": "search_jobs",
+            "query": "Machine Learning Engineer tại Hà Nội",
+            "items": [
+              {
+                "title": "Machine Learning Engineer",
+                "company": "Công ty Cổ phần Giải Pháp Thiên Hoàng",
+                "location": "Ha Noi, VN",
+                "url": "https://jobs.vn.indeed.com/viewjob?jk=de697ac1ff8e11d6",
+                "source": "Công ty Cổ phần Giải Pháp Thiên Hoàng",
+                "date": null,
+                "summary": "Mô tả công việc:\n(Mức lương: Đến 40 triệu VNĐ)\n\n• Xây dựng, huấn luyện và tối ưu các mô hình Machine Learning cho bài toán thực tế.\n\n• Làm việc với dữ liệu lớn sử dụng Apache Spark (MLlib).\n\n• Thiết kế và duy trì pipeline phục vụ training và inference.\n\n• Tối ưu hiệu năng mô hình (độ chính xác, thời gian xử lý, tài nguyên sử dụng).\n\n• Quản lý môi trường Python và dependency bằng Anaconda / Conda.\n\n• Phối hợp với team backend/data để tích hợp model vào hệ thống production.\n\n• Theo dõi hiệu suất m"
+              },
+              {
+                "title": "Deep Learning Algorithms Engineer - ACOT",
+                "company": "NVIDIA",
+                "location": "Ha Noi, VN",
+                "url": "https://vn.linkedin.com/jobs/view/deep-learning-algorithms-engineer-acot-at-nvidia-4395487228",
+                "source": "NVIDIA",
+                "date": "2026-05-20T00:00:00.000Z",
+                "summary": "NVIDIA is seeking a motivated AI Acceleration & Optimization Engineer to join our Acceleration Computing, Optimization and Tools (ACOT) team. In this role, you will help improve the performance, scalability, and efficiency of modern AI models across NVIDIA GPU platforms. You will work with engineers across algorithms, systems, and hardware to support high-performance model deployment and development for real-world AI workloads.\n\nAs part of ACOT, you will collaborate with architecture, research, "
+              },
+              {
+                "title": "Senior/Staff Machine Learning Engineer - Bidding (Bangkok based, relocation provided)",
+                "company": "Agoda",
+                "location": "Ha Noi, VN",
+                "url": "https://vn.linkedin.com/jobs/view/senior-staff-machine-learning-engineer-bidding-bangkok-based-relocation-provided-at-agoda-4308194364",
+                "source": "Agoda",
+                "date": "2026-05-19T00:00:00.000Z",
+                "summary": "About Agoda\n\nAt Agoda, we bridge the world through travel. Our story began in 2005, when two lifelong friends and entrepreneurs, driven by their passion for travel, launched Agoda to make it easier for everyone to explore the world.\n\nToday, we are part of Booking Holdings [NASDAQ: BKNG], with a diverse team of over 7,000 people from 90 countries, working together in offices around the globe. Every day, we connect people to destinations and experiences, with our great deals across our millions of"
+              },
+              {
+                "title": "[Ha Noi] Kỹ sư AI/ AI Engineer",
+                "company": "Data Impact",
+                "location": "Ha Noi, VN",
+                "url": "https://bebee.com/vn/jobs/ha-noi-ky-su-ai-ai-engineer-data-impact-hanoi-capital-region--techmap_vn_4412872317",
+                "source": "Data Impact",
+                "date": "2026-05-19T00:00:00.000Z",
+                "summary": "About Data Impact\n\nData Impact is a Vietnam-based AI & Data Technology company backed by Headwaters Co., Ltd., a publicly listed company in Japan. Headwaters is a trusted technology partner of global enterprises such as Microsoft, Sony, and NVIDIA in delivering IT, AI, and IoT solutions.\n\nWith a team of highly skilled Vietnamese engineers, Data Impact delivers innovative, high-quality AI and IT solutions that compete globally. We provide an environment where engineers can continuously learn, wor"
+              },
+              {
+                "title": "AI Research Engineer",
+                "company": "Qualcomm",
+                "location": "Ha Noi, VN",
+                "url": "https://vn.linkedin.com/jobs/view/ai-research-engineer-at-qualcomm-4307974666",
+                "source": "Qualcomm",
+                "date": "2026-05-26T00:00:00.000Z",
+                "summary": "Company\n\nQualcomm Vietnam Company Limited, Hanoi Branch Office\n\nJob Area\n\nEngineering Group, Engineering Group > Machine Learning Engineering\n\nGeneral Summary\n\nQualcomm AI Research is looking for world-class algorithm engineers in general domain machine learning, especially deep learning, generative AI, LLM, LVM. Come join a high-caliber team of engineers building advanced machine learning technology, and best-in-class solutions, to enable state-of-the-art networks to run on devices with limited"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "JM02_correction_location",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_location_correction",
+        "difficulty": "hard",
+        "what_it_tests": "Sửa location nhưng giữ nguyên query."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm việc Data Engineer ở Hà Nội"
+        },
+        {
+          "role": "user",
+          "content": "À nhầm, ở TP.HCM"
+        },
+        {
+          "role": "user",
+          "content": "Giữ nguyên vị trí Data Engineer"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "Data Engineer",
+              "location": "TP.HCM"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "Data Engineer TP.HCM"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "query: expected 'Data Engineer', got 'Data Engineer TP.HCM'",
+          "location: expected 'TP.HCM', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "job_search",
+          "args": {
+            "query": "Data Engineer TP.HCM"
+          },
+          "result": {
+            "tool": "search_jobs",
+            "query": "Data Engineer TP.HCM",
+            "items": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "JM03_parallel_jobs_and_news",
+      "phase": "B",
+      "suite": "extension",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "parallel_jobs_news",
+        "difficulty": "hard",
+        "what_it_tests": "Một yêu cầu cần cả job_search và lookup; eval không phụ thuộc thứ tự."
+      },
+      "input": "Tìm việc AI Engineer ở Việt Nam và xem thêm tin AI hôm nay",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "AI Engineer",
+              "location": "Việt Nam"
+            }
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "job_search",
+            "args": {
+              "query": "AI Engineer Vietnam"
+            }
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI news today",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'AI Engineer', got 'AI Engineer Vietnam'",
+          "location: expected 'Việt Nam', got None",
+          "query: expected 'AI', got 'AI news today'",
+          "timeframe: expected 'day', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "job_search",
+          "args": {
+            "query": "AI Engineer Vietnam"
+          },
+          "result": {
+            "tool": "search_jobs",
+            "query": "AI Engineer Vietnam",
+            "items": []
+          }
+        },
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI news today",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI news today",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Stock Market Today: New Nvidia Chip Fuels AI Enthusiasm, Oil Climbs After Mideast Hostilities — Live Updates - WSJ",
+                "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-06-01-2026",
+                "source": "wsj.com",
+                "summary": "# Stock Market Today: Dow Opens Lower, Oil Climbs; New Nvidia Chip Fuels AI Enthusiasm — Live Updates. S&P 500 7580.15 0.00%. Nasdaq 26999.93 0.10%. U.S. 10 Yr -27/32 4.501%. KBW Nasdaq Bank Index 168.21 -0.72%. S&P GSCI Index Spot 713.01 2.65%. # Stock Market Today: New Nvidia Chip Fuels AI Enthusiasm. U.S. stock futures rose this morning, driven by enthusiasm around AI, though they were later knocked by Iran's semi-official Tasnim news agency that the country was suspending negotiations with the U.S. over Israel's conduct. Adding to the AI fervor this morning was Nvidia’s unveiling of its new superchip, which it described as “the most efficient PC chip ever built.” The world’s most valuable company will work with manufacturers including Dell Technologies, Microsoft and Lenovo to build laptops, which will be designed for running AI agents. South Korea’s Kospi index, which is dominated by AI chip makers Samsung and SK Hynix, surged 3.7%, bringing its year-to-date gains to 109%.",
+                "score": 0.99174845
+              },
+              {
+                "title": "Stock Market Today: Dow Up As Trump Says This On Iran; AI Stocks Pop On Anthropic IPO Move (Live Coverage) - Investor's Business Daily",
+                "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-us-iran-deal-nvidia-stock-nvda/",
+                "source": "investors.com",
+                "summary": "# Stock Market Today: Dow Up As Trump Says This On Iran; AI Stocks Pop On Anthropic IPO Move | Investor's Business Daily. *   Stocks Near A Buy Zone. *   IBD 50 Stocks To Watch. *   How To Invest In Stocks. # Stock Market Today: Dow Up As Trump Says This On Iran; AI Stocks Pop On Anthropic IPO Move (Live Coverage). Also, **Nvidia** (NVDA) was among winning stocks while Anthropic made an IPO move and **IBM** (IBM) tested an entry on the stock market today. **Salesforce** (CRM) outperformed with a gain of nearly 10% while Nvidia climbed more than 6%. But what impact will the Fed’s incoming leader have on the interest rates and the stock market? A key theme for the stock for the stock market in 2026 has been the outperformance of artificial intelligence stocks.And AI stocks were rallying again Monday amid the news Anthropic has made a key filing as it eyes an initial public offering later this year.",
+                "score": 0.97702265
+              },
+              {
+                "title": "Morning Bid: AI and 1984 - Reuters",
+                "url": "https://www.reuters.com/commentary/reuters-open-interest/global-markets-view-usa-2026-06-01/",
+                "source": "reuters.com",
+                "summary": "# Morning Bid: AI and 1984 | Reuters. Exclusive news, data and analytics for financial market professionals Learn more about Refinitiv. ## Browse World. ## Browse Markets. # Morning Bid: AI and 1984. June 1 (Reuters) - What matters in U.S. and global markets today. By Mike Dolan, opens new tab, Editor-at-Large, Finance and Markets. The Reuters Iran Briefing newsletter keeps you informed with the latest developments and analysis of the Iran war. ## AI AND 1984. Meantime, shares of South Korea’s Samsung added another 10% on Monday, feeding off a mix of news, from the start of shipments of its new HBM4E chip to expectations ​surrounding a meeting with Nvidia's Huang later this week. You can find ROI on the Reuters website, opens new tab, and you can follow us on LinkedIn, opens new tab and X, opens new tab. *   Reuters and AI, opens new tab.",
+                "score": 0.908618
+              },
+              {
+                "title": "AI Weekly: predictions on jobs, $1 trillion market values - Reuters",
+                "url": "https://www.reuters.com/video/watch/idRW388927052026RP1/?chan=technology",
+                "source": "reuters.com",
+                "summary": "# AI Weekly: predictions on jobs, $1 trillion market values | Reuters. Exclusive news, data and analytics for financial market professionals Learn more about Refinitiv. ## Browse World. Image 2: AI Weekly: predictions on jobs, $1 trillion market values. *   ### Image 3: AI Weekly: predictions on jobs, $1 trillion market values Now Playing AI Weekly: predictions on jobs, $1 trillion market values. *   ### Image 5: Nvidia to spend $150 billion a year in Taiwan, says CEO 01:18 SK Hynix joins $1 trillion club after Samsung, Micron on AI chip boom. *   ### Image 6: SK Hynix joins $1 trillion club after Samsung, Micron on AI chip boom 01:28 Micron joins $1 trillion club as AI race powers memory chip boom. *   ### Image 12: Micron joins $1 trillion club as AI race powers memory chip boom 01:08 Lenovo Q4 revenue tops estimates on strong PC sales; shares jump 15%. ## AI Weekly: predictions on jobs, $1 trillion market values.",
+                "score": 0.87234735
+              },
+              {
+                "title": "ABC News & National Geographic Among Top Winners Of News Emmys - TV News Check",
+                "url": "https://tvnewscheck.com/journalism/article/abc-news-national-geographic-among-top-winners-of-news-emmys/",
+                "source": "tvnewscheck.com",
+                "summary": "Broadcast Industry News - Television, Cable, On-demand. Home » ABC News & National Geographic Among Top Winners Of News Emmys. # ABC News & National Geographic Among Top Winners Of News Emmys. The awards were handed out at the Jazz at Lincoln Center’s Frederick P. **Don’t Miss Out on Exclusive Updates and Insights!**. Subscribe to our newsletter today and unlock a world of valuable content, expert tips, and exciting updates delivered straight to your inbox. ### Local TV modernization: From automated execution to first-to-market programmatic. Current job openings in the media industry, including roles in news production, digital media, management, and sales. ### Programming Everywhere Video: AI & Content’s Next Generation. Watch videoProgramming Everywhere Video: AI & Content’s Next Generation. ### Programming Everywhere Video: Putting The New Back In News. ### Programming Everywhere Video: Multiplatform Strategies For Building Communities. ### Local TV Strategies 2026: Commanding The Future In An Omnimedia World. ### Local TV Strategies: AI And Building Tomorrow’s Station Group.",
+                "score": 0.8499712
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

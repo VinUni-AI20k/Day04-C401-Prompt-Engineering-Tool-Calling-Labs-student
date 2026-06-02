@@ -15,6 +15,7 @@ from .fetch.tool import read_url
 from .format.tool import render_digest
 from .policy.tool import search_company_policy
 from .social_search.tool import search_tweets
+from .job_search.tool import search_jobs_tool
 from .send.tool import send_telegram
 from .lookup.tool import web_search
 
@@ -28,6 +29,7 @@ TOOL_FUNCTIONS = {
     "clarify": ask_user,
     "timeline": get_user_tweets,
     "social_search": search_tweets,
+    "job_search": search_jobs_tool,
     "lookup": web_search,
     "fetch": read_url,
     "format": render_digest,

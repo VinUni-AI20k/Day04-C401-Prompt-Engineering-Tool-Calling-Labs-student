@@ -1,0 +1,126 @@
+{
+  "transcript_id": "v0_gemini_20260602T145136098916",
+  "version": "v0",
+  "artifact_version": "v0+peb1c8179815b+t6cdb53d5d7b8",
+  "prompt_hash": "eb1c8179815bd79d34de7d326420bb99b3072e6e8ae96464c02d4411f905fc68",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash-lite",
+  "system_prompt": "D:\\ForCoding\\CodeProject\\VinAIEnv\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\ForCoding\\CodeProject\\VinAIEnv\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T14:51:36",
+  "updated_at": "2026-06-02T14:58:27",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T14:51:52",
+      "user": "Set a hello message in telegram",
+      "status": "answered",
+      "assistant_text": "I can't set a message in Telegram directly. I can send a message, but it requires your confirmation first. Would you like me to send \"Hello message\" to Telegram?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "send",
+              "args": {
+                "text": "Hello message"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "send",
+              "args": {
+                "text": "Hello message"
+              },
+              "result": {
+                "tool": "send_telegram",
+                "status": "needs_confirmation",
+                "message": "Only send after the user explicitly confirms."
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "I can't set a message in Telegram directly. I can send a message, but it requires your confirmation first. Would you like me to send \"Hello message\" to Telegram?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "send",
+          "args": {
+            "text": "Hello message"
+          },
+          "result": {
+            "tool": "send_telegram",
+            "status": "needs_confirmation",
+            "message": "Only send after the user explicitly confirms."
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T14:52:00"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-06-02T14:53:32",
+      "user": "Send a hello message in telegram",
+      "status": "answered",
+      "assistant_text": "I've sent \"Hello message\" to Telegram.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "send",
+              "args": {
+                "text": "Hello message",
+                "confirmed": true
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "send",
+              "args": {
+                "text": "Hello message",
+                "confirmed": true
+              },
+              "result": {
+                "tool": "send_telegram",
+                "status": "sent"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "I've sent \"Hello message\" to Telegram.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "send",
+          "args": {
+            "text": "Hello message",
+            "confirmed": true
+          },
+          "result": {
+            "tool": "send_telegram",
+            "status": "sent"
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T14:53:37"
+    }
+  ]
+}

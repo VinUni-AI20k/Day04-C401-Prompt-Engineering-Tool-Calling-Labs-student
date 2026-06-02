@@ -36,6 +36,29 @@ tools:
         search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Cách sắp xếp"}
         limit: {type: integer, default: 5, description: "Số lượng"}
       required: [query]
+      
+  - name: job_search
+    description: "Tìm kiếm việc làm theo từ khóa."
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+          default: ""
+          description: "Từ khóa tìm việc"
+        page:
+          type: integer
+          default: 1
+          description: "Trang kết quả"
+        num_pages:
+          type: integer
+          default: 1
+          description: "Số trang cần lấy"
+        limit:
+          type: integer
+          default: 5
+          description: "Số lượng kết quả trả về"
+      required: [query]
 
   - name: lookup
     description: "Tra cứu thông tin trên internet."
