@@ -6,3 +6,5 @@ google-genai>=0.8.0
 requests>=2.31.0
 PyYAML>=6.0
 pypdf>=4.0.0
+streamlit>=1.30.0
+
