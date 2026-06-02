@@ -9,7 +9,7 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Gửi câu hỏi làm rõ thông tin thiếu hoặc yêu cầu xác nhận. Sử dụng response_type=text cho thông tin thiếu. Sử dụng response_type=yes_no trước bất kỳ hành động gửi/đăng/xuất bản nào."
     parameters:
       type: object
       properties:
@@ -19,7 +19,7 @@ tools:
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: "Lấy các bài viết/tweets gần đây từ một tài khoản cụ thể (screenname). Không dùng cho tìm kiếm theo chủ đề."
     parameters:
       type: object
       properties:
@@ -28,7 +28,7 @@ tools:
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: "Tìm kiếm bài đăng mạng xã hội theo từ khóa/chủ đề. Dùng search_type=Top cho yêu cầu phổ biến/viral; mặc định là Latest."
     parameters:
       type: object
       properties:
@@ -38,7 +38,7 @@ tools:
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Tìm kiếm thông tin chung hoặc tin tức trên internet. Dùng topic=news cho tin tức. Thời gian hôm nay/tuần này tương ứng với timeframe."
     parameters:
       type: object
       properties:
@@ -49,7 +49,7 @@ tools:
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: "Đọc và lấy nội dung văn bản từ một địa chỉ URL cụ thể."
     parameters:
       type: object
       properties:
@@ -57,7 +57,7 @@ tools:
       required: [url]
 
   - name: format
-    description: "Trình bày dữ liệu đã có thành văn bản."
+    description: "Định dạng dữ liệu đã thu thập thành văn bản báo cáo hoặc danh sách theo mẫu."
     parameters:
       type: object
       properties:
@@ -79,7 +79,7 @@ tools:
 
   # ---------------- Bonus tools ----------------
   - name: send
-    description: "Gửi một đoạn văn bản đi."
+    description: "Gửi tin nhắn văn bản lên Telegram channel sau khi có sự xác nhận của người dùng (confirmed=true)."
     parameters:
       type: object
       properties:
@@ -88,7 +88,7 @@ tools:
       required: [text]
 
   - name: policy
-    description: "Tìm trong tài liệu nội bộ."
+    description: "Tìm kiếm thông tin quy định, hướng dẫn trong tài liệu chính sách nội bộ của công ty."
     parameters:
       type: object
       properties:
@@ -98,7 +98,7 @@ tools:
       required: [query]
 
   - name: papers
-    description: "Tìm bài báo khoa học."
+    description: "Tìm kiếm các bài báo khoa học trên arXiv. Sử dụng sort_by=submittedDate cho các yêu cầu tìm bài mới nhất."
     parameters:
       type: object
       properties:
@@ -108,7 +108,7 @@ tools:
       required: [query]
 
   - name: paper_text
-    description: "Lấy nội dung text của một bài báo."
+    description: "Tải và trích xuất nội dung văn bản từ một bài báo khoa học trên arXiv dựa trên ID hoặc URL."
     parameters:
       type: object
       properties:
