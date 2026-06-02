@@ -1,0 +1,110 @@
+# Baseline copy of the intentionally vague starter declarations.
+# Use only for running v0 after API keys are available.
+tools:
+  - name: clarify
+    description: "Ask the user a question."
+    parameters:
+      type: object
+      properties:
+        question: {type: string, default: "", description: "Question"}
+        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Response type"}
+        options: {type: array, default: [], items: {type: string}, description: "Options"}
+      required: [question]
+
+  - name: timeline
+    description: "Get recent posts."
+    parameters:
+      type: object
+      properties:
+        screenname: {type: string, default: "", description: "Account name"}
+        limit: {type: integer, default: 5, description: "Count"}
+      required: [screenname]
+
+  - name: social_search
+    description: "Search social media."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Keyword"}
+        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Sort type"}
+        limit: {type: integer, default: 5, description: "Count"}
+      required: [query]
+
+  - name: lookup
+    description: "Look up information on the internet."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Query"}
+        topic: {type: string, enum: [general, news], default: "general", description: "Topic"}
+        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Timeframe"}
+        max_results: {type: integer, default: 5, description: "Number of results"}
+      required: [query]
+
+  - name: fetch
+    description: "Get content from an address."
+    parameters:
+      type: object
+      properties:
+        url: {type: string, default: "", description: "Address"}
+      required: [url]
+
+  - name: format
+    description: "Format available data into text."
+    parameters:
+      type: object
+      properties:
+        items:
+          type: array
+          default: []
+          description: "Items"
+          items:
+            type: object
+            properties:
+              title: {type: string}
+              url: {type: string}
+              source: {type: string}
+              summary: {type: string}
+              section: {type: string}
+        template: {type: string, enum: [brief, sections, bullets, thread, daily_ai_vn], default: "sections", description: "Template"}
+        headline: {type: string, default: "", description: "Headline"}
+      required: [items, template]
+
+  - name: send
+    description: "Send a text."
+    parameters:
+      type: object
+      properties:
+        text: {type: string, default: "", description: "Content"}
+        confirmed: {type: boolean, default: false, description: "Confirmation flag"}
+      required: [text]
+
+  - name: policy
+    description: "Search internal documents."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Query"}
+        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Group"}
+        top_k: {type: integer, default: 3, description: "Count"}
+      required: [query]
+
+  - name: papers
+    description: "Search scientific papers."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Keyword"}
+        max_results: {type: integer, default: 5, description: "Count"}
+        sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Sort"}
+      required: [query]
+
+  - name: paper_text
+    description: "Get text content from a paper."
+    parameters:
+      type: object
+      properties:
+        arxiv_url: {type: string, default: "", description: "ID or address"}
+        max_pages: {type: integer, default: 5, description: "Pages"}
+        max_chars: {type: integer, default: 8000, description: "Characters"}
+      required: [arxiv_url]
