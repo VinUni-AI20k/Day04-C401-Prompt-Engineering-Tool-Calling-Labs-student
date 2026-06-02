@@ -21,6 +21,7 @@ from .summarize.tool import summarize_text
 from .translate.tool import translate_text
 from .extract_entities.tool import extract_entities
 from .rank_items.tool import rank_items
+from .dedupe.tool import dedupe_items
 
 
 # NOTE (starter_v0): tool names here are intentionally vague. These keys are the
@@ -43,6 +44,7 @@ TOOL_FUNCTIONS = {
     "translate": translate_text,
     "extract_entities": extract_entities,
     "rank_items": rank_items,
+    "dedupe": dedupe_items,
 }
 
 
