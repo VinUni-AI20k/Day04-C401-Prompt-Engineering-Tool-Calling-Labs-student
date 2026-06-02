@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import os
+import re
+import time
 from typing import Any
 
 from providers.base import ModelResponse, ToolCall
@@ -66,6 +68,19 @@ def _function_call_args(call: Any) -> dict[str, Any]:
     return {}
 
 
+def _quota_retry_delay(exc: Exception) -> float | None:
+    message = str(exc)
+    if "RESOURCE_EXHAUSTED" not in message and "429" not in message:
+        return None
+    match = re.search(r"retryDelay': '(\d+)s'", message)
+    if match:
+        return min(float(match.group(1)) + 1.0, 90.0)
+    match = re.search(r"Please retry in ([0-9.]+)s", message)
+    if match:
+        return min(float(match.group(1)) + 1.0, 90.0)
+    return 60.0
+
+
 class GeminiProvider:
     """Google Gemini API provider with normalized tool_calls output."""
 
@@ -106,11 +121,19 @@ class GeminiProvider:
             config_kwargs["tools"] = [types.Tool(function_declarations=declarations)]
 
         client = genai.Client(api_key=api_key)
-        resp = client.models.generate_content(
-            model=model or self.default_model,
-            contents=contents,
-            config=types.GenerateContentConfig(**config_kwargs),
-        )
+        for attempt in range(3):
+            try:
+                resp = client.models.generate_content(
+                    model=model or self.default_model,
+                    contents=contents,
+                    config=types.GenerateContentConfig(**config_kwargs),
+                )
+                break
+            except Exception as exc:
+                delay = _quota_retry_delay(exc)
+                if delay is None or attempt == 2:
+                    raise
+                time.sleep(delay)
 
         text_parts: list[str] = []
         calls: list[ToolCall] = []

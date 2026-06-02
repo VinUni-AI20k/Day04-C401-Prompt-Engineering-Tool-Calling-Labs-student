@@ -9,55 +9,55 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Ask the user one short clarification question. Use response_type=text for missing non-action details. Use response_type=yes_no for any send/post/publish/Telegram/channel confirmation; never use text for those action confirmations."
     parameters:
       type: object
       properties:
-        question: {type: string, default: "", description: "Câu hỏi"}
-        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Kiểu trả lời"}
-        options: {type: array, default: [], items: {type: string}, description: "Các lựa chọn"}
-      required: [question]
+        question: {type: string, default: "", description: "The clarification question to show the user."}
+        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Use text for missing non-action details. Use yes_no for any send/post/publish confirmation, even when the content is incomplete."}
+        options: {type: array, default: [], items: {type: string}, description: "Allowed choices when response_type is choice."}
+      required: [question, response_type]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: "Get recent tweets/posts from one specific account. Use only when the user names a person/account or provides a handle. Map common names: Sam Altman=sama, Elon Musk=elonmusk, Andrej Karpathy=karpathy. If the account is missing, use clarify."
     parameters:
       type: object
       properties:
-        screenname: {type: string, default: "", description: "Tên tài khoản"}
-        limit: {type: integer, default: 5, description: "Số lượng"}
+        screenname: {type: string, default: "", description: "Account handle without @, e.g. sama, elonmusk, karpathy."}
+        limit: {type: integer, default: 5, description: "Number of posts requested; preserve explicit user limits."}
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: "Search Twitter/X posts by topic or keyword. Use for questions like what people are saying about GPT-5/OpenAI/AI. Use search_type=Top for popular/top tweets; otherwise Latest."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Từ khóa"}
-        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Cách sắp xếp"}
-        limit: {type: integer, default: 5, description: "Số lượng"}
+        query: {type: string, default: "", description: "Concise topic keyword, e.g. AI, OpenAI, GPT-5."}
+        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Latest by default; Top only when user asks for top/popular tweets."}
+        limit: {type: integer, default: 5, description: "Number of posts requested."}
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Search the web for general information or news. Use topic=news for news/current events. For today/hôm nay use timeframe=day; for this week/tuần này use timeframe=week. Keep query concise: AI, OpenAI, robotics, etc."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        topic: {type: string, enum: [general, news], default: "general", description: "Phân loại"}
-        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian"}
-        max_results: {type: integer, default: 5, description: "Số kết quả"}
+        query: {type: string, default: "", description: "Concise web search topic, not a full sentence. Examples: AI, OpenAI, robotics."}
+        topic: {type: string, enum: [general, news], default: "general", description: "Use news for current events/news requests; general otherwise."}
+        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "day=today/hôm nay, week=this week/tuần này."}
+        max_results: {type: integer, default: 5, description: "Number of web results requested."}
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: "Read/scrape a specific URL supplied by the user. Use when a URL is present. If the user says this article/bài này without a URL, use clarify instead."
     parameters:
       type: object
       properties:
-        url: {type: string, default: "", description: "Địa chỉ"}
+        url: {type: string, default: "", description: "Exact URL provided by the user."}
       required: [url]
 
   - name: format
-    description: "Trình bày dữ liệu đã có thành văn bản."
+    description: "Format already available items into a markdown digest. Do not use for gathering new information."
     parameters:
       type: object
       properties:
@@ -79,16 +79,16 @@ tools:
 
   # ---------------- Bonus tools ----------------
   - name: send
-    description: "Gửi một đoạn văn bản đi."
+    description: "Send text to the configured Telegram channel. This is an external write action. Never call unless the user explicitly confirmed sending. For any send/post/publish request without confirmation, first use clarify with response_type=yes_no before asking for content."
     parameters:
       type: object
       properties:
-        text: {type: string, default: "", description: "Nội dung"}
-        confirmed: {type: boolean, default: false, description: "Cờ xác nhận"}
+        text: {type: string, default: "", description: "Text to send after confirmation."}
+        confirmed: {type: boolean, default: false, description: "Set true only after explicit user confirmation."}
       required: [text]
 
   - name: policy
-    description: "Tìm trong tài liệu nội bộ."
+    description: "Search local company policy markdown. Use for internal policy, citation, privacy, publishing, tool usage, or research governance questions."
     parameters:
       type: object
       properties:
@@ -98,7 +98,7 @@ tools:
       required: [query]
 
   - name: papers
-    description: "Tìm bài báo khoa học."
+    description: "Search arXiv for scientific papers by topic. Use for research paper discovery."
     parameters:
       type: object
       properties:
@@ -108,7 +108,7 @@ tools:
       required: [query]
 
   - name: paper_text
-    description: "Lấy nội dung text của một bài báo."
+    description: "Download an arXiv PDF and extract text. Use only when the user gives an arXiv ID/URL or after a specific arXiv paper is selected."
     parameters:
       type: object
       properties:
