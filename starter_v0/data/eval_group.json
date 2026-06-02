@@ -1,7 +1,85 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "description": "Custom test cases for weather_by_region and trend_analyzer.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_weather_routing",
+      "phase": "B",
+      "suite": "group",
+      "query": "Thời tiết Hà Nội hôm nay thế nào?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather_by_region",
+            "args": {
+              "region": "Hà Nội"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "weather_routing",
+        "difficulty": "easy",
+        "what_it_tests": "Check if agent calls weather_by_region for a specified location"
+      }
+    },
+    {
+      "id": "G02_weather_missing_region",
+      "phase": "B",
+      "suite": "group",
+      "query": "Thời tiết hôm nay thế nào?",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "weather_missing_region",
+        "difficulty": "medium",
+        "what_it_tests": "Check if agent calls clarify when region is missing"
+      }
+    },
+    {
+      "id": "G03_trend_analyzer_routing",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm kiếm các bài đăng trên Twitter nói về OpenAI"
+        },
+        {
+          "role": "assistant",
+          "content": "Tôi đã tìm thấy một số bài đăng nói về OpenAI trên Twitter."
+        },
+        {
+          "role": "user",
+          "content": "Hãy phân tích xu hướng, từ khóa và sentiment của các bài đăng này."
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "trend_analyzer",
+            "args": {}
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "trend_analyzer_routing",
+        "difficulty": "hard",
+        "what_it_tests": "Check if agent calls trend_analyzer for analyzing tweets context"
+      }
+    }
+  ]
 }

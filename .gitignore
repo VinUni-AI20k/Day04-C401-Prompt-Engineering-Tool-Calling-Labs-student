@@ -23,3 +23,7 @@ arxiv_papers/
 Thumbs.db
 .idea/
 .vscode/
+
+# Docs, md files
+docs/
+*.md
