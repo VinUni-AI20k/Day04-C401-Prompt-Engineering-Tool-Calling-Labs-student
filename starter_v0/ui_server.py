@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import mimetypes
 import re
 import sys
 from datetime import datetime
@@ -9,7 +10,7 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, quote, urlparse
 
 from chat import (
     json_text,
@@ -211,6 +212,31 @@ INDEX_HTML = r"""<!doctype html>
       color: var(--danger);
       background: #fff5f4;
     }
+    .downloads {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+      white-space: normal;
+    }
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      width: fit-content;
+      max-width: 100%;
+      padding: 6px 10px;
+      border: 1px solid #a7d8d1;
+      border-radius: 6px;
+      background: #ecfdf9;
+      color: #0f766e;
+      text-decoration: none;
+      font-size: 13px;
+      word-break: break-word;
+    }
+    .download-link:hover {
+      border-color: var(--accent);
+      background: #dff8f3;
+    }
     .meta {
       font-size: 12px;
       color: var(--muted);
@@ -406,6 +432,16 @@ INDEX_HTML = r"""<!doctype html>
         .replaceAll('<', '&lt;')
         .replaceAll('>', '&gt;');
     }
+    function downloadLinksHtml(downloads) {
+      if (!downloads || !downloads.length) return '';
+      const links = downloads.map((item) => {
+        const name = escapeHtml(item.filename || 'download.pdf');
+        const href = escapeHtml(item.url || '#');
+        const size = item.file_size_formatted ? ` <span>(${escapeHtml(item.file_size_formatted)})</span>` : '';
+        return `<a class="download-link" href="${href}" download="${name}">Download ${name}${size}</a>`;
+      }).join('');
+      return `<div class="downloads">${links}</div>`;
+    }
     function setStatus(text) {
       els.status.textContent = text;
     }
@@ -457,7 +493,7 @@ INDEX_HTML = r"""<!doctype html>
         if (!response.ok) {
           throw new Error(payload.error || response.statusText);
         }
-        addBubble('agent', payload.assistant_text || '');
+        addBubble('agent', payload.assistant_text || '', downloadLinksHtml(payload.downloads || []));
         renderInspector(payload);
         setStatus(payload.status || 'done');
       } catch (error) {
@@ -509,6 +545,45 @@ INDEX_HTML = r"""<!doctype html>
 
 
 SESSIONS: dict[str, dict[str, Any]] = {}
+
+
+def _download_url_for_file(file_path: str | None) -> dict[str, Any] | None:
+    if not file_path:
+        return None
+    path = Path(file_path)
+    if not path.is_absolute():
+        path = ROOT / path
+    try:
+        resolved = path.resolve()
+        relative = resolved.relative_to(ROOT.resolve())
+    except ValueError:
+        return None
+    if not resolved.is_file():
+        return None
+    return {
+        "filename": resolved.name,
+        "path": str(relative),
+        "url": f"/download?path={quote(str(relative))}",
+    }
+
+
+def annotate_downloads(turn_result: dict[str, Any]) -> list[dict[str, Any]]:
+    downloads: list[dict[str, Any]] = []
+    for event in turn_result.get("tool_events", []) or []:
+        result = event.get("result")
+        if not isinstance(result, dict):
+            continue
+        if result.get("tool") != "download_pdf" or result.get("status") != "success":
+            continue
+        download = _download_url_for_file(result.get("file_path"))
+        if not download:
+            continue
+        if result.get("file_size_formatted"):
+            download["file_size_formatted"] = result["file_size_formatted"]
+        result["download_url"] = download["url"]
+        result["download_filename"] = download["filename"]
+        downloads.append(download)
+    return downloads
 
 
 def build_context(provider_name: str, version: str, model: str | None) -> dict[str, Any]:
@@ -605,6 +680,7 @@ def handle_chat(payload: dict[str, Any]) -> dict[str, Any]:
         model=model,
         max_tool_rounds=max_tool_rounds,
     )
+    downloads = annotate_downloads(result)
     turn_record.update(result)
     turn_record["ended_at"] = now_iso()
     state["history"].append({"role": "user", "content": message})
@@ -620,6 +696,7 @@ def handle_chat(payload: dict[str, Any]) -> dict[str, Any]:
         "model": context["selected_model"],
         "artifact_version": context["artifact_version"].artifact_version,
         "transcript_path": str(state["transcript_path"]),
+        "downloads": downloads,
         "turn": turn_record,
     }
 
@@ -646,13 +723,37 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def send_file(self, relative_path: str) -> None:
+        try:
+            resolved = (ROOT / relative_path).resolve()
+            resolved.relative_to(ROOT.resolve())
+        except ValueError:
+            self.send_error(HTTPStatus.FORBIDDEN)
+            return
+        if not resolved.is_file():
+            self.send_error(HTTPStatus.NOT_FOUND)
+            return
+        body = resolved.read_bytes()
+        content_type = mimetypes.guess_type(resolved.name)[0] or "application/octet-stream"
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Content-Disposition", f'attachment; filename="{resolved.name}"')
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_GET(self) -> None:
-        path = urlparse(self.path).path
+        parsed = urlparse(self.path)
+        path = parsed.path
         if path in {"/", "/index.html"}:
             self.send_html()
             return
         if path == "/api/health":
             self.send_json({"ok": True, "time": now_iso()})
+            return
+        if path == "/download":
+            query = parse_qs(parsed.query)
+            self.send_file((query.get("path") or [""])[0])
             return
         self.send_error(HTTPStatus.NOT_FOUND)
 
