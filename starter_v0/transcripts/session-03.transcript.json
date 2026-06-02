@@ -1,0 +1,19 @@
+{
+  "transcript_id": "session-03",
+  "version": "ui-dev",
+  "provider": "ui-client",
+  "model": "ui-agent",
+  "created_at": "2026-06-02T08:58:19.587Z",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T08:58:19.587Z",
+      "user": "các tools bạn có",
+      "status": "answered",
+      "assistant_text": "Tôi có thể thực hiện các tác vụ liên quan đến nghiên cứu, tin tức, đọc bài viết trên web, nghiên cứu trên Twitter/X, định dạng các mục nghiên cứu hiện có, tìm kiếm chính sách nội bộ, tìm kiếm bài báo học thuật, trích xuất văn bản từ bài báo, và gửi/công bố thông tin đã xác nhận. Nếu bạn cần hỗ trợ trong các lĩnh vực này, hãy cho tôi biết!",
+      "tool_events": [],
+      "ended_at": "2026-06-02T08:58:19.588Z"
+    }
+  ],
+  "updated_at": "2026-06-02T08:58:19.588Z"
+}

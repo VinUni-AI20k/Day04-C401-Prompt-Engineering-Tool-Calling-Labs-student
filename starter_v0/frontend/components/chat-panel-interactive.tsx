@@ -47,121 +47,219 @@ export function ChatPanelInteractive({
   const bottomRef = useRef<HTMLDivElement>(null);
   const currentSessionIdRef = useRef(activeSessionId);
 
-  // Load initial session messages or restore from localStorage
+  // Load initial session messages or restore from localStorage/backend transcripts
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("gaptutor_messages_" + activeSessionId);
-      if (saved) {
+    let isMounted = true;
+
+    async function loadTranscriptAndMessages() {
+      // 1. First, check if we can load the specific transcript from the backend
+      if (
+        !activeSessionId.startsWith("session-cohort") &&
+        !activeSessionId.startsWith("session-student") &&
+        !activeSessionId.startsWith("session-security")
+      ) {
         try {
-          const parsed = JSON.parse(saved) as ChatMessage[];
-          if (parsed && parsed.length > 0) {
-            setMessages(parsed);
-            currentSessionIdRef.current = activeSessionId;
-            return;
+          const response = await fetch(`/api/transcripts?session_id=${activeSessionId}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data && data.turns && data.turns.length > 0) {
+              const parsedMessages: ChatMessage[] = [];
+              data.turns.forEach((turn: any) => {
+                // User turn
+                parsedMessages.push({
+                  id: `msg-user-${turn.turn_index}`,
+                  role: "user",
+                  content: turn.user,
+                  timestamp: turn.started_at ? Date.parse(turn.started_at) : Date.now(),
+                });
+
+                // Assistant turn
+                const thinkingSteps: SimulatedStep[] = [];
+                (turn.rounds || []).forEach((r: any) => {
+                  const roundNum = r.round || 1;
+                  if (r.assistant_text) {
+                    thinkingSteps.push({
+                      id: `thought-${roundNum}-${Math.random()}`,
+                      title: `Model Thought (Round ${roundNum})`,
+                      kind: "thought",
+                      content: r.assistant_text,
+                      status: "completed",
+                    });
+                  }
+                  (r.tool_calls || []).forEach((call: any, idx: number) => {
+                    const toolName = call.name;
+                    const args = call.args;
+                    
+                    // Match with tool_results
+                    const matchRes = (r.tool_results || []).find(
+                      (res: any) => res.tool === toolName && JSON.stringify(res.args) === JSON.stringify(args)
+                    );
+                    const resVal = matchRes ? matchRes.result : {};
+                    const statusStr = (resVal && resVal.error) ? "failed" : "completed";
+                    
+                    thinkingSteps.push({
+                      id: `tool-${roundNum}-${idx}-${Math.random()}`,
+                      title: `Call ${toolName}`,
+                      kind: "tool",
+                      toolName: toolName,
+                      content: statusStr === "completed" ? `Executed ${toolName} successfully.` : `Tool failed: ${resVal.message || "Unknown error"}`,
+                      input: args,
+                      output: resVal,
+                      status: statusStr,
+                      durationMs: 150,
+                    });
+                  });
+                });
+
+                parsedMessages.push({
+                  id: `msg-assistant-${turn.turn_index}`,
+                  role: "assistant",
+                  content: turn.assistant_text || "",
+                  timestamp: turn.ended_at ? Date.parse(turn.ended_at) : Date.now(),
+                  thinkingSteps: thinkingSteps,
+                });
+              });
+
+              if (isMounted) {
+                setMessages(parsedMessages);
+                currentSessionIdRef.current = activeSessionId;
+                return;
+              }
+            }
           }
         } catch (e) {
-          console.error("Failed to parse saved messages", e);
+          console.error("Failed to load transcript from backend", e);
         }
+      }
+
+      // 2. Fallback to localStorage
+      if (typeof window !== "undefined") {
+        const saved = localStorage.getItem("gaptutor_messages_" + activeSessionId);
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved) as ChatMessage[];
+            if (parsed && parsed.length > 0) {
+              if (isMounted) {
+                setMessages(parsed);
+                currentSessionIdRef.current = activeSessionId;
+                return;
+              }
+            }
+          } catch (e) {
+            console.error("Failed to parse saved messages", e);
+          }
+        }
+      }
+
+      // 3. Fallback to default presets
+      let initialMsg: ChatMessage[] = [];
+      if (activeSessionId === "session-cohort") {
+        const trace = traces.find((t) => t.id === "success-cohort-diagnostic")!;
+        initialMsg = [
+          {
+            id: "msg-user-1",
+            role: "user",
+            content: trace.query,
+            timestamp: Date.now() - 1000 * 60 * 5,
+          },
+          {
+            id: "msg-assistant-1",
+            role: "assistant",
+            content: trace.steps.find((s) => s.kind === "final")?.content ?? trace.summary,
+            timestamp: Date.now() - 1000 * 60 * 4,
+            thinkingSteps: trace.steps.map((s) => ({
+              id: s.id,
+              title: s.title,
+              kind: s.kind as SimulatedStep["kind"],
+              content: s.content,
+              toolName: s.toolName,
+              status: "completed",
+              durationMs: s.durationMs,
+            })),
+          },
+        ];
+      } else if (activeSessionId === "session-student") {
+        initialMsg = [
+          {
+            id: "msg-user-2",
+            role: "user",
+            content: "Hãy phân tích concept_mastery của học viên STU003 (Lê Minh C).",
+            timestamp: Date.now() - 1000 * 60 * 30,
+          },
+          {
+            id: "msg-assistant-2",
+            role: "assistant",
+            content: "Học viên Lê Minh C (STU003) thuộc nhóm 'Needs Foundation' với điểm trung bình concept là 34.2%. Yếu nhất ở Agentic Loops (25%) và Reasoning (30%). Cần được hỗ trợ 1-1 khẩn cấp.",
+            timestamp: Date.now() - 1000 * 60 * 29,
+            thinkingSteps: [
+              {
+                id: "stu-t-1",
+                title: "Load student info",
+                kind: "thought",
+                content: "Đọc query và nhận dạng ID học viên STU003.",
+                status: "completed",
+              },
+              {
+                id: "stu-tool-1",
+                title: "Fetch Student Details",
+                kind: "tool",
+                toolName: "get_student_by_id",
+                content: "Tool lấy chi tiết học viên từ database.",
+                status: "completed",
+                durationMs: 45,
+              },
+            ],
+          },
+        ];
+      } else if (activeSessionId === "session-security") {
+        const trace = traces.find((t) => t.id === "security-blocked")!;
+        initialMsg = [
+          {
+            id: "msg-user-3",
+            role: "user",
+            content: trace.query,
+            timestamp: Date.now() - 1000 * 60 * 60,
+          },
+          {
+            id: "msg-assistant-3",
+            role: "assistant",
+            content: trace.summary,
+            timestamp: Date.now() - 1000 * 60 * 59,
+            thinkingSteps: trace.steps.map((s) => ({
+              id: s.id,
+              title: s.title,
+              kind: s.kind as SimulatedStep["kind"],
+              content: s.content,
+              toolName: s.toolName,
+              status: "completed",
+              durationMs: s.durationMs,
+            })),
+          },
+        ];
+      } else {
+        initialMsg = [
+          {
+            id: "msg-welcome",
+            role: "assistant",
+            content: "Xin chào! Tôi là GapTutor AI Agent. Bạn hãy đặt câu hỏi để tôi chẩn đoán thông tin của cohort hoặc học viên nhé.",
+            timestamp: Date.now(),
+          },
+        ];
+      }
+
+      if (isMounted) {
+        setMessages(initialMsg);
+        currentSessionIdRef.current = activeSessionId;
       }
     }
 
-    let initialMsg: ChatMessage[] = [];
-    if (activeSessionId === "session-cohort") {
-      const trace = traces.find((t) => t.id === "success-cohort-diagnostic")!;
-      initialMsg = [
-        {
-          id: "msg-user-1",
-          role: "user",
-          content: trace.query,
-          timestamp: Date.now() - 1000 * 60 * 5,
-        },
-        {
-          id: "msg-assistant-1",
-          role: "assistant",
-          content: trace.steps.find((s) => s.kind === "final")?.content ?? trace.summary,
-          timestamp: Date.now() - 1000 * 60 * 4,
-          thinkingSteps: trace.steps.map((s) => ({
-            id: s.id,
-            title: s.title,
-            kind: s.kind as SimulatedStep["kind"],
-            content: s.content,
-            toolName: s.toolName,
-            status: "completed",
-            durationMs: s.durationMs,
-          })),
-        },
-      ];
-    } else if (activeSessionId === "session-student") {
-      initialMsg = [
-        {
-          id: "msg-user-2",
-          role: "user",
-          content: "Hãy phân tích concept_mastery của học viên STU003 (Lê Minh C).",
-          timestamp: Date.now() - 1000 * 60 * 30,
-        },
-        {
-          id: "msg-assistant-2",
-          role: "assistant",
-          content: "Học viên Lê Minh C (STU003) thuộc nhóm 'Needs Foundation' với điểm trung bình concept là 34.2%. Yếu nhất ở Agentic Loops (25%) và Reasoning (30%). Cần được hỗ trợ 1-1 khẩn cấp.",
-          timestamp: Date.now() - 1000 * 60 * 29,
-          thinkingSteps: [
-            {
-              id: "stu-t-1",
-              title: "Load student info",
-              kind: "thought",
-              content: "Đọc query và nhận dạng ID học viên STU003.",
-              status: "completed",
-            },
-            {
-              id: "stu-tool-1",
-              title: "Fetch Student Details",
-              kind: "tool",
-              toolName: "get_student_by_id",
-              content: "Tool lấy chi tiết học viên từ database.",
-              status: "completed",
-              durationMs: 45,
-            },
-          ],
-        },
-      ];
-    } else if (activeSessionId === "session-security") {
-      const trace = traces.find((t) => t.id === "security-blocked")!;
-      initialMsg = [
-        {
-          id: "msg-user-3",
-          role: "user",
-          content: trace.query,
-          timestamp: Date.now() - 1000 * 60 * 60,
-        },
-        {
-          id: "msg-assistant-3",
-          role: "assistant",
-          content: trace.summary,
-          timestamp: Date.now() - 1000 * 60 * 59,
-          thinkingSteps: trace.steps.map((s) => ({
-            id: s.id,
-            title: s.title,
-            kind: s.kind as SimulatedStep["kind"],
-            content: s.content,
-            toolName: s.toolName,
-            status: "completed",
-            durationMs: s.durationMs,
-          })),
-        },
-      ];
-    } else {
-      initialMsg = [
-        {
-          id: "msg-welcome",
-          role: "assistant",
-          content: "Xin chào! Tôi là GapTutor AI Agent. Bạn hãy đặt câu hỏi để tôi chẩn đoán thông tin của cohort hoặc học viên nhé.",
-          timestamp: Date.now(),
-        }
-      ];
-    }
-    setMessages(initialMsg);
-    currentSessionIdRef.current = activeSessionId;
+    loadTranscriptAndMessages();
+
+    return () => {
+      isMounted = false;
+    };
   }, [activeSessionId]);
+
 
   // Save messages to localStorage whenever they change, isolated by activeSessionId
   useEffect(() => {
@@ -299,7 +397,7 @@ export function ChatPanelInteractive({
       const response = await fetch("/api/diagnose", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ session_id: "session-03", query: userText }),
+        body: JSON.stringify({ session_id: activeSessionId, query: userText }),
       });
       const data = await response.json() as DiagnoseResponse & {
         error_code?: string;
