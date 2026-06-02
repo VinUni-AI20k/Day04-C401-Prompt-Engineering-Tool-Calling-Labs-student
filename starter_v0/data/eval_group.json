@@ -3,5 +3,288 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_missing_handle_product_leader",
+      "phase": "B",
+      "query": "Tóm tắt 3 tweet mới nhất giúp mình",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "clarify_missing_handle_variant",
+        "difficulty": "medium",
+        "what_it_tests": "Biến thể của lỗi v1: yêu cầu tweet nhưng không nêu tài khoản, agent phải hỏi lại thay vì tự đoán."
+      }
+    },
+    {
+      "id": "G02_missing_url_blog_summary",
+      "phase": "B",
+      "query": "Tóm tắt bài blog này thành 3 ý chính giúp mình",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "clarify_missing_url_variant",
+        "difficulty": "medium",
+        "what_it_tests": "Biến thể của lỗi v1: nhắc tới một bài viết mơ hồ nhưng không đưa URL, agent phải xin link."
+      }
+    },
+    {
+      "id": "G03_confirm_telegram_digest",
+      "phase": "B",
+      "query": "Gửi bản tin AI này lên Telegram giúp mình",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "confirm_before_send_variant",
+        "difficulty": "medium",
+        "what_it_tests": "Biến thể của lỗi v1: hành động gửi cần xác nhận rõ ràng trước khi gọi send."
+      }
+    },
+    {
+      "id": "G04_out_of_scope_spreadsheet_formula",
+      "phase": "B",
+      "query": "Viết giúp mình công thức Excel để tra cứu dữ liệu bằng VLOOKUP",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "metadata": {
+        "skill": "out_of_scope_office_work",
+        "difficulty": "easy",
+        "what_it_tests": "Biến thể ngoài phạm vi research: yêu cầu năng suất văn phòng, agent không được gọi tool."
+      }
+    },
+    {
+      "id": "G05_parallel_robotics_web_and_social",
+      "phase": "B",
+      "query": "Tìm tin robotics hôm nay trên web và tìm thêm tweet về robotics.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "robotics",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "robotics"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "parallel_sources_robotics",
+        "difficulty": "hard",
+        "what_it_tests": "Biến thể multi-source của lỗi v1: cùng lúc gọi web và social, giữ query gọn và set topic=news cho nhánh web."
+      }
+    },
+    {
+      "id": "G06_multiturn_fill_handle_then_limit",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tóm tắt tweet mới nhất giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Của Andrej Karpathy nhé"
+        },
+        {
+          "role": "user",
+          "content": "Lấy đúng 3 tweet thôi"
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_fill_missing_handle",
+        "difficulty": "hard",
+        "what_it_tests": "Sau khi thiếu account ở lượt đầu, agent phải dùng bổ sung ở lượt sau và carry limit ở lượt cuối."
+      }
+    },
+    {
+      "id": "G07_multiturn_carry_topic_and_timeframe",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tin AI tuần này có gì đáng chú ý?"
+        },
+        {
+          "role": "user",
+          "content": "Đổi sang semiconductor đi"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ tìm semiconductor thôi, vẫn là tin tuần này"
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "semiconductor",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_carryover_news",
+        "difficulty": "hard",
+        "what_it_tests": "Giữ topic=news và timeframe=week qua nhiều lượt nhưng thay query theo chỉ định mới nhất."
+      }
+    },
+    {
+      "id": "G08_multiturn_switch_search_to_timeline",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm các tweet top về OpenAI"
+        },
+        {
+          "role": "user",
+          "content": "Không, lấy tweet mới nhất của Sam Altman"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ 1 tweet thôi"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 1
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_tool_switch",
+        "difficulty": "hard",
+        "what_it_tests": "Agent phải bỏ ý định social_search trước đó và chuyển hẳn sang timeline theo yêu cầu sửa mới nhất."
+      }
+    },
+    {
+      "id": "G09_multiturn_fill_url_then_fetch",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tóm tắt bài viết này giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Đây là link: https://openai.com/index/introducing-gpt-4-1/"
+        },
+        {
+          "role": "user",
+          "content": "Tóm tắt ngắn gọn thôi"
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/index/introducing-gpt-4-1/"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_fill_missing_url",
+        "difficulty": "hard",
+        "what_it_tests": "Sau khi được cung cấp URL ở lượt giữa, agent phải dùng fetch với đúng link thay vì tiếp tục hỏi hoặc tự đoán."
+      }
+    },
+    {
+      "id": "G10_multiturn_confirm_then_send",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Gửi bản tin này lên Telegram giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Mình xác nhận gửi"
+        },
+        {
+          "role": "user",
+          "content": "Nội dung là: Ban lanh dao can theo doi sat xu huong AI agent trong tuan nay."
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true,
+              "text": "Ban lanh dao can theo doi sat xu huong AI agent trong tuan nay."
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_confirmed_send",
+        "difficulty": "hard",
+        "what_it_tests": "Boundary dương tính: sau khi đã có xác nhận rõ ràng ở lượt trước, agent được phép gọi send với confirmed=true."
+      }
+    }
+  ]
 }
