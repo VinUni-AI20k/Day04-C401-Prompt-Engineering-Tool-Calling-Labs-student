@@ -9,7 +9,7 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Ask the user for missing required information or explicit confirmation. Use response_type=text for missing account, URL, topic, or free-form info. Use response_type=yes_no before any send/post/publish/delivery action. Use response_type=choice only when offering fixed options."
+    description: "Gửi câu hỏi làm rõ thông tin thiếu hoặc yêu cầu xác nhận. Sử dụng response_type=text cho thông tin thiếu. Sử dụng response_type=yes_no trước bất kỳ hành động gửi/đăng/xuất bản nào."
     parameters:
       type: object
       properties:
@@ -19,7 +19,7 @@ tools:
       required: [question]
 
   - name: timeline
-    description: "Get recent posts from one specific account/person. Use for requests like 'tweets by Sam Altman' or 'latest posts from Elon Musk'. Do not use for topic searches like 'what people say about GPT-5'."
+    description: "Lấy các bài viết/tweets gần đây từ một tài khoản cụ thể (screenname). Không dùng cho tìm kiếm theo chủ đề."
     parameters:
       type: object
       properties:
@@ -28,7 +28,7 @@ tools:
       required: [screenname]
 
   - name: social_search
-    description: "Search social media posts by topic or keyword. Use for 'what are people saying about X'. Use search_type=Top for top/popular/viral requests; otherwise use Latest. Do not use for one named account's timeline."
+    description: "Tìm kiếm bài đăng mạng xã hội theo từ khóa/chủ đề. Dùng search_type=Top cho yêu cầu phổ biến/viral; mặc định là Latest."
     parameters:
       type: object
       properties:
@@ -38,7 +38,7 @@ tools:
       required: [query]
 
   - name: lookup
-    description: "Search the web for general information or news. Use topic=news for news/current-events requests. Map today to timeframe=day, this week to week, this month to month, and this year to year. Keep query concise."
+    description: "Tìm kiếm thông tin chung hoặc tin tức trên internet. Dùng topic=news cho tin tức. Thời gian hôm nay/tuần này tương ứng với timeframe."
     parameters:
       type: object
       properties:
@@ -49,7 +49,7 @@ tools:
       required: [query]
 
   - name: fetch
-    description: "Read or summarize a concrete URL supplied by the user. Use this instead of lookup when the request includes a specific link. If no URL is provided, use clarify."
+    description: "Đọc và lấy nội dung văn bản từ một địa chỉ URL cụ thể."
     parameters:
       type: object
       properties:
@@ -57,7 +57,7 @@ tools:
       required: [url]
 
   - name: format
-    description: "Trình bày dữ liệu đã có thành văn bản."
+    description: "Định dạng dữ liệu đã thu thập thành văn bản báo cáo hoặc danh sách theo mẫu."
     parameters:
       type: object
       properties:
@@ -79,7 +79,7 @@ tools:
 
   # ---------------- Bonus tools ----------------
   - name: send
-    description: "Send text to Telegram only after the user has explicitly confirmed yes. Never use this tool for an unconfirmed send/post/publish request; use clarify with response_type=yes_no first."
+    description: "Gửi tin nhắn văn bản lên Telegram channel sau khi có sự xác nhận của người dùng (confirmed=true)."
     parameters:
       type: object
       properties:
@@ -87,8 +87,8 @@ tools:
         confirmed: {type: boolean, default: false, description: "Cờ xác nhận"}
       required: [text]
 
-  - name: search_company_policy
-    description: "Tìm trong tài liệu nội bộ."
+  - name: policy
+    description: "Tìm kiếm thông tin quy định, hướng dẫn trong tài liệu chính sách nội bộ của công ty."
     parameters:
       type: object
       properties:
@@ -97,8 +97,8 @@ tools:
         top_k: {type: integer, default: 3, description: "Số mục"}
       required: [query]
 
-  - name: search_arxiv_papers
-    description: "Tìm bài báo khoa học."
+  - name: papers
+    description: "Tìm kiếm các bài báo khoa học trên arXiv. Sử dụng sort_by=submittedDate cho các yêu cầu tìm bài mới nhất."
     parameters:
       type: object
       properties:
@@ -107,8 +107,8 @@ tools:
         sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Sắp xếp"}
       required: [query]
 
-  - name: extract_arxiv_paper_text
-    description: "Lấy nội dung text của một bài báo."
+  - name: paper_text
+    description: "Tải và trích xuất nội dung văn bản từ một bài báo khoa học trên arXiv dựa trên ID hoặc URL."
     parameters:
       type: object
       properties:
