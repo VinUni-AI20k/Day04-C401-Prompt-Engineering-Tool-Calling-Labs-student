@@ -1,0 +1,322 @@
+{
+  "transcript_id": "ui_gemini_20260602T172149608991",
+  "version": "v0",
+  "artifact_version": "v0+pe3cbc5f6efce+t547093dd9d9c",
+  "prompt_hash": "e3cbc5f6efce0c223ce503ce161695f8181c8310c39551993748b8277d8c555a",
+  "tools_hash": "547093dd9d9c74dfbd1b0b8fbf1211093f915795ec02881a5cbd77d53d76576e",
+  "provider": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "system_prompt": "E:\\VINAI\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\VINAI\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T17:21:49",
+  "updated_at": "2026-06-02T17:21:58",
+  "source": "ui_server",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T17:21:49",
+      "user": "Tìm paper về transformer trên arXiv",
+      "status": "answered",
+      "assistant_text": "Dưới đây là một số bài báo nghiên cứu về Transformer trên arXiv:\n\n*   **PyramidTNT: Improved Transformer-in-Transformer Baselines with Pyramid Architecture** (2022)\n    *   Tác giả: Kai Han, Jianyuan Guo, Yehui Tang, Yunhe Wang\n    *   Tóm tắt: Giới thiệu kiến trúc PyramidTNT, cải tiến từ kiến trúc Transformer-in-Transformer (TNT) gốc bằng cách sử dụng kiến trúc kim tự tháp và convolutional stem để trích xuất biểu diễn phân cấp tốt hơn.\n    *   [Xem trên arXiv](http://arxiv.org/abs/2201.00978v1)\n\n*   **Learning to Cluster Faces via Transformer** (2021)\n    *   Tác giả: Jinxing Ye, Xioajiang Peng, Baigui Sun, Kai Wang, Xiuyu Sun, Hao Li, Hanqing Wu\n    *   Tóm tắt: Đề xuất \"Face Transformer\" cho bài toán phân cụm khuôn mặt có giám sát, chia quy trình thành hai bước: mã hóa quan hệ (relation encoding) và dự đoán liên kết (linkage predicting).\n    *   [Xem trên arXiv](http://arxiv.org/abs/2104.11502v1)\n\n*   **MLP Can Be A Good Transformer Learner** (2024)\n    *   Tác giả: Sihao Lin, Pumeng Lyu, Dongrui Liu, Tao Tang, Xiaodan Liang, Andy Song, Xiaojun Chang\n    *   Tóm tắt: Giới thiệu chiến lược đơn giản hóa Vision Transformer bằng cách loại bỏ các lớp attention không cần thiết và thay thế bằng MLP, giúp cải thiện tốc độ và bộ nhớ mà không làm giảm hiệu suất.\n    *   [Xem trên arXiv](http://arxiv.org/abs/2404.05657v1)\n\n*   **Music Transformer** (2018)\n    *   Tác giả: Cheng-Zhi Anna Huang, Ashish Vaswani, Jakob Uszkoreit, Noam Shazeer, Ian Simon, Curtis Hawthorne, Andrew M. Dai, Matthew D. Hoffman, Monica Dinculescu, Douglas Eck\n    *   Tóm tắt: Ứng dụng Transformer vào mô hình hóa âm nhạc, đề xuất cơ chế chú ý tương đối (relative attention) giúp mô hình duy trì cấu trúc dài hạn trong các bản nhạc.\n    *   [Xem trên arXiv](http://arxiv.org/abs/1809.04281v3)\n\n*   **Transformer in Transformer as Backbone for Deep Reinforcement Learning** (2022)\n    *   Tác giả: Hangyu Mao, Rui Zhao, Hao Chen, Jianye Hao, Yiqun Chen, Dong Li, Junge Zhang, Zhen Xiao\n    *   Tóm tắt: Đề xuất kiến trúc \"Transformer in Transformer\" (TIT) làm backbone thuần Transformer cho học tăng cường sâu (Deep RL), xử lý cả quan sát đơn lẻ và lịch sử quan sát.\n    *   [Xem trên arXiv](http://arxiv.org/abs/2212.14538v2)",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "papers",
+              "args": {
+                "query": "transformer"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "papers",
+              "args": {
+                "query": "transformer"
+              },
+              "result": {
+                "tool": "arxiv_search",
+                "query": "transformer",
+                "api_query": "all:transformer",
+                "total_results": 169597,
+                "items": [
+                  {
+                    "arxiv_id": "2201.00978v1",
+                    "title": "PyramidTNT: Improved Transformer-in-Transformer Baselines with Pyramid Architecture",
+                    "summary": "Transformer networks have achieved great progress for computer vision tasks. Transformer-in-Transformer (TNT) architecture utilizes inner transformer and outer transformer to extract both local and global representations. In this work, we present new TNT baselines by introducing two advanced designs: 1) pyramid architecture, and 2) convolutional stem. The new \"PyramidTNT\" significantly improves the original TNT by establishing hierarchical representations. PyramidTNT achieves better performances than the previous state-of-the-art vision transformers such as Swin Transformer. We hope this new baseline will be helpful to the further research and application of vision transformer. Code will be available at https://github.com/huawei-noah/CV-Backbones/tree/master/tnt_pytorch.",
+                    "authors": [
+                      "Kai Han",
+                      "Jianyuan Guo",
+                      "Yehui Tang",
+                      "Yunhe Wang"
+                    ],
+                    "published": "2022-01-04T04:56:57Z",
+                    "updated": "2022-01-04T04:56:57Z",
+                    "url": "http://arxiv.org/abs/2201.00978v1",
+                    "pdf_url": "https://arxiv.org/pdf/2201.00978v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CV",
+                    "categories": [
+                      "cs.CV"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2104.11502v1",
+                    "title": "Learning to Cluster Faces via Transformer",
+                    "summary": "Face clustering is a useful tool for applications like automatic face annotation and retrieval. The main challenge is that it is difficult to cluster images from the same identity with different face poses, occlusions, and image quality. Traditional clustering methods usually ignore the relationship between individual images and their neighbors which may contain useful context information. In this paper, we repurpose the well-known Transformer and introduce a Face Transformer for supervised face clustering. In Face Transformer, we decompose the face clustering into two steps: relation encoding and linkage predicting. Specifically, given a face image, a \\textbf{relation encoder} module aggregates local context information from its neighbors and a \\textbf{linkage predictor} module judges whether a pair of images belong to the same cluster or not. In the local linkage graph view, Face Transformer can generate more robust node and edge representations compared to existing methods. Experiments on both MS-Celeb-1M and DeepFashion show that our method achieves state-of-the-art performance, e.g., 91.12\\% in pairwise F-score on MS-Celeb-1M.",
+                    "authors": [
+                      "Jinxing Ye",
+                      "Xioajiang Peng",
+                      "Baigui Sun",
+                      "Kai Wang",
+                      "Xiuyu Sun",
+                      "Hao Li",
+                      "Hanqing Wu"
+                    ],
+                    "published": "2021-04-23T09:43:36Z",
+                    "updated": "2021-04-23T09:43:36Z",
+                    "url": "http://arxiv.org/abs/2104.11502v1",
+                    "pdf_url": "https://arxiv.org/pdf/2104.11502v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CV",
+                    "categories": [
+                      "cs.CV"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2404.05657v1",
+                    "title": "MLP Can Be A Good Transformer Learner",
+                    "summary": "Self-attention mechanism is the key of the Transformer but often criticized for its computation demands. Previous token pruning works motivate their methods from the view of computation redundancy but still need to load the full network and require same memory costs. This paper introduces a novel strategy that simplifies vision transformers and reduces computational load through the selective removal of non-essential attention layers, guided by entropy considerations. We identify that regarding the attention layer in bottom blocks, their subsequent MLP layers, i.e. two feed-forward layers, can elicit the same entropy quantity. Meanwhile, the accompanied MLPs are under-exploited since they exhibit smaller feature entropy compared to those MLPs in the top blocks. Therefore, we propose to integrate the uninformative attention layers into their subsequent counterparts by degenerating them into identical mapping, yielding only MLP in certain transformer blocks. Experimental results on ImageNet-1k show that the proposed method can remove 40% attention layer of DeiT-B, improving throughput and memory bound without performance compromise. Code is available at https://github.com/sihaoevery/lambda_vit.",
+                    "authors": [
+                      "Sihao Lin",
+                      "Pumeng Lyu",
+                      "Dongrui Liu",
+                      "Tao Tang",
+                      "Xiaodan Liang",
+                      "Andy Song",
+                      "Xiaojun Chang"
+                    ],
+                    "published": "2024-04-08T16:40:15Z",
+                    "updated": "2024-04-08T16:40:15Z",
+                    "url": "http://arxiv.org/abs/2404.05657v1",
+                    "pdf_url": "https://arxiv.org/pdf/2404.05657v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CV",
+                    "categories": [
+                      "cs.CV"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "1809.04281v3",
+                    "title": "Music Transformer",
+                    "summary": "Music relies heavily on repetition to build structure and meaning. Self-reference occurs on multiple timescales, from motifs to phrases to reusing of entire sections of music, such as in pieces with ABA structure. The Transformer (Vaswani et al., 2017), a sequence model based on self-attention, has achieved compelling results in many generation tasks that require maintaining long-range coherence. This suggests that self-attention might also be well-suited to modeling music. In musical composition and performance, however, relative timing is critically important. Existing approaches for representing relative positional information in the Transformer modulate attention based on pairwise distance (Shaw et al., 2018). This is impractical for long sequences such as musical compositions since their memory complexity for intermediate relative information is quadratic in the sequence length. We propose an algorithm that reduces their intermediate memory requirement to linear in the sequence length. This enables us to demonstrate that a Transformer with our modified relative attention mechanism can generate minute-long compositions (thousands of steps, four times the length modeled in Oore et al., 2018) with compelling structure, generate continuations that coherently elaborate on a given motif, and in a seq2seq setup generate accompaniments conditioned on melodies. We evaluate the Transformer with our relative attention mechanism on two datasets, JSB Chorales and Piano-e-Competition, and obtain state-of-the-art results on the latter.",
+                    "authors": [
+                      "Cheng-Zhi Anna Huang",
+                      "Ashish Vaswani",
+                      "Jakob Uszkoreit",
+                      "Noam Shazeer",
+                      "Ian Simon",
+                      "Curtis Hawthorne",
+                      "Andrew M. Dai",
+                      "Matthew D. Hoffman",
+                      "Monica Dinculescu",
+                      "Douglas Eck"
+                    ],
+                    "published": "2018-09-12T07:15:26Z",
+                    "updated": "2018-12-12T07:42:08Z",
+                    "url": "http://arxiv.org/abs/1809.04281v3",
+                    "pdf_url": "https://arxiv.org/pdf/1809.04281v3",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.LG",
+                    "categories": [
+                      "cs.LG",
+                      "cs.SD",
+                      "eess.AS",
+                      "stat.ML"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2212.14538v2",
+                    "title": "Transformer in Transformer as Backbone for Deep Reinforcement Learning",
+                    "summary": "Designing better deep networks and better reinforcement learning (RL) algorithms are both important for deep RL. This work focuses on the former. Previous methods build the network with several modules like CNN, LSTM and Attention. Recent methods combine the Transformer with these modules for better performance. However, it requires tedious optimization skills to train a network composed of mixed modules, making these methods inconvenient to be used in practice. In this paper, we propose to design \\emph{pure Transformer-based networks} for deep RL, aiming at providing off-the-shelf backbones for both the online and offline settings. Specifically, the Transformer in Transformer (TIT) backbone is proposed, which cascades two Transformers in a very natural way: the inner one is used to process a single observation, while the outer one is responsible for processing the observation history; combining both is expected to extract spatial-temporal representations for good decision-making. Experiments show that TIT can achieve satisfactory performance in different settings consistently.",
+                    "authors": [
+                      "Hangyu Mao",
+                      "Rui Zhao",
+                      "Hao Chen",
+                      "Jianye Hao",
+                      "Yiqun Chen",
+                      "Dong Li",
+                      "Junge Zhang",
+                      "Zhen Xiao"
+                    ],
+                    "published": "2022-12-30T03:50:38Z",
+                    "updated": "2023-01-03T06:51:22Z",
+                    "url": "http://arxiv.org/abs/2212.14538v2",
+                    "pdf_url": "https://arxiv.org/pdf/2212.14538v2",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.LG",
+                    "categories": [
+                      "cs.LG",
+                      "cs.AI",
+                      "cs.RO"
+                    ]
+                  }
+                ],
+                "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Dưới đây là một số bài báo nghiên cứu về Transformer trên arXiv:\n\n*   **PyramidTNT: Improved Transformer-in-Transformer Baselines with Pyramid Architecture** (2022)\n    *   Tác giả: Kai Han, Jianyuan Guo, Yehui Tang, Yunhe Wang\n    *   Tóm tắt: Giới thiệu kiến trúc PyramidTNT, cải tiến từ kiến trúc Transformer-in-Transformer (TNT) gốc bằng cách sử dụng kiến trúc kim tự tháp và convolutional stem để trích xuất biểu diễn phân cấp tốt hơn.\n    *   [Xem trên arXiv](http://arxiv.org/abs/2201.00978v1)\n\n*   **Learning to Cluster Faces via Transformer** (2021)\n    *   Tác giả: Jinxing Ye, Xioajiang Peng, Baigui Sun, Kai Wang, Xiuyu Sun, Hao Li, Hanqing Wu\n    *   Tóm tắt: Đề xuất \"Face Transformer\" cho bài toán phân cụm khuôn mặt có giám sát, chia quy trình thành hai bước: mã hóa quan hệ (relation encoding) và dự đoán liên kết (linkage predicting).\n    *   [Xem trên arXiv](http://arxiv.org/abs/2104.11502v1)\n\n*   **MLP Can Be A Good Transformer Learner** (2024)\n    *   Tác giả: Sihao Lin, Pumeng Lyu, Dongrui Liu, Tao Tang, Xiaodan Liang, Andy Song, Xiaojun Chang\n    *   Tóm tắt: Giới thiệu chiến lược đơn giản hóa Vision Transformer bằng cách loại bỏ các lớp attention không cần thiết và thay thế bằng MLP, giúp cải thiện tốc độ và bộ nhớ mà không làm giảm hiệu suất.\n    *   [Xem trên arXiv](http://arxiv.org/abs/2404.05657v1)\n\n*   **Music Transformer** (2018)\n    *   Tác giả: Cheng-Zhi Anna Huang, Ashish Vaswani, Jakob Uszkoreit, Noam Shazeer, Ian Simon, Curtis Hawthorne, Andrew M. Dai, Matthew D. Hoffman, Monica Dinculescu, Douglas Eck\n    *   Tóm tắt: Ứng dụng Transformer vào mô hình hóa âm nhạc, đề xuất cơ chế chú ý tương đối (relative attention) giúp mô hình duy trì cấu trúc dài hạn trong các bản nhạc.\n    *   [Xem trên arXiv](http://arxiv.org/abs/1809.04281v3)\n\n*   **Transformer in Transformer as Backbone for Deep Reinforcement Learning** (2022)\n    *   Tác giả: Hangyu Mao, Rui Zhao, Hao Chen, Jianye Hao, Yiqun Chen, Dong Li, Junge Zhang, Zhen Xiao\n    *   Tóm tắt: Đề xuất kiến trúc \"Transformer in Transformer\" (TIT) làm backbone thuần Transformer cho học tăng cường sâu (Deep RL), xử lý cả quan sát đơn lẻ và lịch sử quan sát.\n    *   [Xem trên arXiv](http://arxiv.org/abs/2212.14538v2)",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "transformer"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "transformer",
+            "api_query": "all:transformer",
+            "total_results": 169597,
+            "items": [
+              {
+                "arxiv_id": "2201.00978v1",
+                "title": "PyramidTNT: Improved Transformer-in-Transformer Baselines with Pyramid Architecture",
+                "summary": "Transformer networks have achieved great progress for computer vision tasks. Transformer-in-Transformer (TNT) architecture utilizes inner transformer and outer transformer to extract both local and global representations. In this work, we present new TNT baselines by introducing two advanced designs: 1) pyramid architecture, and 2) convolutional stem. The new \"PyramidTNT\" significantly improves the original TNT by establishing hierarchical representations. PyramidTNT achieves better performances than the previous state-of-the-art vision transformers such as Swin Transformer. We hope this new baseline will be helpful to the further research and application of vision transformer. Code will be available at https://github.com/huawei-noah/CV-Backbones/tree/master/tnt_pytorch.",
+                "authors": [
+                  "Kai Han",
+                  "Jianyuan Guo",
+                  "Yehui Tang",
+                  "Yunhe Wang"
+                ],
+                "published": "2022-01-04T04:56:57Z",
+                "updated": "2022-01-04T04:56:57Z",
+                "url": "http://arxiv.org/abs/2201.00978v1",
+                "pdf_url": "https://arxiv.org/pdf/2201.00978v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV"
+                ]
+              },
+              {
+                "arxiv_id": "2104.11502v1",
+                "title": "Learning to Cluster Faces via Transformer",
+                "summary": "Face clustering is a useful tool for applications like automatic face annotation and retrieval. The main challenge is that it is difficult to cluster images from the same identity with different face poses, occlusions, and image quality. Traditional clustering methods usually ignore the relationship between individual images and their neighbors which may contain useful context information. In this paper, we repurpose the well-known Transformer and introduce a Face Transformer for supervised face clustering. In Face Transformer, we decompose the face clustering into two steps: relation encoding and linkage predicting. Specifically, given a face image, a \\textbf{relation encoder} module aggregates local context information from its neighbors and a \\textbf{linkage predictor} module judges whether a pair of images belong to the same cluster or not. In the local linkage graph view, Face Transformer can generate more robust node and edge representations compared to existing methods. Experiments on both MS-Celeb-1M and DeepFashion show that our method achieves state-of-the-art performance, e.g., 91.12\\% in pairwise F-score on MS-Celeb-1M.",
+                "authors": [
+                  "Jinxing Ye",
+                  "Xioajiang Peng",
+                  "Baigui Sun",
+                  "Kai Wang",
+                  "Xiuyu Sun",
+                  "Hao Li",
+                  "Hanqing Wu"
+                ],
+                "published": "2021-04-23T09:43:36Z",
+                "updated": "2021-04-23T09:43:36Z",
+                "url": "http://arxiv.org/abs/2104.11502v1",
+                "pdf_url": "https://arxiv.org/pdf/2104.11502v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV"
+                ]
+              },
+              {
+                "arxiv_id": "2404.05657v1",
+                "title": "MLP Can Be A Good Transformer Learner",
+                "summary": "Self-attention mechanism is the key of the Transformer but often criticized for its computation demands. Previous token pruning works motivate their methods from the view of computation redundancy but still need to load the full network and require same memory costs. This paper introduces a novel strategy that simplifies vision transformers and reduces computational load through the selective removal of non-essential attention layers, guided by entropy considerations. We identify that regarding the attention layer in bottom blocks, their subsequent MLP layers, i.e. two feed-forward layers, can elicit the same entropy quantity. Meanwhile, the accompanied MLPs are under-exploited since they exhibit smaller feature entropy compared to those MLPs in the top blocks. Therefore, we propose to integrate the uninformative attention layers into their subsequent counterparts by degenerating them into identical mapping, yielding only MLP in certain transformer blocks. Experimental results on ImageNet-1k show that the proposed method can remove 40% attention layer of DeiT-B, improving throughput and memory bound without performance compromise. Code is available at https://github.com/sihaoevery/lambda_vit.",
+                "authors": [
+                  "Sihao Lin",
+                  "Pumeng Lyu",
+                  "Dongrui Liu",
+                  "Tao Tang",
+                  "Xiaodan Liang",
+                  "Andy Song",
+                  "Xiaojun Chang"
+                ],
+                "published": "2024-04-08T16:40:15Z",
+                "updated": "2024-04-08T16:40:15Z",
+                "url": "http://arxiv.org/abs/2404.05657v1",
+                "pdf_url": "https://arxiv.org/pdf/2404.05657v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV"
+                ]
+              },
+              {
+                "arxiv_id": "1809.04281v3",
+                "title": "Music Transformer",
+                "summary": "Music relies heavily on repetition to build structure and meaning. Self-reference occurs on multiple timescales, from motifs to phrases to reusing of entire sections of music, such as in pieces with ABA structure. The Transformer (Vaswani et al., 2017), a sequence model based on self-attention, has achieved compelling results in many generation tasks that require maintaining long-range coherence. This suggests that self-attention might also be well-suited to modeling music. In musical composition and performance, however, relative timing is critically important. Existing approaches for representing relative positional information in the Transformer modulate attention based on pairwise distance (Shaw et al., 2018). This is impractical for long sequences such as musical compositions since their memory complexity for intermediate relative information is quadratic in the sequence length. We propose an algorithm that reduces their intermediate memory requirement to linear in the sequence length. This enables us to demonstrate that a Transformer with our modified relative attention mechanism can generate minute-long compositions (thousands of steps, four times the length modeled in Oore et al., 2018) with compelling structure, generate continuations that coherently elaborate on a given motif, and in a seq2seq setup generate accompaniments conditioned on melodies. We evaluate the Transformer with our relative attention mechanism on two datasets, JSB Chorales and Piano-e-Competition, and obtain state-of-the-art results on the latter.",
+                "authors": [
+                  "Cheng-Zhi Anna Huang",
+                  "Ashish Vaswani",
+                  "Jakob Uszkoreit",
+                  "Noam Shazeer",
+                  "Ian Simon",
+                  "Curtis Hawthorne",
+                  "Andrew M. Dai",
+                  "Matthew D. Hoffman",
+                  "Monica Dinculescu",
+                  "Douglas Eck"
+                ],
+                "published": "2018-09-12T07:15:26Z",
+                "updated": "2018-12-12T07:42:08Z",
+                "url": "http://arxiv.org/abs/1809.04281v3",
+                "pdf_url": "https://arxiv.org/pdf/1809.04281v3",
+                "source": "arxiv.org",
+                "primary_category": "cs.LG",
+                "categories": [
+                  "cs.LG",
+                  "cs.SD",
+                  "eess.AS",
+                  "stat.ML"
+                ]
+              },
+              {
+                "arxiv_id": "2212.14538v2",
+                "title": "Transformer in Transformer as Backbone for Deep Reinforcement Learning",
+                "summary": "Designing better deep networks and better reinforcement learning (RL) algorithms are both important for deep RL. This work focuses on the former. Previous methods build the network with several modules like CNN, LSTM and Attention. Recent methods combine the Transformer with these modules for better performance. However, it requires tedious optimization skills to train a network composed of mixed modules, making these methods inconvenient to be used in practice. In this paper, we propose to design \\emph{pure Transformer-based networks} for deep RL, aiming at providing off-the-shelf backbones for both the online and offline settings. Specifically, the Transformer in Transformer (TIT) backbone is proposed, which cascades two Transformers in a very natural way: the inner one is used to process a single observation, while the outer one is responsible for processing the observation history; combining both is expected to extract spatial-temporal representations for good decision-making. Experiments show that TIT can achieve satisfactory performance in different settings consistently.",
+                "authors": [
+                  "Hangyu Mao",
+                  "Rui Zhao",
+                  "Hao Chen",
+                  "Jianye Hao",
+                  "Yiqun Chen",
+                  "Dong Li",
+                  "Junge Zhang",
+                  "Zhen Xiao"
+                ],
+                "published": "2022-12-30T03:50:38Z",
+                "updated": "2023-01-03T06:51:22Z",
+                "url": "http://arxiv.org/abs/2212.14538v2",
+                "pdf_url": "https://arxiv.org/pdf/2212.14538v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.LG",
+                "categories": [
+                  "cs.LG",
+                  "cs.AI",
+                  "cs.RO"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T17:21:58"
+    }
+  ]
+}

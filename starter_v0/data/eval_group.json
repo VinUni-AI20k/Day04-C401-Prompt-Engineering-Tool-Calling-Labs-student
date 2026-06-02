@@ -3,5 +3,106 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_wiki_routing",
+      "phase": "B", "suite": "group",
+      "query": "Tìm thông tin về thuyết tương đối của Einstein trên Wikipedia",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "wikipedia", "args": {"query": "thuyết tương đối"}}]},
+      "metadata": {"skill": "routing_wikipedia", "difficulty": "easy", "what_it_tests": "Tìm kiếm kiến thức chung → gọi tool wikipedia."}
+    },
+    {
+      "id": "G02_github_search",
+      "phase": "B", "suite": "group",
+      "query": "Tìm kiếm các repository nổi bật của React Native trên GitHub",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "github_search", "args": {"query": "React Native"}}]},
+      "metadata": {"skill": "routing_github_search", "difficulty": "easy", "what_it_tests": "Tìm repo mã nguồn trên GitHub → gọi github_search."}
+    },
+    {
+      "id": "G03_crypto_price",
+      "phase": "B", "suite": "group",
+      "query": "Xem giá Solana hôm nay",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "crypto_price", "args": {"coin": "solana"}}]},
+      "metadata": {"skill": "routing_crypto_price", "difficulty": "easy", "what_it_tests": "Tra cứu giá tiền số → gọi crypto_price với coin=solana."}
+    },
+    {
+      "id": "G04_youtube_search",
+      "phase": "B", "suite": "group",
+      "query": "Tìm các video giải thích Transformers trên YouTube",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "youtube_search", "args": {"query": "Transformers architecture explained"}}]},
+      "metadata": {"skill": "routing_youtube_search", "difficulty": "easy", "what_it_tests": "Tìm video giải thích trên YouTube → gọi youtube_search."}
+    },
+    {
+      "id": "G05_out_of_scope_cooking",
+      "phase": "B", "suite": "group",
+      "query": "Hướng dẫn mình nấu canh chua cá lóc miền Tây",
+      "failure_type": "out_of_scope",
+      "expect": {"no_tool": true, "behavior": "refuse"},
+      "metadata": {"skill": "out_of_scope_cooking", "difficulty": "easy", "what_it_tests": "Câu nấu ăn ngoài phạm vi research → KHÔNG gọi tool, từ chối."}
+    },
+    {
+      "id": "G06_multiturn_wiki",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Mình muốn tìm hiểu về thuyết tương đối"},
+        {"role": "user", "content": "Tìm trên Wikipedia nhé"},
+        {"role": "user", "content": "Chỉ lấy thông tin bách khoa thôi"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "wikipedia", "args": {"query": "thuyết tương đối"}}]},
+      "metadata": {"skill": "multiturn_wikipedia", "difficulty": "medium", "what_it_tests": "Hội thoại nhiều lượt: carry chủ đề thuyết tương đối từ lượt 1, xác định nguồn Wikipedia ở lượt 2."}
+    },
+    {
+      "id": "G07_multiturn_github",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm các repo về machine learning"},
+        {"role": "user", "content": "Lấy trên GitHub nhé"},
+        {"role": "user", "content": "Giữ nguyên chủ đề cũ"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "github_search", "args": {"query": "machine learning"}}]},
+      "metadata": {"skill": "multiturn_github", "difficulty": "medium", "what_it_tests": "Hội thoại nhiều lượt: carry chủ đề machine learning từ lượt 1, xác định nguồn GitHub ở lượt 2."}
+    },
+    {
+      "id": "G08_multiturn_crypto",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Kiểm tra giá Bitcoin"},
+        {"role": "user", "content": "À, đổi sang xem giá Ethereum đi"},
+        {"role": "user", "content": "Vẫn là tra cứu tiền số nhé"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "crypto_price", "args": {"coin": "ETH"}}]},
+      "metadata": {"skill": "multiturn_crypto_correction", "difficulty": "medium", "what_it_tests": "Sửa đổi thông tin: đổi Bitcoin sang Ethereum ở lượt 2."}
+    },
+    {
+      "id": "G09_multiturn_youtube",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm các video về OpenAI"},
+        {"role": "user", "content": "Chỉ lấy trên YouTube thôi nhé"},
+        {"role": "user", "content": "Đừng lấy nguồn web thường"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "youtube_search", "args": {"query": "OpenAI"}}]},
+      "metadata": {"skill": "multiturn_youtube", "difficulty": "medium", "what_it_tests": "Xác định nguồn YouTube ở lượt 2 cho chủ đề OpenAI ở lượt 1."}
+    },
+    {
+      "id": "G10_multiturn_out_of_scope",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Bạn có biết làm thơ không?"},
+        {"role": "user", "content": "Làm giúp mình bài thơ lục bát về học tập đi"},
+        {"role": "user", "content": "Yêu cầu nghiêm túc nhé"}
+      ],
+      "failure_type": "out_of_scope",
+      "expect": {"no_tool": true, "behavior": "refuse"},
+      "metadata": {"skill": "multiturn_out_of_scope", "difficulty": "easy", "what_it_tests": "Yêu cầu sáng tạo văn học ngoài scope ở lượt 2 → từ chối, KHÔNG gọi tool."}
+    }
+  ]
 }
