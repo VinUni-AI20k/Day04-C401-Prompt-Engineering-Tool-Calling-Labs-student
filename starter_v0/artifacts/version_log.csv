@@ -1,1 +1,2 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_before,metric_after,run_file
+v0,Nguyen Duc Kien Trung,baseline,v0+peb1c8179815b+t6cdb53d5d7b8,peb1c8179815b,t6cdb53d5d7b8,baseline run,,N/A,0.5455,runs/v0_B_base_gemini_20260602T135510357476.json
