@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import time
 from typing import Any
 
 from providers.base import ModelResponse, ToolCall
@@ -66,6 +67,24 @@ def _function_call_args(call: Any) -> dict[str, Any]:
     return {}
 
 
+_RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
+
+
+def _is_retryable_api_error(exc: Exception) -> bool:
+    code = getattr(exc, "code", None)
+    if isinstance(code, int) and code in _RETRYABLE_STATUS_CODES:
+        return True
+    status = str(getattr(exc, "status", "") or "").upper()
+    return status in {"RESOURCE_EXHAUSTED", "UNAVAILABLE", "INTERNAL"}
+
+
+def _format_api_error(exc: Exception) -> str:
+    code = getattr(exc, "code", "unknown")
+    status = getattr(exc, "status", None) or exc.__class__.__name__
+    message = getattr(exc, "message", None) or str(exc)
+    return f"{code} {status}: {message}"
+
+
 class GeminiProvider:
     """Google Gemini API provider with normalized tool_calls output."""
 
@@ -73,10 +92,12 @@ class GeminiProvider:
         self,
         *,
         api_key_env: str = "GEMINI_API_KEY",
-        default_model: str = "gemini-3.5-flash",
+        default_model: str = "gemini-3.1-flash",
     ) -> None:
         self.api_key_env = api_key_env
         self.default_model = default_model
+        self.max_attempts = max(1, int(os.getenv("GEMINI_MAX_ATTEMPTS", "4")))
+        self.initial_backoff_seconds = max(0.0, float(os.getenv("GEMINI_RETRY_BASE_DELAY_SECONDS", "1.0")))
 
     def complete(
         self,
@@ -89,7 +110,7 @@ class GeminiProvider:
     ) -> ModelResponse:
         try:
             from google import genai
-            from google.genai import types
+            from google.genai import errors, types
         except ImportError as exc:
             raise RuntimeError("Install live provider dependency first: pip install google-genai") from exc
 
@@ -106,11 +127,35 @@ class GeminiProvider:
             config_kwargs["tools"] = [types.Tool(function_declarations=declarations)]
 
         client = genai.Client(api_key=api_key)
-        resp = client.models.generate_content(
-            model=model or self.default_model,
-            contents=contents,
-            config=types.GenerateContentConfig(**config_kwargs),
-        )
+        request_model = model or self.default_model
+        request_config = types.GenerateContentConfig(**config_kwargs)
+        resp = None
+        last_error: Exception | None = None
+
+        for attempt in range(1, self.max_attempts + 1):
+            try:
+                resp = client.models.generate_content(
+                    model=request_model,
+                    contents=contents,
+                    config=request_config,
+                )
+                break
+            except (errors.ClientError, errors.ServerError) as exc:
+                last_error = exc
+                if not _is_retryable_api_error(exc):
+                    raise RuntimeError(f"Gemini request failed: {_format_api_error(exc)}") from exc
+                if attempt >= self.max_attempts:
+                    break
+                delay = self.initial_backoff_seconds * (2 ** (attempt - 1))
+                time.sleep(delay)
+
+        if resp is None:
+            detail = _format_api_error(last_error or RuntimeError("unknown Gemini error"))
+            raise RuntimeError(
+                "Gemini request failed after "
+                f"{self.max_attempts} attempts: {detail}. "
+                "Please retry in a moment or choose another provider/model."
+            ) from last_error
 
         text_parts: list[str] = []
         calls: list[ToolCall] = []
