@@ -1,7 +1,7 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_before,metric_after,run_file
-v0,student,system_prompt,v0,,,"Baseline run","Initial version",,0.70,runs/v0_B_base_openrouter_20260602T143336991647.json
-v1,Junie,system_prompt,v1,6e0771804f32a,011c271ef0bb,"Fix Out of Scope","Define scope & Math/Coding refusal",0.70,0.80,runs/v1_B_base_openrouter_20260602T144653762294.json
-v2,Junie,system_prompt,v2,b58797f2617f6,011c271ef0bb,"Fix Routing & Handles","Mapping screenname & single tool per turn",0.80,0.80,runs/v2_B_base_openrouter_20260602T145100467309.json
-v3,Junie,system_prompt,v3,a907f7811d0be,011c271ef0bb,"Hybrid Workflow","Plan & Execute sequence + Parallel search",0.80,0.95,runs/v3_B_base_openrouter_20260602T153125186988.json
-v4,Junie,twitter_trends,v1,a907f7811d0be,2013635d8284,"Add Creative Tool","Twitter Trends for better social research",1.00,1.00,runs/v4_B_group_openrouter_20260602T163459479420.json
-v5,Junie,save_chat_log,v1,20e6f7773f628,4587a1112b33,"Add Chat Log Feature","Allow archiving conversations",,,
+v0,team,system_prompt,v0,,,"Baseline run","Initial version",,0.70,runs/v0_B_base_openrouter_20260602T143336991647.json
+v1,team,system_prompt,v1,6e0771804f32a,011c271ef0bb,"Fix Out of Scope","Define scope & Math/Coding refusal",0.70,0.80,runs/v1_B_base_openrouter_20260602T144653762294.json
+v2,team,system_prompt,v2,b58797f2617f6,011c271ef0bb,"Fix Routing & Handles","Mapping screenname & single tool per turn",0.80,0.80,runs/v2_B_base_openrouter_20260602T145100467309.json
+v3,team,system_prompt,v3,a907f7811d0be,011c271ef0bb,"Hybrid Workflow","Plan & Execute sequence + Parallel search",0.80,0.95,runs/v3_B_base_openrouter_20260602T153125186988.json
+v4,team,twitter_trends,v1,a907f7811d0be,2013635d8284,"Add Creative Tool","Twitter Trends for better social research",1.00,1.00,runs/v4_B_group_openrouter_20260602T163459479420.json
+v5,team,save_chat_log,v1,20e6f7773f628,4587a1112b33,"Add Chat Log Feature","Allow archiving conversations",,,
