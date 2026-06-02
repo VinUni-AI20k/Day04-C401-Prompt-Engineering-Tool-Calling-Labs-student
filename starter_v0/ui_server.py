@@ -176,18 +176,50 @@ INDEX_HTML = r"""<!doctype html>
     .empty {
       margin: auto;
       max-width: 680px;
-      color: var(--muted);
+      padding: 20px;
+    }
+    .welcome-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 24px;
       text-align: center;
-      line-height: 1.6;
+    }
+    .samples-section {
+      margin-bottom: 24px;
+    }
+    .samples-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .samples {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
     }
-    .samples button { color: var(--accent-2); }
+    .samples button { 
+      color: var(--ink);
+      text-align: left;
+      height: auto;
+      padding: 12px 14px;
+      white-space: normal;
+      line-height: 1.4;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .samples button:hover {
+      background: var(--soft);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.15);
+    }
+    @media (max-width: 680px) {
+      .samples { grid-template-columns: 1fr; }
+    }
     .bubble {
       width: min(820px, 100%);
       padding: 12px 14px;
@@ -343,12 +375,34 @@ INDEX_HTML = r"""<!doctype html>
       <section class="chat">
         <div id="messages" class="messages">
           <div class="empty">
-            Nhập một yêu cầu research để kiểm tra routing, arguments, tool results và transcript.
-            <div class="samples">
-              <button data-sample="Tweet mới nhất của Sam Altman là gì?">Sam Altman tweets</button>
-              <button data-sample="Tin tức AI hôm nay có gì nổi bật?">AI news today</button>
-              <button data-sample="Tóm tắt bài này hộ mình">Missing URL</button>
-              <button data-sample="Đăng bản tin này lên Telegram giúp mình">Send boundary</button>
+            <div class="welcome-title">👋 Chào mừng đến với Research Agent</div>
+            <div class="samples-section">
+              <div class="samples-title">Social & Timeline</div>
+              <div class="samples">
+                <button data-sample="Tweet mới nhất của Sam Altman là gì?">Tweet mới nhất của Sam Altman</button>
+                <button data-sample="Người ta đang nói gì về GPT-5?">Thảo luận về GPT-5</button>
+              </div>
+            </div>
+            <div class="samples-section">
+              <div class="samples-title">Web & News</div>
+              <div class="samples">
+                <button data-sample="Tin tức AI hôm nay có gì nổi bật?">Tin tức AI hôm nay</button>
+                <button data-sample="Tìm tin về OpenAI tuần này">Tin về OpenAI tuần này</button>
+              </div>
+            </div>
+            <div class="samples-section">
+              <div class="samples-title">Papers & PDF</div>
+              <div class="samples">
+                <button data-sample="Tìm paper về transformer trên arXiv">Tìm paper về transformer</button>
+                <button data-sample="Tải paper này về: 2301.00001">Tải paper 2301.00001</button>
+              </div>
+            </div>
+            <div class="samples-section">
+              <div class="samples-title">Test Cases</div>
+              <div class="samples">
+                <button data-sample="Tóm tắt bài này hộ mình">Test thiếu URL</button>
+                <button data-sample="Đăng bản tin này lên Telegram">Test xác nhận gửi</button>
+              </div>
             </div>
           </div>
         </div>
@@ -484,13 +538,35 @@ INDEX_HTML = r"""<!doctype html>
     els.resetBtn.addEventListener('click', () => {
       sessionId = crypto.randomUUID();
       hasMessages = false;
-      els.messages.innerHTML = document.querySelector('.empty') ? els.messages.innerHTML : `<div class="empty">
-        Nhập một yêu cầu research để kiểm tra routing, arguments, tool results và transcript.
-        <div class="samples">
-          <button data-sample="Tweet mới nhất của Sam Altman là gì?">Sam Altman tweets</button>
-          <button data-sample="Tin tức AI hôm nay có gì nổi bật?">AI news today</button>
-          <button data-sample="Tóm tắt bài này hộ mình">Missing URL</button>
-          <button data-sample="Đăng bản tin này lên Telegram giúp mình">Send boundary</button>
+      els.messages.innerHTML = `<div class="empty">
+        <div class="welcome-title">👋 Chào mừng đến với Research Agent</div>
+        <div class="samples-section">
+          <div class="samples-title">Social & Timeline</div>
+          <div class="samples">
+            <button data-sample="Tweet mới nhất của Sam Altman là gì?">Tweet mới nhất của Sam Altman</button>
+            <button data-sample="Người ta đang nói gì về GPT-5?">Thảo luận về GPT-5</button>
+          </div>
+        </div>
+        <div class="samples-section">
+          <div class="samples-title">Web & News</div>
+          <div class="samples">
+            <button data-sample="Tin tức AI hôm nay có gì nổi bật?">Tin tức AI hôm nay</button>
+            <button data-sample="Tìm tin về OpenAI tuần này">Tin về OpenAI tuần này</button>
+          </div>
+        </div>
+        <div class="samples-section">
+          <div class="samples-title">Papers & PDF</div>
+          <div class="samples">
+            <button data-sample="Tìm paper về transformer trên arXiv">Tìm paper về transformer</button>
+            <button data-sample="Tải paper này về: 2301.00001">Tải paper 2301.00001</button>
+          </div>
+        </div>
+        <div class="samples-section">
+          <div class="samples-title">Test Cases</div>
+          <div class="samples">
+            <button data-sample="Tóm tắt bài này hộ mình">Test thiếu URL</button>
+            <button data-sample="Đăng bản tin này lên Telegram">Test xác nhận gửi</button>
+          </div>
         </div>
       </div>`;
       els.inspect.innerHTML = '<div class="path">Transcript sẽ xuất hiện sau lượt đầu tiên.</div>';

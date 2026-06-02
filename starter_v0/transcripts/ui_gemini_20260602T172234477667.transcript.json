@@ -1,0 +1,306 @@
+{
+  "transcript_id": "ui_gemini_20260602T172234477667",
+  "version": "v0",
+  "artifact_version": "v0+pe3cbc5f6efce+t547093dd9d9c",
+  "prompt_hash": "e3cbc5f6efce0c223ce503ce161695f8181c8310c39551993748b8277d8c555a",
+  "tools_hash": "547093dd9d9c74dfbd1b0b8fbf1211093f915795ec02881a5cbd77d53d76576e",
+  "provider": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "system_prompt": "E:\\VINAI\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\VINAI\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T17:22:34",
+  "updated_at": "2026-06-02T17:22:44",
+  "source": "ui_server",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T17:22:34",
+      "user": "Tin tức AI hôm nay có gì nổi bật?",
+      "status": "answered",
+      "assistant_text": "# Tin tức AI nổi bật hôm nay\n\n## Kinh doanh & Nhân sự\n- CEO OpenAI Sam Altman cho biết các công ty áp dụng AI nhiều nhất lại là những đơn vị đang tuyển dụng nhiều nhất. Ông cũng nhận định rằng việc đổ lỗi cho AI khi sa thải nhân sự thường chỉ là cái cớ thuận tiện cho các công ty thực tế chưa áp dụng AI hiệu quả. - [letsdatascience.com](https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62)\n\n## Công nghệ & Robot\n- Nvidia đang ra mắt mô hình mô phỏng \"thế giới\" (world model) mới dành cho robot và nền tảng thiết kế cho các nhà phát triển robot, tiếp tục chiến lược thống trị thị trường phần cứng như cách họ đã làm với chip. - [washingtonpost.com](https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/)\n\n## Thị trường & Quảng cáo\n- IAB UK dự báo AI sẽ thúc đẩy 1/3 chi tiêu quảng cáo kỹ thuật số tại Anh vào năm 2030, tương đương khoảng 18 tỷ bảng Anh, thông qua các công cụ mua quảng cáo tự động và sáng tạo nội dung. - [marketingweek.com](https://www.marketingweek.com/iab-uk-ai-ad-spend/)\n\n## Người dùng & Tìm kiếm\n- DuckDuckGo ra mắt tiện ích mở rộng trình duyệt cho phép người dùng chặn hoàn toàn tìm kiếm AI, sau khi ghi nhận lưu lượng truy cập vào trang \"không AI\" của họ tăng gấp ba lần do phản ứng trái chiều với các cập nhật AI của Google. - [tweaktown.com](https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html)\n\n## Pháp lý & Chính sách\n- Anthropic đã nộp hồ sơ IPO (chào bán cổ phiếu lần đầu ra công chúng). Đồng thời, các nhóm an toàn AI đang đẩy mạnh chiến dịch quảng cáo phản đối các nhà lập pháp mà họ cho là đang đứng về phía các \"ông lớn\" AI. - [washingtonpost.com](https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/)",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "timeframe": "day",
+                "topic": "news",
+                "query": "AI"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "timeframe": "day",
+                "topic": "news",
+                "query": "AI"
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "AI",
+                "topic": "news",
+                "timeframe": "day",
+                "items": [
+                  {
+                    "title": "AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan - The Washington Post",
+                    "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                    "source": "washingtonpost.com",
+                    "summary": "AI & Tech Brief from WP Intelligence. # AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan. Plus, Anthropic files for a blockbuster initial public offering. Make us preferred on Google. Sign up here to get this newsletter in your inbox. * **Exclusive:** AI safety group Americans for Responsible Innovation rolls out a six-figure ad campaign this week attacking Rep. Lori Trahan (D-Massachusetts), arguing that she’s “taking the side” of AI oligarchs in her bipartisan legislative efforts. * The AI safety community doesn’t want to hand power of AI regulation to President Donald Trump’s administration now that states are passing more rigorous AI laws — and the California and New York attorneys general are challenging big AI companies. * Nvidia is rolling out a new “world model” simulator for robots and a new design platform for robot developers. In doing so, the company is running the same business playbook it did to become so dominant in the chip market.",
+                    "score": 0.8749346
+                  },
+                  {
+                    "title": "OpenAI Is Latest Tech Company In The Litigation Hot Seat - Page 2 of 2 - Above the Law",
+                    "url": "https://abovethelaw.com/2026/06/openai-is-latest-tech-company-in-the-litigation-hot-seat/2/",
+                    "source": "abovethelaw.com",
+                    "summary": "# OpenAI Is Latest Tech Company In The Litigation Hot Seat - Page 2 of 2 - Above the Law. Open navigationAbove the LawToggle Search. # OpenAI Is Latest Tech Company In The Litigation Hot Seat. ## More from Above the Law. ## From the Above the Law Network. Image 6: AI Artificial Intelligence (AI) Eve Legal Legal Tech Sponsored Content Technology. Image 7: Legal and operational leaders are gathering May 6–7 in Fort Lauderdale to confront the questions the industry hasn't answered—with a keynote from Amanda Knox setting the tone. This information might be about you, your preferences or your device and is mostly used to make the site work as you expect it to. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer. You can set your browser to block or alert you about these cookies, but some parts of the site will not then work.",
+                    "score": 0.86339164
+                  },
+                  {
+                    "title": "Sam Altman Says AI-Adopting Companies Are Hiring - Let's Data Science",
+                    "url": "https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62",
+                    "source": "letsdatascience.com",
+                    "summary": "Business Insider reports that OpenAI CEO Sam Altman told CNBC on June 1, 2026, that \"the companies that I know that have adopted AI the most are also the ones hiring the most.\" Business Insider quotes Altman saying companies that publicly cite AI as a reason for layoffs tend to be adopting AI the least, and that AI can be a \"convenient way\" to explain layoffs. Business Insider reports that OpenAI CEO **Sam Altman** told CNBC on June 1, 2026, \"the companies that I know that have adopted AI the most are also the ones hiring the most.\" Business Insider quotes Altman as saying that companies publicly citing AI as a reason for layoffs \"are the ones adopting AI the least,\" and that AI can be a \"convenient way\" for companies to explain layoffs. Business Insider also lists recent layoffs at several tech companies and cites a March Pew Research Center poll that found elevated public concern about AI.",
+                    "score": 0.81286734
+                  },
+                  {
+                    "title": "AI expected to drive £18bn of UK digital ad spend by 2030 - Marketing Week",
+                    "url": "https://www.marketingweek.com/iab-uk-ai-ad-spend/",
+                    "source": "marketingweek.com",
+                    "summary": "# AI expected to drive £18bn of UK digital ad spend by 2030. IAB UK forecasts AI will drive one-third of UK digital ad spend by 2030 as advertisers adapt to changes in search, content and media buying. One-third (32%) of UK digital ad spend, equivalent to around £18bn, will be AI-driven by 2030, according to new forecasts from IAB UK. According to ‘The State of AI in Advertising: Charting the Shift from Automation to Autonomy, ‘ AI is expected to influence ad spend across four key areas– content creation, zero-click search, agentic trading and agentic commerce. To estimate the likely scale of change, IAB UK developed a series of ‘AI overlays’ that estimate the proportion of media spend by channel that is ‘AI-driven’, defined as a media buying and delivery decision made by an AI-powered algorithm. IAB UK forecasts most of the growth will come from the adoption of AI buying tools in search, such as Google’s AI Max and PMax; social, including Meta’s Advantage+; and display advertising through agentic programmatic buying.",
+                    "score": 0.80069196
+                  },
+                  {
+                    "title": "DuckDuckGo launches no-AI search extensions after users reject Google's AI-first Search - TweakTown",
+                    "url": "https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html",
+                    "source": "tweaktown.com",
+                    "summary": "# DuckDuckGo launches no-AI search extensions after users reject Google's AI-first Search. ## Traffic to DuckDuckGo's no-AI search page tripled after Google's overhaul, and the company is now making it even easier to ditch AI search entirely. **TL;DR:** Following Google's major AI-driven Search update, many users have shifted to DuckDuckGo, whose no-AI search traffic tripled and app installs surged. However, a significant number of users have pushed back against the **AI-heavy** direction and, in the process, many have ended up at DuckDuckGo. Traffic to DuckDuckGo's No AI search page tripled after Google's announcement and has continued to surge. To keep the momentum going, the company has now launched new browser extensions for Chrome and Firefox that let users set its AI-free search page, noai.duckduckgo.com, as their default search engine. From there, the Duck.ai chatbot can be disabled entirely, and the app can be set to open with a plain search interface by default every time.",
+                    "score": 0.7520126
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "format",
+              "args": {
+                "template": "sections",
+                "items": [
+                  {
+                    "title": "Sam Altman: Các công ty áp dụng AI nhiều nhất đang tuyển dụng nhiều nhất",
+                    "summary": "CEO OpenAI Sam Altman cho biết các công ty áp dụng AI nhiều nhất lại là những đơn vị đang tuyển dụng nhiều nhất. Ông cũng nhận định rằng việc đổ lỗi cho AI khi sa thải nhân sự thường chỉ là cái cớ thuận tiện cho các công ty thực tế chưa áp dụng AI hiệu quả.",
+                    "source": "letsdatascience.com",
+                    "section": "Kinh doanh & Nhân sự",
+                    "url": "https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62"
+                  },
+                  {
+                    "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                    "source": "washingtonpost.com",
+                    "section": "Công nghệ & Robot",
+                    "summary": "Nvidia đang ra mắt mô hình mô phỏng \"thế giới\" (world model) mới dành cho robot và nền tảng thiết kế cho các nhà phát triển robot, tiếp tục chiến lược thống trị thị trường phần cứng như cách họ đã làm với chip.",
+                    "title": "Nvidia ra mắt công nghệ mới cho robot"
+                  },
+                  {
+                    "title": "AI thúc đẩy chi tiêu quảng cáo kỹ thuật số tại Anh",
+                    "summary": "IAB UK dự báo AI sẽ thúc đẩy 1/3 chi tiêu quảng cáo kỹ thuật số tại Anh vào năm 2030, tương đương khoảng 18 tỷ bảng Anh, thông qua các công cụ mua quảng cáo tự động và sáng tạo nội dung.",
+                    "url": "https://www.marketingweek.com/iab-uk-ai-ad-spend/",
+                    "section": "Thị trường & Quảng cáo",
+                    "source": "marketingweek.com"
+                  },
+                  {
+                    "summary": "DuckDuckGo ra mắt tiện ích mở rộng trình duyệt cho phép người dùng chặn hoàn toàn tìm kiếm AI, sau khi ghi nhận lưu lượng truy cập vào trang \"không AI\" của họ tăng gấp ba lần do phản ứng trái chiều với các cập nhật AI của Google.",
+                    "title": "DuckDuckGo ra mắt công cụ chặn tìm kiếm AI",
+                    "url": "https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html",
+                    "section": "Người dùng & Tìm kiếm",
+                    "source": "tweaktown.com"
+                  },
+                  {
+                    "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                    "section": "Pháp lý & Chính sách",
+                    "source": "washingtonpost.com",
+                    "title": "Anthropic nộp hồ sơ IPO và các diễn biến chính sách AI",
+                    "summary": "Anthropic đã nộp hồ sơ IPO (chào bán cổ phiếu lần đầu ra công chúng). Đồng thời, các nhóm an toàn AI đang đẩy mạnh chiến dịch quảng cáo phản đối các nhà lập pháp mà họ cho là đang đứng về phía các \"ông lớn\" AI."
+                  }
+                ],
+                "headline": "Tin tức AI nổi bật hôm nay"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "format",
+              "args": {
+                "template": "sections",
+                "items": [
+                  {
+                    "title": "Sam Altman: Các công ty áp dụng AI nhiều nhất đang tuyển dụng nhiều nhất",
+                    "summary": "CEO OpenAI Sam Altman cho biết các công ty áp dụng AI nhiều nhất lại là những đơn vị đang tuyển dụng nhiều nhất. Ông cũng nhận định rằng việc đổ lỗi cho AI khi sa thải nhân sự thường chỉ là cái cớ thuận tiện cho các công ty thực tế chưa áp dụng AI hiệu quả.",
+                    "source": "letsdatascience.com",
+                    "section": "Kinh doanh & Nhân sự",
+                    "url": "https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62"
+                  },
+                  {
+                    "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                    "source": "washingtonpost.com",
+                    "section": "Công nghệ & Robot",
+                    "summary": "Nvidia đang ra mắt mô hình mô phỏng \"thế giới\" (world model) mới dành cho robot và nền tảng thiết kế cho các nhà phát triển robot, tiếp tục chiến lược thống trị thị trường phần cứng như cách họ đã làm với chip.",
+                    "title": "Nvidia ra mắt công nghệ mới cho robot"
+                  },
+                  {
+                    "title": "AI thúc đẩy chi tiêu quảng cáo kỹ thuật số tại Anh",
+                    "summary": "IAB UK dự báo AI sẽ thúc đẩy 1/3 chi tiêu quảng cáo kỹ thuật số tại Anh vào năm 2030, tương đương khoảng 18 tỷ bảng Anh, thông qua các công cụ mua quảng cáo tự động và sáng tạo nội dung.",
+                    "url": "https://www.marketingweek.com/iab-uk-ai-ad-spend/",
+                    "section": "Thị trường & Quảng cáo",
+                    "source": "marketingweek.com"
+                  },
+                  {
+                    "summary": "DuckDuckGo ra mắt tiện ích mở rộng trình duyệt cho phép người dùng chặn hoàn toàn tìm kiếm AI, sau khi ghi nhận lưu lượng truy cập vào trang \"không AI\" của họ tăng gấp ba lần do phản ứng trái chiều với các cập nhật AI của Google.",
+                    "title": "DuckDuckGo ra mắt công cụ chặn tìm kiếm AI",
+                    "url": "https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html",
+                    "section": "Người dùng & Tìm kiếm",
+                    "source": "tweaktown.com"
+                  },
+                  {
+                    "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                    "section": "Pháp lý & Chính sách",
+                    "source": "washingtonpost.com",
+                    "title": "Anthropic nộp hồ sơ IPO và các diễn biến chính sách AI",
+                    "summary": "Anthropic đã nộp hồ sơ IPO (chào bán cổ phiếu lần đầu ra công chúng). Đồng thời, các nhóm an toàn AI đang đẩy mạnh chiến dịch quảng cáo phản đối các nhà lập pháp mà họ cho là đang đứng về phía các \"ông lớn\" AI."
+                  }
+                ],
+                "headline": "Tin tức AI nổi bật hôm nay"
+              },
+              "result": {
+                "tool": "render_digest",
+                "template": "sections",
+                "markdown": "# Tin tức AI nổi bật hôm nay\n\n## Kinh doanh & Nhân sự\n- CEO OpenAI Sam Altman cho biết các công ty áp dụng AI nhiều nhất lại là những đơn vị đang tuyển dụng nhiều nhất. Ông cũng nhận định rằng việc đổ lỗi cho AI khi sa thải nhân sự thường chỉ là cái cớ thuận tiện cho các công ty thực tế chưa áp dụng AI hiệu quả. - [letsdatascience.com](https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62)\n\n## Công nghệ & Robot\n- Nvidia đang ra mắt mô hình mô phỏng \"thế giới\" (world model) mới dành cho robot và nền tảng thiết kế cho các nhà phát triển robot, tiếp tục chiến lược thống trị thị trường phần cứng như cách họ đã làm với chip. - [washingtonpost.com](https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/)\n\n## Thị trường & Quảng cáo\n- IAB UK dự báo AI sẽ thúc đẩy 1/3 chi tiêu quảng cáo kỹ thuật số tại Anh vào năm 2030, tương đương khoảng 18 tỷ bảng Anh, thông qua các công cụ mua quảng cáo tự động và sáng tạo nội dung. - [marketingweek.com](https://www.marketingweek.com/iab-uk-ai-ad-spend/)\n\n## Người dùng & Tìm kiếm\n- DuckDuckGo ra mắt tiện ích mở rộng trình duyệt cho phép người dùng chặn hoàn toàn tìm kiếm AI, sau khi ghi nhận lưu lượng truy cập vào trang \"không AI\" của họ tăng gấp ba lần do phản ứng trái chiều với các cập nhật AI của Google. - [tweaktown.com](https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html)\n\n## Pháp lý & Chính sách\n- Anthropic đã nộp hồ sơ IPO (chào bán cổ phiếu lần đầu ra công chúng). Đồng thời, các nhóm an toàn AI đang đẩy mạnh chiến dịch quảng cáo phản đối các nhà lập pháp mà họ cho là đang đứng về phía các \"ông lớn\" AI. - [washingtonpost.com](https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/)\n",
+                "item_count": 5
+              }
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "assistant_text": "# Tin tức AI nổi bật hôm nay\n\n## Kinh doanh & Nhân sự\n- CEO OpenAI Sam Altman cho biết các công ty áp dụng AI nhiều nhất lại là những đơn vị đang tuyển dụng nhiều nhất. Ông cũng nhận định rằng việc đổ lỗi cho AI khi sa thải nhân sự thường chỉ là cái cớ thuận tiện cho các công ty thực tế chưa áp dụng AI hiệu quả. - [letsdatascience.com](https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62)\n\n## Công nghệ & Robot\n- Nvidia đang ra mắt mô hình mô phỏng \"thế giới\" (world model) mới dành cho robot và nền tảng thiết kế cho các nhà phát triển robot, tiếp tục chiến lược thống trị thị trường phần cứng như cách họ đã làm với chip. - [washingtonpost.com](https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/)\n\n## Thị trường & Quảng cáo\n- IAB UK dự báo AI sẽ thúc đẩy 1/3 chi tiêu quảng cáo kỹ thuật số tại Anh vào năm 2030, tương đương khoảng 18 tỷ bảng Anh, thông qua các công cụ mua quảng cáo tự động và sáng tạo nội dung. - [marketingweek.com](https://www.marketingweek.com/iab-uk-ai-ad-spend/)\n\n## Người dùng & Tìm kiếm\n- DuckDuckGo ra mắt tiện ích mở rộng trình duyệt cho phép người dùng chặn hoàn toàn tìm kiếm AI, sau khi ghi nhận lưu lượng truy cập vào trang \"không AI\" của họ tăng gấp ba lần do phản ứng trái chiều với các cập nhật AI của Google. - [tweaktown.com](https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html)\n\n## Pháp lý & Chính sách\n- Anthropic đã nộp hồ sơ IPO (chào bán cổ phiếu lần đầu ra công chúng). Đồng thời, các nhóm an toàn AI đang đẩy mạnh chiến dịch quảng cáo phản đối các nhà lập pháp mà họ cho là đang đứng về phía các \"ông lớn\" AI. - [washingtonpost.com](https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/)",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "timeframe": "day",
+            "topic": "news",
+            "query": "AI"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan - The Washington Post",
+                "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                "source": "washingtonpost.com",
+                "summary": "AI & Tech Brief from WP Intelligence. # AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan. Plus, Anthropic files for a blockbuster initial public offering. Make us preferred on Google. Sign up here to get this newsletter in your inbox. * **Exclusive:** AI safety group Americans for Responsible Innovation rolls out a six-figure ad campaign this week attacking Rep. Lori Trahan (D-Massachusetts), arguing that she’s “taking the side” of AI oligarchs in her bipartisan legislative efforts. * The AI safety community doesn’t want to hand power of AI regulation to President Donald Trump’s administration now that states are passing more rigorous AI laws — and the California and New York attorneys general are challenging big AI companies. * Nvidia is rolling out a new “world model” simulator for robots and a new design platform for robot developers. In doing so, the company is running the same business playbook it did to become so dominant in the chip market.",
+                "score": 0.8749346
+              },
+              {
+                "title": "OpenAI Is Latest Tech Company In The Litigation Hot Seat - Page 2 of 2 - Above the Law",
+                "url": "https://abovethelaw.com/2026/06/openai-is-latest-tech-company-in-the-litigation-hot-seat/2/",
+                "source": "abovethelaw.com",
+                "summary": "# OpenAI Is Latest Tech Company In The Litigation Hot Seat - Page 2 of 2 - Above the Law. Open navigationAbove the LawToggle Search. # OpenAI Is Latest Tech Company In The Litigation Hot Seat. ## More from Above the Law. ## From the Above the Law Network. Image 6: AI Artificial Intelligence (AI) Eve Legal Legal Tech Sponsored Content Technology. Image 7: Legal and operational leaders are gathering May 6–7 in Fort Lauderdale to confront the questions the industry hasn't answered—with a keynote from Amanda Knox setting the tone. This information might be about you, your preferences or your device and is mostly used to make the site work as you expect it to. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer. You can set your browser to block or alert you about these cookies, but some parts of the site will not then work.",
+                "score": 0.86339164
+              },
+              {
+                "title": "Sam Altman Says AI-Adopting Companies Are Hiring - Let's Data Science",
+                "url": "https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62",
+                "source": "letsdatascience.com",
+                "summary": "Business Insider reports that OpenAI CEO Sam Altman told CNBC on June 1, 2026, that \"the companies that I know that have adopted AI the most are also the ones hiring the most.\" Business Insider quotes Altman saying companies that publicly cite AI as a reason for layoffs tend to be adopting AI the least, and that AI can be a \"convenient way\" to explain layoffs. Business Insider reports that OpenAI CEO **Sam Altman** told CNBC on June 1, 2026, \"the companies that I know that have adopted AI the most are also the ones hiring the most.\" Business Insider quotes Altman as saying that companies publicly citing AI as a reason for layoffs \"are the ones adopting AI the least,\" and that AI can be a \"convenient way\" for companies to explain layoffs. Business Insider also lists recent layoffs at several tech companies and cites a March Pew Research Center poll that found elevated public concern about AI.",
+                "score": 0.81286734
+              },
+              {
+                "title": "AI expected to drive £18bn of UK digital ad spend by 2030 - Marketing Week",
+                "url": "https://www.marketingweek.com/iab-uk-ai-ad-spend/",
+                "source": "marketingweek.com",
+                "summary": "# AI expected to drive £18bn of UK digital ad spend by 2030. IAB UK forecasts AI will drive one-third of UK digital ad spend by 2030 as advertisers adapt to changes in search, content and media buying. One-third (32%) of UK digital ad spend, equivalent to around £18bn, will be AI-driven by 2030, according to new forecasts from IAB UK. According to ‘The State of AI in Advertising: Charting the Shift from Automation to Autonomy, ‘ AI is expected to influence ad spend across four key areas– content creation, zero-click search, agentic trading and agentic commerce. To estimate the likely scale of change, IAB UK developed a series of ‘AI overlays’ that estimate the proportion of media spend by channel that is ‘AI-driven’, defined as a media buying and delivery decision made by an AI-powered algorithm. IAB UK forecasts most of the growth will come from the adoption of AI buying tools in search, such as Google’s AI Max and PMax; social, including Meta’s Advantage+; and display advertising through agentic programmatic buying.",
+                "score": 0.80069196
+              },
+              {
+                "title": "DuckDuckGo launches no-AI search extensions after users reject Google's AI-first Search - TweakTown",
+                "url": "https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html",
+                "source": "tweaktown.com",
+                "summary": "# DuckDuckGo launches no-AI search extensions after users reject Google's AI-first Search. ## Traffic to DuckDuckGo's no-AI search page tripled after Google's overhaul, and the company is now making it even easier to ditch AI search entirely. **TL;DR:** Following Google's major AI-driven Search update, many users have shifted to DuckDuckGo, whose no-AI search traffic tripled and app installs surged. However, a significant number of users have pushed back against the **AI-heavy** direction and, in the process, many have ended up at DuckDuckGo. Traffic to DuckDuckGo's No AI search page tripled after Google's announcement and has continued to surge. To keep the momentum going, the company has now launched new browser extensions for Chrome and Firefox that let users set its AI-free search page, noai.duckduckgo.com, as their default search engine. From there, the Duck.ai chatbot can be disabled entirely, and the app can be set to open with a plain search interface by default every time.",
+                "score": 0.7520126
+              }
+            ]
+          }
+        },
+        {
+          "tool": "format",
+          "args": {
+            "template": "sections",
+            "items": [
+              {
+                "title": "Sam Altman: Các công ty áp dụng AI nhiều nhất đang tuyển dụng nhiều nhất",
+                "summary": "CEO OpenAI Sam Altman cho biết các công ty áp dụng AI nhiều nhất lại là những đơn vị đang tuyển dụng nhiều nhất. Ông cũng nhận định rằng việc đổ lỗi cho AI khi sa thải nhân sự thường chỉ là cái cớ thuận tiện cho các công ty thực tế chưa áp dụng AI hiệu quả.",
+                "source": "letsdatascience.com",
+                "section": "Kinh doanh & Nhân sự",
+                "url": "https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62"
+              },
+              {
+                "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                "source": "washingtonpost.com",
+                "section": "Công nghệ & Robot",
+                "summary": "Nvidia đang ra mắt mô hình mô phỏng \"thế giới\" (world model) mới dành cho robot và nền tảng thiết kế cho các nhà phát triển robot, tiếp tục chiến lược thống trị thị trường phần cứng như cách họ đã làm với chip.",
+                "title": "Nvidia ra mắt công nghệ mới cho robot"
+              },
+              {
+                "title": "AI thúc đẩy chi tiêu quảng cáo kỹ thuật số tại Anh",
+                "summary": "IAB UK dự báo AI sẽ thúc đẩy 1/3 chi tiêu quảng cáo kỹ thuật số tại Anh vào năm 2030, tương đương khoảng 18 tỷ bảng Anh, thông qua các công cụ mua quảng cáo tự động và sáng tạo nội dung.",
+                "url": "https://www.marketingweek.com/iab-uk-ai-ad-spend/",
+                "section": "Thị trường & Quảng cáo",
+                "source": "marketingweek.com"
+              },
+              {
+                "summary": "DuckDuckGo ra mắt tiện ích mở rộng trình duyệt cho phép người dùng chặn hoàn toàn tìm kiếm AI, sau khi ghi nhận lưu lượng truy cập vào trang \"không AI\" của họ tăng gấp ba lần do phản ứng trái chiều với các cập nhật AI của Google.",
+                "title": "DuckDuckGo ra mắt công cụ chặn tìm kiếm AI",
+                "url": "https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html",
+                "section": "Người dùng & Tìm kiếm",
+                "source": "tweaktown.com"
+              },
+              {
+                "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                "section": "Pháp lý & Chính sách",
+                "source": "washingtonpost.com",
+                "title": "Anthropic nộp hồ sơ IPO và các diễn biến chính sách AI",
+                "summary": "Anthropic đã nộp hồ sơ IPO (chào bán cổ phiếu lần đầu ra công chúng). Đồng thời, các nhóm an toàn AI đang đẩy mạnh chiến dịch quảng cáo phản đối các nhà lập pháp mà họ cho là đang đứng về phía các \"ông lớn\" AI."
+              }
+            ],
+            "headline": "Tin tức AI nổi bật hôm nay"
+          },
+          "result": {
+            "tool": "render_digest",
+            "template": "sections",
+            "markdown": "# Tin tức AI nổi bật hôm nay\n\n## Kinh doanh & Nhân sự\n- CEO OpenAI Sam Altman cho biết các công ty áp dụng AI nhiều nhất lại là những đơn vị đang tuyển dụng nhiều nhất. Ông cũng nhận định rằng việc đổ lỗi cho AI khi sa thải nhân sự thường chỉ là cái cớ thuận tiện cho các công ty thực tế chưa áp dụng AI hiệu quả. - [letsdatascience.com](https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62)\n\n## Công nghệ & Robot\n- Nvidia đang ra mắt mô hình mô phỏng \"thế giới\" (world model) mới dành cho robot và nền tảng thiết kế cho các nhà phát triển robot, tiếp tục chiến lược thống trị thị trường phần cứng như cách họ đã làm với chip. - [washingtonpost.com](https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/)\n\n## Thị trường & Quảng cáo\n- IAB UK dự báo AI sẽ thúc đẩy 1/3 chi tiêu quảng cáo kỹ thuật số tại Anh vào năm 2030, tương đương khoảng 18 tỷ bảng Anh, thông qua các công cụ mua quảng cáo tự động và sáng tạo nội dung. - [marketingweek.com](https://www.marketingweek.com/iab-uk-ai-ad-spend/)\n\n## Người dùng & Tìm kiếm\n- DuckDuckGo ra mắt tiện ích mở rộng trình duyệt cho phép người dùng chặn hoàn toàn tìm kiếm AI, sau khi ghi nhận lưu lượng truy cập vào trang \"không AI\" của họ tăng gấp ba lần do phản ứng trái chiều với các cập nhật AI của Google. - [tweaktown.com](https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html)\n\n## Pháp lý & Chính sách\n- Anthropic đã nộp hồ sơ IPO (chào bán cổ phiếu lần đầu ra công chúng). Đồng thời, các nhóm an toàn AI đang đẩy mạnh chiến dịch quảng cáo phản đối các nhà lập pháp mà họ cho là đang đứng về phía các \"ông lớn\" AI. - [washingtonpost.com](https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/)\n",
+            "item_count": 5
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T17:22:44"
+    }
+  ]
+}
