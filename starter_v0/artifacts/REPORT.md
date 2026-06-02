@@ -15,9 +15,9 @@
 
 Research Agent cua nhom dung de route dung tool cho cac tac vu research: tim tin web, tim tweet theo tai khoan/chu de, doc URL, tim paper arXiv, tra cuu policy noi bo, format digest, va gui Telegram khi da co xac nhan. Agent duoc toi uu bang eval log that qua cac version `v0` -> `v3`, voi ket qua base eval moi nhat dat 20/20.
 
-**Link dung thu (local):**
+**Link dung thu (public):**
 
-URL: `http://127.0.0.1:8686`
+URL: `https://labai.xn--ngcvinh-dx4c.vn/`
 
 Neu can public demo, co the deploy bang Cloudflare Tunnel/Vercel/Streamlit Cloud va thay URL local bang URL public.
 
