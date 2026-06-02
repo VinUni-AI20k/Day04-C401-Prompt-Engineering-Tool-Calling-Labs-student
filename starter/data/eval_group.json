@@ -1,0 +1,68 @@
+{
+  "dataset_id": "eval_group_v1_mvp_final",
+  "description": "Bộ test suite chuẩn hóa cấu trúc phân tách Single-turn và Multi-turn cho v1 MVP",
+  "cases": [
+    {
+      "id": "group_m07_switch_due_to_web_404",
+      "phase": "B",
+      "suite": "group",
+      "failure_type": "wrong_tool",
+      "metadata": {
+        "skill": "multiturn_switch_tool_after_404_error",
+        "difficulty": "hard"
+      },
+      "turns": [
+        {"role": "user", "content": "Tóm tắt bài này giúp mình: https://openai.com/blog/gpt-5"},
+        {"role": "user", "content": "Link đó bị hệ thống báo lỗi 404 rồi, hãy tìm trên web tin tức về GPT-5 thay thế nhé"}
+      ],
+      "expect": {
+        "tool_calls": [{"name": "web_search", "args": {"query": "GPT-5", "topic": "news"}}]
+      }
+    },
+    {
+      "id": "group_m08_switch_due_to_twitter_403",
+      "phase": "B",
+      "suite": "group",
+      "failure_type": "wrong_tool",
+      "metadata": {
+        "skill": "multiturn_switch_tool_after_api_error",
+        "difficulty": "hard"
+      },
+      "turns": [
+        {"role": "user", "content": "Mọi người đang bàn gì về OpenAI trên Twitter?"},
+        {"role": "user", "content": "Kết nối Twitter đang bị lỗi Timeout và 403 Forbidden rồi, chuyển sang tìm trên web tin tức về OpenAI đi"}
+      ],
+      "expect": {
+        "tool_calls": [{"name": "web_search", "args": {"query": "OpenAI", "topic": "news"}}]
+      }
+    },
+    {
+      "id": "group_v1_image_search_routing",
+      "phase": "B",
+      "suite": "group",
+      "failure_type": "wrong_tool",
+      "metadata": {
+        "skill": "routing_to_new_image_tool",
+        "difficulty": "medium"
+      },
+      "input": "Cho mình xem mấy tấm ảnh về mẫu xe Tesla Cybercab mới ra mắt đi",
+      "expect": {
+        "tool_calls": [{"name": "search_images", "args": {"query": "Tesla Cybercab"}}]
+      }
+    },
+    {
+      "id": "group_v1_twitter_credibility_check",
+      "phase": "B",
+      "suite": "group",
+      "failure_type": "wrong_tool",
+      "metadata": {
+        "skill": "routing_to_user_profile_metrics",
+        "difficulty": "medium"
+      },
+      "input": "Lấy tin từ tài khoản elonmusk nhưng check xem tài khoản này có uy tín không trước nhé",
+      "expect": {
+        "tool_calls": [{"name": "get_user_profile", "args": {"screenname": "elonmusk"}}]
+      }
+    }
+  ]
+}
