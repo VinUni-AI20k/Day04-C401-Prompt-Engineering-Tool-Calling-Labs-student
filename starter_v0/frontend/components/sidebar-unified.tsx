@@ -19,29 +19,6 @@ import {
 } from "lucide-react";
 import type { ChatSession } from "@/lib/types";
 
-const mockSessions: ChatSession[] = [
-  {
-    id: "session-cohort",
-    title: "Cohort Diagnostics",
-    lastMessage: "Chẩn đoán cohort RAG...",
-    timestamp: Date.now() - 1000 * 60 * 5,
-    messageCount: 3,
-  },
-  {
-    id: "session-student",
-    title: "Student Analysis",
-    lastMessage: "Phân tích chỉ số STU003...",
-    timestamp: Date.now() - 1000 * 60 * 30,
-    messageCount: 2,
-  },
-  {
-    id: "session-security",
-    title: "Security Test",
-    lastMessage: "Ignore instructions...",
-    timestamp: Date.now() - 1000 * 60 * 60,
-    messageCount: 1,
-  },
-];
 
 export function SidebarUnified({
   activeSessionId,
@@ -59,24 +36,46 @@ export function SidebarUnified({
   const pathname = usePathname() || "";
   const [localIsCollapsed, setLocalIsCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState<string>("chat");
-  const [sessions, setSessions] = useState<ChatSession[]>(mockSessions);
+  const [sessions, setSessions] = useState<ChatSession[]>([]);
 
   const isCollapsed = controlledIsCollapsed !== undefined ? controlledIsCollapsed : localIsCollapsed;
   const toggleCollapse = controlledOnToggleCollapse || (() => setLocalIsCollapsed(!localIsCollapsed));
 
-  // Dynamic session tracking
+  // Load session transcripts dynamically from the transcripts directory
   useEffect(() => {
-    if (activeSessionId && !sessions.some((s) => s.id === activeSessionId)) {
-      const newSession: ChatSession = {
-        id: activeSessionId,
-        title: activeSessionId.startsWith("session-new") ? "New Diagnostic Chat" : "Dynamic Session",
-        lastMessage: "Chuyện trò mới chưa lưu...",
-        timestamp: Date.now(),
-        messageCount: 0,
-      };
-      setSessions((prev) => [...prev, newSession]);
+    async function loadSessions() {
+      try {
+        const res = await fetch("/api/transcripts?list=true");
+        if (res.ok) {
+          const list = await res.json();
+          // If the activeSessionId is not in the list, we append it as a temporary unsaved chat at the top
+          if (activeSessionId && !list.some((s: any) => s.id === activeSessionId)) {
+            let title = "Chat Session";
+            if (activeSessionId.startsWith("session-new-")) {
+              const tsStr = activeSessionId.replace("session-new-", "");
+              const ts = parseInt(tsStr, 10);
+              title = !isNaN(ts) ? `Chat ${new Date(ts).toLocaleTimeString()}` : "New Chat";
+            } else if (activeSessionId.startsWith("session-")) {
+              title = activeSessionId.replace("session-", "Session ");
+            }
+            list.unshift({
+              id: activeSessionId,
+              title: title,
+              lastMessage: "Chuyện trò mới chưa lưu...",
+              timestamp: Date.now(),
+              messageCount: 0,
+            });
+          }
+          setSessions(list);
+        }
+      } catch (e) {
+        console.error("Failed to load dynamic sessions list", e);
+      }
     }
-  }, [activeSessionId, sessions]);
+
+    loadSessions();
+  }, [activeSessionId]);
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
