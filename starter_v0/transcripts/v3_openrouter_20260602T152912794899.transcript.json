@@ -1,0 +1,91 @@
+{
+  "transcript_id": "v3_openrouter_20260602T152912794899",
+  "version": "v3",
+  "artifact_version": "v3+p605f8a177e9f+t011c271ef0bb",
+  "prompt_hash": "605f8a177e9f6b3dcda0fe090826d559255ec590ccbefb2143e75d94a83c21c2",
+  "tools_hash": "011c271ef0bbad1e19a5d7b660b2ed481b7d72950f1faa8a0798c3bdd8784ee1",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "/Users/thanhnguyen/github-classroom/GDGoC-FPTU/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0/artifacts/system_prompt.md",
+  "tools": "/Users/thanhnguyen/github-classroom/GDGoC-FPTU/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T15:29:12",
+  "updated_at": "2026-06-02T15:30:08",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T15:29:18",
+      "user": "What are the recent posts from that tech guy?",
+      "status": "answered",
+      "assistant_text": "Could you please specify which tech guy or account you are referring to?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Could you please specify which tech guy or account you are referring to?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-06-02T15:29:21"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-06-02T15:29:44",
+      "user": "Oh, I meant @TechCrunch on X (formerly Twitter)",
+      "status": "answered",
+      "assistant_text": "It seems that I am currently unable to retrieve the recent posts from @TechCrunch due to a restriction. You might want to check their official account directly on X (formerly Twitter) for the latest updates. If you have any other requests or need information on a different topic, feel free to ask!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "timeline",
+              "args": {
+                "screenname": "TechCrunch",
+                "limit": 5
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "timeline",
+              "args": {
+                "screenname": "TechCrunch",
+                "limit": 5
+              },
+              "result": {
+                "tool": "get_user_tweets",
+                "error": "HTTPError",
+                "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=TechCrunch"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "It seems that I am currently unable to retrieve the recent posts from @TechCrunch due to a restriction. You might want to check their official account directly on X (formerly Twitter) for the latest updates. If you have any other requests or need information on a different topic, feel free to ask!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "TechCrunch",
+            "limit": 5
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=TechCrunch"
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T15:29:49"
+    }
+  ]
+}

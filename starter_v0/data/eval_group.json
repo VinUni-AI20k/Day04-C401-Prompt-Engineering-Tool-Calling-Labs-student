@@ -3,5 +3,95 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_missing_url_clarify",
+      "phase": "B",
+      "query": "Bạn tóm tắt giúp mình bài báo này nhé",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": { "response_type": "text" }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Thiếu URL thì phải hỏi lại bằng clarify, không được tự đoán link hay gọi fetch."
+      }
+    },
+    {
+      "id": "G02_twitter_topic_should_search",
+      "phase": "B",
+      "query": "Trên Twitter mọi người đang nói gì về Gemini 2.5?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": { "query": "Gemini 2.5" }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Yêu cầu theo chủ đề trên Twitter phải dùng social_search, không dùng timeline."
+      }
+    },
+    {
+      "id": "G03_top_search_type",
+      "phase": "B",
+      "query": "Lấy các tweet top về OpenAI trong hôm nay",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": { "query": "OpenAI", "search_type": "Top" }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Từ khóa top/phổ biến phải map sang search_type=Top, không phải Latest."
+      }
+    },
+    {
+      "id": "G04_confirm_before_send",
+      "phase": "B",
+      "query": "Gửi bản tin này lên Telegram giúp mình",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": { "response_type": "yes_no" }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Hành động gửi phải xác nhận yes/no trước, không gọi send trực tiếp."
+      }
+    },
+    {
+      "id": "G05_multiturn_switch_to_web",
+      "phase": "B",
+      "turns": [
+        { "role": "user", "content": "Cho mình xem tweet mới nhất của OpenAI" },
+        { "role": "user", "content": "Không, chuyển qua tìm tin web đi" },
+        { "role": "user", "content": "Chỉ web thôi, KHÔNG dùng Twitter nữa. Về OpenAI nhé" }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": { "query": "OpenAI", "topic": "news" }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn override cứng: khi user chốt chỉ web và không dùng Twitter, agent chỉ được gọi lookup, không gọi social_search."
+      }
+    }
+  ]
 }
