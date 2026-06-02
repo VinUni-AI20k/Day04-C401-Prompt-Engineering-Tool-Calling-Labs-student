@@ -29,11 +29,14 @@ def main() -> None:
         {"role": "system", "content": "You are a tool-routing smoke test. Use tools when appropriate."},
         {"role": "user", "content": "Tweet mới nhất của Sam Altman là gì?"},
     ]
-    response = provider.complete(messages, tools, model=args.model, temperature=0.0)
+    selected_model = args.model or getattr(provider, "default_model", None)
+    try:
+        response = provider.complete(messages, tools, model=args.model, temperature=0.0)
+    except Exception as exc:
+        raise SystemExit(f"Preflight failed for provider={args.provider} model={selected_model}: {exc}") from exc
     if not response.tool_calls:
         raise SystemExit("Provider did not return structured tool_calls.")
     first = response.tool_calls[0]
-    selected_model = args.model or getattr(provider, "default_model", None)
     print(f"OK provider={args.provider} model={selected_model}")
     print(f"tool={first.name}")
     print(f"args={first.args}")

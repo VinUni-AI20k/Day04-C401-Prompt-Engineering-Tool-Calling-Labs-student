@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Any
 
 import yaml
+
+from env_loader import load_dotenv
 
 # Folder names are intentionally vague to match the tool names students see.
 # The imported function names are the underlying implementations (unchanged).
@@ -17,6 +20,21 @@ from .policy.tool import search_company_policy
 from .social_search.tool import search_tweets
 from .send.tool import send_telegram
 from .lookup.tool import web_search
+from .pdf_download.tool import download_pdf
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load_tool_env() -> None:
+    external_path = os.getenv("DAY04_ENV_FILE")
+    if external_path:
+        load_dotenv(Path(external_path).expanduser(), override=False)
+        return
+    load_dotenv(ROOT / ".env", override=False)
+
+
+_load_tool_env()
 
 
 # NOTE (starter_v0): tool names here are intentionally vague. These keys are the
@@ -35,6 +53,7 @@ TOOL_FUNCTIONS = {
     "policy": search_company_policy,
     "papers": arxiv_search,
     "paper_text": get_arxiv_paper_text,
+    "pdf_download": download_pdf,
 }
 
 

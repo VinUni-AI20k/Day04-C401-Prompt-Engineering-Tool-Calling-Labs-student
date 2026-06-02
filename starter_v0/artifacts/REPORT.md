@@ -35,6 +35,7 @@ Neu can public demo, co the deploy bang Cloudflare Tunnel/Vercel/Streamlit Cloud
 | policy | Tra cuu tai lieu company policy noi bo | khong |
 | papers | Tim paper tren arXiv theo topic | khong |
 | paper_text | Tai PDF arXiv va trich text khi co arXiv ID/URL | khong |
+| pdf_download | Tai file PDF tu URL hoac arXiv ID ve local, co fallback cho arXiv/generic PDF | co |
 
 ## A3. Cau hoi mau de thu
 
@@ -58,6 +59,7 @@ Bang duoi duoc lay tu `artifacts/version_log.csv` va `runs/*.json`.
 | v1 | `system_prompt.md`; `tools.yaml` | Mo ta tool ro hon va prompt co rule routing/missing-info/publish-boundary se giam wrong tool va missing-info. | 0.60 | 0.85 | `runs/v1_B_base_gemini_20260602T145712013136.json` |
 | v2 | `system_prompt.md`; `tools.yaml` | Bat buoc `clarify.response_type` se sua loi model goi dung `clarify` nhung thieu/sai arg. | 0.85 | 0.95 | `runs/v2_B_base_gemini_20260602T145930465665.json` |
 | v3 | `system_prompt.md`; `tools.yaml` | Them rule tieng Viet cho Telegram/post/publish de ep `response_type=yes_no` truoc khi gui. | 0.95 | 1.00 | `runs/v3_B_base_gemini_20260602T160835152753.json` |
+| v4 | `system_prompt.md`; `tools.yaml`; `tools/pdf_download` | Them tool `pdf_download` tu branch `quocanh` nhung van giu routing base eval on dinh. | 1.00 | 1.00 | `runs/v4_B_base_gemini_20260602T163110848785.json` |
 
 **Latest v3 summary:**
 
@@ -118,7 +120,7 @@ Bang nay lay tu `transcripts/*.transcript.json`.
 | Bonus | Evidence File | What Worked | Risk / Guardrail |
 |---|---|---|---|
 | send (Telegram) | `tools/send/tool.py`, UI transcripts | Tool chi gui khi `confirmed=true`; prompt bat buoc `clarify(response_type=yes_no)` truoc action gui/post/publish. | Can `TELEGRAM_BOT_TOKEN` va `TELEGRAM_CHAT_ID` dung. Da sua error handling de khong lo token trong URL loi. |
-| arXiv/company policy | `tools/papers/tool.py`, `tools/paper_text/tool.py`, `tools/policy/tool.py` | Tim paper arXiv, tai text paper khi co ID/URL, tra cuu policy noi bo bang local markdown. | arXiv co rate limit nen tool co sleep/retry nhe; policy docs la untrusted content nen tool tra `trust_boundary`. |
+| arXiv/company policy/PDF download | `tools/papers/tool.py`, `tools/paper_text/tool.py`, `tools/pdf_download/tool.py`, `tools/policy/tool.py` | Tim paper arXiv, tai text paper khi co ID/URL, tai file PDF ve local, tra cuu policy noi bo bang local markdown. | arXiv co rate limit nen tool co sleep/retry nhe; policy docs la untrusted content nen tool tra `trust_boundary`; PDF download can URL/arXiv ID hop le. |
 | UI | `ui_server.py`, `transcripts/*.transcript.json` | UI local ho tro provider/model/version, chat, inspector tool calls/results, transcript logging, Enter-to-send va Shift+Enter xuong dong. | UI chay local; can restart server sau khi sua `.env`. |
 
 ## B6. Reflection
@@ -126,4 +128,4 @@ Bang nay lay tu `transcripts/*.transcript.json`.
 - Fix thuoc `system_prompt.md`: routing rules, missing-info behavior, multi-turn carryover/correction, out-of-scope boundary, publish/send confirmation boundary, canonical argument conventions.
 - Fix thuoc `tools.yaml`: mo ta tool ro hon de model phan biet `timeline` vs `social_search`, `lookup` vs `fetch`, `clarify` vs `send`; bat buoc `clarify.response_type`; mo ta `send` nhu external write action.
 - Failure can manual review: Telegram send can pass routing eval nhung van fail runtime neu `TELEGRAM_CHAT_ID` sai hoac bot chua co quyen. Vi vay can test live voi Telegram API, khong chi dua vao eval routing.
-- Cai tien tiep theo: them 10 group eval cases, them tool moi theo yeu cau lab neu can diem toi da, viet UI public deploy, va them health/status panel cho Telegram/Tavily/Firecrawl/RapidAPI key.
+- Cai tien tiep theo: them 10 group eval cases, viet UI public deploy on dinh, va them health/status panel cho Telegram/Tavily/Firecrawl/RapidAPI key.
