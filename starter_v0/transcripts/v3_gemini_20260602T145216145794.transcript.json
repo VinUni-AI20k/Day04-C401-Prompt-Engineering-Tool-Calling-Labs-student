@@ -1,0 +1,75 @@
+{
+  "transcript_id": "v3_gemini_20260602T145216145794",
+  "version": "v3",
+  "artifact_version": "v3+pf0c107a9d7a1+t011c271ef0bb",
+  "prompt_hash": "f0c107a9d7a14032c948d642d7c36f2a85cb6d69a099530093a874c94d472446",
+  "tools_hash": "011c271ef0bbad1e19a5d7b660b2ed481b7d72950f1faa8a0798c3bdd8784ee1",
+  "provider": "gemini",
+  "model": null,
+  "system_prompt": "live_edited",
+  "tools": "live_edited",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T14:54:57",
+  "updated_at": "2026-06-02T14:55:11",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T14:53:41",
+      "user": "tôi cần tóm tắt bài báo này https://arxiv.org/abs/1706.03762",
+      "status": "provider_error",
+      "assistant_text": "Error contacting model: [Errno -3] Temporary failure in name resolution",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "paper_text",
+              "args": {
+                "arxiv_url": "https://arxiv.org/abs/1706.03762"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "paper_text",
+              "args": {
+                "arxiv_url": "https://arxiv.org/abs/1706.03762"
+              },
+              "result": {
+                "tool": "get_arxiv_paper_text",
+                "error": "ConnectionError",
+                "message": "HTTPSConnectionPool(host='arxiv.org', port=443): Read timed out."
+              }
+            }
+          ]
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "paper_text",
+          "args": {
+            "arxiv_url": "https://arxiv.org/abs/1706.03762"
+          },
+          "result": {
+            "tool": "get_arxiv_paper_text",
+            "error": "ConnectionError",
+            "message": "HTTPSConnectionPool(host='arxiv.org', port=443): Read timed out."
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T14:54:57"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-06-02T14:55:10",
+      "user": "tôi cần tóm tắt bài báo này https://arxiv.org/abs/1706.03762",
+      "status": "provider_error",
+      "assistant_text": "Error contacting model: [Errno -3] Temporary failure in name resolution",
+      "rounds": [],
+      "tool_events": [],
+      "ended_at": "2026-06-02T14:55:11"
+    }
+  ]
+}

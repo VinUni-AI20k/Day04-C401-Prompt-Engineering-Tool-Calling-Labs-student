@@ -1,0 +1,136 @@
+{
+  "transcript_id": "v3_openrouter_20260602T152302997962",
+  "version": "v3",
+  "artifact_version": "v3+pf0c107a9d7a1+t011c271ef0bb",
+  "prompt_hash": "f0c107a9d7a14032c948d642d7c36f2a85cb6d69a099530093a874c94d472446",
+  "tools_hash": "011c271ef0bbad1e19a5d7b660b2ed481b7d72950f1faa8a0798c3bdd8784ee1",
+  "provider": "openrouter",
+  "model": null,
+  "system_prompt": "live_edited",
+  "tools": "live_edited",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T15:23:13",
+  "updated_at": "2026-06-02T15:25:27",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T15:23:08",
+      "user": "hello",
+      "status": "answered",
+      "assistant_text": "Hello! How can I assist you today?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Hello! How can I assist you today?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-06-02T15:23:13"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-06-02T15:24:06",
+      "user": "thông nổi bật trên X về openAI",
+      "status": "answered",
+      "assistant_text": "I encountered another timeout issue while trying to fetch the latest posts about OpenAI on X. Unfortunately, I am unable to retrieve the information at this moment. \n\nIf you have any other requests or need information on a different topic, feel free to let me know!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "social_search",
+              "args": {
+                "query": "OpenAI",
+                "search_type": "Top",
+                "limit": 5
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "social_search",
+              "args": {
+                "query": "OpenAI",
+                "search_type": "Top",
+                "limit": 5
+              },
+              "result": {
+                "tool": "search_tweets",
+                "error": "ReadTimeout",
+                "message": "HTTPSConnectionPool(host='twitter-api45.p.rapidapi.com', port=443): Read timed out. (read timeout=30)"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "It seems there was a timeout issue while trying to fetch the latest posts about OpenAI on X (formerly Twitter). I'll try again to get the top posts. Please hold on. \n\nI'll make another attempt to retrieve the information.",
+          "tool_calls": [
+            {
+              "name": "social_search",
+              "args": {
+                "query": "OpenAI",
+                "search_type": "Top",
+                "limit": 5
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "social_search",
+              "args": {
+                "query": "OpenAI",
+                "search_type": "Top",
+                "limit": 5
+              },
+              "result": {
+                "tool": "search_tweets",
+                "error": "ReadTimeout",
+                "message": "HTTPSConnectionPool(host='twitter-api45.p.rapidapi.com', port=443): Read timed out. (read timeout=30)"
+              }
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "assistant_text": "I encountered another timeout issue while trying to fetch the latest posts about OpenAI on X. Unfortunately, I am unable to retrieve the information at this moment. \n\nIf you have any other requests or need information on a different topic, feel free to let me know!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "OpenAI",
+            "search_type": "Top",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "ReadTimeout",
+            "message": "HTTPSConnectionPool(host='twitter-api45.p.rapidapi.com', port=443): Read timed out. (read timeout=30)"
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "OpenAI",
+            "search_type": "Top",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "ReadTimeout",
+            "message": "HTTPSConnectionPool(host='twitter-api45.p.rapidapi.com', port=443): Read timed out. (read timeout=30)"
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T15:25:27"
+    }
+  ]
+}
