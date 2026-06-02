@@ -1,0 +1,61 @@
+{
+  "transcript_id": "v3_openrouter_20260602T125644276293",
+  "version": "v3",
+  "artifact_version": "v3+p6c788ef88fb4+t6cdb53d5d7b8",
+  "prompt_hash": "6c788ef88fb4f7cdd72c4f15548c161f69fd30ca5e7cea6c1999cb1edf0d8e8d",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\VinUni\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\VinUni\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T12:56:44",
+  "updated_at": "2026-06-02T12:56:53",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T12:56:44",
+      "user": "Tim bai viet AI moi nhat tren web hom nay",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f527' in position 0: character maps to <undefined>",
+      "ended_at": "2026-06-02T12:56:47"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-06-02T12:56:47",
+      "user": "Tom tat bai nay giup minh",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f527' in position 0: character maps to <undefined>",
+      "ended_at": "2026-06-02T12:56:48"
+    },
+    {
+      "turn_index": 3,
+      "started_at": "2026-06-02T12:56:48",
+      "user": "https://openai.com/research/",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f527' in position 0: character maps to <undefined>",
+      "ended_at": "2026-06-02T12:56:51"
+    },
+    {
+      "turn_index": 4,
+      "started_at": "2026-06-02T12:56:51",
+      "user": "Dang ban tin len Telegram giup minh",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f527' in position 0: character maps to <undefined>",
+      "ended_at": "2026-06-02T12:56:53"
+    }
+  ]
+}

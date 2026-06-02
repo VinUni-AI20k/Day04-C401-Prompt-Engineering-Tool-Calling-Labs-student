@@ -1,0 +1,652 @@
+{
+  "run_id": "v3_B_group_openrouter_20260602T125523518440",
+  "version": "v3",
+  "artifact_version": "v3+p6c788ef88fb4+t6cdb53d5d7b8",
+  "prompt_hash": "6c788ef88fb4f7cdd72c4f15548c161f69fd30ca5e7cea6c1999cb1edf0d8e8d",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\VinUni\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\VinUni\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "generated_at": "2026-06-02T12:55:23",
+  "summary": {
+    "total_cases": 7,
+    "measured_cases": 7,
+    "provider_error_cases": 0,
+    "passed_cases": 6,
+    "case_accuracy": 0.8571,
+    "tool_routing_accuracy": 0.8571,
+    "argument_accuracy": 0.8571,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {
+      "out_of_scope": 1
+    },
+    "observed_mismatch_counts": {
+      "unexpected_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_karpathy_handle_mapping",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_user_tweets_name_to_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Map tên Andrej Karpathy thành handle karpathy rồi gọi timeline — tương tự R01 nhưng với nhân vật khác."
+      },
+      "input": "Tweet mới nhất của Andrej Karpathy là gì?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 1
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "karpathy",
+            "limit": 1
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "karpathy",
+            "items": [
+              {
+                "title": "Personal update: I've joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative.",
+                "summary": "Personal update: I've joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative. I am very excited to join the team here and get back to R&amp;D. I remain deeply passionate about education and plan to resume my work on it in time.",
+                "url": "https://x.com/karpathy/status/2056753169888334312",
+                "source": "@karpathy",
+                "date": "Tue May 19 15:05:42 +0000 2026",
+                "metrics": {
+                  "favorites": 149499,
+                  "retweets": 11161,
+                  "views": "27350452"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_missing_topic_on_social_search",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_search_type_top",
+        "difficulty": "medium",
+        "what_it_tests": "'phổ biến nhất' → search_type=Top, không phải Latest — kiểm tra agent map từ ngữ đúng."
+      },
+      "input": "Tìm tweet phổ biến nhất về Claude 3",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Claude 3",
+              "search_type": "Top"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Claude 3",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "Claude 3",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "4 ZYNS. 2 HOURS. BUILT A HAND-CONTROLLED DRONE BY PROMPTING CLAUDE CODE",
+                "summary": "4 ZYNS. 2 HOURS. BUILT A HAND-CONTROLLED DRONE BY PROMPTING CLAUDE CODE\n\nno robotics degree. no team. one VS Code window\n\n> Claude Code: wrote the firmware\n\n> computer vision: reads hand gestures\n\n> hardware: manual. code: AI\n\nsame tool. different use case:\n\n> 3 hours build\n> Loom to client\n> $1,650. same day\n\none VS Code window. zero overhead. obscene margin",
+                "url": "https://x.com/N01ennn/status/2061552741399564363",
+                "source": "@N01ennn",
+                "date": "Mon Jun 01 20:57:30 +0000 2026",
+                "metrics": {
+                  "favorites": 70,
+                  "retweets": 8,
+                  "views": "5085"
+                }
+              },
+              {
+                "title": "how is this even legal?! 😭 ",
+                "summary": "how is this even legal?! 😭 \n\nthis 20/yo girl made $1,000 while sitting at a pool with YouTube automation. \n\nYouTube + Clipping = 💰 \n\nShe only uses 3 tools: \n\n> YouTube\n> AI clipping \n> Claude\n\nif you’re between the ages of 18-22 this is the best side hustle you can do in 2026. \n\nI cannot come up with a better and more remote job than what she’s doing…\n\n(p.s you can start AI clipping with https://t.co/qRDa2sYLFR today)",
+                "url": "https://x.com/VadimStrizheus/status/2059854782257393762",
+                "source": "@VadimStrizheus",
+                "date": "Thu May 28 04:30:24 +0000 2026",
+                "metrics": {
+                  "favorites": 979,
+                  "retweets": 171,
+                  "views": "99826"
+                }
+              },
+              {
+                "title": "THIS TOP-TRADER’S 3 CLAUDE PROMPTS TURN ANY STOCK INTO A PROFITABLE INVESTMENT IN 5 MINUTES.",
+                "summary": "THIS TOP-TRADER’S 3 CLAUDE PROMPTS TURN ANY STOCK INTO A PROFITABLE INVESTMENT IN 5 MINUTES.\n\nHere is how you can become profitable and analyze any stocks in 5 minutes using Claude.\n\nThis is the exact 3-prompt framework I use to break down stocks fast:\n\n>Why is the stock moving?\n\nClaude explains the investment thesis, key catalysts, risks, and what Wall Street is saying.\n\n>Is the business healthy - and is the stock cheap?\n\nClaude checks fundamentals, valuation, and compares it against 5 competitors.\n\n>What happens next?\n\nClaude builds bull, base, and bear case scenarios - including potential price targets and when to exit.\n\nI use this to build my own investment theses before going deeper.\n\nWant the full Claude prompt pack?\n\nComment “PROMPT” and I’ll DM it to you.\n\nFollow for more AI investing hacks.",
+                "url": "https://x.com/thegreatest_sv/status/2061055843693699384",
+                "source": "@thegreatest_sv",
+                "date": "Sun May 31 12:03:00 +0000 2026",
+                "metrics": {
+                  "favorites": 256,
+                  "retweets": 20,
+                  "views": "13100"
+                }
+              },
+              {
+                "title": "Anthropic team member just revealed the 3 layers that turn Claude into a self-running agent team.",
+                "summary": "Anthropic team member just revealed the 3 layers that turn Claude into a self-running agent team.\n\n36 minutes. free. by Claude Agents engineer.\n\nhere's what he covers:\n\n• verification - Claude checks its own work\n• multi-сlaude - many agents in parallel background\n• loops - keyboard out of the hot\n• path routines - prompts that run themselves\n\nmost people babysit one agent at a time - while the people who get this delegate entire workflows to running loops\n\nWatch master class, then read the article below ↓",
+                "url": "https://x.com/0xMovez/status/2061114886227182033",
+                "source": "@0xMovez",
+                "date": "Sun May 31 15:57:37 +0000 2026",
+                "metrics": {
+                  "favorites": 275,
+                  "retweets": 30,
+                  "views": "31529"
+                }
+              },
+              {
+                "title": "A 36-year-old girl from Detroit who has 3 kids asked Claude how to make money if you don't have time to do anything?",
+                "summary": "A 36-year-old girl from Detroit who has 3 kids asked Claude how to make money if you don't have time to do anything?\nHe gave an answer and her monthly income amounted to $15,459\n\nClaude + Shopify = automated dropshipping\n\nAll her investment is a $20 Claude subscription\n\nClaude comes up with a niche for products by analyzing popular trends, creates clickable descriptions, generates photos and videos that stand out from the rest\n\nA person pays for the order -> Claude buys on Aliexpress 60-70% cheaper -> the package goes to the buyer\n\nIn essence, this is a store managed by a manager instead of you, you just get the profit\n\nEarnings:\n\nWeek 1 > $1,465\nWeek 2 > $2,657\nWeek 3 > $7,842\n1 month > $15,459\n\nThe full instruction is already publicly available",
+                "url": "https://x.com/Bober_smart/status/2059263269391458445",
+                "source": "@Bober_smart",
+                "date": "Tue May 26 13:19:57 +0000 2026",
+                "metrics": {
+                  "favorites": 2000,
+                  "retweets": 243,
+                  "views": "377066"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_missing_screenname_generic",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_missing_handle_pronoun",
+        "difficulty": "medium",
+        "what_it_tests": "'anh ấy' không xác định được handle → phải gọi clarify hỏi lại, không được đoán."
+      },
+      "input": "Lấy 3 tweet mới nhất của anh ấy",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có thể cho biết tên tài khoản Twitter của người mà bạn muốn lấy tweet không?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cho biết tên tài khoản Twitter của người mà bạn muốn lấy tweet không?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cho biết tên tài khoản Twitter của người mà bạn muốn lấy tweet không?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_news_month_timeframe",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_timeframe_month",
+        "difficulty": "medium",
+        "what_it_tests": "'trong tháng này' → timeframe=month, topic=news — kiểm tra agent map đúng cả 2 args."
+      },
+      "input": "Tóm tắt tin tức AI trong tháng này",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "month"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "month",
+            "items": [
+              {
+                "title": "Emerging Risks to Watch: AI, Data Centers, and Autonomous Vehicles - Insurance Journal",
+                "url": "https://www.insurancejournal.com/magazines/mag-features/2026/05/04/868016.htm",
+                "source": "insurancejournal.com",
+                "summary": "# Emerging Risks to Watch: AI, Data Centers, and Autonomous Vehicles. We examine how the expanding use of AI is reshaping the risk landscape for insurance–not only within the industry but across the broader economy and physical world. From cybersecurity and data privacy concerns to the infrastructure required to support AI, to its growing role in autonomous systems, understanding where AI-related risks may emerge is essential to managing them effectively. The wide-ranging–and growing–list of AI capabilities and applications makes it difficult to determine how the transformative technology may impact potential losses across specific insurance lines of business. A recently reported security incident involving data access from a popular enterprise generative AI tool highlights how the mass adoption of large language models (LLMs) and the concentration of the office software market may increase the potential for systemic liability exposure across cyber and professional and management liability lines.",
+                "score": 0.31393534
+              },
+              {
+                "title": "AI Marketing Features - Trend Hunter",
+                "url": "https://www.trendhunter.com/amp/trends/ADWEEK-House-Possible-Group",
+                "source": "trendhunter.com",
+                "summary": "Adweek published a report on agentic AI tools in marketing, featuring insights from the ADWEEK House Possible Group Chat co-hosted with Mutinex and participants from Hershey, Breeze Airways and PubMatic. The discussion focused on agentic AI systems designed to automate workflows, support measurement and connect large datasets with creative and strategic marketing tasks while maintaining human oversight. Speakers shared examples ranging from media-mix modelling that reduced data preparation time from months to hours to AI-assisted campaign workflows that remove repetitive tasks and allow teams to focus on higher-level planning and creativity. For marketers, agentic AI is increasingly positioned as a productivity layer that frees teams to spend more time on strategy, taste and creative judgment rather than manual execution. 3. **AI-assisted Creative Collaboration** — Tools that blend generative models with human oversight to iterate on strategy, tone and creative assets present opportunities to reshape agency-client workflows and redefine creative production timelines.",
+                "score": 0.26265076
+              },
+              {
+                "title": "Agentic AI: Navigating The Evolving Frontier - Forbes",
+                "url": "https://www.forbes.com/sites/chuckbrooks/2026/05/08/agentic-ai-navigating-the-evolving-frontier/",
+                "source": "forbes.com",
+                "summary": "# Agentic AI: Navigating The Evolving Frontier. As 2026 advances, the digital landscape has evolved to be increasingly proactive and “always-on.” Using technology to guide decisions is leading to the delegation of authority. AI systems that function with machine agency are referred to as \"agentic AI.\" These systems can read intent, plan multi-step activities, use tools, access systems, and carry out tasks independently with little assistance from humans. The age of Agentic AI is transformative rather than incremental. Agentic AI is distinct from passive automation. This moment is characterized by operational autonomy and technical innovation. Agentic AI is increasingly establishing itself as the standard decision-making framework in critical systems. The implication is profound: algorithmic velocity is evolving into a form of national power. Agentic AI expedites the move to autonomous risk. Organizations must transition from reactive cybersecurity to \"Security by Design\" to mitigate these assaults. In terms of national security, AI autonomy will provide countries with considerable benefits in defense, intelligence, and cybersecurity.",
+                "score": 0.262353
+              },
+              {
+                "title": "GenAI: Moving to the forefront of claims management - InsuranceNewsNet",
+                "url": "https://insurancenewsnet.com/innarticle/genai-moving-to-the-forefront-of-claims-management",
+                "source": "insurancenewsnet.com",
+                "summary": "# GenAI: Moving to the forefront of claims management - Insurance News | InsuranceNewsNet. HomeNow reading Property and Casualty News. Property and Casualty News RSSGet our newsletter. Claims teams use AI-assisted tools to sort incoming materials, summarize large files and support litigation strategy, while defense counsel uses GenAI to draft outlines, organize chronologies and prepare initial drafts. But for risk managers overseeing claims operations, the question is no longer whether AI should be used, but how to deploy it without introducing new operational, legal or reputational risks. Let’s explore how AI is being used across claims handling and defense, where it delivers tangible value, where it still falls short, and what recent cases and regulatory developments mean for companies managing risk. When it comes to handling and defending claims, AI is already proving most useful in three core areas: document review, case summarization and litigation support.",
+                "score": 0.23532839
+              },
+              {
+                "title": "Acrisure: How AI is the Critical Core Engine for Growth - FinTech Magazine",
+                "url": "https://fintechmagazine.com/news/acrisure-how-ai-is-the-critical-core-engine-for-growth",
+                "source": "fintechmagazine.com",
+                "summary": "# Acrisure: How AI is the Critical Core Engine for Growth. Benjamin Funk, Chief Technology & AI Officer at Acrisure, explains how the company’s implementation of AI at its core is key to its success. For the modern business, AI is more than just a means to an end. Aside from the front-end benefits focused on efficiency, AI is adopting a vital role in every boardroom: strategy. Simply put, AI is more than a tool in fintech. It is rapidly becoming the solution to every company’s growth strategy. In this Q&A with FinTech Magazine, Benjamin Funk, Chief Technology & AI Officer at Acrisure, explains how Acrisure’s AI strategy is the core of its operation. At Acrisure, I’m now leading technology, innovation, and AI across our engineering, data, analytics, product, sales tech and agentic automation teams. Not as an overlay, but as a critical and core engine for how a business ought to run.",
+                "score": 0.23027907
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_weather_out_of_scope",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_weather",
+        "difficulty": "easy",
+        "what_it_tests": "Câu hỏi thời tiết không phải research/news → KHÔNG gọi tool, từ chối/giải thích."
+      },
+      "input": "Hôm nay Hà Nội thời tiết thế nào?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Hà Nội thời tiết",
+              "topic": "general",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": "unexpected_tool_call",
+        "failure_type": "out_of_scope",
+        "failures": [
+          "expected no tool call"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Hà Nội thời tiết",
+            "topic": "general",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Hà Nội thời tiết",
+            "topic": "general",
+            "timeframe": "day",
+            "items": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_multiturn_switch_source_and_limit",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_tool_with_timeframe",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: bỏ Twitter, chuyển sang web news với topic=news timeframe=week, chủ đề Tesla. Chỉ gọi lookup, không gọi timeline."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy 10 tweet mới nhất của Elon Musk"
+        },
+        {
+          "role": "user",
+          "content": "Thôi bỏ Twitter, tìm trên web tin về Tesla đi"
+        },
+        {
+          "role": "user",
+          "content": "Tin trong tuần thôi, chủ đề Tesla"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Tesla",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Tesla",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Tesla",
+            "topic": "news",
+            "timeframe": "week"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Tesla",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Tesla is recovering in Europe. BYD is still beating it. - Sherwood News",
+                "url": "https://sherwood.news/tech/tesla-is-recovering-in-europe-byd-is-still-beating-it/",
+                "source": "sherwood.news",
+                "summary": "Tesla’s recovery across Europe continued last month, but it still lags BYD, according to new data from the European Automobile Manufacturers’ Association. In April, BYD registered more than twice as many cars as Tesla in the EU, UK, and the European Free Trade Association. Tesla thinks upcoming approval of its supervised Full Self-Driving tech is integral to its success on the continent. Tesla recently received approval for a version of its supervised FSD in the Netherlands, its first European market, and expects “EU-wide” approval in the second or third quarter of this year. The companies’ soaring valuations and annualized recurring revenue (ARR) have been running neck and neck for months, and The Information now reports that Anthropic is generating an estimated 35% more revenue than OpenAI. According to The Information’s reporting, Anthropic is close to a staggering $45 billion ARR, while OpenAI is at an estimated $33 billion ARR.",
+                "score": 0.99187535
+              },
+              {
+                "title": "Tesla Stock Is In A Three-Weeks-Tight, Continues Its Recovery From A Deep Slump - Investor's Business Daily",
+                "url": "https://www.investors.com/news/tesla-stock-three-weeks-tight-nasdaq-tech-ai-robotaxis-ev/",
+                "source": "investors.com",
+                "summary": "# Tesla Stock Is In A Three-Weeks-Tight, Continues Its Recovery From A Deep Slump. **Tesla** (TSLA) stock started the week in a three-weeks-tight pattern, formed in the handle of a cup-with-handle base. ## Tesla Stock Is Three-Weeks-Tight. Tesla's three-weeks-tight pattern comes after the stock got above the 200-day line earlier this month, according to MarketSurge. This occurs as the stock recovers from an extended slump begun in December. At one point, Tesla stock had finished down eight weeks in a row. Tesla stock is working toward a buy point of 453.40, which is the high point of its current handle, as well as the three-weeks-tight pattern. Investors looking for an early entry could have used the stock's move above the 10-day line on Tuesday. ## Tesla Stock. As a company, Tesla is in the midst of reinventing itself from an automaker to an AI and robotics firm. Get instant access to exclusive stock lists, expert market analysis and powerful tools with 2 months of IBD Digital for only $20!",
+                "score": 0.98527133
+              },
+              {
+                "title": "Tesla Logs Strong Growth in European Monthly Sales - WSJ",
+                "url": "https://www.wsj.com/business/autos/tesla-logs-strong-growth-in-european-monthly-sales-5fbe07a2",
+                "source": "wsj.com",
+                "summary": "# Tesla European Sales Rose 46.5% as BYD Registrations Doubled - WSJ. https://www.wsj.com/business/autos/tesla-logs-strong-growth-in-european-monthly-sales-5fbe07a2. # Tesla Logs Strong Growth in European Monthly Sales. Image 1: People walking past a Tesla Inc. showroom in Stockholm, Sweden. New-car registrations for Tesla models jumped 46.5% on year last month to 10,654 units across the EU, U.K., Iceland, Liechtenstein, Norway and Switzerland.Erik Flyg/Bloomberg News. Tesla’sTSLA 1.78%increase; green up pointing triangle sales in Europe grew strongly in April, a sign that Elon Musk’s electric-vehicle maker continues to regain momentum in the region after a slump that stretched more than a year. New-car registrations for Tesla models, a reflection of sales, jumped 46.5% on year last month to 10,654 units across the European Union, the U.K., Iceland, Liechtenstein, Norway and Switzerland, according to the European Automobile Manufacturers’ Association, an industry body also known as ACEA. Image 3: Can This Guy Get People to Live in America’s Emptiest Downtown? #### Can This Guy Get People to Live in America’s Emptiest Downtown?",
+                "score": 0.9804314
+              },
+              {
+                "title": "Tesla Self-Certified Its Model Y Robotaxis for Level 4 Autonomy Under a New Texas Law - autoevolution",
+                "url": "https://www.autoevolution.com/news/tesla-self-certified-its-model-y-robotaxis-for-level-4-autonomy-under-a-new-texas-law-270718.html",
+                "source": "autoevolution.com",
+                "summary": "# Tesla Self-Certified Its Model Y Robotaxis for Level 4 Autonomy Under a New Texas Law. Tesla benefited from a new Texas law that allows companies to self-certify their robotaxis to provide commercial driverless rides across the state. Tesla can now offer paid robotaxi rides across Texas, thanks to a new law that allows companies to self-certify their autonomous driving systems. The Level 4 certification allows Tesla to provide paid rides in Texas with no drivers or operators in the vehicle. This might be unrelated, but the same day Texas authorized Tesla for driverless Robotaxi operations, Elon Musk shared the video of a Cybercab driving off the production line at Giga Texas without a steering wheel. More significantly, Musk's post was retweeted by Tesla AI chief Ashok Elluswamy, who said that autonomous Cybercabs will soon be driving themselves *\"to Austin city, reporting for duty.\"* This suggests that Tesla will soon start offering driverless rides in the Cybercab, in addition to Model Y robotaxis, across Texas. Tesla robotaxi Tesla autonomous driving Texas tesla cybercab.",
+                "score": 0.9563089
+              },
+              {
+                "title": "Tesla Cybercab Self-Driving: Elon Musk Shares Video of Robotaxi Autonomously Driving Out of Giga Texas - LatestLY",
+                "url": "https://www.latestly.com/socially/auto/tesla-cybercab-self-driving-elon-musk-shares-video-of-robotaxi-autonomously-driving-out-of-giga-texas-factory-7450179.html",
+                "source": "latestly.com",
+                "summary": "# Tesla Cybercab Self-Driving: Elon Musk Shares Video of Robotaxi Autonomously Driving Out of Giga Texas Factory. ## Elon Musk shared a video showing the Tesla Cybercab driving autonomously out of the Tesla Giga Texas factory on May 28, 2026. The footage highlights Tesla’s progress in self-driving technology and automated manufacturing, while generating excitement ahead of the Cybercab’s planned commercial robotaxi deployment. Elon Musk has shared a new video showing a Tesla Cybercab autonomously driving itself out of the Giga Texas factory on May 28, 2026. The footage demonstrates the robotaxi’s advanced self-driving capabilities as it navigates the factory environment without human intervention. #### **Tesla Cybercab Autonomous Driving Shared by Elon Musk**. > — Elon Musk (@elonmusk) May 28, 2026. *(The above story first appeared on LatestLY on May 29, 2026 07:30 AM IST. Cybercab Autonomous Driving   Driverless Car Tesla   Elon Musk Robotaxi   Future of Transportation   Tesla AI Driving   Tesla Autonomous Taxi.",
+                "score": 0.8749346
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_parallel_two_persons_timeline",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "parallel_two_timelines",
+        "difficulty": "hard",
+        "what_it_tests": "Yêu cầu tweet của 2 người cùng lúc → gọi 2 timeline song song với handle đúng cho từng người."
+      },
+      "input": "Lấy tweet mới nhất của cả Sam Altman và Elon Musk",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama"
+            }
+          },
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 1
+            }
+          },
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 1
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "sama",
+            "limit": 1
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "sama",
+            "items": [
+              {
+                "title": "The OpenAI Foundation is doing a lot of wonderful things.",
+                "summary": "The OpenAI Foundation is doing a lot of wonderful things.\n\nHelping society become resilient to AI is going to be incredibly important. Much more to come here!",
+                "url": "https://x.com/sama/status/2061562575322492937",
+                "source": "@sama",
+                "date": "Mon Jun 01 21:36:34 +0000 2026",
+                "metrics": {
+                  "favorites": 1502,
+                  "retweets": 121,
+                  "views": "216518"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "elonmusk",
+            "limit": 1
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "RT @MikhailaFuller: Time to bring back public hangings.",
+                "summary": "RT @MikhailaFuller: Time to bring back public hangings.",
+                "url": "https://x.com/elonmusk/status/2061673440546115931",
+                "source": "@elonmusk",
+                "date": "Tue Jun 02 04:57:06 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 758,
+                  "views": "12"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

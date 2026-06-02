@@ -1,1 +1,7 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_before,metric_after,run_file
+,,,,,,,,,,
+v0,team,baseline,v0+peb1c8179815b+t6cdb53d5d7b8,eb1c8179815b,6cdb53d5d7b8,Baseline intentionally bad system prompt,N/A baseline,N/A,0.75,v0_B_base_openrouter_20260602T124633190428.json
+,,,,,,,,,,
+v1,team,system_prompt.md,v1+p62ef4988601c+t6cdb53d5d7b8,62ef4988601c,6cdb53d5d7b8,Removed 3 bad rules guess to clarify + send-without-confirm + single-step; added routing + boundary + parallel rules,Fixing dont-ask/guess + send-without-confirm + single-tool limit causes 5 failures R08/R10/R11/R12/R13,0.75,0.95,v1_B_base_openrouter_20260602T124902719765.json
+,,,,,,,,,,
+v2,team,system_prompt.md,v2+p6c788ef88fb4+t6cdb53d5d7b8,6c788ef88fb4,6cdb53d5d7b8,Added explicit tool-switching rule: bo X / chuyen sang Y call ONLY tool Y not both,M06 fails because agent calls both social_search+lookup when user says switch; adding switch rule prevents extra call,0.95,1,v2_B_base_openrouter_20260602T125158112768.json

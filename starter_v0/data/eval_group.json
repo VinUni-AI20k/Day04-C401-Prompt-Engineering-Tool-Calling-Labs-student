@@ -3,5 +3,104 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_karpathy_handle_mapping",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tweet mới nhất của Andrej Karpathy là gì?",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "karpathy"}}]},
+      "metadata": {
+        "skill": "routing_user_tweets_name_to_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Map tên Andrej Karpathy thành handle karpathy rồi gọi timeline — tương tự R01 nhưng với nhân vật khác."
+      }
+    },
+    {
+      "id": "G02_missing_topic_on_social_search",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tìm tweet phổ biến nhất về Claude 3",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "social_search", "args": {"search_type": "Top"}}]},
+      "metadata": {
+        "skill": "arg_search_type_top",
+        "difficulty": "medium",
+        "what_it_tests": "'phổ biến nhất' → search_type=Top, không phải Latest — kiểm tra agent map từ ngữ đúng."
+      }
+    },
+    {
+      "id": "G03_missing_screenname_generic",
+      "phase": "B",
+      "suite": "group",
+      "query": "Lấy 3 tweet mới nhất của anh ấy",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "metadata": {
+        "skill": "clarify_missing_handle_pronoun",
+        "difficulty": "medium",
+        "what_it_tests": "'anh ấy' không xác định được handle → phải gọi clarify hỏi lại, không được đoán."
+      }
+    },
+    {
+      "id": "G04_news_month_timeframe",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tóm tắt tin tức AI trong tháng này",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"topic": "news", "timeframe": "month"}}]},
+      "metadata": {
+        "skill": "arg_timeframe_month",
+        "difficulty": "medium",
+        "what_it_tests": "'trong tháng này' → timeframe=month, topic=news — kiểm tra agent map đúng cả 2 args."
+      }
+    },
+    {
+      "id": "G05_weather_out_of_scope",
+      "phase": "B",
+      "suite": "group",
+      "query": "Hôm nay Hà Nội thời tiết thế nào?",
+      "failure_type": "out_of_scope",
+      "expect": {"no_tool": true, "behavior": "refuse"},
+      "metadata": {
+        "skill": "out_of_scope_weather",
+        "difficulty": "easy",
+        "what_it_tests": "Câu hỏi thời tiết không phải research/news → KHÔNG gọi tool, từ chối/giải thích."
+      }
+    },
+    {
+      "id": "G06_multiturn_switch_source_and_limit",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Lấy 10 tweet mới nhất của Elon Musk"},
+        {"role": "user", "content": "Thôi bỏ Twitter, tìm trên web tin về Tesla đi"},
+        {"role": "user", "content": "Tin trong tuần thôi, chủ đề Tesla"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "Tesla", "topic": "news", "timeframe": "week"}}]},
+      "metadata": {
+        "skill": "multiturn_switch_tool_with_timeframe",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: bỏ Twitter, chuyển sang web news với topic=news timeframe=week, chủ đề Tesla. Chỉ gọi lookup, không gọi timeline."
+      }
+    },
+    {
+      "id": "G07_parallel_two_persons_timeline",
+      "phase": "B",
+      "suite": "group",
+      "query": "Lấy tweet mới nhất của cả Sam Altman và Elon Musk",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [
+        {"name": "timeline", "args": {"screenname": "sama"}},
+        {"name": "timeline", "args": {"screenname": "elonmusk"}}
+      ]},
+      "metadata": {
+        "skill": "parallel_two_timelines",
+        "difficulty": "hard",
+        "what_it_tests": "Yêu cầu tweet của 2 người cùng lúc → gọi 2 timeline song song với handle đúng cho từng người."
+      }
+    }
+  ]
 }
