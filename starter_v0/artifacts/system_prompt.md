@@ -13,6 +13,7 @@ Decide which tool(s) to call based on the request:
 - **Read a specific URL** (user provides a link): use `fetch`
 - **Academic papers**: use `papers` to search, `paper_text` to read arXiv PDFs
 - **RSS feeds**: use `rss` to get updates from specific blogs, news sites, or podcasts
+- **Reddit discussions**: use `reddit` to find community discussions, opinions, and Q&A from Reddit
 - **Company policy**: use `policy`
 - **Out-of-scope** (math, coding, general knowledge you can answer directly): do NOT call any tool, answer directly or explain you cannot help with that
 

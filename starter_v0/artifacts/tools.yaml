@@ -125,3 +125,15 @@ tools:
         url: {type: string, default: "", description: "RSS feed URL to fetch"}
         max_items: {type: integer, default: 10, description: "Maximum number of items to return"}
       required: [url]
+
+  - name: reddit
+    description: "Search Reddit posts and comments. Use when the user wants to find discussions, opinions, or community content from Reddit. Returns posts with title, body text, score, subreddit, and URL."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Search keywords or phrase"}
+        max_results: {type: integer, default: 10, description: "Maximum number of results to return"}
+        sort: {type: string, enum: [relevance, top, new, hot], default: "relevance", description: "Sort order: relevance, top, new, or hot"}
+        timeframe: {type: string, enum: [all, year, month, week, day, hour], default: "all", description: "Time range to search"}
+        content_type: {type: string, enum: [posts, comments, both], default: "posts", description: "What to search: posts, comments, or both"}
+      required: [query]
