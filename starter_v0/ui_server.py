@@ -417,17 +417,24 @@ INDEX_HTML = r"""<!doctype html>
               </div>
             </div>
             <div class="samples-section">
-              <div class="samples-title">Papers & PDF</div>
+              <div class="samples-title">Research & Knowledge</div>
               <div class="samples">
-                <button data-sample="Tìm paper về transformer trên arXiv">Tìm paper về transformer</button>
-                <button data-sample="Tải paper này về: 2301.00001">Tải paper 2301.00001</button>
+                <button data-sample="Artificial intelligence là gì?">Tìm trên Wikipedia</button>
+                <button data-sample="Tìm video về deep learning">Tìm video YouTube</button>
               </div>
             </div>
             <div class="samples-section">
-              <div class="samples-title">Test Cases</div>
+              <div class="samples-title">Code & Crypto</div>
               <div class="samples">
-                <button data-sample="Tóm tắt bài này hộ mình">Test thiếu URL</button>
-                <button data-sample="Đăng bản tin này lên Telegram">Test xác nhận gửi</button>
+                <button data-sample="Tìm repo về transformer trên GitHub">Tìm repo GitHub</button>
+                <button data-sample="Giá Bitcoin hiện tại?">Giá cryptocurrency</button>
+              </div>
+            </div>
+            <div class="samples-section">
+              <div class="samples-title">Papers & PDF</div>
+              <div class="samples">
+                <button data-sample="Tìm paper về transformer trên arXiv">Tìm paper arXiv</button>
+                <button data-sample="Tải paper này về: 2301.00001">Tải paper về máy</button>
               </div>
             </div>
           </div>
@@ -591,17 +598,24 @@ INDEX_HTML = r"""<!doctype html>
           </div>
         </div>
         <div class="samples-section">
-          <div class="samples-title">Papers & PDF</div>
+          <div class="samples-title">Research & Knowledge</div>
           <div class="samples">
-            <button data-sample="Tìm paper về transformer trên arXiv">Tìm paper về transformer</button>
-            <button data-sample="Tải paper này về: 2301.00001">Tải paper 2301.00001</button>
+            <button data-sample="Artificial intelligence là gì?">Tìm trên Wikipedia</button>
+            <button data-sample="Tìm video về deep learning">Tìm video YouTube</button>
           </div>
         </div>
         <div class="samples-section">
-          <div class="samples-title">Test Cases</div>
+          <div class="samples-title">Code & Crypto</div>
           <div class="samples">
-            <button data-sample="Tóm tắt bài này hộ mình">Test thiếu URL</button>
-            <button data-sample="Đăng bản tin này lên Telegram">Test xác nhận gửi</button>
+            <button data-sample="Tìm repo về transformer trên GitHub">Tìm repo GitHub</button>
+            <button data-sample="Giá Bitcoin hiện tại?">Giá cryptocurrency</button>
+          </div>
+        </div>
+        <div class="samples-section">
+          <div class="samples-title">Papers & PDF</div>
+          <div class="samples">
+            <button data-sample="Tìm paper về transformer trên arXiv">Tìm paper arXiv</button>
+            <button data-sample="Tải paper này về: 2301.00001">Tải paper về máy</button>
           </div>
         </div>
       </div>`;
