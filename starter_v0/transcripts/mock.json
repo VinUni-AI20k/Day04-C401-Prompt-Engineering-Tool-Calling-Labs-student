@@ -1,0 +1,85 @@
+{
+  "transcript_id": "v3_openrouter_mock_20260602",
+  "version": "v3",
+  "artifact_version": "v3+peb1c8179815b+t6cdb53d5d7b8",
+  "prompt_hash": "eb1c8179815bd79d34de7d326420bb99b3072e6e8ae96464c02d4411f905fc68",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\CODE\\AITHUCCHIEN\\LABS\\system_prompt.md",
+  "tools": "D:\\CODE\\AITHUCCHIEN\\LABS\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T14:55:00",
+  "updated_at": "2026-06-02T14:56:00",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T14:55:05",
+      "user": "Tìm trên web tin AI hôm nay và tìm thêm tweet về AI.",
+      "status": "answered",
+      "assistant_text": "Dưới đây là tổng hợp tin tức AI hôm nay từ web và mạng xã hội...",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Tôi cần thực hiện tìm kiếm trên web và mạng xã hội cùng lúc.",
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "AI",
+                "topic": "news",
+                "timeframe": "day"
+              }
+            },
+            {
+              "name": "social_search",
+              "args": {
+                "query": "AI",
+                "search_type": "Latest"
+              }
+            }
+          ]
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "day"
+          },
+          "result": {
+            "status": "success",
+            "items": [
+              {
+                "title": "UAE Launches First AI-Powered Newsroom",
+                "url": "https://example.com/uae-ai-newsroom",
+                "summary": "19Network has launched the region's first AI newsroom for digital publishing."
+              }
+            ]
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI",
+            "search_type": "Latest"
+          },
+          "result": {
+            "status": "success",
+            "tweets": [
+              {
+                "id": "123456",
+                "text": "GPT-5 training cluster is rumored to exceed 100k GPUs.",
+                "user": "sama"
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T14:55:12"
+    }
+  ]
+}

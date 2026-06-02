@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f2efe4;        /* premium warm sand-grey canvas */
+  --foreground: #3c3a39;        /* warm near-black prose */
+  
+  --color-white: #ffffff;       /* card lift surface - crisp clean white */
+  --color-white-tint: #eaeae2;  /* divider */
+  --color-light-gray: #f8f8f5;  /* section tint */
+  
+  /* Black Alpha scale for higher legibility */
+  --color-black-80: rgba(11, 9, 7, 0.85);
+  --color-black-60: rgba(11, 9, 7, 0.70);
+  --color-black-40: rgba(11, 9, 7, 0.50);
+  --color-black-20: rgba(11, 9, 7, 0.30);
+  --color-black-10: rgba(11, 9, 7, 0.18);
+  --color-black-5: rgba(11, 9, 7, 0.08);
+
+  /* Accents */
+  --color-primary-red: #ff272d;
+  --color-orange: #ff7300;
+  --color-yellow: #ffc753;
+  --color-pink: #f49eff;
+  --color-lav: #817fff;
+  --color-primary-blue: #2677ff;
+  --color-turquoise: #79deeb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-black-60);
+  outline-offset: 2px;
+}
+
+/* Custom premium scrollbar style matching light cream theme */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(11, 9, 7, 0.12);
+  border-radius: 9999px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(11, 9, 7, 0.25);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Premium Prose Markdown styling */
+.prose {
+  font-size: 0.875rem;
+  line-height: 1.625;
+  color: var(--foreground);
+}
+
+.prose p {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: #3c3a39;
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+}
+
+.prose h1 { font-size: 1.25rem; }
+.prose h2 { font-size: 1.125rem; }
+.prose h3 { font-size: 1rem; }
+
+.prose strong {
+  font-weight: 700;
+  color: #110907;
+}
+
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color-lav);
+  padding-left: 0.75rem;
+  color: var(--color-black-60);
+  font-style: italic;
+  margin: 0.75rem 0;
+}
+
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.85em;
+  background-color: var(--color-light-gray);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-black-10);
+  color: var(--color-primary-red);
+}
+
+.prose pre {
+  background-color: var(--color-light-gray);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-black-10);
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+  font-size: 0.825rem;
+}
+
+.prose th, .prose td {
+  border: 1px solid var(--color-black-10);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.prose th {
+  background-color: var(--color-light-gray);
+  font-weight: 600;
+}
+
+.prose tr:nth-child(even) {
+  background-color: rgba(248, 248, 245, 0.5);
+}
+
+
