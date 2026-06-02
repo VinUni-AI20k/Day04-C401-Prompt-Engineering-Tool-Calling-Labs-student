@@ -1,0 +1,34 @@
+{
+  "transcript_id": "v3_openrouter_20260602T161126678404",
+  "version": "v3",
+  "artifact_version": "v3+p7cee23239850+t4ab691d2eb2e",
+  "prompt_hash": "7cee23239850fb4a7626712dd5ace36dd5e16ad92f0230723354eed1a6c035a0",
+  "tools_hash": "4ab691d2eb2e2b665ddfa1d5ccb7970ef73e9989acf209b36a246fd333000541",
+  "provider": "openrouter",
+  "model": null,
+  "system_prompt": "live_edited",
+  "tools": "live_edited",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T16:11:56",
+  "updated_at": "2026-06-02T16:11:56",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T16:11:45",
+      "user": "hello",
+      "status": "answered",
+      "assistant_text": "Hello! How can I assist you today?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Hello! How can I assist you today?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-06-02T16:11:56"
+    }
+  ]
+}

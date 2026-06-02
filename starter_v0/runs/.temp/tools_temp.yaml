@@ -116,3 +116,36 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  - name: current_time
+    description: "Lấy ngày, giờ và thứ hiện tại của hệ thống."
+    parameters:
+      type: object
+      properties: {}
+
+  - name: calculator
+    description: "Tính toán giá trị của một biểu thức toán học cơ bản."
+    parameters:
+      type: object
+      properties:
+        expression: {type: string, default: "", description: "Biểu thức toán học ví dụ: 2 * (3 + 4)"}
+      required: [expression]
+
+  - name: dictionary
+    description: "Tra cứu nghĩa của một từ tiếng Anh."
+    parameters:
+      type: object
+      properties:
+        word: {type: string, default: "", description: "Từ cần tra cứu"}
+      required: [word]
+
+  - name: currency_converter
+    description: "Chuyển đổi tiền tệ giữa các quốc gia."
+    parameters:
+      type: object
+      properties:
+        amount: {type: number, default: 1.0, description: "Số tiền cần chuyển"}
+        from_currency: {type: string, default: "USD", description: "Mã tiền tệ gốc (ví dụ: USD, EUR)"}
+        to_currency: {type: string, default: "VND", description: "Mã tiền tệ đích (ví dụ: VND, JPY)"}
+      required: [amount, from_currency, to_currency]
+

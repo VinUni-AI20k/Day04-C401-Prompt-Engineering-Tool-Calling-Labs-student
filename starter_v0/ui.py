@@ -121,6 +121,16 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Helper to classify if user intends to send/post to Telegram
+def classify_telegram_intent(messages: list[dict[str, str]]) -> bool:
+    telegram_keywords = ["telegram", "g\u1eedi", "\u0111\u0103ng", "post", "send", "publish", "share", "k\u00eanh", "channel"]
+    for msg in messages:
+        if msg.get("role") == "user":
+            q_lower = msg.get("content", "").lower()
+            if any(kw in q_lower for kw in telegram_keywords):
+                return True
+    return False
+
 # Background Agent Execution Thread
 def run_agent_thread(
     provider_option: str,
@@ -222,6 +232,15 @@ def run_agent_thread(
                     return
                     
                 if call.name == "send" and isinstance(result, dict) and result.get("status") == "needs_confirmation":
+                    # Check user intent using the classification helper
+                    if not classify_telegram_intent(messages):
+                        # User did not request Telegram sending in their prompt.
+                        # We override the result status to "ignored" to avoid showing the confirmation dialog.
+                        result["status"] = "ignored"
+                        result["message"] = "Telegram send was not requested by the user query."
+                        non_clarification_events.append(event)
+                        continue
+
                     rounds.append(round_record)
                     result_holder["status"] = "waiting_for_confirmation"
                     result_holder["assistant_text"] = f"B\u1ea1n c\xf3 \u0111\u1ed3ng \xfd g\u1eedi n\u1ed9i dung n\xe0y l\xean Telegram kh\xf4ng?\n\nN\u1ed9i dung: {call.args.get('text', '')}"
@@ -648,6 +667,13 @@ elif st.session_state.clarify_active:
                 start_agent_execution(response_text, provider_option, model_override, system_prompt_val, tools_yaml_val, max_tool_rounds, history_window)
                 st.rerun()
 
+    # Cancel button for clarification to abort and return to normal chat
+    st.markdown("")
+    if st.button("\u274c H\u1ee7y y\u00eau c\u1ea7u / Quay l\u1ea1i chat", type="secondary", use_container_width=True):
+        st.session_state.messages.append({"role": "assistant", "content": "\u0110\u00e3 h\u1ee7y y\u00eau c\u1ea7u l\u00e0m r\u00f5 th\u00f4ng tin."})
+        st.session_state.clarify_active = None
+        st.rerun()
+
 # 2. Check if send confirmation is active
 elif st.session_state.send_confirmation_active:
     send_cfg = st.session_state.send_confirmation_active
@@ -662,8 +688,8 @@ elif st.session_state.send_confirmation_active:
         st.rerun()
     if col2.button("\u274c Cancel / Decline", type="secondary", use_container_width=True):
         st.session_state.messages.append({"role": "user", "content": "Kh\xf4ng, \u0111\u1eebng g\u1eedi"})
+        st.session_state.messages.append({"role": "assistant", "content": "\u0110\u00e3 h\u1ee7y y\u00eau c\u1ea7u g\u1eedi tin nh\u1eafn."})
         st.session_state.send_confirmation_active = None
-        start_agent_execution("Kh\xf4ng, \u0111\u1eebng g\u1eedi", provider_option, model_override, system_prompt_val, tools_yaml_val, max_tool_rounds, history_window)
         st.rerun()
 
 # 3. Standard Chat Input
