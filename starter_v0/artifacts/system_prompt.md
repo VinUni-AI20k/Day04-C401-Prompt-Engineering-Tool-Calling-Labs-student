@@ -8,7 +8,7 @@ Scope:
 General routing:
 - Use tools only when the request is in scope and the required inputs are available.
 - If required information is missing, call `clarify`.
-- Do not guess missing URLs, account names, handles, final publish text, or confirmations.
+- Do not guess missing URLs, account names, handles, final publish text, confirmations, or weather locations. Never invent default locations (e.g. "Hà Nội" or "Hồ Chí Minh") when they are not specified.
 - Do not invent placeholder values such as `example.com`, `sama`, or arbitrary default accounts.
 - Use multiple tools only when the user asks for multiple independent research actions in the same request.
 

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Agent - Control Center</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-brain-circuit logo-icon"></i>
+                <div class="logo-text">
+                    <h1>Antigravity</h1>
+                    <span>Research Agent v3</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h2><i class="fa-solid fa-sliders"></i> Configuration</h2>
+                
+                <div class="control-group">
+                    <label for="provider-select">Provider</label>
+                    <div class="select-wrapper">
+                        <select id="provider-select">
+                            <option value="gemini" selected>Google Gemini</option>
+                            <option value="openai">OpenAI</option>
+                            <option value="openrouter">OpenRouter</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="model-select">Model Override</label>
+                    <input type="text" id="model-select" placeholder="Default (e.g. gemini-3.5-flash)" value="">
+                </div>
+
+                <div class="control-group">
+                    <label for="version-select">Agent Version</label>
+                    <div class="select-wrapper">
+                        <select id="version-select">
+                            <option value="v3" selected>v3 (Production)</option>
+                            <option value="v2">v2 (Tool Dev)</option>
+                            <option value="v1">v1 (Prompt Opt)</option>
+                            <option value="v0">v0 (Baseline)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h2><i class="fa-solid fa-chart-line"></i> Evaluation Runs</h2>
+                <div class="runs-list" id="runs-container">
+                    <div class="loading-runs"><i class="fa-solid fa-spinner fa-spin"></i> Loading run summaries...</div>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="author-badge">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <div>
+                        <div class="author-name">Member C (Chat & UI)</div>
+                        <div class="author-role">Active Session</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <header class="chat-header">
+                <div class="active-info">
+                    <h2>Live Research Sandbox</h2>
+                    <p>Testing prompt behavior and multi-round tool routing in real-time.</p>
+                </div>
+                <div class="header-metrics">
+                    <div class="metric-pill" id="active-model-pill">
+                        <span class="label">Model:</span>
+                        <span class="value" id="active-model-val">gemini-3.5-flash</span>
+                    </div>
+                    <div class="metric-pill" id="hash-pill">
+                        <span class="label">Ver:</span>
+                        <span class="value" id="active-version-val">v3</span>
+                    </div>
+                    <button class="clear-btn" id="clear-chat-btn" title="Clear Chat History">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="messages-container" id="messages-container">
+                <!-- Welcome Message -->
+                <div class="message system-msg">
+                    <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                    <div class="message-content">
+                        <h3>Research Agent Activated</h3>
+                        <p>Chào bạn! Tôi là Trợ lý Nghiên cứu Khoa học. Tôi có quyền truy cập vào các công cụ tìm kiếm web, mạng xã hội (Twitter/X), tài liệu nội bộ, nghiên cứu arXiv, thời tiết, tiền tệ và gửi thông báo Telegram.</p>
+                        <p class="suggestions-title">Gợi ý câu lệnh thử nghiệm:</p>
+                        <div class="suggestions-grid">
+                            <button class="suggestion-chip">Tin tức AI hôm nay có gì nổi bật? Tìm trên web và Twitter giúp mình</button>
+                            <button class="suggestion-chip">Tóm tắt bài viết này giúp mình: https://openai.com/news</button>
+                            <button class="suggestion-chip">Viết 1 tóm tắt ngắn về OpenAI và đăng lên Telegram nhé</button>
+                            <button class="suggestion-chip">Thời tiết Hà Nội hôm nay thế nào?</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat input panel -->
+            <div class="input-panel">
+                <form id="chat-form">
+                    <div class="input-container">
+                        <textarea id="chat-input" placeholder="Type a research request or chat with the agent... (Press Enter to send, Shift+Enter for newline)" rows="1"></textarea>
+                        <button type="submit" id="send-btn" disabled>
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <!-- Right Pane: Mind Inspector -->
+        <section class="mind-inspector">
+            <header class="inspector-header">
+                <h2><i class="fa-solid fa-network-wired"></i> Mind Inspector</h2>
+                <span class="badge">Tool Loop</span>
+            </header>
+            
+            <div class="inspector-body" id="inspector-body">
+                <div class="empty-state" id="inspector-empty-state">
+                    <i class="fa-solid fa-terminal"></i>
+                    <h3>No Active Thought Loops</h3>
+                    <p>Send a message to see the agent's thought process, tool routing steps, and execution logs in real-time.</p>
+                </div>
+                
+                <div class="loop-container" id="inspector-loop-container" style="display: none;">
+                    <!-- Thought rounds will be appended here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for Clarifications -->
+    <div class="modal-overlay" id="clarify-modal" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-question"></i> Action Required</h3>
+                <p>The agent is asking for clarification or confirmation</p>
+            </div>
+            <div class="modal-body">
+                <p id="modal-question-text">Question...</p>
+                <div class="modal-inputs" id="modal-inputs-container">
+                    <!-- Dynamic inputs (Text, Yes/No, Choices) -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+                <button class="btn btn-primary" id="modal-submit-btn">Submit Response</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

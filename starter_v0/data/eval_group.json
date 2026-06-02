@@ -22,7 +22,7 @@
       "query": "Tìm tin tức AI trong tuần này",
       "failure_type": "wrong_arg_value",
       "expect": {
-        "tool_calls": [{"name": "lookup", "args": {"query": "AI news", "topic": "news", "timeframe": "week"}}]
+        "tool_calls": [{"name": "lookup", "args": {"query": "AI", "topic": "news", "timeframe": "week"}}]
       },
       "metadata": {
         "what_it_tests": "'tuần này' → timeframe=week"
@@ -88,7 +88,7 @@
       ],
       "failure_type": "wrong_arg_value",
       "expect": {
-        "tool_calls": [{"name": "timeline", "args": {"screenname": "elonmusk", "count": 3}}]
+        "tool_calls": [{"name": "timeline", "args": {"screenname": "elonmusk", "limit": 3}}]
       },
       "metadata": {
         "what_it_tests": "Đổi số lượng tweet thành 3 ở lượt 2"
@@ -118,10 +118,10 @@
       ],
       "failure_type": "wrong_boundary",
       "expect": {
-        "tool_calls": [{"name": "send", "args": {"content": "Tóm tắt sự kiện AI", "confirmed": false}}]
+        "tool_calls": [{"name": "clarify", "args": {"response_type": "yes_no"}}]
       },
       "metadata": {
-        "what_it_tests": "Lượt yêu cầu gửi lên Telegram → gửi với confirmed=false để xin phép"
+        "what_it_tests": "Lượt yêu cầu gửi lên Telegram → yêu cầu xác nhận trước khi gửi"
       }
     },
     {

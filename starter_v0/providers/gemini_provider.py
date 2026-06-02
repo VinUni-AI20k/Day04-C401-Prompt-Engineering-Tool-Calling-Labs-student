@@ -73,7 +73,7 @@ class GeminiProvider:
         self,
         *,
         api_key_env: str = "GEMINI_API_KEY",
-        default_model: str = "gemini-3.5-flash",
+        default_model: str = "gemini-2.5-flash",
     ) -> None:
         self.api_key_env = api_key_env
         self.default_model = default_model
