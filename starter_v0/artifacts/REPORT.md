@@ -68,52 +68,55 @@ Research Agent hỗ trợ tra cứu thông tin học thuật, tin tức thời s
 
 ## B1. Version Evidence
 
-Fill from `artifacts/version_log.csv` and `runs/*.json`.
-
 | Version | Changed Artifact | Hypothesis | Metric Before | Metric After | Run File |
 |---|---|---|---:|---:|---|
-| v0 | baseline |  |  |  |  |
-| v1 |  |  |  |  |  |
-| v2 |  |  |  |  |  |
-| v3 |  |  |  |  |  |
+| v0 | baseline | Initial version | | 0.70 | runs/v0_B_base_openrouter_20260602T143336991647.json |
+| v1 | system_prompt | Define scope & Math/Coding refusal | 0.70 | 0.80 | runs/v1_B_base_openrouter_20260602T144653762294.json |
+| v2 | system_prompt | Mapping screenname & single tool per turn | 0.80 | 0.80 | runs/v2_B_base_openrouter_20260602T145100467309.json |
+| v3 | system_prompt | Plan & Execute sequence + Parallel search | 0.80 | 0.95 | runs/v3_B_base_openrouter_20260602T153125186988.json |
+| v4 | twitter_trends | Add Creative Tool: Twitter Trends | 1.00 | 1.00 | runs/v4_B_group_openrouter_20260602T163459479420.json |
 
 ## B2. Failure Analysis
 
-Use actual failures from `results[*].result.failures`.
-
 | Case ID | Failure Type | Actual Tool Calls | What Failed | Fix |
 |---|---|---|---|---|
-|  |  |  |  |  |
+| R08_out_of_scope | out_of_scope | lookup | Agent attempted to search for calculus help on web instead of refusing. | Added "Out of Scope" instructions to system_prompt to refuse Math/Coding. |
+| R12_confirm_before_send | wrong_boundary | clarify (response_type: "text") | Agent asked for content but used response_type: "text" instead of "yes_no" for confirmation. | Enhanced system_prompt to enforce "yes_no" for tool confirmation flows. |
 
 ## B3. Team Eval Cases
 
-List the 10 cases added to `data/eval_group.json` (5 single turn + 5 multi turn).
-
 | Case ID | What It Tests | Expected Tool/Behavior | Result |
 |---|---|---|---|
-|  |  |  |  |
+| T01_trends | Discovery of trending topics on X | twitter_trends | PASS |
+| T02_trends_and_lookup | Multi-task: Trends + Web search | twitter_trends + lookup | PASS |
+| T03_save_log | Saving chat log with filename | save_chat_log | PASS |
+| T04_out_of_scope_joke | Refusal for creative writing | no_tool (refuse) | PASS |
+| T05_missing_info_trends | Tool trends without args | twitter_trends | PASS |
+| M07_trends_to_lookup | Multi-turn: Trends -> Lookup | lookup | PASS |
+| M08_confirm_send_then_save | Multi-turn: Send -> Save log | save_chat_log | PASS |
+| M09_clarify_topic_lookup | Multi-turn: Building lookup args | lookup | PASS |
+| M10_switch_person_timeline | Multi-turn: Switch person on X | timeline | PASS |
+| M11_save_log_with_context | Multi-turn: Save log after turns | save_chat_log | PASS |
 
 ## B4. Live Chat Evidence
 
-Use `transcripts/*.transcript.json`.
-
 | Turn | User Request | Tool Calls | Version Evidence | Outcome |
 |---|---|---|---|---|
-|  |  |  |  |  |
+| 1 | "cho tôi biết trend đang hot trên X" | twitter_trends | v4 | Trả về danh sách top trends (Pride Month, Solana, Trump...). |
+| 2 | "gửi danh sách nào lên Telegram" | clarify (yes_no) | v3 | Agent hỏi xác nhận trước khi gửi. |
+| 4 | "Có, hãy gửi đi" | send (confirmed: true) | v3 | Gửi thành công lên Telegram. |
 
 ## B5. Bonus Evidence
 
-Only fill if your team did bonus.
-
 | Bonus | Evidence File | What Worked | Risk / Guardrail |
 |---|---|---|---|
-| send (Telegram) |  |  |  |
-| arXiv/company policy |  |  |  |
-| UI |  |  |  |
+| send (Telegram) | .env (TELEGRAM_CHAT_ID) | Gửi tin nhắn thành công qua bot. | Phải qua bước clarify (yes_no) và popup UI xác nhận. |
+| arXiv/company policy | tools.yaml | Tra cứu policy và paper khoa học chính xác. | Chỉ tra cứu, không chỉnh sửa nội dung. |
+| UI | ui.py | Hiển thị Inner Dialogue, Stop Button, và Chat History Sidebar. | Ngắt stream khi bấm Stop để tránh treo session. |
 
 ## B6. Reflection
 
-- Which fixes belonged in `system_prompt.md`?
-- Which fixes belonged in `tools.yaml`?
-- Which failure needed manual review instead of automatic grading?
-- What would you improve next?
+- Which fixes belonged in `system_prompt.md`? Logic từ chối (Math/Coding), quy trình xác nhận (yes_no), mapping screenname (sama, elonmusk).
+- Which fixes belonged in `tools.yaml`? Thêm tool mới (twitter_trends, save_chat_log), cập nhật mô tả tham số để model gọi chính xác hơn.
+- Which failure needed manual review instead of automatic grading? Các case liên quan đến "nuance" trong câu trả lời văn bản (actual_text) mà eval chỉ check tool_calls.
+- What would you improve next? Thêm tính năng nhớ ngữ cảnh dài hạn (memory) và hỗ trợ đa ngôn ngữ tốt hơn trong các báo cáo format.

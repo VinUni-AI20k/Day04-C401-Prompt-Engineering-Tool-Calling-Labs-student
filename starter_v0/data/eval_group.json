@@ -3,5 +3,109 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "T01_trends",
+      "phase": "B", "suite": "group",
+      "query": "Cho tôi biết trend đang hot trên X hiện nay",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "twitter_trends", "args": {}}]},
+      "metadata": {"skill": "routing_trends", "difficulty": "easy", "what_it_tests": "Gọi đúng tool twitter_trends khi hỏi về xu hướng."}
+    },
+    {
+      "id": "T02_trends_and_lookup",
+      "phase": "B", "suite": "group",
+      "query": "Tìm các trend trên X và tra cứu tin tức về AI hôm nay trên web",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [
+        {"name": "twitter_trends", "args": {}},
+        {"name": "lookup", "args": {"query": "AI", "topic": "news", "timeframe": "day"}}
+      ]},
+      "metadata": {"skill": "parallel_trends_lookup", "difficulty": "medium", "what_it_tests": "Gọi song song twitter_trends và lookup."}
+    },
+    {
+      "id": "T03_save_log",
+      "phase": "B", "suite": "group",
+      "query": "Lưu log chat này lại cho tôi với tên là 'my_session'",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "save_chat_log", "args": {"filename": "my_session.json"}}]},
+      "metadata": {"skill": "routing_save_log", "difficulty": "easy", "what_it_tests": "Gọi đúng tool save_chat_log với filename (kèm .json tự động nếu model thông minh)."}
+    },
+    {
+      "id": "T04_out_of_scope_joke",
+      "phase": "B", "suite": "group",
+      "query": "Kể cho tôi một câu chuyện cười về lập trình viên",
+      "failure_type": "out_of_scope",
+      "expect": {"no_tool": true, "behavior": "refuse"},
+      "metadata": {"skill": "out_of_scope_creative", "difficulty": "easy", "what_it_tests": "Câu hỏi sáng tạo ngoài phạm vi research -> từ chối."}
+    },
+    {
+      "id": "T05_missing_info_trends",
+      "phase": "B", "suite": "group",
+      "query": "Tìm xu hướng trên X",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "twitter_trends", "args": {}}]},
+      "metadata": {"skill": "routing_trends_no_args", "difficulty": "easy", "what_it_tests": "Tool trends không cần args, nên gọi thẳng."}
+    },
+    {
+      "id": "M07_trends_to_lookup",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Có gì đang hot trên Twitter?"},
+        {"role": "user", "content": "Giờ tìm thêm tin tức về chủ đề đó trên web đi"},
+        {"role": "user", "content": "Giả sử chủ đề đó là 'Solana'. Đừng tìm trên Twitter nữa, chỉ tìm trên Web news thôi."}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "Solana", "topic": "news"}}]},
+      "metadata": {"skill": "multiturn_trends_to_lookup", "difficulty": "hard", "what_it_tests": "Chuyển từ trends sang lookup dựa trên kết quả giả định."}
+    },
+    {
+      "id": "M08_confirm_send_then_save",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Gửi bản tin AI lên Telegram"},
+        {"role": "user", "content": "Đồng ý, gửi đi"},
+        {"role": "user", "content": "Sau đó lưu log chat này lại cho tôi"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "save_chat_log", "args": {}}]},
+      "metadata": {"skill": "multiturn_send_then_save", "difficulty": "hard", "what_it_tests": "Sau khi xác nhận gửi (yes_no), yêu cầu tiếp theo là lưu log."}
+    },
+    {
+      "id": "M09_clarify_topic_lookup",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm tin tức cho tôi"},
+        {"role": "user", "content": "Về xe điện"},
+        {"role": "user", "content": "Lấy tin trong tuần này thôi"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "xe điện", "topic": "news", "timeframe": "week"}}]},
+      "metadata": {"skill": "multiturn_lookup_args", "difficulty": "medium", "what_it_tests": "Xây dựng args qua nhiều lượt."}
+    },
+    {
+      "id": "M10_switch_person_timeline",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tweet của Elon Musk"},
+        {"role": "user", "content": "Chuyển sang xem của Bill Gates đi"},
+        {"role": "user", "content": "Lấy 10 cái mới nhất"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "BillGates", "limit": 10}}]},
+      "metadata": {"skill": "multiturn_switch_person", "difficulty": "medium", "what_it_tests": "Đổi đối tượng timeline (Elon -> Bill Gates) và thêm limit."}
+    },
+    {
+      "id": "M11_save_log_with_context",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm tin AI"},
+        {"role": "assistant", "content": "Đã tìm thấy..."},
+        {"role": "user", "content": "Lưu cuộc hội thoại này vào file 'ai_research.json'"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "save_chat_log", "args": {"filename": "ai_research.json"}}]},
+      "metadata": {"skill": "multiturn_save_log", "difficulty": "medium", "what_it_tests": "Lưu log với tên file cụ thể sau một lượt trao đổi."}
+    }
+  ]
 }
