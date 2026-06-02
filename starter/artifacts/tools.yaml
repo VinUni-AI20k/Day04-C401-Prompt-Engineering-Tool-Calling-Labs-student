@@ -1,0 +1,134 @@
+tools:
+  # ---------------- Core tools ----------------
+  - name: ask_user
+    description: "Hỏi lại người dùng khi THIẾU thông tin bắt buộc (handle/chủ đề/URL) hoặc cần XÁC NHẬN trước hành động gửi/đăng. Bắt buộc dùng tool này; không hỏi lại bằng plain text trong eval."
+    parameters:
+      type: object
+      properties:
+        question: {type: string, default: "", description: "Câu hỏi ngắn, rõ cho người dùng"}
+        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "text=tự gõ; yes_no=xác nhận; choice=chọn 1 trong options"}
+        options: {type: array, default: [], items: {type: string}, description: "Các lựa chọn nếu response_type=choice"}
+      required: [question]
+
+  - name: get_user_tweets
+    description: "Lấy tweet mới nhất TỪ một tài khoản cụ thể. Dùng khi user hỏi 'tweet của <người/account>'. Nếu biết chắc handle public figure thì dùng handle không có @; nếu không chắc thì ask_user. KHÔNG dùng cho tweet theo chủ đề."
+    parameters:
+      type: object
+      properties:
+        screenname: {type: string, default: "", description: "Twitter/X handle, không có @, ví dụ: sama, elonmusk, karpathy"}
+        limit: {type: integer, default: 5, description: "Số tweet cần lấy"}
+      required: [screenname]
+
+  - name: search_tweets
+    description: "Tìm tweet theo CHỦ ĐỀ/từ khóa. Dùng khi user hỏi 'mọi người nói gì về X' hoặc 'tweet về X'. KHÔNG dùng cho tweet từ một tài khoản cụ thể. Trong multi-turn, nếu lượt mới đã chuyển sang web/news thì không gọi lại search_tweets từ lượt cũ."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Chủ đề/từ khóa cần tìm"}
+        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Latest=mới nhất; Top=phổ biến"}
+        limit: {type: integer, default: 5, description: "Số tweet cần lấy"}
+      required: [query]
+
+  - name: web_search
+    description: "Tìm thông tin/tin tức trên web bằng Tavily. Dùng cho tin mới, tin tức, news, hôm nay/tuần này, bài viết theo chủ đề, hoặc research chung. Bất cứ khi nào user nói 'tin'/'tin tức'/'news' thì đặt topic='news'. KHÔNG dùng khi user đã đưa URL cụ thể."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Câu truy vấn"}
+        topic: {type: string, enum: [general, news], default: "general", description: "news cho tin thời sự"}
+        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "hôm nay=today=day; tuần này=this week=week"}
+        max_results: {type: integer, default: 5, description: "Số kết quả"}
+      required: [query]
+
+  - name: read_url
+    description: "Đọc MỘT URL cụ thể bằng Firecrawl. Dùng khi user dán link và muốn đọc/tóm tắt link đó. Nếu user đưa nhiều link, gọi read_url một lần cho mỗi link. Nếu chưa có URL thì ask_user."
+    parameters:
+      type: object
+      properties:
+        url: {type: string, default: "", description: "URL cần đọc"}
+      required: [url]
+
+  - name: render_digest
+    description: "Định dạng các item đã thu thập thành markdown digest có nguồn. Dùng sau khi đã có tool results. KHÔNG dùng để fetch dữ liệu mới."
+    parameters:
+      type: object
+      properties:
+        items:
+          type: array
+          default: []
+          description: "Danh sách {title, url, source, summary, section?}; phải giữ url/source"
+          items:
+            type: object
+            properties:
+              title: {type: string}
+              url: {type: string}
+              source: {type: string}
+              summary: {type: string}
+              section: {type: string}
+        template: {type: string, enum: [brief, sections, bullets, thread, daily_ai_vn], default: "sections", description: "Khuôn digest"}
+        headline: {type: string, default: "", description: "Tiêu đề digest"}
+      required: [items, template]
+
+  # ---------------- Bonus tools ----------------
+  - name: send_telegram
+    description: "(BONUS ACTION) Gửi text tới Telegram. Chỉ dùng khi user đã xác nhận rõ ràng. Nếu user mới yêu cầu gửi/đăng nhưng chưa xác nhận, phải gọi ask_user(response_type='yes_no') trước."
+    parameters:
+      type: object
+      properties:
+        text: {type: string, default: "", description: "Nội dung gửi đi"}
+        confirmed: {type: boolean, default: false, description: "true chỉ khi user đã xác nhận gửi"}
+      required: [text]
+
+  - name: search_company_policy
+    description: "(BONUS KNOWLEDGE) Tìm trong company policy markdown nội bộ. Dùng khi user hỏi quy định nội bộ. Gọi một lần với policy_area cụ thể nhất, trừ khi user yêu cầu nhiều mảng policy. Map policy_area: source/citation/trích dẫn/tweet fact -> source_citation; API key/customer data/privacy -> data_privacy; Telegram/publish/approval -> external_publishing; research workflow -> ai_research; tool usage/rate limit -> tool_usage. KHÔNG dùng thay cho tin mới/tweet mới/paper mới/link cụ thể."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Câu truy vấn policy, ví dụ: 'tweet viral có được coi là fact không'"}
+        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Nhóm policy cần tìm"}
+        top_k: {type: integer, default: 3, description: "Số section trả về"}
+      required: [query]
+
+  - name: arxiv_search
+    description: "(BONUS RESEARCH) Tìm paper/preprint trên arXiv. Dùng khi user hỏi paper/research/preprint/literature về một chủ đề. KHÔNG dùng để đọc chi tiết paper đã có arXiv ID/URL."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Từ khóa hoặc arXiv query, ví dụ: 'AI agent evaluation'"}
+        max_results: {type: integer, default: 5, description: "Số paper trả về, tối đa 10"}
+        sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Cách sort kết quả"}
+      required: [query]
+
+  - name: get_arxiv_paper_text
+    description: "(BONUS RESEARCH) Tải PDF arXiv và trích text cục bộ bằng pypdf. Dùng khi user đưa arXiv ID/URL và muốn đọc/tóm tắt nội dung paper."
+    parameters:
+      type: object
+      properties:
+        arxiv_url: {type: string, default: "", description: "arXiv ID hoặc URL, ví dụ: 1706.03762 hoặc https://arxiv.org/abs/1706.03762"}
+        max_pages: {type: integer, default: 5, description: "Số trang đầu cần trích text"}
+        max_chars: {type: integer, default: 8000, description: "Số ký tự text tối đa trả về"}
+      required: [arxiv_url]
+
+  # ---------------- MVP v1 Extended Tools ----------------
+  # ---------------- MVP v1 Extended Tools ----------------
+  - name: search_images
+    description: "Search for image URLs based on a query. Use this when the user explicitly asks to see photos, images, or visual evidence."
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+          description: "The core topic to find images for."
+      required:
+        - query
+
+  - name: get_user_profile
+    description: "Retrieve Twitter user profile analytics including follower count and verification status. Use this to verify account credibility."
+    parameters:
+      type: object
+      properties:
+        screenname:
+          type: string
+          description: "The Twitter handle without @."
+      required:
+        - screenname

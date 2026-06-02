@@ -5,6 +5,7 @@ from typing import Any
 
 import yaml
 from .search_images.tool import search_images
+from .get_user_profile.tool import get_user_profile
 from .ask_user.tool import ask_user
 from .arxiv_search.tool import arxiv_search
 from .get_arxiv_paper_text.tool import get_arxiv_paper_text
@@ -30,7 +31,7 @@ TOOL_FUNCTIONS = {
     "get_arxiv_paper_text": get_arxiv_paper_text,
     # Đăng ký mới cho v1 MVP
     "search_images": search_images,
-    
+    "get_user_profile": get_user_profile,
 
 }
 

@@ -1,5 +1,5 @@
 ---
-name: social_search
+name: search_tweets
 track: core
 kind: live_api
 provider: RapidAPI Twitter API45
@@ -8,6 +8,7 @@ inputs: [query, search_type, limit]
 outputs: [items]
 side_effect: false
 ---
-# social_search
+# search_tweets
 
-Searches posts by keyword. `search_type` orders results (`Latest` or `Top`).
+Use for tweets about a topic. Do not use it for tweets from a specific account.
+

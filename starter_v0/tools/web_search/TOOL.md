@@ -1,5 +1,5 @@
 ---
-name: lookup
+name: web_search
 track: core
 kind: live_api
 provider: Tavily
@@ -8,7 +8,8 @@ inputs: [query, topic, timeframe, max_results]
 outputs: [items]
 side_effect: false
 ---
-# lookup
+# web_search
 
-Searches the web via Tavily. Has a `topic` (`general` or `news`) and a
-`timeframe` argument.
+Use for web/news search. For recent news, set `topic` to `news` and map
+phrases like "today" or "hôm nay" to `timeframe=day`.
+
