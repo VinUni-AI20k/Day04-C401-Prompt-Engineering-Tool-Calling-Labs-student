@@ -116,3 +116,13 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  - name: pdf_download
+    description: "Download PDF files from any URL with optimized arXiv support. Automatically detects arXiv papers, uses proper rate limiting, and includes fallback mechanisms. Supports custom filename and download location."
+    parameters:
+      type: object
+      properties:
+        url: {type: string, default: "", description: "URL of PDF to download (supports arXiv URLs, IDs, and generic URLs)"}
+        filename: {type: string, default: "", description: "Custom filename (optional, without .pdf extension)"}
+        download_folder: {type: string, default: "downloads", description: "Folder to save file (relative to project root)"}
+      required: [url]
