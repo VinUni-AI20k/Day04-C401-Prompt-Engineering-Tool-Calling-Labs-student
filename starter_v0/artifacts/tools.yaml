@@ -116,3 +116,30 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  - name: news_sentiment
+    description: >
+      Search recent news about a topic using Tavily API and return a lightweight sentiment/risk scan.
+      Use this only when the user explicitly asks to analyze news sentiment, tone, risk level,
+      positive/negative signals, or public narrative around a topic.
+      This tool is related to lookup, but lookup is for retrieving news results, while news_sentiment
+      is for analyzing the tone and risk of recent news.
+      Do not use this for ordinary news search such as "Tin AI hôm nay có gì?".
+      Do not use this for URL reading, Twitter/X search, formatting, or sending/posting.
+    parameters:
+      type: object
+      properties:
+        topic:
+          type: string
+          default: ""
+          description: "Topic to analyze, e.g. OpenAI, VinFast, AI, robotics."
+        timeframe:
+          type: string
+          enum: [day, week, month, year]
+          default: "week"
+          description: "Time range for recent news."
+        max_results:
+          type: integer
+          default: 5
+          description: "Number of news results to analyze."
+      required: [topic]

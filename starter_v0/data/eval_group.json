@@ -2,6 +2,128 @@
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "G01_news_sentiment_openai_week",
+      "phase": "B",
+      "query": "Analyze the sentiment around OpenAI news this week.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "OpenAI",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "User explicitly asks for sentiment analysis around OpenAI news this week, so the agent should use news_sentiment instead of lookup."
+      }
+    },
+    {
+      "id": "G02_news_sentiment_vinfast_day",
+      "phase": "B",
+      "query": "Give me a risk scan of VinFast news today.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "VinFast",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "User asks for a risk scan, which requires sentiment and risk analysis, not ordinary news retrieval."
+      }
+    },
+    {
+      "id": "G03_news_sentiment_robotics_month",
+      "phase": "B",
+      "query": "Are robotics news articles this month mostly positive or negative?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "robotics",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "User asks whether recent news is positive or negative, so the agent should use the custom news_sentiment tool with timeframe=month."
+      }
+    },
+    {
+      "id": "G04_lookup_not_news_sentiment_for_plain_news",
+      "phase": "B",
+      "query": "Tin tức AI hôm nay có gì?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Plain news request should still use lookup, not news_sentiment. This checks that the new custom tool is not overused."
+      }
+    },
+    {
+      "id": "G05_news_sentiment_multiturn_topic_correction",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Analyze the sentiment around OpenAI news this week."
+        },
+        {
+          "role": "user",
+          "content": "Actually, do it for Anthropic instead."
+        },
+        {
+          "role": "user",
+          "content": "Keep the timeframe as this week."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "Anthropic",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn correction: the agent should update the topic from OpenAI to Anthropic while carrying over timeframe=week."
+      }
+    }
+  ]
 }

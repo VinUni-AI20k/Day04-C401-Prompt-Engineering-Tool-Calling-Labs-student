@@ -1,0 +1,541 @@
+{
+  "run_id": "v1_B_group_openrouter_20260602T162220804968",
+  "version": "v1",
+  "artifact_version": "v1+p8cc517d3f0c6+t0f0df59b9e1c",
+  "prompt_hash": "8cc517d3f0c60959e5c559d7d2551b1ba4ce43d97386cd470a2bd9d787a8ac17",
+  "tools_hash": "0f0df59b9e1ca59e824746e253d75e42d89e0d4fe53c85b0066cedcc0bde32e5",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "C:\\Users\\PC\\Downloads\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\PC\\Downloads\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "generated_at": "2026-06-02T16:22:20",
+  "summary": {
+    "total_cases": 5,
+    "measured_cases": 5,
+    "provider_error_cases": 0,
+    "passed_cases": 5,
+    "case_accuracy": 1.0,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 1.0,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "G01_news_sentiment_openai_week",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "User explicitly asks for sentiment analysis around OpenAI news this week, so the agent should use news_sentiment instead of lookup."
+      },
+      "input": "Analyze the sentiment around OpenAI news this week.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "OpenAI",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "OpenAI",
+              "timeframe": "week"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "news_sentiment",
+          "args": {
+            "topic": "OpenAI",
+            "timeframe": "week"
+          },
+          "result": {
+            "ok": true,
+            "tool": "news_sentiment",
+            "topic": "OpenAI",
+            "timeframe": "week",
+            "overall_sentiment": "negative",
+            "risk_level": "high",
+            "sentiment_counts": {
+              "positive": 2,
+              "neutral": 0,
+              "negative": 3
+            },
+            "items": [
+              {
+                "title": "OpenAI offers rival AI to UK banks blocked from Claude Mythos - BBC",
+                "url": "https://www.bbc.com/news/articles/cm2p3j6lvn7o",
+                "summary": "OpenAI has offered nine major UK banks access to its cyber security AI tool GPT-5.5 Cyber, as its fierce rival Anthropic has blocked them in previews of its version, Claude Mythos. Both tools are designed to find hidden security weaknesses in digital systems and can outperform humans at some hacking and cyber-security tasks. Some finance ministers, central bankers and financiers have since expressed serious concerns about it, fearing the model could undermine the security of all financial systems. The AI Security Institute, which has tested both Anthropic's Mythos and OpenAI's GPT-5.5 Cyber, said in its report that they reached \"a similar level of performance\" in the tasks it set them. The UK banks which will now gain access to OpenAI's GPT 5.5 Cyber include Lloyds Banking Group, HSBC and Nationwide. OpenAI has been more generous with access to Cyber 5.5, opening it up in the EU and also to banks in Japan and Canada, among others.",
+                "sentiment": "negative",
+                "source": ""
+              },
+              {
+                "title": "OpenAI Launches Rosalind Biodefense, Offers Free AI Model to Governments for Pandemic Preparedness - MLQ.ai",
+                "url": "https://mlq.ai/news/openai-launches-rosalind-biodefense-offers-free-ai-model-to-governments-for-pandemic-preparedness/",
+                "summary": "# OpenAI Launches Rosalind Biodefense, Offers Free AI Model to Governments for Pandemic Preparedness. * OpenAI launched Rosalind Biodefense, a two-track program giving vetted developers and U.S. government agencies free access to GPT-Rosalind for pandemic preparedness and biosecurity work [1]. * GPT-Rosalind outperforms GPT-5, GPT-5.2, and GPT-5.4 on internal benchmarks in chemistry, biochemistry, and experiment design [2]. OpenAI on May 29 launched Rosalind Biodefense, a program that provides free access to its specialized life sciences AI model, GPT-Rosalind, for government agencies, academic institutions, and nonprofit developers working on pandemic preparedness and biodefense [1]. The program operates on two tracks: a developer track sponsoring vetted teams building epidemiological models, early-detection tools, and screening systems, and a government track extending access to select U.S. federal agencies and allied partners for outbreak-response planning, diagnostics, and medical countermeasure development [3]. The Rosalind Biodefense program expands GPT-Rosalind's use from general life-science research into national security and public health applications, marking the first time OpenAI has offered a specialized model free of charge to government partners at this scale [3].",
+                "sentiment": "positive",
+                "source": ""
+              },
+              {
+                "title": "Exclusive: OpenAI launches biodefense program - Axios",
+                "url": "https://www.axios.com/2026/05/29/openai-biodefense-program",
+                "summary": "# Exclusive: OpenAI launches biodefense program. OpenAI is launching a tool to help develop new biodefense and pandemic preparedness capabilities, according to an announcement shared first with Axios. **Driving the news:** OpenAI's new Rosalind Biodefense Program will offer its GPT-Rosalind model for life sciences research to \"trusted developers\" operationalizing biodefense tools. * The company will sponsor access to the tool and provide launch support for epidemiological modeling, early detection, screening, preparedness, non-pharmaceutical interventions and other public-health work. * OpenAI is supporting organizations that it says span the life cycle of biological threats \"from prevention and early detection to societal resilience and medical countermeasure development.\". **What's next:** OpenAI said it briefed the White House and several federal agencies on its approach, and is in the process of involving public-health-focused federal agencies. * The company is also expanding access to GPT-Rosalind for select U.S. government and allied partners to support public health and biodefense missions.",
+                "sentiment": "negative",
+                "source": ""
+              },
+              {
+                "title": "OpenAI heralds cybersecurity, election interference safeguard plans for 2026 midterms - CyberScoop",
+                "url": "https://cyberscoop.com/openai-2026-election-security-plans/",
+                "summary": "The announcement builds on work from major tech firms in 2024 to combat AI-infused election chicanery. OpenAI on Wednesday hailed its plans to safeguard information and aid cybersecurity defenders in the 2026 midterm elections, including work to combat deepfakes and other forms of artificial intelligence misuse. The announcement builds on commitments from major tech companies in 2024, including OpenAI, to protect elections from AI-infused election interference — efforts that some thought weren’t enough. OpenAI highlighted that it has made its Codex Security agentic framework and Trusted Access for Cyber framework available to election officials, and was briefing the National Association of Secretaries of State and the National Association of State Election Directors on its tools. One new element of Wednesday’s announcement is that OpenAI has struck a partnership with the Associated Press on sharing election data.",
+                "sentiment": "positive",
+                "source": ""
+              },
+              {
+                "title": "OpenAI and Sam Altman are being sued by the Florida Attorney General for 'releasing a dangerous ChatGPT.' - GIGAZINE",
+                "url": "https://gigazine.net/gsc_news/en/20260602-florida-sues-openai-sam-altman",
+                "summary": "# OpenAI and Sam Altman are being sued by the Florida Attorney General for 'releasing a dangerous ChatGPT.'. James Ousmayer, Attorney General of Florida, has filed a lawsuit against OpenAI and its CEO, Sam Altman, alleging deceptive practices and damages. **Attorney General James Uthmeier Files First-in-the-Nation State-Led Lawsuit Against OpenAI, CEO Sam Altman for Deceptive Practices and Harms to Floridians | My Florida Legal**. **OpenAI Sued by Florida's Attorney General Over AI Harms - WSJ**. On June 1, 2026, local time, Attorney General James Usmayer filed a lawsuit against OpenAI and CEO Sam Altman, alleging that the company deliberately released ChatGPT to the public, including children, while concealing significant risks, suppressing internal safety warnings, and deceiving Florida residents about the true nature and dangers of the product. Attorney General Ousmayer explained, 'Today we announced the first state-led lawsuit in the nation against OpenAI and its CEO, Sam Altman. > Today, we announced the first-in-the-nation state-led lawsuit against OpenAI and its CEO, Sam Altman.",
+                "sentiment": "negative",
+                "source": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_news_sentiment_vinfast_day",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "User asks for a risk scan, which requires sentiment and risk analysis, not ordinary news retrieval."
+      },
+      "input": "Give me a risk scan of VinFast news today.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "VinFast",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "VinFast",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "news_sentiment",
+          "args": {
+            "topic": "VinFast",
+            "timeframe": "day"
+          },
+          "result": {
+            "ok": true,
+            "tool": "news_sentiment",
+            "topic": "VinFast",
+            "timeframe": "day",
+            "overall_sentiment": "positive",
+            "risk_level": "low",
+            "sentiment_counts": {
+              "positive": 3,
+              "neutral": 1,
+              "negative": 1
+            },
+            "items": [
+              {
+                "title": "Hiab acquires Labrie for US$1bn in North America push - Automotive World",
+                "url": "https://www.automotiveworld.com/news/hiab-acquires-labrie-for-us1bn-in-north-america-push/",
+                "summary": "Hiab acquires Labrie for US$1bn in North America push Tesla faces China fraud lawsuit over unmet FSD promises Global light vehicle demand edges higher thanks to India Setra MultiClass S 515 LE hybrid enters Bus Euro Test 2026 VinFast launches Agentic AI level 4 programme for Asia Nvidia launches Alpamayo 2 Super open reasoning model Uber and Autobrains plan Munich robotaxi programme Nvidia expands Drive Hyperion with four new robotaxi deals Scania launches first battery-electric CrewCab in Hannover Trump admin demands 50% US content in USMCA talks. “Our goal is to help stakeholders understand the future of mobility.”. Home › News › Hiab acquires Labrie for US$1bn in North America push. # Hiab acquires Labrie for US$1bn in North America push. Finnish load-handling equipment maker Hiab has agreed to acquire North American refuse truckmaker Labrie Environmental Group at an value of US$1.035bn, expanding its foothold in what it deems a strategically critical market. For the 12 months to March 2026, it generated sales of US$491m and comparable EBITDA of US$113m—a margin of 23% that is higher than Hiab’s existing operations. https://www.automotiveworld.com/news/hiab-acquires-labrie-for-us1bn-in-north-america-push/. Let us help you understand the future of mobility.",
+                "sentiment": "negative",
+                "source": ""
+              },
+              {
+                "title": "China’s model smart dairy factory offers lessons for Vietnam - Báo VietNamNet",
+                "url": "https://vietnamnet.vn/en/china-s-model-smart-dairy-factory-offers-lessons-for-vietnam-2521949.html",
+                "summary": "## Vietnam’s dairy manufacturers are pursuing digital transformation through open data platforms that connect aging machinery with modern IoT systems. In the fourth quarter of 2024, the World Economic Forum (WEF) officially recognized Mengniu’s Ningxia facility in China as a Lighthouse Factory. The Lighthouse Factory title is awarded by the WEF to manufacturing facilities that pioneer the use of advanced digital technologies to create customer value, accelerate time-to-market and optimize operational efficiency. The results achieved by the Lighthouse Factory model have established a new benchmark for the global dairy industry. Speaking to VietNamNet on the sidelines of the International Dairy and Dairy Products Exhibition 2026, Nguyen Van, Technical Director of Tetra Pak Vietnam, said the greatest challenge facing Vietnam’s dairy sector is the lack of infrastructure uniformity. In Vietnam, major dairy producers are beginning to incorporate these technologies into their smart factory roadmaps, gradually narrowing the gap between local manufacturing operations and the world’s leading Lighthouse Factories.",
+                "sentiment": "neutral",
+                "source": ""
+              },
+              {
+                "title": "DriveNets hits $8.5b, sports cards merger, and a new DCVC fund - Axios",
+                "url": "https://amp.axios.com/pro-rata-premium-first-look-3a75d2c9-b85f-4bbb-8ad0-bc5e4920c494.html",
+                "summary": "## Venture Capital. **Bessemer Venture Partners** and **Atreides Management** led, joined by Pitango, D1 Capital Partners, AMD, and Red Dot Capital Partners. **⚡️Spiro**, a Dubai and Nairobi, Kenya-based electric mobility provider, raised $215m from investors like Impact Fund Denmark and Equitane. • **Blulabs**, a Miami-based global supply chain platform, raised $7m at a $160m pre-money valuation led by **Lodestone Capital**. **Parlay Capital** led, joined by Bullpen Capital, TA Ventures, and EdgeEquity. **⚡️ Maxwell Power**, a San Diego-based solar and storage financing firm, received a $750m commitment from **Fairtide Partners**. • **Reichmann Segal Capital Partners** acquired **Green Circuits**, a San Jose, Calif.-based electronics manufacturing services provider. • **WWEX Group**, a parcel and freight services company backed by **CVC**, and **Auctane** (aka Stamps.com) merged as **ShipStation Global** with backing from **Thoma Bravo.** Go deeper. • **Velosio**, an Atlanta-based cloud solutions partner, acquired Las Vegas-based **Domain 6**, a Microsoft consultancy company. He previously was a managing partner at Energy Impact Partners.",
+                "sentiment": "positive",
+                "source": ""
+              },
+              {
+                "title": "Мач Индустриес мудофаа стартапи бир йилда ўз қийматини 4 бараварга оширди - Zamin.uz",
+                "url": "https://zamin.uz/en/technology/204655-defense-startup-mach-industries-quadruples-its-valuation-in-one-year.html",
+                "summary": "# Defense startup Mach Industries quadruples its valuation in one year. Mach Industries, a defense technology startup founded by 22-year-old Ethan Thornton, has raised $300 million in a Series C funding round. This is nearly four times higher than last year's figure—in June 2025, the company was valued at $470 million. According to Mach Industries founder Ethan Thornton, developing autonomous weapons systems requires significant capital, which is why the company initially planned to raise $200 million, but due to high investor interest, this amount was increased to $300 million. Founded in 2023, Mach Industries is currently working on five autonomous vehicles: Viper (a VTOL jet aircraft), Glide (a high-altitude glider), Stratos (an aerial surveillance platform), Dart (a low-cost anti-drone interceptor), and Pike (a long-range munition launcher). Furthermore, the startup recently signed a new contract with the US Department of Defense (Pentagon). News » Technology » Defense startup Mach Industries quadruples its valuation in one year.",
+                "sentiment": "positive",
+                "source": ""
+              },
+              {
+                "title": "XPENG Sales Up 4% Month Over Month, Down 4% Year Over Year - CleanTechnica",
+                "url": "https://cleantechnica.com/2026/06/01/xpeng-sales-up-4-month-over-month-down-4-year-over-year/",
+                "summary": "# XPENG Sales Up 4% Month Over Month, Down 4% Year Over Year. It’s mostly been a matter of trying to maintain a level of stability rather than reaching for the kind of growth it’s seen in recent years. With that in mind, May was a fine month for XPENG, even if it wasn’t spectacular in any way. However, it was also a 4% decrease compared to the company’s May 2025 results. “XPENG’s electric vehicles delivered from January to May 2026 are expected to reduce life-cycle greenhouse gas emissions by more than 2 million tons compared to internal combustion engine vehicles — equivalent to the carbon absorption of 33.16 million young trees over 10 years,” the company did write. *Sign up for CleanTechnica's Weekly Substack for Zach and Scott's in-depth analyses and high level summaries, sign up for our daily newsletter, and follow us on Google News!*. *Sign up for our daily newsletter for 15 new cleantech stories a day. Or sign up for our weekly one on top stories of the week if daily is too frequent.*.",
+                "sentiment": "positive",
+                "source": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_news_sentiment_robotics_month",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "User asks whether recent news is positive or negative, so the agent should use the custom news_sentiment tool with timeframe=month."
+      },
+      "input": "Are robotics news articles this month mostly positive or negative?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "robotics",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "robotics",
+              "timeframe": "month"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "news_sentiment",
+          "args": {
+            "topic": "robotics",
+            "timeframe": "month"
+          },
+          "result": {
+            "ok": true,
+            "tool": "news_sentiment",
+            "topic": "robotics",
+            "timeframe": "month",
+            "overall_sentiment": "positive",
+            "risk_level": "low",
+            "sentiment_counts": {
+              "positive": 2,
+              "neutral": 3,
+              "negative": 0
+            },
+            "items": [
+              {
+                "title": "Robotics Summit keynote to present open foundation for AI-powered robots - The Robot Report",
+                "url": "https://www.therobotreport.com/robotics-summit-keynote-present-open-robotics-ai-foundation/",
+                "summary": "# Robotics Summit keynote to present open foundation for AI-powered robots. Open Robotics will discuss the open-source robotics ecosystem and AI at the 2026 Robotics Summit & Expo. Developments in artificial intelligence and robotics are converging and accelerating, making open source more critical than ever, according to Open Robotics. The organization, which maintains the Robot Operating System and the Gazebo simulator, will explore how the technology ecosystem is evolving to meet the demands of the AI era at the Robotics Summit & Expo in Boston next week. In the keynote on “An Open Foundation for the Age of AI-Powered Robots,” the company plans to discuss how open-source technology is driving innovation broadly in automation and physical AI while fostering a robust, collaborative community. Brian Gerkey, co-founder and former CEO of Open Robotics, will highlight the strategic vision of the Open Source Robotics Alliance (OSRA). The organization invites roboticists to join it to build the open foundation for the age of AI-powered robotics.",
+                "sentiment": "positive",
+                "source": ""
+              },
+              {
+                "title": "PAL Robotics unveils new robotic arm platform for advanced AI-driven manipulation - Robotics & Automation News",
+                "url": "https://roboticsandautomationnews.com/2026/05/14/pal-robotics-unveils-new-robotic-arm-platform-for-advanced-ai-driven-manipulation/101537/",
+                "summary": "# PAL Robotics unveils new robotic arm platform for advanced AI-driven manipulation. **PAL Robotics has announced a new robotic arm platform aimed at researchers, developers, and robotics engineers working on advanced manipulation applications.**. The Barcelona-based robotics company, known for platforms including TIAGo Pro and Kangaroo, said the new system has been designed to make robotic manipulation more accessible, flexible, and easier to deploy across both research and real-world operational environments. The cookie is used to store the user consent for the cookies in the category \"Analytics\". The cookies is used to store the user consent for the cookies in the category \"Necessary\". The cookie is used to store the user consent for the cookies in the category \"Other. The cookie is used to store the user consent for the cookies in the category \"Performance\". | viewed\\_cookie\\_policy | 11 months | The cookie is set by the GDPR Cookie Consent plugin and is used to store whether or not user has consented to the use of cookies.",
+                "sentiment": "neutral",
+                "source": ""
+              },
+              {
+                "title": "The power of the open-source community in robotics: Collaboration and shared innovation - Robotics & Automation News",
+                "url": "https://roboticsandautomationnews.com/2026/05/27/the-power-of-the-open-source-community-in-robotics-collaboration-and-shared-innovation/101927/",
+                "summary": "# The power of the open-source community in robotics: Collaboration and shared innovation. **For decades, robotics was viewed as a niche engineering discipline inhabited largely by researchers, academics, and highly specialized industrial automation companies.**. Today, robotics sits at the center of one of the largest technology investment waves in modern industrial history. Governments are pouring billions into automation, manufacturers are racing to digitize operations, AI companies are building “physical AI” systems for real-world machines, and venture capital firms are funding everything from warehouse robots and humanoids to autonomous tractors and delivery systems. Increasingly, the robotics industry is being built not by isolated companies working behind closed doors, but by global communities sharing software, simulation environments, AI frameworks, and development tools. ### ROS and the creation of a common robotics language. Before ROS, robotics software development was fragmented and highly proprietary. Today, ROS and ROS 2 underpin large portions of the global robotics ecosystem, from university research projects to commercial warehouse automation systems and autonomous mobile robots deployed in factories.",
+                "sentiment": "positive",
+                "source": ""
+              },
+              {
+                "title": "Why warehouse robotics succeeds or fails at scale: A Q&A with Christina Gomez-Terry of Plus One Robotics - Robotics & Automation News",
+                "url": "https://roboticsandautomationnews.com/2026/06/01/why-warehouse-robotics-succeeds-or-fails-at-scale-a-qa-with-christina-gomez-terry-of-plus-one-robotics/102105/",
+                "summary": "# Why warehouse robotics succeeds or fails at scale: A Q&A with Christina Gomez-Terry of Plus One Robotics. **Warehouse automation has entered a new phase. As logistics operators expand robotics systems across multiple facilities, they often discover that success depends less on peak performance and more on consistency, reliability, and operational resilience. In this Q&A, Christina Gomez-Terry, vice president of operations at Plus One Robotics, discusses the practical realities of scaling warehouse automation. She also discusses the long-term role of human-in-the-loop operations, the importance of customer support infrastructure, the influence of ROS and open-source robotics on commercial systems, and why integration may become the next major bottleneck facing warehouse automation. **Robotics & Automation News: You’ve said that a robotics company is only as strong as its “worst day.” What are the most common operational problems that emerge when warehouse robotics systems move from pilot projects to large-scale deployments?**.",
+                "sentiment": "neutral",
+                "source": ""
+              },
+              {
+                "title": "The next phase of robotics: How Chinese firms like AGIBOT are structuring global service networks - New York Post",
+                "url": "https://nypost.com/contributor-content/the-next-phase-of-robotics-how-chinese-firms-like-agibot-are-structuring-global-service-networks/",
+                "summary": "At its 2026 Partner Conference, **AGIBOT** outlined a direction that reflects a broader inflection point in embodied artificial intelligence: the transition from capability-driven progress to deployment-oriented systems. The company’s messaging focused instead on how these systems are introduced, scaled, and operationalized in real-world environments, under the theme *“Redefining Productivity in the AGI Era.”*. More notably, this iteration was framed in the context of deployment, and the company emphasized a cycle in which systems are introduced into specific use cases, evaluated, and refined based on operational feedback. Within this framework, AGIBOT identified 2026 as the starting point of the “deployment phase.”. AGIBOT outlined a series of application scenarios, ranging from retail and logistics to industrial handling and facility operations, as part of what it describes as “production-level solutions.”. ## **Sharebot and the Globalization of Robotics Deployment**. Central to this was Sharebot, AGIBOT’s global robotics rental platform. The company positions this model as part of a broader Robotics-as-a-Service (RaaS) strategy, where systems are deployed based on usage and operational demand.",
+                "sentiment": "neutral",
+                "source": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_lookup_not_news_sentiment_for_plain_news",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Plain news request should still use lookup, not news_sentiment. This checks that the new custom tool is not overused."
+      },
+      "input": "Tin tức AI hôm nay có gì?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "AI expected to drive £18bn of UK digital ad spend by 2030 - Marketing Week",
+                "url": "https://www.marketingweek.com/iab-uk-ai-ad-spend/",
+                "source": "marketingweek.com",
+                "summary": "# AI expected to drive £18bn of UK digital ad spend by 2030. IAB UK forecasts AI will drive one-third of UK digital ad spend by 2030 as advertisers adapt to changes in search, content and media buying. One-third (32%) of UK digital ad spend, equivalent to around £18bn, will be AI-driven by 2030, according to new forecasts from IAB UK. According to ‘The State of AI in Advertising: Charting the Shift from Automation to Autonomy, ‘ AI is expected to influence ad spend across four key areas– content creation, zero-click search, agentic trading and agentic commerce. To estimate the likely scale of change, IAB UK developed a series of ‘AI overlays’ that estimate the proportion of media spend by channel that is ‘AI-driven’, defined as a media buying and delivery decision made by an AI-powered algorithm. IAB UK forecasts most of the growth will come from the adoption of AI buying tools in search, such as Google’s AI Max and PMax; social, including Meta’s Advantage+; and display advertising through agentic programmatic buying.",
+                "score": 0.80069196
+              },
+              {
+                "title": "40% of executives thought AI could save up to 20%. It didn’t deliver. - PitchBook",
+                "url": "https://pitchbook.com/news/articles/40-of-executives-thought-ai-could-save-up-to-20-it-didnt-deliver",
+                "source": "pitchbook.com",
+                "summary": "## The gap between AI spending and productivity gains “should be making executives uncomfortable,” a Bain report found. Corporates are beefing up their AI budgets but seeing lackluster productivity gains, according to the latest Bain & Company report. Bain’s Automation and AI Pathfinder Survey 2026, which had 951 respondents, found that 40% of the companies that tracked their spending recorded cost savings of less than 10% from their AI initiatives. Still, 90% of those surveyed whose AI investments underdelivered plan to increase their AI budgets next year. As compute and usage costs have risen dramatically, executives and shareholders are taking a closer look at the returns that those investments have brought so far. A PitchBook analysis of 186 AI-related questions on B2C earnings calls found that 90% were probing and investigative in tone, and that ROI and financial returns have overtaken product roadmaps as the dominant focus. Employees’ use of AI tools can range from coding assistants to AI-generated research to organizing unstructured databases.",
+                "score": 0.26990628
+              },
+              {
+                "title": "AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan - The Washington Post",
+                "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                "source": "washingtonpost.com",
+                "summary": "AI & Tech Brief from WP Intelligence. # AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan. Plus, Anthropic files for a blockbuster initial public offering. Make us preferred on Google. Sign up here to get this newsletter in your inbox. * **Exclusive:** AI safety group Americans for Responsible Innovation rolls out a six-figure ad campaign this week attacking Rep. Lori Trahan (D-Massachusetts), arguing that she’s “taking the side” of AI oligarchs in her bipartisan legislative efforts. * The AI safety community doesn’t want to hand power of AI regulation to President Donald Trump’s administration now that states are passing more rigorous AI laws — and the California and New York attorneys general are challenging big AI companies. * Nvidia is rolling out a new “world model” simulator for robots and a new design platform for robot developers. In doing so, the company is running the same business playbook it did to become so dominant in the chip market.",
+                "score": 0.8749346
+              },
+              {
+                "title": "AI Savings Misses ‘Should Be Making Executives Uncomfortable,’ Bain Says - Insurance Journal",
+                "url": "https://www.insurancejournal.com/news/national/2026/06/01/871951.htm",
+                "source": "insurancejournal.com",
+                "summary": "The missed targets “should be making executives uncomfortable,” especially since many of them are approving increased spending for artificial intelligence on the basis of expected savings, the consulting firm said in a report shared exclusively with Bloomberg News. While some companies are funding fresh investment in generative and agentic AI with realized savings, the largest share (44%) cited targeted savings among their top sources of funding for the next wave of outlays, according to the report. “Despite a decade of investments in data modernization running well into hundreds of billions of dollars globally, the No. 1 reason AI programs underperform is that companies cannot reliably get access to their own data,” Bain said. Its prescription: Instead of waiting to structure all of their data to make it ingestible by AI, companies should start with what’s available to feed into the models — and then use AI to help sort out how to structure the rest.",
+                "score": 0.22715242
+              },
+              {
+                "title": "New Report: The AI Rebuild of Travel - Skift",
+                "url": "https://skift.com/insights/the-ai-rebuild-of-travel/",
+                "source": "skift.com",
+                "summary": "# New Report: The AI Rebuild of Travel. Travel technology is being rebuilt in real time as AI begins to shape how trips are discovered, booked, and managed. And systems built for websites and manual workflows are struggling to keep pace with a more connected, autonomous future. What once operated as a predictable digital journey is becoming an AI-mediated ecosystem powered by real-time data, interoperability, and increasingly intelligent systems. Skift Studio spoke with 10 senior technology, product, and digital leaders across airlines, hospitality companies, travel platforms, and technology providers to understand how the industry is preparing. One thing is clear: the next era of travel will be defined by infrastructure as much as interface. **Download the report to learn:**. * How AI assistants and agentic experiences are reshaping travel discovery and booking. * Why trust, governance, and identity are becoming central to AI-powered travel. * How airlines, hotels, and platforms are preparing for a more autonomous future.",
+                "score": 0.20429464
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_news_sentiment_multiturn_topic_correction",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn correction: the agent should update the topic from OpenAI to Anthropic while carrying over timeframe=week."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Analyze the sentiment around OpenAI news this week."
+        },
+        {
+          "role": "user",
+          "content": "Actually, do it for Anthropic instead."
+        },
+        {
+          "role": "user",
+          "content": "Keep the timeframe as this week."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "Anthropic",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "news_sentiment",
+            "args": {
+              "topic": "Anthropic",
+              "timeframe": "week"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "news_sentiment",
+          "args": {
+            "topic": "Anthropic",
+            "timeframe": "week"
+          },
+          "result": {
+            "ok": true,
+            "tool": "news_sentiment",
+            "topic": "Anthropic",
+            "timeframe": "week",
+            "overall_sentiment": "positive",
+            "risk_level": "low",
+            "sentiment_counts": {
+              "positive": 3,
+              "neutral": 2,
+              "negative": 0
+            },
+            "items": [
+              {
+                "title": "Anthropic leapfrogs OpenAI as the most valuable AI startup — and drops a new model - Business Insider",
+                "url": "https://www.businessinsider.com/anthropic-surpasses-openai-with-965b-valuation-debuts-opus-4-8-2026-5",
+                "summary": "# Anthropic leapfrogs OpenAI as the most valuable AI startup — and drops a new model. Anthropic has arrived with the newest entrant in the AI race — and a new stack of cash. On Thursday, the AI lab announced a new $65 billion fundraise, valuing it at a staggering $965 billion and making it the most valuable AI startup — surpassing its rival OpenAI. The same day, Anthropic released Claude Opus 4.8, a new version of its general-purpose large language model. Anthropic is in the midst of a high-stakes fight for technological supremacy and market share with OpenAI, and this new model marks the latest in a series of salvos. ## What's new about Anthropic's Opus 4.8 model. Anthropic called the new Opus 4.8 model \"weaker\" than Mythos and said it's \"substantially behind\" the unreleased model on cyber capabilities. Look out for an alert in your inbox the next time a new story is published!",
+                "sentiment": "positive",
+                "source": ""
+              },
+              {
+                "title": "Anthropic races toward a Wall Street debut with a confidential SEC filing - The Washington Post",
+                "url": "https://www.washingtonpost.com/business/2026/06/01/anthropic-ai-claude-ipo/ffc2f514-5dd8-11f1-9c46-d6211372eede_story.html",
+                "summary": "# Anthropic races toward a Wall Street debut with a confidential SEC filing. Artificial intelligence company Anthropic is moving toward going public on Wall Street, the latest chapter in its meteoric rise from a little-known research laboratory to one of the leading AI companies valued at $965 billion. FILE - Pages from the Anthropic website and the company’s logo are displayed on a computer screen in New York, Feb. 26, 2026. (AP Photo/Patrick Sison, File). By Matt O'Brien | AP.",
+                "sentiment": "neutral",
+                "source": ""
+              },
+              {
+                "title": "Anthropic Is Now Worth More Than OpenAI—Exceeds $900 Billion Valuation - Forbes",
+                "url": "https://www.forbes.com/sites/antoniopequenoiv/2026/05/28/anthropic-is-now-worth-almost-1-trillion-more-than-openai/",
+                "summary": "# Anthropic Is Now Worth Almost $1 Trillion—More Than OpenAI. Pequeño is a breaking news reporter who covers tech and more. ## Topline. Anthropic secured a $900 billion valuation Thursday following a Series H fundraise of $65 billion, overtaking OpenAI as the world’s most valuable artificial intelligence startup. ## Key Facts. Anthropic announced the funding round Thursday, revealing a $965 billion post-money valuation involving investments from Altimeter Capital, Dragoneer, Greenoaks and Sequoia Capital. OpenAI raised $122 billion in a March funding round that increased its valuation to $730 billion, or $852 billion post-money. Anthropic has more than doubled the valuation it posted in its previous funding round in February, when it raised $30 billion for a $380 billion valuation. Anthropic said in its statement it expects its new funding to improve its safety research and help increase the computing power needed for growing demand of Claude, its flagship AI model. *This is a developing story. Share confidential information with Forbes.",
+                "sentiment": "positive",
+                "source": ""
+              },
+              {
+                "title": "VC Bill Gurley says Anthropic is 'midwifing a deity' by 'building a species that's superior to humans' - Business Insider",
+                "url": "https://www.businessinsider.com/bill-gurley-anthropic-ai-god-humanity-theory-2026-6",
+                "summary": "# VC Bill Gurley says Anthropic is 'midwifing a deity' by 'building a species that's superior to humans'. \"The more I dig, I've met people who I dare say think it's their responsibility and they're excited about building a species that's superior to humans,\" Gurley said during a recent episode of the \"All-In Podcast.\". Gurley, who said he spent a month reading everything he could about Anthropic, said he came away convinced that one of the leading AI startups wants to create a God-like system to rule humanity. I think they're midwifing a deity here,\" Gurley said. \"He says, 'It could be a capitalist economy of AI systems which then give out resources to humans based on some secondary economy of what the AI systems think makes sense to reward in humans.' So that's envisioning a deity of sorts that's going to break ties and decide what humans do,\" Gurley said, quoting from the essay.",
+                "sentiment": "neutral",
+                "source": ""
+              },
+              {
+                "title": "Anthropic tops OpenAI as most valuable AI startup, nears $1 trillion valuation in latest round - CNBC",
+                "url": "https://www.cnbc.com/2026/05/28/anthropic-open-ai-startup-value.html",
+                "summary": "# Anthropic tops OpenAI as most valuable AI startup, nears $1 trillion valuation in latest round. * AI giant Anthropic is now worth more than OpenAI. * Anthropic announced a $65 billion Series H financing at a $965 billion valuation, a round led by Altimeter Capital, Dragoneer, Greenoaks, and Sequoia Capital. The AI giant announced a $65 billion Series H financing at a $965 billion valuation on Thursday. CNBC reported in late April that Anthropic was in talks to raise capital. The newest round was led by Altimeter Capital, Dragoneer, Greenoaks, and Sequoia Capital and almost triples its valuation from February, when it was worth $380 billion. That's up from $30 billion run rate earlier this year, and $10 billion in revenue last year. ## More In CNBC Disruptor 50. 2026 CNBC Disruptor 50 list: Why Anthropic was No. 1 in this year's rankings. 2026 CNBC Disruptor 50: See the full list of companies, rankings, and a new leader in the AI race.",
+                "sentiment": "positive",
+                "source": ""
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
