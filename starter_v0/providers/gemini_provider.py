@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import time
 from typing import Any
 
@@ -85,6 +86,17 @@ def _format_api_error(exc: Exception) -> str:
     return f"{code} {status}: {message}"
 
 
+def _retry_delay(exc: Exception, *, attempt: int, base_delay: float) -> float:
+    message = str(exc)
+    match = re.search(r"retryDelay': '(\d+)s'", message)
+    if match:
+        return min(float(match.group(1)) + 1.0, 90.0)
+    match = re.search(r"Please retry in ([0-9.]+)s", message)
+    if match:
+        return min(float(match.group(1)) + 1.0, 90.0)
+    return min(base_delay * (2 ** (attempt - 1)), 30.0)
+
+
 class GeminiProvider:
     """Google Gemini API provider with normalized tool_calls output."""
 
@@ -92,7 +104,7 @@ class GeminiProvider:
         self,
         *,
         api_key_env: str = "GEMINI_API_KEY",
-        default_model: str = "gemini-3.1-flash",
+        default_model: str = "gemini-3.5-flash",
     ) -> None:
         self.api_key_env = api_key_env
         self.default_model = default_model
@@ -146,8 +158,7 @@ class GeminiProvider:
                     raise RuntimeError(f"Gemini request failed: {_format_api_error(exc)}") from exc
                 if attempt >= self.max_attempts:
                     break
-                delay = self.initial_backoff_seconds * (2 ** (attempt - 1))
-                time.sleep(delay)
+                time.sleep(_retry_delay(exc, attempt=attempt, base_delay=self.initial_backoff_seconds))
 
         if resp is None:
             detail = _format_api_error(last_error or RuntimeError("unknown Gemini error"))
@@ -175,7 +186,6 @@ class GeminiProvider:
                 if function_call:
                     append_call(function_call)
 
-        # Some SDK versions expose function calls directly on the response.
         for function_call in getattr(resp, "function_calls", []) or []:
             append_call(function_call)
 

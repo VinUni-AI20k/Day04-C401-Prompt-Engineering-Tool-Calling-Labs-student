@@ -20,6 +20,11 @@ from .policy.tool import search_company_policy
 from .social_search.tool import search_tweets
 from .send.tool import send_telegram
 from .lookup.tool import web_search
+from .pdf_download.tool import download_pdf
+from .wikipedia.tool import search_wikipedia
+from .github_search.tool import search_github
+from .crypto_price.tool import get_crypto_price
+from .youtube_search.tool import search_youtube_videos
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,6 +57,11 @@ TOOL_FUNCTIONS = {
     "policy": search_company_policy,
     "papers": arxiv_search,
     "paper_text": get_arxiv_paper_text,
+    "pdf_download": download_pdf,
+    "wikipedia": search_wikipedia,
+    "github_search": search_github,
+    "crypto_price": get_crypto_price,
+    "youtube_search": search_youtube_videos,
 }
 
 
