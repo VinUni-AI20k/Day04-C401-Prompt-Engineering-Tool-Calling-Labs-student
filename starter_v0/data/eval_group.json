@@ -3,5 +3,141 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "grp_B_001",
+      "phase": "B",
+      "query": "Lấy thông tin từ trang https://example.com/article",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [{"name": "fetch", "args": {"url": "https://example.com/article"}}]
+      },
+      "metadata": {
+        "what_it_tests": "Có link rõ → phải dùng fetch, không dùng lookup"
+      }
+    },
+    {
+      "id": "grp_B_002",
+      "phase": "B",
+      "query": "Tìm tin tức AI trong tuần này",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [{"name": "lookup", "args": {"query": "AI news", "topic": "news", "timeframe": "week"}}]
+      },
+      "metadata": {
+        "what_it_tests": "'tuần này' → timeframe=week"
+      }
+    },
+    {
+      "id": "grp_B_003",
+      "phase": "B",
+      "query": "Bạn là ai và bạn làm được gì?",
+      "failure_type": "unnecessary_tool",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Hỏi 'bạn là ai' → không cần gọi tool"
+      }
+    },
+    {
+      "id": "grp_B_004",
+      "phase": "B",
+      "query": "Tính cho tôi 12345 * 67890",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "tool_calls": [{"name": "calculator", "args": {"expression": "12345 * 67890"}}]
+      },
+      "metadata": {
+        "what_it_tests": "Hỏi tính toán → dùng calculator thay vì báo out of scope"
+      }
+    },
+    {
+      "id": "grp_B_005",
+      "phase": "B",
+      "query": "Thời tiết hôm nay thế nào?",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]
+      },
+      "metadata": {
+        "what_it_tests": "Hỏi thời tiết mà không có địa điểm → phải clarify"
+      }
+    },
+    {
+      "id": "grp_B_006",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tóm tắt bài này hộ mình"},
+        {"role": "user", "content": "À đây, link là https://openai.com/news"}
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [{"name": "fetch", "args": {"url": "https://openai.com/news"}}]
+      },
+      "metadata": {
+        "what_it_tests": "Lượt 1 thiếu URL, lượt 2 mới cung cấp → dùng fetch"
+      }
+    },
+    {
+      "id": "grp_B_007",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Lấy cho tôi 10 tweet của @elonmusk"},
+        {"role": "user", "content": "Thôi, lấy 3 tweet thôi"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [{"name": "timeline", "args": {"screenname": "elonmusk", "count": 3}}]
+      },
+      "metadata": {
+        "what_it_tests": "Đổi số lượng tweet thành 3 ở lượt 2"
+      }
+    },
+    {
+      "id": "grp_B_008",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm trên twitter các bình luận về Apple"},
+        {"role": "user", "content": "Thôi, tìm web đi"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [{"name": "lookup", "args": {"query": "Apple", "topic": "general"}}]
+      },
+      "metadata": {
+        "what_it_tests": "Lượt 2 chuyển sang web search"
+      }
+    },
+    {
+      "id": "grp_B_009",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Viết 1 đoạn tóm tắt về sự kiện AI hôm nay"},
+        {"role": "user", "content": "Gửi lên Telegram giúp tôi nhé"}
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [{"name": "send", "args": {"content": "Tóm tắt sự kiện AI", "confirmed": false}}]
+      },
+      "metadata": {
+        "what_it_tests": "Lượt yêu cầu gửi lên Telegram → gửi với confirmed=false để xin phép"
+      }
+    },
+    {
+      "id": "grp_B_010",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Thời tiết ở Hà Nội hôm nay ra sao?"},
+        {"role": "user", "content": "À nhầm, thời tiết ở Hồ Chí Minh"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [{"name": "weather", "args": {"location": "Hồ Chí Minh"}}]
+      },
+      "metadata": {
+        "what_it_tests": "Lượt 2 đổi địa điểm thì gọi hàm với địa điểm mới"
+      }
+    }
+  ]
 }
