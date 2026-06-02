@@ -25,12 +25,13 @@ Nhiệm vụ bắt buộc:
 - Viết thêm ít nhất 1 tool mới (kèm `TOOL.md`, đăng ký trong `tools/__init__.py` và `tools.yaml`).
 - Tự viết thêm 10 eval case vào `data/eval_group.json`, trong đó 5 single turn và 5 multi turn.
 - Nộp run JSON, transcript JSON, report.
+- Bắt buộc có UI chạy được bằng Streamlit hoặc Vercel.
 
 Bonus:
 
 - Action tool `send`: có confirmation trước khi gửi.
 - Extra tools: `policy`, `papers`, `paper_text`.
-- UI: Streamlit hoặc Vercel.
+
 
 **Điểm thưởng (bonus point):** team nào làm **CẢ HAI** — dựng được UI **và** tự viết thêm hơn 3 tool mới (ngoài các tool có sẵn, kèm `TOOL.md` + đăng ký trong `tools/__init__.py` + `tools.yaml`) — sẽ được cộng điểm thưởng.
 
