@@ -9,7 +9,7 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Ask the user for missing required information or explicit confirmation. Use response_type=text for missing account, URL, topic, or free-form info. Use response_type=yes_no before any send/post/publish/delivery action. Use response_type=choice only when offering fixed options."
     parameters:
       type: object
       properties:
@@ -19,7 +19,7 @@ tools:
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: "Get recent posts from one specific account/person. Use for requests like 'tweets by Sam Altman' or 'latest posts from Elon Musk'. Do not use for topic searches like 'what people say about GPT-5'."
     parameters:
       type: object
       properties:
@@ -28,7 +28,7 @@ tools:
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: "Search social media posts by topic or keyword. Use for 'what are people saying about X'. Use search_type=Top for top/popular/viral requests; otherwise use Latest. Do not use for one named account's timeline."
     parameters:
       type: object
       properties:
@@ -38,7 +38,7 @@ tools:
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Search the web for general information or news. Use topic=news for news/current-events requests. Map today to timeframe=day, this week to week, this month to month, and this year to year. Keep query concise."
     parameters:
       type: object
       properties:
@@ -49,7 +49,7 @@ tools:
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: "Read or summarize a concrete URL supplied by the user. Use this instead of lookup when the request includes a specific link. If no URL is provided, use clarify."
     parameters:
       type: object
       properties:
@@ -78,8 +78,8 @@ tools:
       required: [items, template]
 
   # ---------------- Bonus tools ----------------
-  - name: send_telegram_message
-    description: "Gửi một đoạn văn bản đi."
+  - name: send
+    description: "Send text to Telegram only after the user has explicitly confirmed yes. Never use this tool for an unconfirmed send/post/publish request; use clarify with response_type=yes_no first."
     parameters:
       type: object
       properties:

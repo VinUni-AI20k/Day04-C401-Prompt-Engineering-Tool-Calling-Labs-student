@@ -1,7 +1,130 @@
-{
-  "dataset_id": "day04_v2_research_group",
-  "dataset_role": "group",
-  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
-}
+[
+  {
+    "id": "R15_parallel_arxiv_and_news",
+    "phase": "B",
+    "suite": "base",
+    "query": "Tìm các bài báo arXiv mới nhất về autonomous agents và tin tức AI tuần này trên web.",
+    "failure_type": "wrong_tool",
+    "expect": {
+      "tool_calls": [
+        {
+          "name": "search_arxiv_papers",
+          "args": {
+            "query": "autonomous agents",
+            "sort_by": "submittedDate"
+          }
+        },
+        {
+          "name": "lookup",
+          "args": {
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "week"
+          }
+        }
+      ]
+    },
+    "metadata": {
+      "skill": "parallel_tool_calls",
+      "difficulty": "hard",
+      "what_it_tests": "Gọi đồng thời 2 công cụ khác miền: search_arxiv_papers (kèm sort_by=submittedDate do có chữ 'mới nhất') và lookup (topic=news, timeframe=week)."
+    }
+  },
+  {
+    "id": "R16_parallel_fetch_and_arxiv_extract",
+    "phase": "B",
+    "suite": "base",
+    "query": "Đọc nội dung từ link https://example.com/blog và trích xuất bài arXiv có mã 2310.11234 giúp mình.",
+    "failure_type": "wrong_tool",
+    "expect": {
+      "tool_calls": [
+        {
+          "name": "fetch",
+          "args": {
+            "url": "https://example.com/blog"
+          }
+        },
+        {
+          "name": "extract_arxiv_paper_text",
+          "args": {
+            "arxiv_url": "2310.11234"
+          }
+        }
+      ]
+    },
+    "metadata": {
+      "skill": "parallel_read_tools",
+      "difficulty": "medium",
+      "what_it_tests": "Xử lý song song hai nguồn tài liệu cụ thể: một URL web thường (fetch) và một mã arXiv cụ thể (extract_arxiv_paper_text)."
+    }
+  },
+  {
+    "id": "R17_parallel_policy_and_social",
+    "phase": "B",
+    "suite": "base",
+    "query": "Kiểm tra chính sách công ty về data privacy và xem cộng đồng mạng đang bàn tán gì (top) về rò rỉ dữ liệu.",
+    "failure_type": "wrong_tool",
+    "expect": {
+      "tool_calls": [
+        {
+          "name": "search_company_policy",
+          "args": {
+            "query": "data privacy",
+            "policy_area": "data_privacy"
+          }
+        },
+        {
+          "name": "social_search",
+          "args": {
+            "query": "rò rỉ dữ liệu",
+            "search_type": "Top"
+          }
+        }
+      ]
+    },
+    "metadata": {
+      "skill": "parallel_internal_and_external",
+      "difficulty": "hard",
+      "what_it_tests": "Phân biệt và gọi đúng công cụ tìm kiếm nội bộ (map chính xác policy_area) cùng với tìm kiếm mạng xã hội (map search_type=Top)."
+    }
+  },
+  {
+    "id": "M07_multiturn_parallel_add_tool",
+    "phase": "B",
+    "suite": "base",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Tìm giúp mình bài báo arXiv về GPT-4o nhé."
+      },
+      {
+        "role": "user",
+        "content": "À tiện thể tìm luôn cả tin tức web tuần này về OpenAI nữa."
+      }
+    ],
+    "failure_type": "missing_info",
+    "expect": {
+      "tool_calls": [
+        {
+          "name": "search_arxiv_papers",
+          "args": {
+            "query": "GPT-4o"
+          }
+        },
+        {
+          "name": "lookup",
+          "args": {
+            "query": "OpenAI",
+            "topic": "news",
+            "timeframe": "week"
+          }
+        }
+      ]
+    },
+    "metadata": {
+      "skill": "multiturn_accumulate_intents",
+      "difficulty": "hard",
+      "what_it_tests": "2 turns: Lượt sau yêu cầu thêm một hành động mới nhưng không phủ nhận lượt đầu. Agent cần gom cả 2 intent để gọi đồng thời search_arxiv_papers và lookup."
+    }
+  }
+]
