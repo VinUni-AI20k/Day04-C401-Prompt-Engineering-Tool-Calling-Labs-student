@@ -3,5 +3,268 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_single_top_social_anthropic",
+      "phase": "B",
+      "query": "Cho mình các tweet phổ biến nhất về Anthropic",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "search_social_posts",
+            "args": {
+              "query": "Anthropic",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: tweet ABOUT topic -> social_search; 'phổ biến nhất' -> search_type=Top."
+      }
+    },
+    {
+      "id": "G02_single_missing_news_topic",
+      "phase": "B",
+      "query": "Tìm tin hôm nay giúp mình",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "ask_user",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: thiếu chủ đề tin tức -> clarify thay vì đoán query hoặc gọi lookup rỗng."
+      }
+    },
+    {
+      "id": "G03_single_confirm_send_with_text",
+      "phase": "B",
+      "query": "Đăng lên Telegram nội dung: AI digest hôm nay đã sẵn sàng",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "ask_user",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: action gửi/đăng phải hỏi xác nhận trước, kể cả khi user đã đưa nội dung."
+      }
+    },
+    {
+      "id": "G04_single_policy_source_citation",
+      "phase": "B",
+      "query": "Theo policy nội bộ, tweet viral có được coi là nguồn fact không?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "search_policy",
+            "args": {
+              "policy_area": "source_citation"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: câu hỏi về policy/trích dẫn nguồn -> policy với policy_area=source_citation."
+      }
+    },
+    {
+      "id": "G05_single_arxiv_latest_papers",
+      "phase": "B",
+      "query": "Tìm 3 paper arXiv mới nhất về retrieval augmented generation",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "search_papers",
+            "args": {
+              "query": "retrieval augmented generation",
+              "max_results": 3,
+              "sort_by": "submittedDate"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: paper/preprint/literature search -> papers; 'mới nhất' -> sort_by=submittedDate; giữ limit=3."
+      }
+    },
+    {
+      "id": "G06_multi_switch_to_url",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin mới về OpenAI trên web"
+        },
+        {
+          "role": "user",
+          "content": "Thôi, đọc link này thôi: https://openai.com/blog/gpt-5"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ tóm tắt đúng URL đó"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "read_url",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: source switch sang URL cụ thể -> fetch, không tiếp tục lookup từ lượt cũ."
+      }
+    },
+    {
+      "id": "G07_multi_limit_correction",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Lấy 8 tweet mới nhất của Sam Altman"
+        },
+        {
+          "role": "user",
+          "content": "Đổi thành 2 tweet thôi"
+        },
+        {
+          "role": "user",
+          "content": "Vẫn của Sam Altman nhé"
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "get_user_timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 2
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: carry account Sam Altman -> sama, sửa limit từ 8 xuống 2."
+      }
+    },
+    {
+      "id": "G08_multi_carryover_news_topic",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tin AI hôm nay có gì nổi bật?"
+        },
+        {
+          "role": "user",
+          "content": "Còn về robotics thì sao?"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ tìm robotics thôi, vẫn là tin hôm nay"
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "search_web",
+            "args": {
+              "query": "robotics",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: latest turn đổi query sang robotics nhưng carry topic=news và timeframe=day."
+      }
+    },
+    {
+      "id": "G09_multi_correct_person",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tweet mới nhất của Sam Altman"
+        },
+        {
+          "role": "user",
+          "content": "À nhầm, của Andrej Karpathy"
+        },
+        {
+          "role": "user",
+          "content": "Lấy 3 tweet mới nhất nhé"
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "get_user_timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: correction overrides earlier person; Andrej Karpathy -> karpathy; latest limit=3."
+      }
+    },
+    {
+      "id": "G10_multi_policy_before_publish",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Mình có một bản tin muốn đăng ra ngoài"
+        },
+        {
+          "role": "user",
+          "content": "Trước khi đăng, kiểm tra policy xuất bản ngoài công ty giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ kiểm tra policy, chưa gửi gì cả"
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "search_policy",
+            "args": {
+              "policy_area": "external_publishing"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: user chỉ muốn kiểm tra policy xuất bản; gọi policy, không gọi send."
+      }
+    }
+  ]
 }

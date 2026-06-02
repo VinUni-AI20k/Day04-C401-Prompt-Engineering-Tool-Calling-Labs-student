@@ -1,5 +1,5 @@
 ---
-name: social_search
+name: search_social_posts
 track: core
 kind: live_api
 provider: RapidAPI Twitter API45
@@ -8,6 +8,6 @@ inputs: [query, search_type, limit]
 outputs: [items]
 side_effect: false
 ---
-# social_search
+# search_social_posts
 
 Searches posts by keyword. `search_type` orders results (`Latest` or `Top`).

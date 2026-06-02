@@ -1,5 +1,5 @@
 ---
-name: papers
+name: search_papers
 track: bonus
 kind: live_api
 provider: arXiv API
@@ -8,7 +8,7 @@ inputs: [query, max_results, sort_by]
 outputs: [items, total_results]
 side_effect: false
 ---
-# papers
+# search_papers
 
 Searches arXiv via the official Atom API. Rate-limited (waits ~3s between
 in-process requests).

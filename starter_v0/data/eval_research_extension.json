@@ -9,7 +9,7 @@
       "suite": "extension",
       "query": "Theo company policy, tweet viral có được coi là fact đã xác nhận không?",
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "policy", "args": {"policy_area": "source_citation"}}]},
+      "expect": {"tool_calls": [{"name": "search_policy", "args": {"policy_area": "source_citation"}}]},
       "metadata": {"skill": "company_source_policy", "difficulty": "medium", "what_it_tests": "Câu hỏi policy nội bộ về source/citation → search_company_policy."}
     },
     {
@@ -18,7 +18,7 @@
       "suite": "extension",
       "query": "Theo policy công ty, có được đưa API key hoặc dữ liệu khách hàng vào prompt của model không?",
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "policy", "args": {"policy_area": "data_privacy"}}]},
+      "expect": {"tool_calls": [{"name": "search_policy", "args": {"policy_area": "data_privacy"}}]},
       "metadata": {"skill": "company_data_privacy_policy", "difficulty": "medium", "what_it_tests": "Câu hỏi secrets/customer data → company policy, không dùng web."}
     },
     {
@@ -27,7 +27,7 @@
       "suite": "extension",
       "query": "Theo policy công ty, đăng bản tin lên Telegram channel có cần xác nhận trước không?",
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "policy", "args": {"policy_area": "external_publishing"}}]},
+      "expect": {"tool_calls": [{"name": "search_policy", "args": {"policy_area": "external_publishing"}}]},
       "metadata": {"skill": "company_external_publishing_policy", "difficulty": "medium", "what_it_tests": "Câu hỏi write/publish policy → company policy."}
     },
     {
@@ -36,7 +36,7 @@
       "suite": "extension",
       "query": "Tìm paper arXiv về retrieval augmented generation evaluation.",
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "papers", "args": {}}]},
+      "expect": {"tool_calls": [{"name": "search_papers", "args": {}}]},
       "metadata": {"skill": "arxiv_search", "difficulty": "medium", "what_it_tests": "Paper/preprint discovery → arxiv_search."}
     },
     {
@@ -45,7 +45,7 @@
       "suite": "extension",
       "query": "Đọc giúp mình paper arXiv 1706.03762, lấy text 2 trang đầu.",
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "paper_text", "args": {"arxiv_url": "1706.03762", "max_pages": 2}}]},
+      "expect": {"tool_calls": [{"name": "read_paper_text", "args": {"arxiv_url": "1706.03762", "max_pages": 2}}]},
       "metadata": {"skill": "arxiv_pdf_text", "difficulty": "hard", "what_it_tests": "Có arXiv ID và muốn đọc nội dung → tải PDF + extract local text."}
     },
     {
@@ -55,8 +55,8 @@
       "query": "Làm bản tin AI hôm nay, nhưng kiểm tra policy công ty về source/citation trước.",
       "failure_type": "wrong_tool",
       "expect": {"tool_calls": [
-        {"name": "lookup", "args": {"topic": "news", "timeframe": "day"}},
-        {"name": "policy", "args": {"policy_area": "source_citation"}}
+        {"name": "search_web", "args": {"topic": "news", "timeframe": "day"}},
+        {"name": "search_policy", "args": {"policy_area": "source_citation"}}
       ]},
       "metadata": {"skill": "parallel_live_plus_policy", "difficulty": "hard", "what_it_tests": "Kết hợp live news + company source policy; eval không phụ thuộc thứ tự."}
     },
@@ -67,8 +67,8 @@
       "query": "Tìm paper mới về AI agents và kiểm tra policy công ty về cách trích dẫn arXiv.",
       "failure_type": "wrong_tool",
       "expect": {"tool_calls": [
-        {"name": "papers", "args": {}},
-        {"name": "policy", "args": {"policy_area": "source_citation"}}
+        {"name": "search_papers", "args": {}},
+        {"name": "search_policy", "args": {"policy_area": "source_citation"}}
       ]},
       "metadata": {"skill": "parallel_arxiv_plus_policy", "difficulty": "hard", "what_it_tests": "Paper search + company citation policy."}
     },
@@ -79,8 +79,8 @@
       "query": "Tóm tắt link này nhưng nhớ kiểm tra policy công ty về research workflow: https://openai.com/research/",
       "failure_type": "wrong_tool",
       "expect": {"tool_calls": [
-        {"name": "fetch", "args": {"url": "https://openai.com/research/"}},
-        {"name": "policy", "args": {"policy_area": "ai_research"}}
+        {"name": "read_url", "args": {"url": "https://openai.com/research/"}},
+        {"name": "search_policy", "args": {"policy_area": "ai_research"}}
       ]},
       "metadata": {"skill": "url_plus_company_policy", "difficulty": "hard", "what_it_tests": "Specific URL → read_url, internal research policy → company policy."}
     },
@@ -91,8 +91,8 @@
       "query": "Đọc và tóm tắt giúp mình 2 bài này: https://openai.com/research/ và https://www.anthropic.com/research",
       "failure_type": "wrong_tool",
       "expect": {"tool_calls": [
-        {"name": "fetch", "args": {"url": "https://openai.com/research/"}},
-        {"name": "fetch", "args": {"url": "https://www.anthropic.com/research"}}
+        {"name": "read_url", "args": {"url": "https://openai.com/research/"}},
+        {"name": "read_url", "args": {"url": "https://www.anthropic.com/research"}}
       ]},
       "metadata": {"skill": "parallel_two_links", "difficulty": "hard", "what_it_tests": "User gửi 2 links cùng lúc → gọi read_url cho từng link; eval không phụ thuộc thứ tự."}
     },
@@ -102,7 +102,7 @@
       "suite": "extension",
       "query": "Tìm research paper arXiv mới về AI agent evaluation.",
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "papers", "args": {}}]},
+      "expect": {"tool_calls": [{"name": "search_papers", "args": {}}]},
       "metadata": {"skill": "arxiv_research_search", "difficulty": "medium", "what_it_tests": "Research paper/arXiv discovery → arxiv_search."}
     }
   ]

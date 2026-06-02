@@ -1,5 +1,5 @@
 ---
-name: send
+name: send_message
 track: bonus
 kind: action
 provider: Telegram Bot API
@@ -8,6 +8,6 @@ inputs: [text, confirmed]
 outputs: [status]
 side_effect: true
 ---
-# send
+# send_message
 
 Posts text to a Telegram channel. The message is only sent when `confirmed` is true.

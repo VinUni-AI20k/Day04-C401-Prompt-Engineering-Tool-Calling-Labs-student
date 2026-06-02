@@ -5,36 +5,38 @@ from typing import Any
 
 import yaml
 
-# Folder names are intentionally vague to match the tool names students see.
-# The imported function names are the underlying implementations (unchanged).
-from .clarify.tool import ask_user
-from .papers.tool import arxiv_search
-from .paper_text.tool import get_arxiv_paper_text
-from .timeline.tool import get_user_tweets
-from .fetch.tool import read_url
-from .format.tool import render_digest
-from .policy.tool import search_company_policy
-from .social_search.tool import search_tweets
-from .send.tool import send_telegram
-from .lookup.tool import web_search
+# Public tool names and folder names are verb-first, single-action names.
+# The imported function names are the underlying implementations.
+from .ask_user.tool import ask_user
+from .get_user_timeline.tool import get_user_tweets
+from .read_paper_text.tool import get_arxiv_paper_text
+from .read_url.tool import read_url
+from .render_digest.tool import render_digest
+from .search_papers.tool import arxiv_search
+from .search_policy.tool import search_company_policy
+from .search_social_posts.tool import search_tweets
+from .search_topic_notes.tool import search_topic_notes
+from .search_web.tool import web_search
+from .send_message.tool import send_telegram
 
 
-# NOTE (starter_v0): tool names here are intentionally vague. These keys are the
-# names the model sees AND the names data/eval_base.json + data/eval_research_extension.json
-# match against. If a team renames a tool, it MUST stay in sync across ALL of:
+# NOTE: These keys are the names the model sees AND the names
+# data/eval_base.json + data/eval_research_extension.json match against.
+# If a team renames a tool, it MUST stay in sync across ALL of:
 #   artifacts/tools.yaml  ->  this dict  ->  data/eval_base.json + data/eval_research_extension.json
 # Otherwise the eval raises "not declared in tools.yaml" or scores every call as a name mismatch.
 TOOL_FUNCTIONS = {
-    "clarify": ask_user,
-    "timeline": get_user_tweets,
-    "social_search": search_tweets,
-    "lookup": web_search,
-    "fetch": read_url,
-    "format": render_digest,
-    "send": send_telegram,
-    "policy": search_company_policy,
-    "papers": arxiv_search,
-    "paper_text": get_arxiv_paper_text,
+    "ask_user": ask_user,
+    "get_user_timeline": get_user_tweets,
+    "search_social_posts": search_tweets,
+    "search_web": web_search,
+    "read_url": read_url,
+    "render_digest": render_digest,
+    "send_message": send_telegram,
+    "search_policy": search_company_policy,
+    "search_topic_notes": search_topic_notes,
+    "search_papers": arxiv_search,
+    "read_paper_text": get_arxiv_paper_text,
 }
 
 

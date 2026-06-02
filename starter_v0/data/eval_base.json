@@ -8,7 +8,7 @@
       "phase": "B", "suite": "base",
       "query": "Tweet mới nhất của Sam Altman là gì?",
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "sama"}}]},
+      "expect": {"tool_calls": [{"name": "get_user_timeline", "args": {"screenname": "sama"}}]},
       "metadata": {"skill": "routing_user_tweets_name_to_handle", "difficulty": "medium", "what_it_tests": "Tin CỦA một người nổi tiếng → map tên Sam Altman thành handle sama rồi gọi get_user_tweets."}
     },
     {
@@ -16,7 +16,7 @@
       "phase": "B", "suite": "base",
       "query": "Mọi người đang bàn gì về GPT-5 trên Twitter?",
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "social_search", "args": {}}]},
+      "expect": {"tool_calls": [{"name": "search_social_posts", "args": {}}]},
       "metadata": {"skill": "routing_search_tweets", "difficulty": "easy", "what_it_tests": "Tweet theo CHỦ ĐỀ → search_tweets, không phải get_user_tweets."}
     },
     {
@@ -24,7 +24,7 @@
       "phase": "B", "suite": "base",
       "query": "Tin tức AI hôm nay có gì nổi bật?",
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "AI", "topic": "news", "timeframe": "day"}}]},
+      "expect": {"tool_calls": [{"name": "search_web", "args": {"query": "AI", "topic": "news", "timeframe": "day"}}]},
       "metadata": {"skill": "routing_web_news", "difficulty": "medium", "what_it_tests": "Tin thời sự trên web → web_search topic=news, timeframe=day (hôm nay)."}
     },
     {
@@ -32,7 +32,7 @@
       "phase": "B", "suite": "base",
       "query": "Tóm tắt bài này giúp mình: https://openai.com/blog/gpt-5",
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "fetch", "args": {"url": "https://openai.com/blog/gpt-5"}}]},
+      "expect": {"tool_calls": [{"name": "read_url", "args": {"url": "https://openai.com/blog/gpt-5"}}]},
       "metadata": {"skill": "routing_read_url", "difficulty": "easy", "what_it_tests": "Đã có link cụ thể → read_url, không phải web_search."}
     },
     {
@@ -40,7 +40,7 @@
       "phase": "B", "suite": "base",
       "query": "Lấy 10 tweet mới nhất của Elon Musk",
       "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "elonmusk", "limit": 10}}]},
+      "expect": {"tool_calls": [{"name": "get_user_timeline", "args": {"screenname": "elonmusk", "limit": 10}}]},
       "metadata": {"skill": "arg_limit", "difficulty": "easy", "what_it_tests": "Trích đúng limit=10 từ '10 tweet'."}
     },
     {
@@ -48,7 +48,7 @@
       "phase": "B", "suite": "base",
       "query": "Tin công nghệ trong tuần này",
       "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "lookup", "args": {"topic": "news", "timeframe": "week"}}]},
+      "expect": {"tool_calls": [{"name": "search_web", "args": {"topic": "news", "timeframe": "week"}}]},
       "metadata": {"skill": "arg_timeframe", "difficulty": "medium", "what_it_tests": "'tuần này' → timeframe=week."}
     },
     {
@@ -56,7 +56,7 @@
       "phase": "B", "suite": "base",
       "query": "Cho mình các tweet phổ biến (top) nhất về OpenAI",
       "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "social_search", "args": {"search_type": "Top"}}]},
+      "expect": {"tool_calls": [{"name": "search_social_posts", "args": {"search_type": "Top"}}]},
       "metadata": {"skill": "arg_search_type", "difficulty": "medium", "what_it_tests": "'phổ biến/top' → search_type=Top (không phải Latest)."}
     },
     {
@@ -80,7 +80,7 @@
       "phase": "B", "suite": "base",
       "query": "Tóm tắt 5 tweet mới nhất giúp mình",
       "failure_type": "missing_info",
-      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "expect": {"tool_calls": [{"name": "ask_user", "args": {"response_type": "text"}}]},
       "metadata": {"skill": "clarify_missing_handle", "difficulty": "medium", "what_it_tests": "Thiếu handle → ask_user, KHÔNG đoán bừa người nào."}
     },
     {
@@ -88,7 +88,7 @@
       "phase": "B", "suite": "base",
       "query": "Tóm tắt bài viết này hộ mình",
       "failure_type": "missing_info",
-      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "expect": {"tool_calls": [{"name": "ask_user", "args": {"response_type": "text"}}]},
       "metadata": {"skill": "clarify_missing_url", "difficulty": "medium", "what_it_tests": "Nói 'bài này' nhưng không có link → ask_user xin URL."}
     },
     {
@@ -96,7 +96,7 @@
       "phase": "B", "suite": "base",
       "query": "Đăng bản tin này lên Telegram giúp mình",
       "failure_type": "wrong_boundary",
-      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "yes_no"}}]},
+      "expect": {"tool_calls": [{"name": "ask_user", "args": {"response_type": "yes_no"}}]},
       "metadata": {"skill": "confirm_before_write", "difficulty": "medium", "what_it_tests": "Hành động ghi (gửi) → xác nhận trước (ask_user yes_no), không tự gửi."}
     },
     {
@@ -105,8 +105,8 @@
       "query": "Tìm trên web tin AI hôm nay và tìm thêm tweet về AI.",
       "failure_type": "wrong_tool",
       "expect": {"tool_calls": [
-        {"name": "lookup", "args": {"query": "AI", "topic": "news", "timeframe": "day"}},
-        {"name": "social_search", "args": {"query": "AI"}}
+        {"name": "search_web", "args": {"query": "AI", "topic": "news", "timeframe": "day"}},
+        {"name": "search_social_posts", "args": {"query": "AI"}}
       ]},
       "metadata": {"skill": "parallel_tool_calls", "difficulty": "hard", "what_it_tests": "Một request cần hai nguồn → gọi cả web_search và search_tweets; eval không phụ thuộc thứ tự tool call."}
     },
@@ -127,7 +127,7 @@
         {"role": "user", "content": "Giữ đúng 5 tweet, đừng đổi số lượng"}
       ],
       "failure_type": "missing_info",
-      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "elonmusk", "limit": 5}}]},
+      "expect": {"tool_calls": [{"name": "get_user_timeline", "args": {"screenname": "elonmusk", "limit": 5}}]},
       "metadata": {"skill": "multiturn_clarify_fill", "difficulty": "hard", "what_it_tests": "3 turns: carry limit=5 từ lượt 1 + map tên Elon Musk thành handle elonmusk từ lượt 2."}
     },
     {
@@ -139,7 +139,7 @@
         {"role": "user", "content": "Chỉ tìm robotics thôi, vẫn là tin hôm nay"}
       ],
       "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "robotics", "topic": "news", "timeframe": "day"}}]},
+      "expect": {"tool_calls": [{"name": "search_web", "args": {"query": "robotics", "topic": "news", "timeframe": "day"}}]},
       "metadata": {"skill": "multiturn_carryover", "difficulty": "hard", "what_it_tests": "3 turns: chỉ xử lý latest turn, carry timeframe=day và topic=news, query robotics."}
     },
     {
@@ -151,7 +151,7 @@
         {"role": "user", "content": "Lấy 3 tweet mới nhất nhé"}
       ],
       "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "karpathy", "limit": 3}}]},
+      "expect": {"tool_calls": [{"name": "get_user_timeline", "args": {"screenname": "karpathy", "limit": 3}}]},
       "metadata": {"skill": "multiturn_correction", "difficulty": "hard", "what_it_tests": "3 turns: map tên thường, sửa Sam Altman→Andrej Karpathy, dùng handle karpathy và limit=3."}
     },
     {
@@ -163,7 +163,7 @@
         {"role": "user", "content": "Chỉ đọc đúng link đó thôi"}
       ],
       "failure_type": "missing_info",
-      "expect": {"tool_calls": [{"name": "fetch", "args": {"url": "https://anthropic.com/news/claude"}}]},
+      "expect": {"tool_calls": [{"name": "read_url", "args": {"url": "https://anthropic.com/news/claude"}}]},
       "metadata": {"skill": "multiturn_clarify_url", "difficulty": "medium", "what_it_tests": "3 turns: sau khi được cung cấp URL, latest turn xác nhận chỉ đọc link đó → read_url đúng url."}
     },
     {
@@ -175,7 +175,7 @@
         {"role": "user", "content": "Vẫn của Elon Musk nhé"}
       ],
       "failure_type": "wrong_arg_value",
-      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "elonmusk", "limit": 3}}]},
+      "expect": {"tool_calls": [{"name": "get_user_timeline", "args": {"screenname": "elonmusk", "limit": 3}}]},
       "metadata": {"skill": "multiturn_arg_correction", "difficulty": "hard", "what_it_tests": "3 turns: map tên Elon Musk, carry handle elonmusk, sửa limit 10→3."}
     },
     {
@@ -187,7 +187,7 @@
         {"role": "user", "content": "Giữ chủ đề OpenAI"}
       ],
       "failure_type": "wrong_tool",
-      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "OpenAI", "topic": "news"}}]},
+      "expect": {"tool_calls": [{"name": "search_web", "args": {"query": "OpenAI", "topic": "news"}}]},
       "metadata": {"skill": "multiturn_switch_tool", "difficulty": "hard", "what_it_tests": "3 turns: explicitly bỏ Twitter, chuyển sang web_search news, giữ chủ đề OpenAI."}
     }
   ]

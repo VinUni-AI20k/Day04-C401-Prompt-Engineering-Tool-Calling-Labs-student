@@ -1,5 +1,5 @@
 ---
-name: fetch
+name: read_url
 track: core
 kind: live_api
 provider: Firecrawl
@@ -8,6 +8,6 @@ inputs: [url]
 outputs: [items]
 side_effect: false
 ---
-# fetch
+# read_url
 
 Reads the content of a single URL via Firecrawl.

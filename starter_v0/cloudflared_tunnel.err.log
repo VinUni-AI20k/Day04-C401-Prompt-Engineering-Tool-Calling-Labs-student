@@ -1,0 +1,19 @@
+2026-06-02T08:08:04Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+2026-06-02T08:08:04Z INF Requesting new quick Tunnel on trycloudflare.com...
+2026-06-02T08:08:09Z INF +--------------------------------------------------------------------------------------------+
+2026-06-02T08:08:09Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+2026-06-02T08:08:09Z INF |  https://mpg-river-relatively-correlation.trycloudflare.com                                |
+2026-06-02T08:08:09Z INF +--------------------------------------------------------------------------------------------+
+2026-06-02T08:08:09Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp]
+2026-06-02T08:08:09Z INF Version 2024.1.5
+2026-06-02T08:08:09Z INF GOOS: windows, GOVersion: go1.21.5-devel-cf, GoArch: amd64
+2026-06-02T08:08:09Z INF Settings: map[ha-connections:1 protocol:quic url:http://localhost:8501]
+2026-06-02T08:08:09Z INF cloudflared will not automatically update on Windows systems.
+2026-06-02T08:08:09Z INF Generated Connector ID: 658412f1-110c-49a8-b74b-6ff862ac36be
+2026-06-02T08:08:09Z WRN Your version 2024.1.5 is outdated. We recommend upgrading it to 2026.5.2
+2026-06-02T08:08:10Z INF Initial protocol quic
+2026-06-02T08:08:10Z INF ICMP proxy will use 172.16.9.128 as source for IPv4
+2026-06-02T08:08:10Z INF ICMP proxy will use fe80::8aa5:2f37:e79:79dc in zone Wi-Fi as source for IPv6
+2026-06-02T08:08:10Z INF cloudflared does not support loading the system root certificate pool on Windows. Please use --origin-ca-pool <PATH> to specify the path to the certificate pool
+2026-06-02T08:08:10Z INF Starting metrics server on 127.0.0.1:57308/metrics
+2026-06-02T08:08:10Z INF Registered tunnel connection connIndex=0 connection=c522f392-33d5-4d82-8d88-9bbf9c2b099c event=0 ip=198.41.200.233 location=hkg11 protocol=quic
