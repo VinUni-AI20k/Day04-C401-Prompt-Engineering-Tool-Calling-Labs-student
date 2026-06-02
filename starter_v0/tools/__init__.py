@@ -18,6 +18,12 @@ from .social_search.tool import search_tweets
 from .send.tool import send_telegram
 from .lookup.tool import web_search
 
+# New bonus tools
+from .summarize.tool import summarize_text
+from .dedupe.tool import dedupe_items
+from .rank_items.tool import rank_items
+from .extract_entities.tool import extract_entities
+
 
 # NOTE (starter_v0): tool names here are intentionally vague. These keys are the
 # names the model sees AND the names data/eval_base.json + data/eval_research_extension.json
@@ -35,6 +41,11 @@ TOOL_FUNCTIONS = {
     "policy": search_company_policy,
     "papers": arxiv_search,
     "paper_text": get_arxiv_paper_text,
+    # New bonus tools
+    "summarize": summarize_text,
+    "dedupe": dedupe_items,
+    "rank_items": rank_items,
+    "extract_entities": extract_entities,
 }
 
 
@@ -51,4 +62,3 @@ def to_openai_tools(declarations: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "parameters": item.get("parameters", {"type": "object", "properties": {}}),
         },
     } for item in declarations]
-
