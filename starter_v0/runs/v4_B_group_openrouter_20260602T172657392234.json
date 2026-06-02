@@ -1,0 +1,1246 @@
+{
+  "run_id": "v4_B_group_openrouter_20260602T172657392234",
+  "version": "v4",
+  "artifact_version": "v4+p10330cfc9c9d+t14c4024e07f4",
+  "prompt_hash": "10330cfc9c9dc3ccba8cca41f48163c030b7db445f0593fccb22d522f7eee933",
+  "tools_hash": "14c4024e07f4b64e57d9c9e31d321718ea4b7fe3a47d35b80bb535d3c2c3192a",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "/Users/nhduongss/VinUni Project/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0/artifacts/system_prompt.md",
+  "tools": "/Users/nhduongss/VinUni Project/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0/artifacts/tools.yaml",
+  "eval_cases": "data/eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "generated_at": "2026-06-02T17:26:57",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 7,
+    "case_accuracy": 0.7,
+    "tool_routing_accuracy": 0.9,
+    "argument_accuracy": 0.7,
+    "multiturn_accuracy": 0.6,
+    "failure_counts": {
+      "wrong_tool": 2,
+      "wrong_arg_value": 1
+    },
+    "observed_mismatch_counts": {
+      "wrong_arg_value": 2,
+      "extra_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "T01_trends",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_trends",
+        "difficulty": "easy",
+        "what_it_tests": "Gọi đúng tool twitter_trends khi hỏi về xu hướng."
+      },
+      "input": "Cho tôi biết trend đang hot trên X hiện nay",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "twitter_trends",
+          "args": {},
+          "result": {
+            "tool": "twitter_trends",
+            "status": "success",
+            "trends": [
+              {
+                "name": "#セブンスムージッパー",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "コロッケ",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "暴風警報",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#四期生LIVE_DAY1",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#恋するへびべあ診断",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "サグラダ・ファミリア",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "台風の影響",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#咲き続ける四期",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "在宅勤務",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "メインタワー",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "ベストイレブン",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "台風接近",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "テレワーク",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#JIBLUE交換",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "仕事休み",
+                "query": null,
+                "tweet_volume": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "T02_trends_and_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "parallel_trends_lookup",
+        "difficulty": "medium",
+        "what_it_tests": "Gọi song song twitter_trends và lookup."
+      },
+      "input": "Tìm các trend trên X và tra cứu tin tức về AI hôm nay trên web",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "twitter_trends",
+          "args": {},
+          "result": {
+            "tool": "twitter_trends",
+            "status": "success",
+            "trends": [
+              {
+                "name": "#CayetanoResign",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#TREASURE_NEW_WAV",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#NEWWAV_ALBUM_RELEASE",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Happy Pride Month",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#GirlRulesSeriesFinalEP",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "LINGORM MV TOUCH MY HEART",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#สัมผัสรักOSTวาดฝันวันวิวาห์",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "AND2BLE FIRST WIN",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "LINGORM LOVE BD PARTY",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Jinggoy",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "miss behave premiere night",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "HEATHs BTY BANANAKREW NUMBER1",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Kaohsiung",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "grand suite time with azralph",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "KAIA ON FMR MANILA",
+                "query": null,
+                "tweet_volume": null
+              }
+            ]
+          }
+        },
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan - The Washington Post",
+                "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                "source": "washingtonpost.com",
+                "summary": "AI & Tech Brief from WP Intelligence. # AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan. Plus, Anthropic files for a blockbuster initial public offering. Make us preferred on Google. Sign up here to get this newsletter in your inbox. * **Exclusive:** AI safety group Americans for Responsible Innovation rolls out a six-figure ad campaign this week attacking Rep. Lori Trahan (D-Massachusetts), arguing that she’s “taking the side” of AI oligarchs in her bipartisan legislative efforts. * The AI safety community doesn’t want to hand power of AI regulation to President Donald Trump’s administration now that states are passing more rigorous AI laws — and the California and New York attorneys general are challenging big AI companies. * Nvidia is rolling out a new “world model” simulator for robots and a new design platform for robot developers. In doing so, the company is running the same business playbook it did to become so dominant in the chip market.",
+                "score": 0.8749346
+              },
+              {
+                "title": "OpenAI Is Latest Tech Company In The Litigation Hot Seat - Page 2 of 2 - Above the Law",
+                "url": "https://abovethelaw.com/2026/06/openai-is-latest-tech-company-in-the-litigation-hot-seat/2/",
+                "source": "abovethelaw.com",
+                "summary": "# OpenAI Is Latest Tech Company In The Litigation Hot Seat - Page 2 of 2 - Above the Law. Open navigationAbove the LawToggle Search. # OpenAI Is Latest Tech Company In The Litigation Hot Seat. ## More from Above the Law. ## From the Above the Law Network. Image 6: AI Artificial Intelligence (AI) Eve Legal Legal Tech Sponsored Content Technology. Image 7: Legal and operational leaders are gathering May 6–7 in Fort Lauderdale to confront the questions the industry hasn't answered—with a keynote from Amanda Knox setting the tone. This information might be about you, your preferences or your device and is mostly used to make the site work as you expect it to. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer. You can set your browser to block or alert you about these cookies, but some parts of the site will not then work.",
+                "score": 0.86339164
+              },
+              {
+                "title": "Sam Altman Says AI-Adopting Companies Are Hiring - Let's Data Science",
+                "url": "https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62",
+                "source": "letsdatascience.com",
+                "summary": "Business Insider reports that OpenAI CEO Sam Altman told CNBC on June 1, 2026, that \"the companies that I know that have adopted AI the most are also the ones hiring the most.\" Business Insider quotes Altman saying companies that publicly cite AI as a reason for layoffs tend to be adopting AI the least, and that AI can be a \"convenient way\" to explain layoffs. Business Insider reports that OpenAI CEO **Sam Altman** told CNBC on June 1, 2026, \"the companies that I know that have adopted AI the most are also the ones hiring the most.\" Business Insider quotes Altman as saying that companies publicly citing AI as a reason for layoffs \"are the ones adopting AI the least,\" and that AI can be a \"convenient way\" for companies to explain layoffs. Business Insider also lists recent layoffs at several tech companies and cites a March Pew Research Center poll that found elevated public concern about AI.",
+                "score": 0.81286734
+              },
+              {
+                "title": "AI expected to drive £18bn of UK digital ad spend by 2030 - Marketing Week",
+                "url": "https://www.marketingweek.com/iab-uk-ai-ad-spend/",
+                "source": "marketingweek.com",
+                "summary": "# AI expected to drive £18bn of UK digital ad spend by 2030. IAB UK forecasts AI will drive one-third of UK digital ad spend by 2030 as advertisers adapt to changes in search, content and media buying. One-third (32%) of UK digital ad spend, equivalent to around £18bn, will be AI-driven by 2030, according to new forecasts from IAB UK. According to ‘The State of AI in Advertising: Charting the Shift from Automation to Autonomy, ‘ AI is expected to influence ad spend across four key areas– content creation, zero-click search, agentic trading and agentic commerce. To estimate the likely scale of change, IAB UK developed a series of ‘AI overlays’ that estimate the proportion of media spend by channel that is ‘AI-driven’, defined as a media buying and delivery decision made by an AI-powered algorithm. IAB UK forecasts most of the growth will come from the adoption of AI buying tools in search, such as Google’s AI Max and PMax; social, including Meta’s Advantage+; and display advertising through agentic programmatic buying.",
+                "score": 0.80069196
+              },
+              {
+                "title": "DuckDuckGo launches no-AI search extensions after users reject Google's AI-first Search - TweakTown",
+                "url": "https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html",
+                "source": "tweaktown.com",
+                "summary": "# DuckDuckGo launches no-AI search extensions after users reject Google's AI-first Search. ## Traffic to DuckDuckGo's no-AI search page tripled after Google's overhaul, and the company is now making it even easier to ditch AI search entirely. **TL;DR:** Following Google's major AI-driven Search update, many users have shifted to DuckDuckGo, whose no-AI search traffic tripled and app installs surged. However, a significant number of users have pushed back against the **AI-heavy** direction and, in the process, many have ended up at DuckDuckGo. Traffic to DuckDuckGo's No AI search page tripled after Google's announcement and has continued to surge. To keep the momentum going, the company has now launched new browser extensions for Chrome and Firefox that let users set its AI-free search page, noai.duckduckgo.com, as their default search engine. From there, the Duck.ai chatbot can be disabled entirely, and the app can be set to open with a plain search interface by default every time.",
+                "score": 0.7520126
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "T03_save_log",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_save_log",
+        "difficulty": "easy",
+        "what_it_tests": "Gọi đúng tool save_chat_log với filename."
+      },
+      "input": "Lưu log chat này lại cho tôi với tên là 'my_session'",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {
+              "filename": "my_session"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "Lưu log chat này lại cho tôi với tên là 'my_session'"
+                }
+              ],
+              "filename": "my_session.json"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "filename: expected 'my_session', got 'my_session.json'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "save_chat_log",
+          "args": {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Lưu log chat này lại cho tôi với tên là 'my_session'"
+              }
+            ],
+            "filename": "my_session.json"
+          },
+          "result": {
+            "tool": "save_chat_log",
+            "status": "success",
+            "file_path": "logs/my_session.json",
+            "message": "Chat log has been saved to logs/my_session.json"
+          }
+        }
+      ]
+    },
+    {
+      "id": "T04_out_of_scope_joke",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_creative",
+        "difficulty": "easy",
+        "what_it_tests": "Câu hỏi sáng tạo ngoài phạm vi research -> từ chối."
+      },
+      "input": "Kể cho tôi một câu chuyện cười về lập trình viên",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Dưới đây là một câu chuyện cười về lập trình viên:\n\nMột lập trình viên đang đi bộ trên đường thì thấy một cái chai. Anh ta nhặt lên và thấy có một cái đèn thần. Anh ta chà xát cái đèn và một vị thần xuất hiện.\n\nVị thần nói: \"Ta sẽ cho ngươi ba điều ước, nhưng hãy nhớ, mỗi điều ước sẽ có một điều kiện.\"\n\nLập trình viên nghĩ một lúc rồi nói: \"Tôi ước có một chiếc xe hơi mới!\"\n\nVị thần gật đầu và nói: \"Được, nhưng mỗi lần bạn lái xe, bạn sẽ phải viết một đoạn mã để khởi động nó.\"\n\nLập trình viên đồng ý và ngay lập tức có một chiếc xe hơi mới.\n\nĐiều ước thứ hai, anh ta nói: \"Tôi ước có một ngôi nhà lớn!\"\n\nVị thần lại gật đầu: \"Được, nhưng mỗi lần bạn vào nhà, bạn sẽ phải viết một đoạn mã để mở cửa.\"\n\nLập trình viên lại đồng ý.\n\nCuối cùng, anh ta nói: \"Tôi ước có một cô vợ xinh đẹp!\"\n\nVị thần nói: \"Được, nhưng mỗi lần bạn muốn nói chuyện với cô ấy, bạn sẽ phải viết một đoạn mã để bắt đầu cuộc trò chuyện.\"\n\nLập trình viên nghĩ một lúc rồi nói: \"Thôi, tôi không cần vợ nữa!\"\n\nVị thần cười và nói: \"Đó chính là điều ước thông minh nhất mà tôi từng nghe!\" \n\nCâu chuyện này cho thấy rằng đôi khi, những điều mà chúng ta ước muốn có thể đi kèm với những điều kiện không ngờ tới!",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "T05_missing_info_trends",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_trends_no_args",
+        "difficulty": "easy",
+        "what_it_tests": "Tool trends không cần args, nên gọi thẳng."
+      },
+      "input": "Tìm xu hướng trên X",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "twitter_trends",
+          "args": {},
+          "result": {
+            "tool": "twitter_trends",
+            "status": "success",
+            "trends": [
+              {
+                "name": "#TREASURE_NEW_WAV",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#NEWWAV_ALBUM_RELEASE",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#InfoA1zulhas",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Peran Strategis Pembangunan",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Zulkifli Hasan Ungkap",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#JossGawinConcertLIVE",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "JG CONCERT PRESS TOUR",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "RENJUN ECHOES BETWEEN US",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "piala affu19 banksumut",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Pancasila",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#WUTheSeriesEP5",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "PHANTOM FIRE MV OUT",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "AND2BLE FIRST WIN",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "H. Isam",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Happy Pride Month",
+                "query": null,
+                "tweet_volume": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M07_trends_to_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_trends_to_lookup",
+        "difficulty": "hard",
+        "what_it_tests": "Chuyển từ trends sang lookup dựa trên kết quả giả định."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Có gì đang hot trên Twitter?"
+        },
+        {
+          "role": "user",
+          "content": "Giờ tìm thêm tin tức về chủ đề đứng đầu đó trên web đi"
+        },
+        {
+          "role": "user",
+          "content": "Giả sử chủ đề đứng đầu là 'Solana'"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Solana",
+              "topic": "news"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Solana",
+              "search_type": "Latest",
+              "limit": 5
+            }
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Solana",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "extra_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "extra tool call social_search"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Solana",
+            "search_type": "Latest",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "Solana",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "@Haxx3r3n solana:9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+                "summary": "@Haxx3r3n solana:9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+                "url": "https://x.com/adamir007/status/2061756361541599239",
+                "source": "@adamir007",
+                "date": "Tue Jun 02 10:26:36 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@skmakeit solana:9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+                "summary": "@skmakeit solana:9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+                "url": "https://x.com/adamir007/status/2061756330461835702",
+                "source": "@adamir007",
+                "date": "Tue Jun 02 10:26:29 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@upsidedowncabal @solana @toly @rajgokal @Pumpfun @WasabiCheeseSol https://t.co/y1SgkReDbb",
+                "summary": "@upsidedowncabal @solana @toly @rajgokal @Pumpfun @WasabiCheeseSol https://t.co/y1SgkReDbb",
+                "url": "https://x.com/ErikaBosston444/status/2061756315391738119",
+                "source": "@ErikaBosston444",
+                "date": "Tue Jun 02 10:26:25 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@CyberSpartanX solana:9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+                "summary": "@CyberSpartanX solana:9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+                "url": "https://x.com/adamir007/status/2061756308622053761",
+                "source": "@adamir007",
+                "date": "Tue Jun 02 10:26:24 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "2x pump on my alpha call on $TORTURE",
+                "summary": "2x pump on my alpha call on $TORTURE\n\nCA&gt;&gt; 9FYsbDBgr3oXkXy8YTNTbT3MNjoh3rtH27svMhXKpump\n#memecoin #solana #Degen https://t.co/NZzbjilBit",
+                "url": "https://x.com/DegenWar01/status/2061756262367248847",
+                "source": "@DegenWar01",
+                "date": "Tue Jun 02 10:26:13 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Solana",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Solana",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Solana Unchained Outlines Fixed-Supply Utility Architecture and AI Tool Hub Ahead of Late May Public Allocation Launch - markets.businessinsider.com",
+                "url": "https://markets.businessinsider.com/news/stocks/solana-unchained-outlines-fixed-supply-utility-architecture-and-ai-tool-hub-ahead-of-late-may-public-allocation-launch-1036209731",
+                "source": "markets.businessinsider.com",
+                "summary": "# Solana Unchained Outlines Fixed-Supply Utility Architecture and AI Tool Hub Ahead of Late May Public Allocation Launch. SACRAMENTO, Calif, May 30, 2026 (GLOBE NEWSWIRE) -- Solana Unchained today disclosed the comprehensive operational structure of its upcoming decentralized platform, which unifies artificial intelligence features with three specialized infrastructure protocols. Scheduled to open its initial public allocation phase on May 30, 2026, the ecosystem establishes a functional framework where every internal network service requires the utilization of the native Solana Unchained token, ticker symbol $UCHN. The underlying network architecture requires specific token volumes to be spent, held, or committed to functional access vaults to perform automated processing commands. However, due to the inherently speculative nature of the blockchain sector—including cryptocurrency, NFTs, and mining—complete accuracy cannot always be guaranteed.Neither the media platform nor the publisher shall be held responsible for any fraudulent activities, misrepresentations, or financial losses arising from the content of this press release.* ***In the event of any legal claims or charges against this article, we accept no liability or responsibility.*** *Globenewswire does not endorse any content on this page.*.",
+                "score": 0.52115494
+              },
+              {
+                "title": "Photo highlights from the French Open tennis tournament - AP News",
+                "url": "https://apnews.com/photo-gallery/photo-highlights-french-open-tennis-tournament-42ca688c9309446681fe9b0e6abe17ff",
+                "source": "apnews.com",
+                "summary": "Camilo Ugo Carabelli of Argentina casts a shadow as he serves to Andrey Rublev of Russia during their second round men’s singles tennis match at the French Open tennis tournament in Paris, Wednesday, May 27, 2026. Emma Navarro of the U.S. returns to Iva Jovic of the U.S. during their second round women’s singles tennis match at the French Open tennis tournament in Paris, Thursday, May 28, 2026. The tennis ball casts a shadow on the court, left, as Daniil Medvedev of Russia serves to Adam Walton of Australia during their first round men’s singles tennis match at the French Open tennis tournament in Paris, Tuesday, May 26, 2026. Solana Sierra of Argentina returns to Jasmine Paolini of Italy during their second round women’s singles tennis match at the French Open tennis tournament in Paris, Wednesday, May 27, 2026. Jannik Sinner of Italy reacts during the second round men’s singles tennis match against Juan Manuel Cerundolo of Argentina at the French Open tennis tournament in Paris, Thursday, May 28, 2026.",
+                "score": 0.39487803
+              },
+              {
+                "title": "GlassWorm Botnet Disrupted - SecurityWeek",
+                "url": "https://www.securityweek.com/glassworm-botnet-disrupted/",
+                "source": "securityweek.com",
+                "summary": "Security firms took down all four command-and-control (C&C) channels used by the GlassWorm malware. **The GlassWorm botnet that has been targeting the open source software ecosystem for over six months has been disrupted, cybersecurity firm CrowdStrike reports.**. Together with Google and the Shadowserver Foundation, CrowdStrike took down GlassWorm’s four command-and-control (C&C) channels simultaneously, preventing access to the infected machines and the delivery of fresh payloads. The malware has been using the Solana blockchain for C&C infrastructure, with Google Calendar, the BitTorrent peer-to-peer network, and traditional servers hosted on commercial VPS providers serving as backup C&Cs. GlassWorm’s operators have been encoding C&C addresses in the memo fields of blockchain transactions, which cannot be modified or deleted. By taking down all four channels at the same time, the cybersecurity firms severed the operators’ access to the infected machines and their ability to deliver new instructions. Subscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.",
+                "score": 0.3280454
+              },
+              {
+                "title": "Raydium Surpasses $1T in Volume Following Robinhood and Revolut Listings – Company Announcement - Financial Times",
+                "url": "https://markets.ft.com/data/announce/detail?dockey=600-202605290800BIZWIRE_USPRX____20260529_BW915969-1",
+                "source": "markets.ft.com",
+                "summary": "*Two regulated consumer finance platforms serving more than 75 million users across the US, UK, and EU have listed RAY within a month.*. NEW YORK & LONDON--(BUSINESS WIRE)--May 29, 2026-- Raydium, the highest-volume decentralized exchange on Solana and the on-chain liquidity protocol behind more than $1 trillion in cumulative trading volume, has had its RAY token listed on Revolut and Robinhood. Raydium's RAY token listed on Robinhood and Revolut. The listings follow more than a year of sustained growth in Raydium’s on-chain activity, trading volume, and protocol revenue, all of which can be independently verified on-chain by compliance teams. Raydium has facilitated over $1 trillion in on-chain trading volume and generated $370 million in lifetime protocol revenue. *“There is currently no other DeFi token on both Robinhood and Revolut, and Raydium remains the only Solana DEX to have processed more than $1 trillion in cumulative trading volume through its liquidity pools.",
+                "score": 0.30822197
+              },
+              {
+                "title": "CrowdStrike, Google slay 'unkillable' Glassworm botnet targeting devs - iTnews",
+                "url": "https://www.itnews.com.au/news/crowdstrike-google-slay-unkillable-glassworm-botnet-targeting-devs-626172",
+                "source": "itnews.com.au",
+                "summary": "## CrowdStrike, Google slay 'unkillable' Glassworm botnet targeting devs ## Australian cyber teams test data security controls after Court transcriptions offshored ## Microsoft trials automatic device isolation from network in Defender for Endpoint ## Australia Post is co-developing two ML models to prioritise its incident queue ## ACCC greenlights Superloop, Lynham separation plan. Security vendor CrowdStrike said it has taken down the command and control (C2) channels used by the operators of the Glassworm botnet that has targeted developers since last year. Earlier reports suggested the self-replicating malware's infrastructure was unkillable due to the use of the immutable and distributed Solana public blockchain for C2 dead-drops. CrowdStrike wrote in its analysis that the Glassworm operators went further in their efforts to create resilient infrastructure, using the BitTorrent peer-to-peer (P2P) network's distributed hash table (DHT) for configuration data, stored against hard-coded public keys. In addition, Glassworm is set up to use Google Calendar event titles as dead-drops for C2 paths, encoded with Base64, and the malware also used commercial virtual private service providers to deliver its final payload.",
+                "score": 0.30554238
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M08_confirm_send_then_save",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_send_then_save",
+        "difficulty": "hard",
+        "what_it_tests": "Sau khi xác nhận gửi (yes_no), yêu cầu tiếp theo là lưu log."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Gửi bản tin AI lên Telegram"
+        },
+        {
+          "role": "user",
+          "content": "Đồng ý, gửi đi"
+        },
+        {
+          "role": "user",
+          "content": "Sau đó lưu log chat này lại cho tôi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "Gửi bản tin AI lên Telegram"
+                },
+                {
+                  "role": "user",
+                  "content": "Đồng ý, gửi đi"
+                }
+              ],
+              "filename": "chat_log.json"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "save_chat_log",
+          "args": {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Gửi bản tin AI lên Telegram"
+              },
+              {
+                "role": "user",
+                "content": "Đồng ý, gửi đi"
+              }
+            ],
+            "filename": "chat_log.json"
+          },
+          "result": {
+            "tool": "save_chat_log",
+            "status": "success",
+            "file_path": "logs/chat_log.json",
+            "message": "Chat log has been saved to logs/chat_log.json"
+          }
+        }
+      ]
+    },
+    {
+      "id": "M09_clarify_topic_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_lookup_args",
+        "difficulty": "medium",
+        "what_it_tests": "Xây dựng args qua nhiều lượt."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin tức cho tôi"
+        },
+        {
+          "role": "user",
+          "content": "Về xe điện (EV)"
+        },
+        {
+          "role": "user",
+          "content": "Lấy tin trong tuần này thôi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện (EV)",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "query: expected 'xe điện (EV)', got 'xe điện'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "xe điện",
+            "topic": "news",
+            "timeframe": "week"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "xe điện",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Lithium, rare earths and EV patents: Elektros courts new investors - Stock Titan",
+                "url": "https://www.stocktitan.net/news/ELEK/a-distinguished-opportunity-emerges-global-investors-increasingly-dhvipmnou9x5.html",
+                "source": "stocktitan.net",
+                "summary": "4. A Distinguished Opportunity Emerges: Global Investors Increasingly Discover ELEKTROS Inc.'s Strategic Position in Lithium Mining, Rare Earth Minerals and Advanced EV Patent Technology. Management points to growing awareness of the company’s long-term vision in hard rock lithium mining and advanced EV patent technology, and reiterates its commitment to long-term shareholder value and strategic opportunities in lithium and EV infrastructure. Management further stated that increasing investor attention toward lithium supply chains, EV infrastructure, and next-generation charging technologies continues strengthening as more investors globally continue discovering the long-term vision and growth potential of ELEKTROS Inc. Reuters recently reported that expanding high-speed charging infrastructure remains one of the most important components necessary for accelerating electric vehicle adoption worldwide, as governments and major corporations continue investing billions into EV charging expansion initiatives. According to ELEKTROS, more investors are discovering its long-term vision around lithium mining and advanced EV patent technology as demand for EV charging and energy storage continues expanding worldwide.",
+                "score": 0.15102781
+              },
+              {
+                "title": "ICF8｜XCMG Excavator Showcase: A Shared Path Toward a Greener Future - The Manila Times",
+                "url": "https://www.manilatimes.net/2026/05/27/tmt-newswire/pr-newswire/icf8xcmg-excavator-showcase-a-shared-path-toward-a-greener-future/2352251",
+                "source": "manilatimes.net",
+                "summary": "ICF8｜XCMG Excavator Showcase: A Shared Path Toward a Greener Future. XCMG Excavator Showcase: A Shared Path Toward a Greener Future. The event marked a new chapter for XCMG in driving the conversation on sustainable equipment, customer value, and the future of construction machinery. Interactive displays, including a glasses-free 3D screen and a simulated cab, gave visitors a first-hand look at how XCMG is integrating intelligent manufacturing, digital systems, and lower-carbon production into its operations, supported by a global service network and localized customer support. By combining intelligent manufacturing with data-driven precision, XCMG aims to make high-quality excavator production more efficient, consistent, and responsive to customer needs worldwide. The range includes pure electric, hybrid, and plug-in electric machines, reflecting the company's efforts to reduce carbon emissions and support the industry's transition toward lower-emission operations through continued product development. Moving forward, XCMG Excavator will continue to work closely with global partners to support the development of greener, more intelligent equipment solutions for the construction industry.",
+                "score": 0.013222823
+              },
+              {
+                "title": "XPENG GX Popularity Jacks Up XPENG Orders To ~50,000 Vehicles In May? - CleanTechnica",
+                "url": "https://cleantechnica.com/2026/05/26/xpeng-gx-popularity-jacks-up-xpeng-orders-to-50000-vehicles-in-may/",
+                "source": "cleantechnica.com",
+                "summary": "# XPENG GX Popularity Jacks Up XPENG Orders To ~50,000 Vehicles In May? Deutsche Bank analysts expect that orders for the XPENG GX will give XPENG enough of a boost that it will have around 50,000 sales in May. That’s a big boost for a company that was just above 31,000 in April! For a limited time, you can order a GX for 269,800 yuan ($39,707), a ridiculous price for a vehicle of its size and capability. Following the GX, XPENG has the ultra-large G9L SUV coming out in the fall to boost sales again, as well as the smaller Mona L05 and Mona L03 sometime in the second half of the year and the Mona M05 in 2027. *Sign up for CleanTechnica's Weekly Substack for Zach and Scott's in-depth analyses and high level summaries, sign up for our daily newsletter, and follow us on Google News!*.",
+                "score": 0.0017073675
+              },
+              {
+                "title": "In a city with an iconic skyline, the Obama presidential museum aims to reshape Chicago architecture - The Sun Chronicle",
+                "url": "https://www.thesunchronicle.com/news/nation_world/in-a-city-with-an-iconic-skyline-the-obama-presidential-museum-aims-to-reshape-chicago/article_da52fdda-1b36-57eb-92aa-9b7913aafc20.html",
+                "source": "thesunchronicle.com",
+                "summary": "The Obama Presidential Center is seen in Chicago, Thursday, May 28, 2026. Visitors photograph statues of former President Barack Obama and former First Lady Michelle Obama at the Obama Presidential Center in Chicago, Thursday, May 28, 2026. A visitor poses with statues of former President Barack Obama and former First Lady Michelle Obama at the Obama Presidential Center in Chicago, Thursday, May 28, 2026. # In a city with an iconic skyline, the Obama presidential museum aims to reshape Chicago architecture. ## Crews are putting the finishing touches on the Obama Presidential Center ahead of the official public opening in Chicago on Juneteenth. Crews are putting the finishing touches on the Obama Presidential Center ahead of the official public opening on Juneteenth, more than a decade after the site was chosen. E92E H:== D92A6 r9:428@’D :4@?:4 D6]k^Am. ED 92G6 4@>A2C65 :E E@ 2 8C2:? 5 2 >2FD@=6F>]k^Am. kAm“xE 5@6D?’E 7:E :? 5 2 7@C>6C ~32>2 25G:D@C] “%96 56D:8?",
+                "score": 0.001044386
+              },
+              {
+                "title": "Jonas Vingegaard wins Giro d’Italia to become the eighth male rider to win all three Grand Tours - The Sun Chronicle",
+                "url": "https://www.thesunchronicle.com/sports/jonas-vingegaard-wins-giro-d-italia-to-become-the-eighth-male-rider-to-win-all/article_7b106894-5912-5fe3-ac4a-f712054b25f8.html",
+                "source": "thesunchronicle.com",
+                "summary": "Overall leader Denmark's Jonas Vingegaard pedals during the last stage of the Giro d'Italia in Rome Sunday May 31, 2026. # Jonas Vingegaard wins Giro d’Italia to become the eighth male rider to win all three Grand Tours. ## Danish cyclist Jonas Vingegaard has won the Giro d’Italia. ROME (AP) — Danish cyclist Jonas Vingegaard won the Giro d’Italia on Sunday, becoming the eighth male rider to win all three Grand Tours. 86822C5\\`fhea6bgg`h`bgcb6hah3afhf7d\\_gh`bQm$A2?:D9 'F6=E2 E:E=6k^2m] xE H2D 9:D 7:CDE v:C@]k^Am. 8 C6A=:42D @7 9:D >28=:2 C@D2 — E96 =6256CVD A:?< ;6CD6J]k^Am. 2E65 9:D 7:CDE v:C@ — =:G:? E@ 4@>A=6E6 E96 v:C@\\%@FC 5@F3=6]k^Am. kAm%96 =2C86=J AC@46DD:@? 8 E@ E96 xE2=:2? 8 E96 C:56 @FE E@ E96 D62]k^Am. kAm|:=2?[ H9@ 925 D66? Submitting this form below will send a message to your email with a link to change your password. An email message containing instructions on how to reset your password has been sent to the email address listed on your account.",
+                "score": 0.0010083435
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M10_switch_person_timeline",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_person",
+        "difficulty": "medium",
+        "what_it_tests": "Đổi đối tượng timeline (Elon -> Bill Gates) và thêm limit."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tweet của Elon Musk"
+        },
+        {
+          "role": "user",
+          "content": "Chuyển sang xem của Bill Gates đi"
+        },
+        {
+          "role": "user",
+          "content": "Lấy 10 cái mới nhất"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "BillGates",
+              "limit": 10
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "BillGates",
+              "limit": 10
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "BillGates",
+            "limit": 10
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "BillGates",
+            "items": [
+              {
+                "title": "Thank you for the warm welcome, @ncbn. It’s exciting to witness Andhra Pradesh’s growth being accelerated through AI, te",
+                "summary": "Thank you for the warm welcome, @ncbn. It’s exciting to witness Andhra Pradesh’s growth being accelerated through AI, technology, and innovations across health, agriculture &amp; education.",
+                "url": "https://x.com/BillGates/status/2023509972714496206",
+                "source": "@BillGates",
+                "date": "Mon Feb 16 21:29:07 +0000 2026",
+                "metrics": {
+                  "favorites": 12863,
+                  "retweets": 2379,
+                  "views": "1310430"
+                }
+              },
+              {
+                "title": "I’m deeply sad to learn of the passing of Dr. Bill Foege. Bill was a towering figure in global health—a man who saved th",
+                "summary": "I’m deeply sad to learn of the passing of Dr. Bill Foege. Bill was a towering figure in global health—a man who saved the lives of literally hundreds of millions of people. He was also a friend and mentor who gave me a deep grounding in the history of global health and inspired me with his conviction that the world could do more to alleviate suffering.​\n\nBill and I often talked together about the future of global health. The legacy of his career is that many of the remarkable developments to come will have his imprint all over them. ​https://t.co/tDn7YvtkdC",
+                "url": "https://x.com/BillGates/status/2016281284478435702",
+                "source": "@BillGates",
+                "date": "Tue Jan 27 22:44:53 +0000 2026",
+                "metrics": {
+                  "favorites": 3900,
+                  "retweets": 851,
+                  "views": "1162115"
+                }
+              },
+              {
+                "title": ".@fervoenergy is creating energy that’s clean, affordable, reliable, and American-made. https://t.co/9eEKdZszvP",
+                "summary": ".@fervoenergy is creating energy that’s clean, affordable, reliable, and American-made. https://t.co/9eEKdZszvP",
+                "url": "https://x.com/BillGates/status/1964422434767224969",
+                "source": "@BillGates",
+                "date": "Sat Sep 06 20:16:20 +0000 2025",
+                "metrics": {
+                  "favorites": 5962,
+                  "retweets": 1768,
+                  "views": "1810280"
+                }
+              },
+              {
+                "title": "Learning how many kids were dying from diarrhea back in 1997—when I never worried about it with my own kids—led me to ge",
+                "summary": "Learning how many kids were dying from diarrhea back in 1997—when I never worried about it with my own kids—led me to get involved in global health. https://t.co/NYitqiRY38",
+                "url": "https://x.com/BillGates/status/1948167071684231344",
+                "source": "@BillGates",
+                "date": "Wed Jul 23 23:43:19 +0000 2025",
+                "metrics": {
+                  "favorites": 5189,
+                  "retweets": 1861,
+                  "views": "2766753"
+                }
+              },
+              {
+                "title": "Thanks to vaccines, fewer children are dying from preventable diseases around the world. Cutting funding for them would ",
+                "summary": "Thanks to vaccines, fewer children are dying from preventable diseases around the world. Cutting funding for them would reverse that progress and put millions of children in danger. https://t.co/UF7IaASepq",
+                "url": "https://x.com/BillGates/status/1943794047988249030",
+                "source": "@BillGates",
+                "date": "Fri Jul 11 22:06:29 +0000 2025",
+                "metrics": {
+                  "favorites": 5331,
+                  "retweets": 1678,
+                  "views": "1306042"
+                }
+              },
+              {
+                "title": "The devastating effects of these cuts are entirely preventable—and it’s not too late to reverse them.",
+                "summary": "The devastating effects of these cuts are entirely preventable—and it’s not too late to reverse them.",
+                "url": "https://x.com/BillGates/status/1943750242148790622",
+                "source": "@BillGates",
+                "date": "Fri Jul 11 19:12:25 +0000 2025",
+                "metrics": {
+                  "favorites": 5271,
+                  "retweets": 1549,
+                  "views": "2082765"
+                }
+              },
+              {
+                "title": "U.S. global health and development aid is estimated to have saved 92 million lives over the past 20 years. We can't affo",
+                "summary": "U.S. global health and development aid is estimated to have saved 92 million lives over the past 20 years. We can't afford to let that kind of progress unravel: https://t.co/eqLEVzB9gA https://t.co/4JJJfyO2E3",
+                "url": "https://x.com/BillGates/status/1940173410304475500",
+                "source": "@BillGates",
+                "date": "Tue Jul 01 22:19:22 +0000 2025",
+                "metrics": {
+                  "favorites": 2337,
+                  "retweets": 665,
+                  "views": "641367"
+                }
+              },
+              {
+                "title": "There’s never been a point in the past 25 years when more lives hung in the balance. https://t.co/q8I2dBdtYB",
+                "summary": "There’s never been a point in the past 25 years when more lives hung in the balance. https://t.co/q8I2dBdtYB",
+                "url": "https://x.com/BillGates/status/1938400507258909125",
+                "source": "@BillGates",
+                "date": "Fri Jun 27 00:54:29 +0000 2025",
+                "metrics": {
+                  "favorites": 1400,
+                  "retweets": 465,
+                  "views": "435661"
+                }
+              },
+              {
+                "title": "It's not too late to change course.",
+                "summary": "It's not too late to change course.",
+                "url": "https://x.com/BillGates/status/1938368126372253782",
+                "source": "@BillGates",
+                "date": "Thu Jun 26 22:45:49 +0000 2025",
+                "metrics": {
+                  "favorites": 1408,
+                  "retweets": 483,
+                  "views": "586713"
+                }
+              },
+              {
+                "title": "In the last 25 years, @gavi has helped over a billion kids live better, healthier lives. Pulling the organization’s fund",
+                "summary": "In the last 25 years, @gavi has helped over a billion kids live better, healthier lives. Pulling the organization’s funding would have devastating consequences: more sick kids who fall behind in school, more overcrowded hospital wards, and eventually more grieving parents. I’m urging Congress to rethink this decision, fund Gavi, and help save millions more lives.",
+                "url": "https://x.com/BillGates/status/1938012546365329906",
+                "source": "@BillGates",
+                "date": "Wed Jun 25 23:12:52 +0000 2025",
+                "metrics": {
+                  "favorites": 1768,
+                  "retweets": 510,
+                  "views": "655259"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M11_save_log_with_context",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_save_log",
+        "difficulty": "medium",
+        "what_it_tests": "Lưu log với tên file cụ thể sau một lượt trao đổi."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin AI"
+        },
+        {
+          "role": "assistant",
+          "content": "Đã tìm thấy..."
+        },
+        {
+          "role": "user",
+          "content": "Lưu cuộc hội thoại này vào file 'ai_research.json'"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {
+              "filename": "ai_research.json"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "Tìm tin AI"
+                },
+                {
+                  "role": "assistant",
+                  "content": "Đã tìm thấy..."
+                }
+              ],
+              "filename": "ai_research.json"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "save_chat_log",
+          "args": {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Tìm tin AI"
+              },
+              {
+                "role": "assistant",
+                "content": "Đã tìm thấy..."
+              }
+            ],
+            "filename": "ai_research.json"
+          },
+          "result": {
+            "tool": "save_chat_log",
+            "status": "success",
+            "file_path": "logs/ai_research.json",
+            "message": "Chat log has been saved to logs/ai_research.json"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1244 @@
+{
+  "run_id": "v4_B_group_openrouter_20260602T172807558817",
+  "version": "v4",
+  "artifact_version": "v4+p10330cfc9c9d+t14c4024e07f4",
+  "prompt_hash": "10330cfc9c9dc3ccba8cca41f48163c030b7db445f0593fccb22d522f7eee933",
+  "tools_hash": "14c4024e07f4b64e57d9c9e31d321718ea4b7fe3a47d35b80bb535d3c2c3192a",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "/Users/nhduongss/VinUni Project/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0/artifacts/system_prompt.md",
+  "tools": "/Users/nhduongss/VinUni Project/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0/artifacts/tools.yaml",
+  "eval_cases": "data/eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "generated_at": "2026-06-02T17:28:07",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 9,
+    "case_accuracy": 0.9,
+    "tool_routing_accuracy": 0.9,
+    "argument_accuracy": 0.9,
+    "multiturn_accuracy": 0.8,
+    "failure_counts": {
+      "wrong_tool": 1
+    },
+    "observed_mismatch_counts": {
+      "extra_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "T01_trends",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_trends",
+        "difficulty": "easy",
+        "what_it_tests": "Gọi đúng tool twitter_trends khi hỏi về xu hướng."
+      },
+      "input": "Cho tôi biết trend đang hot trên X hiện nay",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "twitter_trends",
+          "args": {},
+          "result": {
+            "tool": "twitter_trends",
+            "status": "success",
+            "trends": [
+              {
+                "name": "#2giugno",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#festadellarepubblica",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#terremoto",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#ICesaroni",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#Arnaldi",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Buon 2",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Palestra",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Dumfries",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Tiafoe",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "De Gregori",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Happy Pride Month",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Il 2",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Libano",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Costituzione",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Percassi",
+                "query": null,
+                "tweet_volume": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "T02_trends_and_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "parallel_trends_lookup",
+        "difficulty": "medium",
+        "what_it_tests": "Gọi song song twitter_trends và lookup."
+      },
+      "input": "Tìm các trend trên X và tra cứu tin tức về AI hôm nay trên web",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "twitter_trends",
+          "args": {},
+          "result": {
+            "tool": "twitter_trends",
+            "status": "success",
+            "trends": [
+              {
+                "name": "#GBSherKa",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#SkarduMainTeerChaleyGa",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#50_KM_notEV",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#خان_کے_نام_سے_کانپتی_ٹانگیں",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#CDFLegacyOfPeace",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Gilgit",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "BEVs",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "With 50",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Lebanon",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "BEV-first",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Release Saad Rizvi",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Beirut",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Tangir",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Kaja Kallas",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "GB-18",
+                "query": null,
+                "tweet_volume": null
+              }
+            ]
+          }
+        },
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan - The Washington Post",
+                "url": "https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/06/01/ai-tech-brief-exclusive-ai-ad-campaigns-slam-trahan/",
+                "source": "washingtonpost.com",
+                "summary": "AI & Tech Brief from WP Intelligence. # AI & Tech Brief: Exclusive | AI ad campaigns slam Trahan. Plus, Anthropic files for a blockbuster initial public offering. Make us preferred on Google. Sign up here to get this newsletter in your inbox. * **Exclusive:** AI safety group Americans for Responsible Innovation rolls out a six-figure ad campaign this week attacking Rep. Lori Trahan (D-Massachusetts), arguing that she’s “taking the side” of AI oligarchs in her bipartisan legislative efforts. * The AI safety community doesn’t want to hand power of AI regulation to President Donald Trump’s administration now that states are passing more rigorous AI laws — and the California and New York attorneys general are challenging big AI companies. * Nvidia is rolling out a new “world model” simulator for robots and a new design platform for robot developers. In doing so, the company is running the same business playbook it did to become so dominant in the chip market.",
+                "score": 0.8749346
+              },
+              {
+                "title": "OpenAI Is Latest Tech Company In The Litigation Hot Seat - Page 2 of 2 - Above the Law",
+                "url": "https://abovethelaw.com/2026/06/openai-is-latest-tech-company-in-the-litigation-hot-seat/2/",
+                "source": "abovethelaw.com",
+                "summary": "# OpenAI Is Latest Tech Company In The Litigation Hot Seat - Page 2 of 2 - Above the Law. Open navigationAbove the LawToggle Search. # OpenAI Is Latest Tech Company In The Litigation Hot Seat. ## More from Above the Law. ## From the Above the Law Network. Image 6: AI Artificial Intelligence (AI) Eve Legal Legal Tech Sponsored Content Technology. Image 7: Legal and operational leaders are gathering May 6–7 in Fort Lauderdale to confront the questions the industry hasn't answered—with a keynote from Amanda Knox setting the tone. This information might be about you, your preferences or your device and is mostly used to make the site work as you expect it to. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer. You can set your browser to block or alert you about these cookies, but some parts of the site will not then work.",
+                "score": 0.86339164
+              },
+              {
+                "title": "Sam Altman Says AI-Adopting Companies Are Hiring - Let's Data Science",
+                "url": "https://letsdatascience.com/news/sam-altman-says-ai-adopting-companies-are-hiring-132adf62",
+                "source": "letsdatascience.com",
+                "summary": "Business Insider reports that OpenAI CEO Sam Altman told CNBC on June 1, 2026, that \"the companies that I know that have adopted AI the most are also the ones hiring the most.\" Business Insider quotes Altman saying companies that publicly cite AI as a reason for layoffs tend to be adopting AI the least, and that AI can be a \"convenient way\" to explain layoffs. Business Insider reports that OpenAI CEO **Sam Altman** told CNBC on June 1, 2026, \"the companies that I know that have adopted AI the most are also the ones hiring the most.\" Business Insider quotes Altman as saying that companies publicly citing AI as a reason for layoffs \"are the ones adopting AI the least,\" and that AI can be a \"convenient way\" for companies to explain layoffs. Business Insider also lists recent layoffs at several tech companies and cites a March Pew Research Center poll that found elevated public concern about AI.",
+                "score": 0.81286734
+              },
+              {
+                "title": "AI expected to drive £18bn of UK digital ad spend by 2030 - Marketing Week",
+                "url": "https://www.marketingweek.com/iab-uk-ai-ad-spend/",
+                "source": "marketingweek.com",
+                "summary": "# AI expected to drive £18bn of UK digital ad spend by 2030. IAB UK forecasts AI will drive one-third of UK digital ad spend by 2030 as advertisers adapt to changes in search, content and media buying. One-third (32%) of UK digital ad spend, equivalent to around £18bn, will be AI-driven by 2030, according to new forecasts from IAB UK. According to ‘The State of AI in Advertising: Charting the Shift from Automation to Autonomy, ‘ AI is expected to influence ad spend across four key areas– content creation, zero-click search, agentic trading and agentic commerce. To estimate the likely scale of change, IAB UK developed a series of ‘AI overlays’ that estimate the proportion of media spend by channel that is ‘AI-driven’, defined as a media buying and delivery decision made by an AI-powered algorithm. IAB UK forecasts most of the growth will come from the adoption of AI buying tools in search, such as Google’s AI Max and PMax; social, including Meta’s Advantage+; and display advertising through agentic programmatic buying.",
+                "score": 0.80069196
+              },
+              {
+                "title": "DuckDuckGo launches no-AI search extensions after users reject Google's AI-first Search - TweakTown",
+                "url": "https://www.tweaktown.com/news/111963/duckduckgo-launches-no-ai-search-extensions-after-users-reject-googles-ai-first-search/index.html",
+                "source": "tweaktown.com",
+                "summary": "# DuckDuckGo launches no-AI search extensions after users reject Google's AI-first Search. ## Traffic to DuckDuckGo's no-AI search page tripled after Google's overhaul, and the company is now making it even easier to ditch AI search entirely. **TL;DR:** Following Google's major AI-driven Search update, many users have shifted to DuckDuckGo, whose no-AI search traffic tripled and app installs surged. However, a significant number of users have pushed back against the **AI-heavy** direction and, in the process, many have ended up at DuckDuckGo. Traffic to DuckDuckGo's No AI search page tripled after Google's announcement and has continued to surge. To keep the momentum going, the company has now launched new browser extensions for Chrome and Firefox that let users set its AI-free search page, noai.duckduckgo.com, as their default search engine. From there, the Duck.ai chatbot can be disabled entirely, and the app can be set to open with a plain search interface by default every time.",
+                "score": 0.7520126
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "T03_save_log",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_save_log",
+        "difficulty": "easy",
+        "what_it_tests": "Gọi đúng tool save_chat_log với filename (kèm .json tự động nếu model thông minh)."
+      },
+      "input": "Lưu log chat này lại cho tôi với tên là 'my_session'",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {
+              "filename": "my_session.json"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "Lưu log chat này lại cho tôi với tên là 'my_session'"
+                }
+              ],
+              "filename": "my_session.json"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "save_chat_log",
+          "args": {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Lưu log chat này lại cho tôi với tên là 'my_session'"
+              }
+            ],
+            "filename": "my_session.json"
+          },
+          "result": {
+            "tool": "save_chat_log",
+            "status": "success",
+            "file_path": "logs/my_session.json",
+            "message": "Chat log has been saved to logs/my_session.json"
+          }
+        }
+      ]
+    },
+    {
+      "id": "T04_out_of_scope_joke",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_creative",
+        "difficulty": "easy",
+        "what_it_tests": "Câu hỏi sáng tạo ngoài phạm vi research -> từ chối."
+      },
+      "input": "Kể cho tôi một câu chuyện cười về lập trình viên",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Dưới đây là một câu chuyện cười về lập trình viên:\n\nMột lập trình viên đang đi bộ trên đường thì thấy một cái đèn thần. Anh ta chà xát cái đèn và một vị thần xuất hiện.\n\nVị thần nói: \"Ta sẽ cho ngươi một điều ước!\"\n\nLập trình viên suy nghĩ một lúc rồi nói: \"Tôi ước có một chiếc máy tính không bao giờ bị lỗi!\"\n\nVị thần gật đầu và biến mất. Lập trình viên vui vẻ quay về nhà, nhưng khi mở máy tính ra, anh ta thấy một thông báo: \"Máy tính đã bị lỗi. Vui lòng khởi động lại.\"\n\nLập trình viên thở dài và nói: \"Tôi đã quên rằng không có lỗi cũng là một lỗi!\" \n\nHy vọng bạn thích câu chuyện này!",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "T05_missing_info_trends",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_trends_no_args",
+        "difficulty": "easy",
+        "what_it_tests": "Tool trends không cần args, nên gọi thẳng."
+      },
+      "input": "Tìm xu hướng trên X",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "twitter_trends",
+          "args": {},
+          "result": {
+            "tool": "twitter_trends",
+            "status": "success",
+            "trends": [
+              {
+                "name": "#BitgetStocksUpgrade",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#SolidarityWithUyghurs",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#ExposeCCP",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#GirlRulesSeriesFinalEP",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Happy Pride Month",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "IPTV",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#TREASURE_NEW_WAV",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "NEW WAV IF I RELEASE",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "JG CONCERT PRESS TOUR",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Bibi",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "$SVPN",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "EWB FIFTH EP",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "The DECADE",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "FINALE in SEOUL",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "JASPER DIRECT OUR MUSICONSG",
+                "query": null,
+                "tweet_volume": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M07_trends_to_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_trends_to_lookup",
+        "difficulty": "hard",
+        "what_it_tests": "Chuyển từ trends sang lookup dựa trên kết quả giả định."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Có gì đang hot trên Twitter?"
+        },
+        {
+          "role": "user",
+          "content": "Giờ tìm thêm tin tức về chủ đề đó trên web đi, đừng tìm trên Twitter nữa"
+        },
+        {
+          "role": "user",
+          "content": "Giả sử chủ đề đó là 'Solana'"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Solana",
+              "topic": "news"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Solana",
+              "topic": "news",
+              "timeframe": "day",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Solana",
+              "search_type": "Latest",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "extra_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "extra tool call social_search"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Solana",
+            "topic": "news",
+            "timeframe": "day",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Solana",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "SOLAI Announces Agreement to Acquire 51% Stake in NEURALAND - TradingView",
+                "url": "https://www.tradingview.com/news/prnewswire:5ba19d8e0fd76:0-solai-announces-agreement-to-acquire-51-stake-in-neuraland/",
+                "source": "tradingview.com",
+                "summary": "AKRON, Ohio, June 1, 2026 /PRNewswire/ -- SOLAI Limited (SLAI) (previously traded under \"BTCM\") (\"SOLAI\" or the \"Company\"), a technology-driven personal AI and digital infrastructure provider, today announced that it has entered into a definitive Share Exchange Agreement (the \"**Agreement**\") with AIPICO Global Limited, a British Virgin Islands company (the \"Selling Shareholder\"), pursuant to which the Company will acquire a 51% equity stake in NEURALAND PTE. SOLAI intends to benefit from NEURALAND's expertise in AI node hardware design and software-defined systems, complementing the Company's existing high-performance computing infrastructure and accelerating its roadmap toward building its personal AI ecosystem. Under the terms of the Agreement, the Selling Shareholder will transfer 51% of NEURALAND's issued and outstanding shares to the Company in exchange for 1,162,025,300 newly issued Class A ordinary shares of the Company (the \"Company Exchange Shares\") valued US$0.0079 per share, corresponding to US$0.79 per American Depositary Share (\"ADS\") (based on the current ADS ratio of one hundred (100) Class A ordinary shares per ADS), representing a total consideration of approximately US$9.18 million.",
+                "score": 0.05873887
+              },
+              {
+                "title": "Apex Lubrication LLC Chooses Solace to Bring Real-Time AI Intelligence to Industrial Conveyor Operations - The Manila Times",
+                "url": "https://www.manilatimes.net/2026/06/01/tmt-newswire/pr-newswire/apex-lubrication-llc-chooses-solace-to-bring-real-time-ai-intelligence-to-industrial-conveyor-operations/2355936",
+                "source": "manilatimes.net",
+                "summary": "Apex Lubrication LLC Chooses Solace to Bring Real-Time AI Intelligence to Industrial Conveyor Operations. OTTAWA, ON, June 1, 2026 /PRNewswire/ -- Solace, the real-time data platform for the agent-native enterprise, today announced that Apex Lubrication LLC, a leader in conveyor lubrication, chain monitoring and plant reliability, together with its long-standing partner Mighty Lube, will deploy Solace Agent Mesh across its OmniView machine learning platform to help customers monitor conveyor health, reduce unplanned downtime and move critical operational data in real time. For more than 40 years, some of the world's leading automotive manufacturers and large-scale production facilities have turned to Mighty Lube for proven conveyor maintenance, lubrication, and monitoring solutions. \"We're proud to see Apex and Mighty Lube invest their trust in Solace Agent Mesh to power real-time conveyor intelligence for some of the world's most demanding production environments.\". Solace is a real-time data platform for the agent-native enterprise.",
+                "score": 0.040529426
+              },
+              {
+                "title": "SEALSQ Acquires Miraex SA, Cementing Its Quantum Sovereign Vertical Stack and Quantum Orbital Space Cloud (QOSC) - markets.businessinsider.com",
+                "url": "https://markets.businessinsider.com/news/stocks/sealsq-acquires-miraex-sa-cementing-its-quantum-sovereign-vertical-stack-and-quantum-orbital-space-cloud-qosc-1036216224",
+                "source": "markets.businessinsider.com",
+                "summary": "# SEALSQ Acquires Miraex SA, Cementing Its Quantum Sovereign Vertical Stack and Quantum Orbital Space Cloud (QOSC). SEALSQ Corp (NASDAQ: LAES) (“SEALSQ” or the “Company”), a subsidiary of WISeKey International Holding Ltd (NASDAQ: WKEY; SIX: WIHN) and a global leader in post-quantum semiconductor and cybersecurity solutions, today announced the acquisition of 100% of Miraex SA (“Miraex”), a developer of photonics-based quantum interconnect solutions headquartered at the EPFL Innovation Park in Ecublens, Switzerland. The investment has been made using the Company’s Quantum Fund, SEALQUANTUM.com, an internal strategic investment initiative of SEALSQ using a dedicated allocation of our cash with the goal of accelerating the development of a fully integrated Quantum Vertical Sovereign Stack. This milestone marks a defining step in the evolution of SEALSQ's Quantum Sovereign Vertical Stack, the Company's Root-to-Qubit architecture encompassing the full spectrum of quantum technology from quantum-resistant semiconductors to orbital space infrastructure. Miraex's acquisition closes the quantum interconnect layer of SEALSQ's Quantum Sovereign Vertical Stack, the critical bridge between quantum computing hardware and quantum communication networks.",
+                "score": 0.034963243
+              },
+              {
+                "title": "enCore Energy Extends Uranium Mineralization 3,700 Feet at Alta Mesa East – Company Announcement - Financial Times",
+                "url": "https://markets.ft.com/data/announce/detail?dockey=600-202606010705PR_NEWS_USPRX____VA72039-1",
+                "source": "markets.ft.com",
+                "summary": "### enCore Energy Extends Uranium Mineralization 3,700 Feet at Alta Mesa East. (NASDAQ: EU) (TSXV: EU) (the \"Company\" or \"enCore\"), America's Clean Energy CompanyTM, today shared positive results from initial exploration drilling tests conducted on its Alta Mesa East (\"AME\") property, which is immediately adjacent to the Alta Mesa wellfields and extraction operations. Exploratory drilling tests are designed to outline mineralization, which will guide the Company's efforts in permitting and expanding In-Situ Recovery (\"ISR\") operations into the AME from the existing Alta Mesa operations. These initial results have confirmed uranium mineralization extending more than 3,700 feet to the east from the nearest wellfield. Sheriff, Executive Chairman of enCore, said, \"Our initial drill results from Alta Mesa East have reconfirmed our expectations of encouraging uranium grades across all major mineralized sand units known to exist at Alta Mesa. Uranium extraction efforts from these sand units at the Alta Mesa wellfields have generated solid results, including current operations at wellfield 7.",
+                "score": 0.032629862
+              },
+              {
+                "title": "Selena tribute performer Mayra Alejandra set to perform at Aurora Fest - CBS News",
+                "url": "https://www.cbsnews.com/colorado/video/selena-tribute-performer-mayra-alejandra-set-to-perform-at-aurora-fest/",
+                "source": "cbsnews.com",
+                "summary": "# Selena tribute performer Mayra Alejandra set to perform at Aurora Fest. Mayra Alejandra will perform at Aurora Fest on June 13.",
+                "score": 0.027798323
+              }
+            ]
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Solana",
+            "search_type": "Latest",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "Solana",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "@VegetaCrypto1 solana:9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+                "summary": "@VegetaCrypto1 solana:9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+                "url": "https://x.com/adamir007/status/2061756646875951452",
+                "source": "@adamir007",
+                "date": "Tue Jun 02 10:27:44 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "guys revamped https://t.co/Vv79zEJpTd",
+                "summary": "guys revamped https://t.co/Vv79zEJpTd\n\nan interactive reference for @solana  infrastructure\n\n- every concept is its own page (took the notebooklm inspiration)\n- automated quizzing, grounded in the docs + generated live with deepseek v4\n- code practice tasks per topic with AI hints + evaluation (the \"dive into the concepts\" step)\n-  tx lifecycle, and a sandwich-attack sim, all interactive",
+                "url": "https://x.com/Rachit_twts/status/2061756622117155272",
+                "source": "@Rachit_twts",
+                "date": "Tue Jun 02 10:27:38 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              },
+              {
+                "title": "🚀 $TCG moved from roughly $2.5K market cap to around $8.5M, showing a rapid ~3,400x expansion",
+                "summary": "🚀 $TCG moved from roughly $2.5K market cap to around $8.5M, showing a rapid ~3,400x expansion\n\nMoves like this highlight how quickly low-cap conditions can shift in crypto cycles\n\n🔗 https://t.co/m4L7Wfn6Us\n\nCA:\nDLGRpmkMGr7J4KD1xR5x2XjaGeQH64PLFQkyxNNSpump\n\n#Solana #BBVIPKS4 https://t.co/8X1QQfoMhU",
+                "url": "https://x.com/ZYPHOXCALL/status/2061756620615381024",
+                "source": "@ZYPHOXCALL",
+                "date": "Tue Jun 02 10:27:38 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "3"
+                }
+              },
+              {
+                "title": "Remilio Squad : The next big thing on Solana",
+                "summary": "Remilio Squad : The next big thing on Solana\n\nAffordable entry into premium NFT ownership\n\nUtility included.\n\nPrice: 0.01 $SOL BONUS GIFT with every mint🎁\nStatus: 146/641 $Sold\n   \nSecure your spot now!\nLink",
+                "url": "https://x.com/MoochYoung98832/status/2061756617650295142",
+                "source": "@MoochYoung98832",
+                "date": "Tue Jun 02 10:27:37 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "3/3 plays of the day all cake through ",
+                "summary": "3/3 plays of the day all cake through \n\nEasy 4.5X on  my Tg call  $WILLO2\n\nJoin our  vip group to get early alpha calls on trending memecoin before they take off\n\nCgoBzH5qyF68Y8a77MvGdxY33JVt3UHBT1UbNrT6pump\n\nDM now let's get you started\n\n#memecoin #Solana #Degen https://t.co/bIpbtQ0vr9",
+                "url": "https://x.com/majorrngm/status/2061756591255228904",
+                "source": "@majorrngm",
+                "date": "Tue Jun 02 10:27:31 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M08_confirm_send_then_save",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_send_then_save",
+        "difficulty": "hard",
+        "what_it_tests": "Sau khi xác nhận gửi (yes_no), yêu cầu tiếp theo là lưu log."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Gửi bản tin AI lên Telegram"
+        },
+        {
+          "role": "user",
+          "content": "Đồng ý, gửi đi"
+        },
+        {
+          "role": "user",
+          "content": "Sau đó lưu log chat này lại cho tôi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "Gửi bản tin AI lên Telegram"
+                },
+                {
+                  "role": "user",
+                  "content": "Đồng ý, gửi đi"
+                }
+              ],
+              "filename": "chat_log.json"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "save_chat_log",
+          "args": {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Gửi bản tin AI lên Telegram"
+              },
+              {
+                "role": "user",
+                "content": "Đồng ý, gửi đi"
+              }
+            ],
+            "filename": "chat_log.json"
+          },
+          "result": {
+            "tool": "save_chat_log",
+            "status": "success",
+            "file_path": "logs/chat_log.json",
+            "message": "Chat log has been saved to logs/chat_log.json"
+          }
+        }
+      ]
+    },
+    {
+      "id": "M09_clarify_topic_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_lookup_args",
+        "difficulty": "medium",
+        "what_it_tests": "Xây dựng args qua nhiều lượt."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin tức cho tôi"
+        },
+        {
+          "role": "user",
+          "content": "Về xe điện"
+        },
+        {
+          "role": "user",
+          "content": "Lấy tin trong tuần này thôi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "xe điện",
+            "topic": "news",
+            "timeframe": "week"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "xe điện",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Lithium, rare earths and EV patents: Elektros courts new investors - Stock Titan",
+                "url": "https://www.stocktitan.net/news/ELEK/a-distinguished-opportunity-emerges-global-investors-increasingly-dhvipmnou9x5.html",
+                "source": "stocktitan.net",
+                "summary": "4. A Distinguished Opportunity Emerges: Global Investors Increasingly Discover ELEKTROS Inc.'s Strategic Position in Lithium Mining, Rare Earth Minerals and Advanced EV Patent Technology. Management points to growing awareness of the company’s long-term vision in hard rock lithium mining and advanced EV patent technology, and reiterates its commitment to long-term shareholder value and strategic opportunities in lithium and EV infrastructure. Management further stated that increasing investor attention toward lithium supply chains, EV infrastructure, and next-generation charging technologies continues strengthening as more investors globally continue discovering the long-term vision and growth potential of ELEKTROS Inc. Reuters recently reported that expanding high-speed charging infrastructure remains one of the most important components necessary for accelerating electric vehicle adoption worldwide, as governments and major corporations continue investing billions into EV charging expansion initiatives. According to ELEKTROS, more investors are discovering its long-term vision around lithium mining and advanced EV patent technology as demand for EV charging and energy storage continues expanding worldwide.",
+                "score": 0.15102781
+              },
+              {
+                "title": "ICF8｜XCMG Excavator Showcase: A Shared Path Toward a Greener Future - The Manila Times",
+                "url": "https://www.manilatimes.net/2026/05/27/tmt-newswire/pr-newswire/icf8xcmg-excavator-showcase-a-shared-path-toward-a-greener-future/2352251",
+                "source": "manilatimes.net",
+                "summary": "ICF8｜XCMG Excavator Showcase: A Shared Path Toward a Greener Future. XCMG Excavator Showcase: A Shared Path Toward a Greener Future. The event marked a new chapter for XCMG in driving the conversation on sustainable equipment, customer value, and the future of construction machinery. Interactive displays, including a glasses-free 3D screen and a simulated cab, gave visitors a first-hand look at how XCMG is integrating intelligent manufacturing, digital systems, and lower-carbon production into its operations, supported by a global service network and localized customer support. By combining intelligent manufacturing with data-driven precision, XCMG aims to make high-quality excavator production more efficient, consistent, and responsive to customer needs worldwide. The range includes pure electric, hybrid, and plug-in electric machines, reflecting the company's efforts to reduce carbon emissions and support the industry's transition toward lower-emission operations through continued product development. Moving forward, XCMG Excavator will continue to work closely with global partners to support the development of greener, more intelligent equipment solutions for the construction industry.",
+                "score": 0.013222823
+              },
+              {
+                "title": "XPENG GX Popularity Jacks Up XPENG Orders To ~50,000 Vehicles In May? - CleanTechnica",
+                "url": "https://cleantechnica.com/2026/05/26/xpeng-gx-popularity-jacks-up-xpeng-orders-to-50000-vehicles-in-may/",
+                "source": "cleantechnica.com",
+                "summary": "# XPENG GX Popularity Jacks Up XPENG Orders To ~50,000 Vehicles In May? Deutsche Bank analysts expect that orders for the XPENG GX will give XPENG enough of a boost that it will have around 50,000 sales in May. That’s a big boost for a company that was just above 31,000 in April! For a limited time, you can order a GX for 269,800 yuan ($39,707), a ridiculous price for a vehicle of its size and capability. Following the GX, XPENG has the ultra-large G9L SUV coming out in the fall to boost sales again, as well as the smaller Mona L05 and Mona L03 sometime in the second half of the year and the Mona M05 in 2027. *Sign up for CleanTechnica's Weekly Substack for Zach and Scott's in-depth analyses and high level summaries, sign up for our daily newsletter, and follow us on Google News!*.",
+                "score": 0.0017073675
+              },
+              {
+                "title": "In a city with an iconic skyline, the Obama presidential museum aims to reshape Chicago architecture - The Sun Chronicle",
+                "url": "https://www.thesunchronicle.com/news/nation_world/in-a-city-with-an-iconic-skyline-the-obama-presidential-museum-aims-to-reshape-chicago/article_da52fdda-1b36-57eb-92aa-9b7913aafc20.html",
+                "source": "thesunchronicle.com",
+                "summary": "The Obama Presidential Center is seen in Chicago, Thursday, May 28, 2026. Visitors photograph statues of former President Barack Obama and former First Lady Michelle Obama at the Obama Presidential Center in Chicago, Thursday, May 28, 2026. A visitor poses with statues of former President Barack Obama and former First Lady Michelle Obama at the Obama Presidential Center in Chicago, Thursday, May 28, 2026. # In a city with an iconic skyline, the Obama presidential museum aims to reshape Chicago architecture. ## Crews are putting the finishing touches on the Obama Presidential Center ahead of the official public opening in Chicago on Juneteenth. Crews are putting the finishing touches on the Obama Presidential Center ahead of the official public opening on Juneteenth, more than a decade after the site was chosen. E92E H:== D92A6 r9:428@’D :4@?:4 D6]k^Am. ED 92G6 4@>A2C65 :E E@ 2 8C2:? 5 2 >2FD@=6F>]k^Am. kAm“xE 5@6D?’E 7:E :? 5 2 7@C>6C ~32>2 25G:D@C] “%96 56D:8?",
+                "score": 0.001044386
+              },
+              {
+                "title": "Jonas Vingegaard wins Giro d’Italia to become the eighth male rider to win all three Grand Tours - The Sun Chronicle",
+                "url": "https://www.thesunchronicle.com/sports/jonas-vingegaard-wins-giro-d-italia-to-become-the-eighth-male-rider-to-win-all/article_7b106894-5912-5fe3-ac4a-f712054b25f8.html",
+                "source": "thesunchronicle.com",
+                "summary": "Overall leader Denmark's Jonas Vingegaard pedals during the last stage of the Giro d'Italia in Rome Sunday May 31, 2026. # Jonas Vingegaard wins Giro d’Italia to become the eighth male rider to win all three Grand Tours. ## Danish cyclist Jonas Vingegaard has won the Giro d’Italia. ROME (AP) — Danish cyclist Jonas Vingegaard won the Giro d’Italia on Sunday, becoming the eighth male rider to win all three Grand Tours. 86822C5\\`fhea6bgg`h`bgcb6hah3afhf7d\\_gh`bQm$A2?:D9 'F6=E2 E:E=6k^2m] xE H2D 9:D 7:CDE v:C@]k^Am. 8 C6A=:42D @7 9:D >28=:2 C@D2 — E96 =6256CVD A:?< ;6CD6J]k^Am. 2E65 9:D 7:CDE v:C@ — =:G:? E@ 4@>A=6E6 E96 v:C@\\%@FC 5@F3=6]k^Am. kAm%96 =2C86=J AC@46DD:@? 8 E@ E96 xE2=:2? 8 E96 C:56 @FE E@ E96 D62]k^Am. kAm|:=2?[ H9@ 925 D66? Submitting this form below will send a message to your email with a link to change your password. An email message containing instructions on how to reset your password has been sent to the email address listed on your account.",
+                "score": 0.0010083435
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M10_switch_person_timeline",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_person",
+        "difficulty": "medium",
+        "what_it_tests": "Đổi đối tượng timeline (Elon -> Bill Gates) và thêm limit."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tweet của Elon Musk"
+        },
+        {
+          "role": "user",
+          "content": "Chuyển sang xem của Bill Gates đi"
+        },
+        {
+          "role": "user",
+          "content": "Lấy 10 cái mới nhất"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "BillGates",
+              "limit": 10
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "BillGates",
+              "limit": 10
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "BillGates",
+            "limit": 10
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "BillGates",
+            "items": [
+              {
+                "title": "Thank you for the warm welcome, @ncbn. It’s exciting to witness Andhra Pradesh’s growth being accelerated through AI, te",
+                "summary": "Thank you for the warm welcome, @ncbn. It’s exciting to witness Andhra Pradesh’s growth being accelerated through AI, technology, and innovations across health, agriculture &amp; education.",
+                "url": "https://x.com/BillGates/status/2023509972714496206",
+                "source": "@BillGates",
+                "date": "Mon Feb 16 21:29:07 +0000 2026",
+                "metrics": {
+                  "favorites": 12864,
+                  "retweets": 2379,
+                  "views": "1310432"
+                }
+              },
+              {
+                "title": "I’m deeply sad to learn of the passing of Dr. Bill Foege. Bill was a towering figure in global health—a man who saved th",
+                "summary": "I’m deeply sad to learn of the passing of Dr. Bill Foege. Bill was a towering figure in global health—a man who saved the lives of literally hundreds of millions of people. He was also a friend and mentor who gave me a deep grounding in the history of global health and inspired me with his conviction that the world could do more to alleviate suffering.​\n\nBill and I often talked together about the future of global health. The legacy of his career is that many of the remarkable developments to come will have his imprint all over them. ​https://t.co/tDn7YvtkdC",
+                "url": "https://x.com/BillGates/status/2016281284478435702",
+                "source": "@BillGates",
+                "date": "Tue Jan 27 22:44:53 +0000 2026",
+                "metrics": {
+                  "favorites": 3900,
+                  "retweets": 851,
+                  "views": "1162116"
+                }
+              },
+              {
+                "title": ".@fervoenergy is creating energy that’s clean, affordable, reliable, and American-made. https://t.co/9eEKdZszvP",
+                "summary": ".@fervoenergy is creating energy that’s clean, affordable, reliable, and American-made. https://t.co/9eEKdZszvP",
+                "url": "https://x.com/BillGates/status/1964422434767224969",
+                "source": "@BillGates",
+                "date": "Sat Sep 06 20:16:20 +0000 2025",
+                "metrics": {
+                  "favorites": 5962,
+                  "retweets": 1768,
+                  "views": "1810281"
+                }
+              },
+              {
+                "title": "Learning how many kids were dying from diarrhea back in 1997—when I never worried about it with my own kids—led me to ge",
+                "summary": "Learning how many kids were dying from diarrhea back in 1997—when I never worried about it with my own kids—led me to get involved in global health. https://t.co/NYitqiRY38",
+                "url": "https://x.com/BillGates/status/1948167071684231344",
+                "source": "@BillGates",
+                "date": "Wed Jul 23 23:43:19 +0000 2025",
+                "metrics": {
+                  "favorites": 5189,
+                  "retweets": 1861,
+                  "views": "2766754"
+                }
+              },
+              {
+                "title": "Thanks to vaccines, fewer children are dying from preventable diseases around the world. Cutting funding for them would ",
+                "summary": "Thanks to vaccines, fewer children are dying from preventable diseases around the world. Cutting funding for them would reverse that progress and put millions of children in danger. https://t.co/UF7IaASepq",
+                "url": "https://x.com/BillGates/status/1943794047988249030",
+                "source": "@BillGates",
+                "date": "Fri Jul 11 22:06:29 +0000 2025",
+                "metrics": {
+                  "favorites": 5331,
+                  "retweets": 1678,
+                  "views": "1306043"
+                }
+              },
+              {
+                "title": "The devastating effects of these cuts are entirely preventable—and it’s not too late to reverse them.",
+                "summary": "The devastating effects of these cuts are entirely preventable—and it’s not too late to reverse them.",
+                "url": "https://x.com/BillGates/status/1943750242148790622",
+                "source": "@BillGates",
+                "date": "Fri Jul 11 19:12:25 +0000 2025",
+                "metrics": {
+                  "favorites": 5271,
+                  "retweets": 1549,
+                  "views": "2082767"
+                }
+              },
+              {
+                "title": "U.S. global health and development aid is estimated to have saved 92 million lives over the past 20 years. We can't affo",
+                "summary": "U.S. global health and development aid is estimated to have saved 92 million lives over the past 20 years. We can't afford to let that kind of progress unravel: https://t.co/eqLEVzB9gA https://t.co/4JJJfyO2E3",
+                "url": "https://x.com/BillGates/status/1940173410304475500",
+                "source": "@BillGates",
+                "date": "Tue Jul 01 22:19:22 +0000 2025",
+                "metrics": {
+                  "favorites": 2337,
+                  "retweets": 665,
+                  "views": "641367"
+                }
+              },
+              {
+                "title": "There’s never been a point in the past 25 years when more lives hung in the balance. https://t.co/q8I2dBdtYB",
+                "summary": "There’s never been a point in the past 25 years when more lives hung in the balance. https://t.co/q8I2dBdtYB",
+                "url": "https://x.com/BillGates/status/1938400507258909125",
+                "source": "@BillGates",
+                "date": "Fri Jun 27 00:54:29 +0000 2025",
+                "metrics": {
+                  "favorites": 1400,
+                  "retweets": 465,
+                  "views": "435661"
+                }
+              },
+              {
+                "title": "It's not too late to change course.",
+                "summary": "It's not too late to change course.",
+                "url": "https://x.com/BillGates/status/1938368126372253782",
+                "source": "@BillGates",
+                "date": "Thu Jun 26 22:45:49 +0000 2025",
+                "metrics": {
+                  "favorites": 1408,
+                  "retweets": 483,
+                  "views": "586713"
+                }
+              },
+              {
+                "title": "In the last 25 years, @gavi has helped over a billion kids live better, healthier lives. Pulling the organization’s fund",
+                "summary": "In the last 25 years, @gavi has helped over a billion kids live better, healthier lives. Pulling the organization’s funding would have devastating consequences: more sick kids who fall behind in school, more overcrowded hospital wards, and eventually more grieving parents. I’m urging Congress to rethink this decision, fund Gavi, and help save millions more lives.",
+                "url": "https://x.com/BillGates/status/1938012546365329906",
+                "source": "@BillGates",
+                "date": "Wed Jun 25 23:12:52 +0000 2025",
+                "metrics": {
+                  "favorites": 1768,
+                  "retweets": 510,
+                  "views": "655259"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M11_save_log_with_context",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_save_log",
+        "difficulty": "medium",
+        "what_it_tests": "Lưu log với tên file cụ thể sau một lượt trao đổi."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin AI"
+        },
+        {
+          "role": "assistant",
+          "content": "Đã tìm thấy..."
+        },
+        {
+          "role": "user",
+          "content": "Lưu cuộc hội thoại này vào file 'ai_research.json'"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {
+              "filename": "ai_research.json"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "save_chat_log",
+            "args": {
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "Tìm tin AI"
+                },
+                {
+                  "role": "assistant",
+                  "content": "Đã tìm thấy..."
+                }
+              ],
+              "filename": "ai_research.json"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "save_chat_log",
+          "args": {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Tìm tin AI"
+              },
+              {
+                "role": "assistant",
+                "content": "Đã tìm thấy..."
+              }
+            ],
+            "filename": "ai_research.json"
+          },
+          "result": {
+            "tool": "save_chat_log",
+            "status": "success",
+            "file_path": "logs/ai_research.json",
+            "message": "Chat log has been saved to logs/ai_research.json"
+          }
+        }
+      ]
+    }
+  ]
+}
