@@ -101,6 +101,77 @@
         "difficulty": "hard",
         "what_it_tests": "Yêu cầu tweet của 2 người cùng lúc → gọi 2 timeline song song với handle đúng cho từng người."
       }
+    },
+    {
+      "id": "G08_reddit_subreddit_refinement",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm bài trên Reddit về AI agents"},
+        {"role": "user", "content": "Lọc trong subreddit LocalLLaMA thôi"},
+        {"role": "user", "content": "Sắp xếp theo hot nhất nhé"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "reddit_search", "args": {"query": "AI agents", "subreddit": "LocalLLaMA", "sort": "hot"}}]},
+      "metadata": {
+        "skill": "multiturn_reddit_subreddit_sort",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: carry query từ lượt 1, nhận subreddit ở lượt 2, nhận sort=hot ở lượt 3 → reddit_search với đủ 3 args."
+      }
+    },
+    {
+      "id": "G09_github_trending_language_filter",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm các repo GitHub trending về LLM"},
+        {"role": "user", "content": "Chỉ lấy repo viết bằng Python thôi"},
+        {"role": "user", "content": "Trending trong tuần này nhé"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "github_trending", "args": {"topic": "llm", "language": "python", "since": "weekly"}}]},
+      "metadata": {
+        "skill": "multiturn_github_trending_args",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: topic=llm từ lượt 1, language=python từ lượt 2, since=weekly từ lượt 3 → github_trending với đủ args."
+      }
+    },
+    {
+      "id": "G10_translate_language_correction",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Dịch câu này sang tiếng Việt: 'Large language models are transforming software development'"},
+        {"role": "user", "content": "À nhầm, dịch sang tiếng Nhật nhé"},
+        {"role": "user", "content": "Giữ nguyên câu gốc đó"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "translate", "args": {"text": "Large language models are transforming software development", "target_lang": "ja"}}]},
+      "metadata": {
+        "skill": "multiturn_translate_lang_correction",
+        "difficulty": "medium",
+        "what_it_tests": "3 turns: user sửa target_lang từ vi→ja ở lượt 2, lượt 3 xác nhận giữ nguyên text → translate với target_lang=ja đúng."
+      }
+    },
+    {
+      "id": "G11_parallel_reddit_and_web",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm tin tức web về Gemini 2.0 và cả thảo luận trên Reddit về nó"},
+        {"role": "user", "content": "Giữ cả 2 nguồn nhé"},
+        {"role": "user", "content": "Tin web lấy hôm nay, chủ đề Gemini 2.0"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [
+        {"name": "lookup", "args": {"query": "Gemini 2.0", "topic": "news", "timeframe": "day"}},
+        {"name": "reddit_search", "args": {"query": "Gemini 2.0"}}
+      ]},
+      "metadata": {
+        "skill": "multiturn_parallel_web_and_reddit",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: yêu cầu 2 nguồn (web + Reddit), lượt 3 xác nhận giữ cả 2 → gọi lookup(news, day) + reddit_search song song."
+      }
     }
   ]
 }

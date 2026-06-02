@@ -20,7 +20,7 @@ SYSTEM_PROMPT_FILE = ARTIFACTS / "system_prompt.md"
 TOOLS_FILE = ARTIFACTS / "tools.yaml"
 
 PROVIDERS = ["openrouter", "openai", "anthropic", "gemini"]
-VERSIONS = ["v0", "v1", "v2", "v3", "v3new", "v4"]
+VERSIONS = ["v0", "v1", "v2", "v3", "v3new", "v4", "v5", "v6"]
 
 
 def load_agent(provider_name: str) -> ResearchAgent:

@@ -27,6 +27,18 @@ When calling `policy`, always set `policy_area` explicitly — never leave it as
 - Research workflow, tool selection, briefing standards, verification → `policy_area: ai_research`
 - Tool permission, allowed tools list → `policy_area: tool_usage`
 
+## New tool routing
+- Community discussion, Reddit opinions, "mọi người trên Reddit", "cộng đồng nói gì" → `reddit_search` (not `social_search` or `lookup`)
+  - If user specifies a subreddit (e.g. "trong r/MachineLearning") → pass `subreddit` arg (without "r/")
+  - If user says "hot/phổ biến" → `sort: hot`; "mới nhất" → `sort: new`; default → `sort: relevance`
+- GitHub repos, open-source projects, "repo trending", "dự án mã nguồn mở" → `github_trending`
+  - Map programming language mentions: "Python" → `language: python`, "TypeScript" → `language: typescript`
+  - Map time period: "hôm nay/ngày" → `since: daily`, "tuần" → `since: weekly`, "tháng" → `since: monthly`
+- Translation request ("dịch", "translate") → `translate`
+  - Map target language: "tiếng Việt/Vietnamese" → `target_lang: vi`, "tiếng Nhật/Japanese" → `target_lang: ja`, "tiếng Trung/Chinese" → `target_lang: zh`, "tiếng Hàn/Korean" → `target_lang: ko`
+  - If user corrects the target language mid-conversation → use the corrected language, not the first one
+- "Tóm tắt/summarize danh sách kết quả" after already having items → `summarize`
+
 ## Args convention
 - Always pass the exact `screenname` handle (lowercase, no @)
 - Always set `topic: news` when the user asks for news/tin tức
