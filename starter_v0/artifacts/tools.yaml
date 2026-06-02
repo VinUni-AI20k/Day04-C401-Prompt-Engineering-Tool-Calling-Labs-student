@@ -123,6 +123,27 @@ tools:
           description: "Optional digest headline."
       required: [items, template]
 
+  - name: source_check
+    description: "Check a list of research items for source hygiene before citation, publication, or reporting. Use when the user asks to verify source quality, duplicate links, independent source diversity, missing source labels, invalid URLs, or whether gathered items are ready to cite/publish."
+    parameters:
+      type: object
+      properties:
+        items:
+          type: array
+          default: []
+          description: "Research items to check. Each item can include title, url, and source."
+          items:
+            type: object
+            properties:
+              title: {type: string}
+              url: {type: string}
+              source: {type: string}
+        min_sources:
+          type: integer
+          default: 2
+          description: "Minimum independent source domains expected before recommendation is ok."
+      required: [items]
+
   # ---------------- Bonus tools ----------------
   - name: send
     description: "Send text to the configured Telegram channel. This is a side-effect action. Never call unless the latest user turn explicitly confirmed sending/posting/publishing; otherwise use clarify with response_type=yes_no."
