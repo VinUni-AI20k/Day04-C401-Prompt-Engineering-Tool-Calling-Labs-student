@@ -68,17 +68,33 @@ def _function_call_args(call: Any) -> dict[str, Any]:
     return {}
 
 
-def _quota_retry_delay(exc: Exception) -> float | None:
+_RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
+
+
+def _is_retryable_api_error(exc: Exception) -> bool:
+    code = getattr(exc, "code", None)
+    if isinstance(code, int) and code in _RETRYABLE_STATUS_CODES:
+        return True
+    status = str(getattr(exc, "status", "") or "").upper()
+    return status in {"RESOURCE_EXHAUSTED", "UNAVAILABLE", "INTERNAL"}
+
+
+def _format_api_error(exc: Exception) -> str:
+    code = getattr(exc, "code", "unknown")
+    status = getattr(exc, "status", None) or exc.__class__.__name__
+    message = getattr(exc, "message", None) or str(exc)
+    return f"{code} {status}: {message}"
+
+
+def _retry_delay(exc: Exception, *, attempt: int, base_delay: float) -> float:
     message = str(exc)
-    if "RESOURCE_EXHAUSTED" not in message and "429" not in message:
-        return None
     match = re.search(r"retryDelay': '(\d+)s'", message)
     if match:
         return min(float(match.group(1)) + 1.0, 90.0)
     match = re.search(r"Please retry in ([0-9.]+)s", message)
     if match:
         return min(float(match.group(1)) + 1.0, 90.0)
-    return 60.0
+    return min(base_delay * (2 ** (attempt - 1)), 30.0)
 
 
 class GeminiProvider:
@@ -88,7 +104,7 @@ class GeminiProvider:
         self,
         *,
         api_key_env: str = "GEMINI_API_KEY",
-        default_model: str = "gemini-3.1-flash",
+        default_model: str = "gemini-3.5-flash",
     ) -> None:
         self.api_key_env = api_key_env
         self.default_model = default_model
@@ -123,19 +139,34 @@ class GeminiProvider:
             config_kwargs["tools"] = [types.Tool(function_declarations=declarations)]
 
         client = genai.Client(api_key=api_key)
-        for attempt in range(3):
+        request_model = model or self.default_model
+        request_config = types.GenerateContentConfig(**config_kwargs)
+        resp = None
+        last_error: Exception | None = None
+
+        for attempt in range(1, self.max_attempts + 1):
             try:
                 resp = client.models.generate_content(
-                    model=model or self.default_model,
+                    model=request_model,
                     contents=contents,
-                    config=types.GenerateContentConfig(**config_kwargs),
+                    config=request_config,
                 )
                 break
-            except Exception as exc:
-                delay = _quota_retry_delay(exc)
-                if delay is None or attempt == 2:
-                    raise
-                time.sleep(delay)
+            except (errors.ClientError, errors.ServerError) as exc:
+                last_error = exc
+                if not _is_retryable_api_error(exc):
+                    raise RuntimeError(f"Gemini request failed: {_format_api_error(exc)}") from exc
+                if attempt >= self.max_attempts:
+                    break
+                time.sleep(_retry_delay(exc, attempt=attempt, base_delay=self.initial_backoff_seconds))
+
+        if resp is None:
+            detail = _format_api_error(last_error or RuntimeError("unknown Gemini error"))
+            raise RuntimeError(
+                "Gemini request failed after "
+                f"{self.max_attempts} attempts: {detail}. "
+                "Please retry in a moment or choose another provider/model."
+            ) from last_error
 
         text_parts: list[str] = []
         calls: list[ToolCall] = []
@@ -155,7 +186,6 @@ class GeminiProvider:
                 if function_call:
                     append_call(function_call)
 
-        # Some SDK versions expose function calls directly on the response.
         for function_call in getattr(resp, "function_calls", []) or []:
             append_call(function_call)
 

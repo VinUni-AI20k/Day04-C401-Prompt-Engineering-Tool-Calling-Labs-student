@@ -312,7 +312,7 @@ INDEX_HTML = r"""<!doctype html>
         <div class="mark">RA</div>
         <div>
           <h1>Research Agent Test UI</h1>
-          <div class="subtitle">Gemini tool calling lab runner</div>
+          <div class="subtitle">Nhóm 4</div>
         </div>
       </div>
       <div class="controls">
@@ -474,6 +474,12 @@ INDEX_HTML = r"""<!doctype html>
       if (!text) return;
       els.message.value = '';
       sendMessage(text);
+    });
+    els.message.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' || event.shiftKey || event.ctrlKey || event.altKey || event.metaKey) return;
+      event.preventDefault();
+      if (els.sendBtn.disabled) return;
+      els.form.requestSubmit();
     });
     els.resetBtn.addEventListener('click', () => {
       sessionId = crypto.randomUUID();

@@ -1,13 +1,4 @@
-# starter_v0 — tool declarations (intentionally vague).
-# Names and descriptions here are a rough first draft. Routing rules, name->handle
-# mapping, arg conventions (news/timeframe/Top), and the send-confirmation boundary
-# are NOT spelled out anywhere yet. Your job is to make these declarations + the
-# system prompt good enough that the agent routes correctly on the eval.
-#
-# If you rename a tool, keep the name in sync across:
-#   this file  ->  tools/__init__.py (TOOL_FUNCTIONS)  ->  data/eval_base.json + data/eval_research_extension.json
 tools:
-  # ---------------- Core tools ----------------
   - name: clarify
     description: "Ask the user one short clarification question. Use response_type=text for missing non-action details. Use response_type=yes_no for any send/post/publish/Telegram/channel confirmation; never use text for those action confirmations."
     parameters:
@@ -28,23 +19,23 @@ tools:
       required: [screenname]
 
   - name: social_search
-    description: "Search Twitter/X posts by topic or keyword. Use for questions like what people are saying about GPT-5/OpenAI/AI. Use search_type=Top for popular/top tweets; otherwise Latest."
+    description: "Search Twitter/X posts by topic or keyword. Use for questions like what people are saying about GPT-5/OpenAI/AI. Use search_type=Top for popular/top/viral tweets; otherwise Latest. Do not use for one named account's timeline."
     parameters:
       type: object
       properties:
         query: {type: string, default: "", description: "Concise topic keyword, e.g. AI, OpenAI, GPT-5."}
-        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Latest by default; Top only when user asks for top/popular tweets."}
+        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Latest by default; Top only when user asks for top/popular/viral tweets."}
         limit: {type: integer, default: 5, description: "Number of posts requested."}
       required: [query]
 
   - name: lookup
-    description: "Search the web for general information or news. Use topic=news for news/current events. For today/hôm nay use timeframe=day; for this week/tuần này use timeframe=week. Keep query concise: AI, OpenAI, robotics, etc."
+    description: "Search the web for general information or news. Use topic=news for news/current events. Map today/hôm nay to timeframe=day, this week/tuần này to week, this month/tháng này to month, this year/năm nay to year. Keep query concise."
     parameters:
       type: object
       properties:
         query: {type: string, default: "", description: "Concise web search topic, not a full sentence. Examples: AI, OpenAI, robotics."}
         topic: {type: string, enum: [general, news], default: "general", description: "Use news for current events/news requests; general otherwise."}
-        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "day=today/hôm nay, week=this week/tuần này."}
+        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "day=today/hôm nay, week=this week/tuần này, month=this month, year=this year."}
         max_results: {type: integer, default: 5, description: "Number of web results requested."}
       required: [query]
 
@@ -64,7 +55,7 @@ tools:
         items:
           type: array
           default: []
-          description: "Danh sách item"
+          description: "Items to format."
           items:
             type: object
             properties:
@@ -73,11 +64,10 @@ tools:
               source: {type: string}
               summary: {type: string}
               section: {type: string}
-        template: {type: string, enum: [brief, sections, bullets, thread, daily_ai_vn], default: "sections", description: "Khuôn"}
-        headline: {type: string, default: "", description: "Tiêu đề"}
+        template: {type: string, enum: [brief, sections, bullets, thread, daily_ai_vn], default: "sections", description: "Output template."}
+        headline: {type: string, default: "", description: "Digest headline."}
       required: [items, template]
 
-  # ---------------- Bonus tools ----------------
   - name: send
     description: "Send text to the configured Telegram channel. This is an external write action. Never call unless the user explicitly confirmed sending. For any send/post/publish request without confirmation, first use clarify with response_type=yes_no before asking for content."
     parameters:
@@ -92,9 +82,9 @@ tools:
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Nhóm"}
-        top_k: {type: integer, default: 3, description: "Số mục"}
+        query: {type: string, default: "", description: "Policy search query."}
+        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Policy area to search."}
+        top_k: {type: integer, default: 3, description: "Number of policy hits."}
       required: [query]
 
   - name: papers
@@ -102,9 +92,9 @@ tools:
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Từ khóa"}
-        max_results: {type: integer, default: 5, description: "Số lượng"}
-        sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Sắp xếp"}
+        query: {type: string, default: "", description: "Paper search query."}
+        max_results: {type: integer, default: 5, description: "Number of papers."}
+        sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Sort order."}
       required: [query]
 
   - name: paper_text
@@ -112,17 +102,17 @@ tools:
     parameters:
       type: object
       properties:
-        arxiv_url: {type: string, default: "", description: "ID hoặc địa chỉ"}
-        max_pages: {type: integer, default: 5, description: "Số trang"}
-        max_chars: {type: integer, default: 8000, description: "Số ký tự"}
+        arxiv_url: {type: string, default: "", description: "arXiv ID or URL."}
+        max_pages: {type: integer, default: 5, description: "Maximum pages to read."}
+        max_chars: {type: integer, default: 8000, description: "Maximum returned characters."}
       required: [arxiv_url]
 
   - name: pdf_download
-    description: "Download PDF files from any URL with optimized arXiv support. Automatically detects arXiv papers, uses proper rate limiting, and includes fallback mechanisms. Supports custom filename and download location."
+    description: "Download a PDF file from a URL or arXiv ID and save it locally. Use for requests to download/save PDF files. Supports arXiv optimization, fallback HTTP download, custom filename, and custom download folder."
     parameters:
       type: object
       properties:
-        url: {type: string, default: "", description: "URL of PDF to download (supports arXiv URLs, IDs, and generic URLs)"}
-        filename: {type: string, default: "", description: "Custom filename (optional, without .pdf extension)"}
-        download_folder: {type: string, default: "downloads", description: "Folder to save file (relative to project root)"}
+        url: {type: string, default: "", description: "PDF URL, arXiv URL, or arXiv ID to download."}
+        filename: {type: string, default: "", description: "Optional custom filename, with or without .pdf extension."}
+        download_folder: {type: string, default: "downloads", description: "Folder to save file, relative to project root."}
       required: [url]

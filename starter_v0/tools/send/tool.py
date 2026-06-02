@@ -8,6 +8,17 @@ import requests
 from tools._shared import TIMEOUT, err
 
 
+def _telegram_error(response: requests.Response) -> str:
+    try:
+        data = response.json()
+        description = data.get("description")
+        if description:
+            return str(description)
+    except Exception:
+        pass
+    return f"Telegram API returned HTTP {response.status_code}"
+
+
 def send_telegram(text: str = "", confirmed: bool = False) -> dict[str, Any]:
     if not confirmed:
         return {
@@ -25,8 +36,8 @@ def send_telegram(text: str = "", confirmed: bool = False) -> dict[str, Any]:
             json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"},
             timeout=TIMEOUT,
         )
-        response.raise_for_status()
+        if not response.ok:
+            raise RuntimeError(_telegram_error(response))
         return {"tool": "send_telegram", "status": "sent"}
     except Exception as exc:
         return err("send_telegram", exc)
-
