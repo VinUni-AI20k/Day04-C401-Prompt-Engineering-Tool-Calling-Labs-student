@@ -8,45 +8,78 @@ import requests
 from tools._shared import TIMEOUT, err
 
 
-def _twitter_get(path: str, params: dict[str, Any]) -> dict[str, Any]:
+def _apify_search(query: str, search_type: str, limit: int) -> dict[str, Any]:
+    api_key = os.getenv("APIFY_API_KEY")
+    if not api_key:
+        raise RuntimeError("Missing APIFY_API_KEY env var")
+    search_type_map = {"Latest": "Latest", "Top": "Top"}
+    resp = requests.post(
+        "https://api.apify.com/v2/acts/powerai~twitter-search-scraper/run-sync-get-dataset-items",
+        params={"token": api_key},
+        json={"query": query, "searchType": search_type_map.get(search_type, "Latest"), "maxResults": max(limit, 15)},
+        timeout=120,
+    )
+    resp.raise_for_status()
+    raw_items = resp.json()
+    items = []
+    for raw in raw_items[:limit]:
+        handle = raw.get("screen_name") or ""
+        tweet_id = raw.get("tweet_id") or raw.get("id") or ""
+        text = (raw.get("text") or "").strip()
+        items.append({
+            "title": text.split("\n")[0][:120],
+            "summary": text,
+            "url": f"https://x.com/{handle}/status/{tweet_id}" if handle and tweet_id else "",
+            "source": f"@{handle}" if handle else "x.com",
+            "date": raw.get("created_at"),
+            "metrics": {
+                "favorites": raw.get("favorites") or 0,
+                "retweets": raw.get("retweets") or 0,
+                "views": raw.get("views") or 0,
+            },
+        })
+    return {"tool": "search_tweets", "query": query, "search_type": search_type, "items": items}
+
+
+def _rapid_search(query: str, search_type: str, limit: int) -> dict[str, Any]:
     key = os.getenv("RAPIDAPI_KEY")
-    host = os.getenv("RAPIDAPI_TWITTER_HOST", "twitter-api45.p.rapidapi.com")
+    host = os.getenv("RAPIDAPI_TWITTER_HOST", "twitter241.p.rapidapi.com")
     if not key:
         raise RuntimeError("Missing RAPIDAPI_KEY env var")
-    response = requests.get(
-        f"https://{host}{path}",
-        params=params,
+    resp = requests.get(
+        f"https://{host}/search.php",
+        params={"query": query, "search_type": search_type},
         headers={"x-rapidapi-key": key, "x-rapidapi-host": host},
         timeout=TIMEOUT,
     )
-    response.raise_for_status()
-    return response.json()
-
-
-def _tweet_item(raw: dict[str, Any]) -> dict[str, Any]:
-    handle = raw.get("screen_name") or (raw.get("author") or {}).get("screen_name") or ""
-    tweet_id = raw.get("tweet_id") or raw.get("id") or ""
-    text = (raw.get("text") or "").strip()
-    return {
-        "title": text.split("\n")[0][:120],
-        "summary": text,
-        "url": f"https://x.com/{handle}/status/{tweet_id}" if handle and tweet_id else "",
-        "source": f"@{handle}" if handle else "x.com",
-        "date": raw.get("created_at"),
-        "metrics": {"favorites": raw.get("favorites"), "retweets": raw.get("retweets"), "views": raw.get("views")},
-    }
-
-
-def _tweets_from(data: dict[str, Any], limit: int) -> list[dict[str, Any]]:
+    resp.raise_for_status()
+    data = resp.json()
     raw_items = data.get("timeline") or data.get("tweets") or []
-    items = [_tweet_item(item) for item in raw_items if item.get("tweet_id") or item.get("id")]
-    return items[: int(limit or 5)]
+    items = []
+    for raw in raw_items:
+        if not (raw.get("tweet_id") or raw.get("id")):
+            continue
+        handle = raw.get("screen_name") or (raw.get("author") or {}).get("screen_name") or ""
+        tweet_id = raw.get("tweet_id") or raw.get("id") or ""
+        text = (raw.get("text") or "").strip()
+        items.append({
+            "title": text.split("\n")[0][:120],
+            "summary": text,
+            "url": f"https://x.com/{handle}/status/{tweet_id}" if handle and tweet_id else "",
+            "source": f"@{handle}" if handle else "x.com",
+            "date": raw.get("created_at"),
+            "metrics": {"favorites": raw.get("favorites"), "retweets": raw.get("retweets"), "views": raw.get("views")},
+        })
+    return {"tool": "search_tweets", "query": query, "search_type": search_type, "items": items[:limit]}
 
 
 def search_tweets(query: str = "", search_type: str = "Latest", limit: int = 5) -> dict[str, Any]:
     try:
-        data = _twitter_get("/search.php", {"query": query, "search_type": search_type})
-        return {"tool": "search_tweets", "query": query, "search_type": search_type, "items": _tweets_from(data, limit)}
+        if not query:
+            return {"tool": "search_tweets", "error": "missing_query", "message": "Query is required"}
+        try:
+            return _apify_search(query, search_type, limit)
+        except Exception:
+            return _rapid_search(query, search_type, limit)
     except Exception as exc:
         return err("search_tweets", exc)
-

@@ -13,9 +13,26 @@ tools:
     parameters:
       type: object
       properties:
-        question: {type: string, default: "", description: "The question to ask the user"}
-        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Expected response format: text for free-form, yes_no for confirmation, choice for multiple options"}
-        options: {type: array, default: [], items: {type: string}, description: "Available options when response_type is choice"}
+        question:
+          {
+            type: string,
+            default: "",
+            description: "The question to ask the user",
+          }
+        response_type:
+          {
+            type: string,
+            enum: [text, yes_no, choice],
+            default: "text",
+            description: "Expected response format: text for free-form, yes_no for confirmation, choice for multiple options",
+          }
+        options:
+          {
+            type: array,
+            default: [],
+            items: { type: string },
+            description: "Available options when response_type is choice",
+          }
       required: [question]
 
   - name: timeline
@@ -23,8 +40,18 @@ tools:
     parameters:
       type: object
       properties:
-        screenname: {type: string, default: "", description: "Account handle (e.g. sama, elonmusk, karpathy)"}
-        limit: {type: integer, default: 5, description: "Number of posts to retrieve"}
+        screenname:
+          {
+            type: string,
+            default: "",
+            description: "Account handle (e.g. sama, elonmusk, karpathy)",
+          }
+        limit:
+          {
+            type: integer,
+            default: 5,
+            description: "Number of posts to retrieve",
+          }
       required: [screenname]
 
   - name: social_search
@@ -32,20 +59,48 @@ tools:
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Search keywords"}
-        search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Latest for recent posts, Top for most popular"}
-        limit: {type: integer, default: 5, description: "Number of results"}
+        query: { type: string, default: "", description: "Search keywords" }
+        search_type:
+          {
+            type: string,
+            enum: [Latest, Top],
+            default: "Latest",
+            description: "Latest for recent posts, Top for most popular",
+          }
+        limit: { type: integer, default: 5, description: "Number of results" }
       required: [query]
 
   - name: lookup
-    description: "Search the web for information, news, and current events. Use for general knowledge questions and news lookups."
+    description: "Search the web for information, news, and current events. Use for general knowledge questions and news lookups. Automatically prioritizes Vietnamese news sites (VnExpress, Dân Trí, Tuổi Trẻ, Vietnamnet, etc.) when searching for Vietnamese news."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Search query (keep concise, use user's keywords)"}
-        topic: {type: string, enum: [general, news], default: "general", description: "general for broad search, news for recent news articles"}
-        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Time range: day for today, week for this week"}
-        max_results: {type: integer, default: 5, description: "Number of results to return"}
+        query:
+          {
+            type: string,
+            default: "",
+            description: "Search query (keep concise, use user's keywords)",
+          }
+        topic:
+          {
+            type: string,
+            enum: [general, news],
+            default: "general",
+            description: "general for broad search, news for recent news articles",
+          }
+        timeframe:
+          {
+            type: string,
+            enum: [day, week, month, year],
+            default: "week",
+            description: "Time range: day for today, week for this week",
+          }
+        max_results:
+          {
+            type: integer,
+            default: 5,
+            description: "Number of results to return",
+          }
       required: [query]
 
   - name: fetch
@@ -53,7 +108,7 @@ tools:
     parameters:
       type: object
       properties:
-        url: {type: string, default: "", description: "The full URL to read"}
+        url: { type: string, default: "", description: "The full URL to read" }
       required: [url]
 
   - name: format
@@ -68,13 +123,24 @@ tools:
           items:
             type: object
             properties:
-              title: {type: string}
-              url: {type: string}
-              source: {type: string}
-              summary: {type: string}
-              section: {type: string}
-        template: {type: string, enum: [brief, sections, bullets, thread, daily_ai_vn], default: "sections", description: "Output format template"}
-        headline: {type: string, default: "", description: "Main headline for the digest"}
+              title: { type: string }
+              url: { type: string }
+              source: { type: string }
+              summary: { type: string }
+              section: { type: string }
+        template:
+          {
+            type: string,
+            enum: [brief, sections, bullets, thread, daily_ai_vn],
+            default: "sections",
+            description: "Output format template",
+          }
+        headline:
+          {
+            type: string,
+            default: "",
+            description: "Main headline for the digest",
+          }
       required: [items, template]
 
   # ---------------- Bonus tools ----------------
@@ -83,8 +149,13 @@ tools:
     parameters:
       type: object
       properties:
-        text: {type: string, default: "", description: "Content to send"}
-        confirmed: {type: boolean, default: false, description: "Must be true to actually send. Only set true after user confirms via clarify."}
+        text: { type: string, default: "", description: "Content to send" }
+        confirmed:
+          {
+            type: boolean,
+            default: false,
+            description: "Must be true to actually send. Only set true after user confirms via clarify.",
+          }
       required: [text]
 
   - name: policy
@@ -92,9 +163,28 @@ tools:
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Policy topic or keyword to search"}
-        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Filter by policy category"}
-        top_k: {type: integer, default: 3, description: "Number of results"}
+        query:
+          {
+            type: string,
+            default: "",
+            description: "Policy topic or keyword to search",
+          }
+        policy_area:
+          {
+            type: string,
+            enum:
+              [
+                all,
+                ai_research,
+                source_citation,
+                data_privacy,
+                external_publishing,
+                tool_usage,
+              ],
+            default: "all",
+            description: "Filter by policy category",
+          }
+        top_k: { type: integer, default: 3, description: "Number of results" }
       required: [query]
 
   - name: papers
@@ -102,9 +192,25 @@ tools:
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Research topic or keywords"}
-        max_results: {type: integer, default: 5, description: "Number of papers to return"}
-        sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Sort order"}
+        query:
+          {
+            type: string,
+            default: "",
+            description: "Research topic or keywords",
+          }
+        max_results:
+          {
+            type: integer,
+            default: 5,
+            description: "Number of papers to return",
+          }
+        sort_by:
+          {
+            type: string,
+            enum: [relevance, lastUpdatedDate, submittedDate],
+            default: "relevance",
+            description: "Sort order",
+          }
       required: [query]
 
   - name: paper_text
@@ -112,9 +218,20 @@ tools:
     parameters:
       type: object
       properties:
-        arxiv_url: {type: string, default: "", description: "arXiv paper ID or full URL"}
-        max_pages: {type: integer, default: 5, description: "Maximum pages to extract"}
-        max_chars: {type: integer, default: 8000, description: "Maximum characters to return"}
+        arxiv_url:
+          {
+            type: string,
+            default: "",
+            description: "arXiv paper ID or full URL",
+          }
+        max_pages:
+          { type: integer, default: 5, description: "Maximum pages to extract" }
+        max_chars:
+          {
+            type: integer,
+            default: 8000,
+            description: "Maximum characters to return",
+          }
       required: [arxiv_url]
 
   - name: calculator
@@ -122,5 +239,10 @@ tools:
     parameters:
       type: object
       properties:
-        expression: {type: string, default: "", description: "The mathematical expression to evaluate (e.g. '2 + 2', '15 * 3 - 4', '2 ** 8')"}
+        expression:
+          {
+            type: string,
+            default: "",
+            description: "The mathematical expression to evaluate (e.g. '2 + 2', '15 * 3 - 4', '2 ** 8')",
+          }
       required: [expression]

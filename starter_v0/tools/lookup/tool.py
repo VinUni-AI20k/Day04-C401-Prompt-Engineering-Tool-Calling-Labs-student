@@ -1,11 +1,38 @@
 from __future__ import annotations
 
 import os
+import re
 from typing import Any
 
 import requests
 
 from tools._shared import TIMEOUT, domain, err
+
+VN_NEWS_DOMAINS = [
+    "vnexpress.net",
+    "dantri.com.vn",
+    "tuoitre.vn",
+    "vietnamnet.vn",
+    "thanhnien.vn",
+    "nld.com.vn",
+    "plo.vn",
+    "vietnamplus.vn",
+    "baomoi.com",
+    "kenh14.vn",
+]
+
+VN_KEYWORDS = re.compile(
+    r"(việt nam|vietnam|vn|hà nội|hanoi|hồ chí minh|ho chi minh|đà nẵng|da nang|"
+    r"thủ tướng|chủ tịch|bộ trưởng|quốc hội|nghị định|thông tư|"
+    r"tin tức|tin mới|bản tin|hôm nay|hôm qua|tuần này)",
+    re.IGNORECASE,
+)
+
+
+def _has_vietnamese_context(query: str, topic: str) -> bool:
+    if topic == "news" and VN_KEYWORDS.search(query):
+        return True
+    return False
 
 
 def web_search(query: str = "", topic: str = "general", timeframe: str | None = "week", max_results: int = 5) -> dict[str, Any]:
@@ -16,6 +43,8 @@ def web_search(query: str = "", topic: str = "general", timeframe: str | None = 
         body: dict[str, Any] = {"query": query, "topic": topic, "max_results": int(max_results or 5), "search_depth": "basic"}
         if timeframe:
             body["time_range"] = timeframe
+        if _has_vietnamese_context(query, topic):
+            body["include_domains"] = VN_NEWS_DOMAINS
         response = requests.post(
             "https://api.tavily.com/search",
             json=body,
