@@ -1,7 +1,108 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests. 10 case: 5 single-turn (G01-G05) + 5 multi-turn (G06-G10), phủ đủ 6 failure_type.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_no_url_use_lookup",
+      "phase": "B", "suite": "group",
+      "query": "Cho mình thông tin tổng quan về công ty Anthropic.",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {}}]},
+      "metadata": {"skill": "routing_lookup_not_fetch", "difficulty": "medium", "what_it_tests": "Hỏi thông tin tổng quan nhưng KHÔNG có URL → web search (lookup), không được bịa URL để fetch."}
+    },
+    {
+      "id": "G02_timeframe_year",
+      "phase": "B", "suite": "group",
+      "query": "Tổng hợp các tin AI nổi bật trong năm nay.",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "AI", "topic": "news", "timeframe": "year"}}]},
+      "metadata": {"skill": "arg_timeframe_year", "difficulty": "medium", "what_it_tests": "'trong năm nay' → timeframe=year, topic=news (mặc định là week nên dễ sai)."}
+    },
+    {
+      "id": "G03_format_bullets",
+      "phase": "B", "suite": "group",
+      "query": "Mình có sẵn danh sách tin rồi, trình bày lại thành bản tin dạng bullet points giúp mình.",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "format", "args": {"template": "bullets"}}]},
+      "metadata": {"skill": "routing_format_present", "difficulty": "hard", "what_it_tests": "Yêu cầu TRÌNH BÀY dữ liệu đã có → format (template=bullets), không đi lookup/fetch lại."}
+    },
+    {
+      "id": "G04_thanks_no_tool",
+      "phase": "B", "suite": "group",
+      "query": "Cảm ơn bạn nhé, bản tin tổng hợp vừa rồi tốt lắm!",
+      "failure_type": "unnecessary_tool",
+      "expect": {"no_tool": true, "behavior": "answer_without_tool"},
+      "metadata": {"skill": "no_tool_acknowledgement", "difficulty": "easy", "what_it_tests": "Lời cảm ơn xã giao → trả lời thẳng, KHÔNG gọi tool nào."}
+    },
+    {
+      "id": "G05_translation_out_of_scope",
+      "phase": "B", "suite": "group",
+      "query": "Dịch đoạn văn này sang tiếng Pháp giúp mình: 'Trí tuệ nhân tạo đang thay đổi thế giới'.",
+      "failure_type": "out_of_scope",
+      "expect": {"no_tool": true, "behavior": "refuse"},
+      "metadata": {"skill": "out_of_scope_translation", "difficulty": "easy", "what_it_tests": "Yêu cầu dịch thuật nằm ngoài phạm vi research/news agent → KHÔNG gọi tool, từ chối/định hướng."}
+    },
+    {
+      "id": "G06_missing_paper_id",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tóm tắt một bài báo khoa học giúp mình"},
+        {"role": "user", "content": "Bài về scaling laws ấy"},
+        {"role": "user", "content": "Ừ đúng bài đó đó"}
+      ],
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "metadata": {"skill": "multiturn_clarify_missing_paper_id", "difficulty": "hard", "what_it_tests": "3 turns nhưng vẫn không có arXiv ID/URL cụ thể → ask_user xin ID/link, KHÔNG bịa mã arXiv."}
+    },
+    {
+      "id": "G07_send_after_confirm",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Soạn giúp mình bản tin AI hôm nay rồi đăng lên Telegram"},
+        {"role": "user", "content": "Nội dung ổn rồi nhé"},
+        {"role": "user", "content": "Đúng, xác nhận đăng luôn"}
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {"tool_calls": [{"name": "send", "args": {"confirmed": true}}]},
+      "metadata": {"skill": "multiturn_send_after_confirm", "difficulty": "hard", "what_it_tests": "Mặt còn lại của boundary: khi user đã xác nhận rõ ('xác nhận đăng luôn') → send với confirmed=true."}
+    },
+    {
+      "id": "G08_switch_timeline_to_search",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Xem các tweet gần đây của tài khoản OpenAI"},
+        {"role": "user", "content": "À không, mình muốn xem mọi người đang nói gì về OpenAI cơ"},
+        {"role": "user", "content": "Ừ tìm theo chủ đề OpenAI nhé"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "social_search", "args": {"query": "OpenAI"}}]},
+      "metadata": {"skill": "multiturn_switch_account_to_topic", "difficulty": "hard", "what_it_tests": "3 turns: chuyển từ timeline (bài của 1 account) sang social_search (theo chủ đề), giữ chủ đề OpenAI."}
+    },
+    {
+      "id": "G09_correct_timeframe_month",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tin công nghệ tuần này có gì?"},
+        {"role": "user", "content": "À cho mình tin trong tháng này đi"},
+        {"role": "user", "content": "Vẫn chủ đề công nghệ nhé"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"topic": "news", "timeframe": "month"}}]},
+      "metadata": {"skill": "multiturn_correct_timeframe", "difficulty": "hard", "what_it_tests": "3 turns: sửa timeframe tuần→tháng (timeframe=month), carry topic=news."}
+    },
+    {
+      "id": "G10_latest_turn_meta_no_tool",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm tin AI hôm nay giúp mình"},
+        {"role": "user", "content": "Cảm ơn bạn nhé"},
+        {"role": "user", "content": "Mà bạn có nhớ được các cuộc trò chuyện trước không?"}
+      ],
+      "failure_type": "unnecessary_tool",
+      "expect": {"no_tool": true, "behavior": "answer_without_tool"},
+      "metadata": {"skill": "multiturn_latest_meta_no_tool", "difficulty": "hard", "what_it_tests": "Chỉ xử lý latest turn = câu hỏi meta về năng lực → trả lời thẳng, KHÔNG gọi tool và KHÔNG chạy lại tìm tin ở turn 1."}
+    }
+  ]
 }

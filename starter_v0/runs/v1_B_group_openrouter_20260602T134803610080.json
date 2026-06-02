@@ -1,0 +1,804 @@
+{
+  "run_id": "v1_B_group_openrouter_20260602T134803610080",
+  "version": "v1",
+  "artifact_version": "v1+p91ebfaa94479+tb13e2821fc3a",
+  "prompt_hash": "91ebfaa9447904b29bcbd3c17d135ee852916d56bbdd1bf15f17e0ac2012dc0a",
+  "tools_hash": "b13e2821fc3a689f75da71d3e3ebf40c6a74017151fe19874a9f440f95038374",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "C:\\Users\\admin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\admin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests. 10 case: 5 single-turn (G01-G05) + 5 multi-turn (G06-G10), phủ đủ 6 failure_type.",
+  "generated_at": "2026-06-02T13:48:03",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 3,
+    "case_accuracy": 0.3,
+    "tool_routing_accuracy": 0.4,
+    "argument_accuracy": 0.3,
+    "multiturn_accuracy": 0.4,
+    "failure_counts": {
+      "wrong_tool": 2,
+      "wrong_arg_value": 2,
+      "out_of_scope": 1,
+      "missing_info": 1,
+      "wrong_boundary": 1
+    },
+    "observed_mismatch_counts": {
+      "extra_tool_call": 2,
+      "wrong_arg_value": 2,
+      "missing_tool_call": 2,
+      "unexpected_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_no_url_use_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_lookup_not_fetch",
+        "difficulty": "medium",
+        "what_it_tests": "Hỏi thông tin tổng quan nhưng KHÔNG có URL → web search (lookup), không được bịa URL để fetch."
+      },
+      "input": "Cho mình thông tin tổng quan về công ty Anthropic.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Anthropic company overview",
+              "topic": "general"
+            }
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Anthropic news",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "extra_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "extra tool call lookup"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Anthropic company overview",
+            "topic": "general"
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "RuntimeError",
+            "message": "Missing TAVILY_API_KEY env var"
+          }
+        },
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Anthropic news",
+            "topic": "news",
+            "timeframe": "week"
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "RuntimeError",
+            "message": "Missing TAVILY_API_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_timeframe_year",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_timeframe_year",
+        "difficulty": "medium",
+        "what_it_tests": "'trong năm nay' → timeframe=year, topic=news (mặc định là week nên dễ sai)."
+      },
+      "input": "Tổng hợp các tin AI nổi bật trong năm nay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "year"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI news",
+              "topic": "news",
+              "timeframe": "year",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "query: expected 'AI', got 'AI news'",
+          "extra tool call social_search"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI news",
+            "topic": "news",
+            "timeframe": "year",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "RuntimeError",
+            "message": "Missing TAVILY_API_KEY env var"
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_format_bullets",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_format_present",
+        "difficulty": "hard",
+        "what_it_tests": "Yêu cầu TRÌNH BÀY dữ liệu đã có → format (template=bullets), không đi lookup/fetch lại."
+      },
+      "input": "Mình có sẵn danh sách tin rồi, trình bày lại thành bản tin dạng bullet points giúp mình.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "format",
+            "args": {
+              "template": "bullets"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có thể cung cấp danh sách tin mà bạn muốn trình bày lại thành bullet points không?"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call format",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cung cấp danh sách tin mà bạn muốn trình bày lại thành bullet points không?"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cung cấp danh sách tin mà bạn muốn trình bày lại thành bullet points không?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_thanks_no_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "no_tool_acknowledgement",
+        "difficulty": "easy",
+        "what_it_tests": "Lời cảm ơn xã giao → trả lời thẳng, KHÔNG gọi tool nào."
+      },
+      "input": "Cảm ơn bạn nhé, bản tin tổng hợp vừa rồi tốt lắm!",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Rất vui khi biết bạn thấy bản tin tổng hợp hữu ích! Nếu bạn cần thêm thông tin hoặc có yêu cầu nào khác, hãy cho tôi biết nhé!",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G05_translation_out_of_scope",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_translation",
+        "difficulty": "easy",
+        "what_it_tests": "Yêu cầu dịch thuật nằm ngoài phạm vi research/news agent → KHÔNG gọi tool, từ chối/định hướng."
+      },
+      "input": "Dịch đoạn văn này sang tiếng Pháp giúp mình: 'Trí tuệ nhân tạo đang thay đổi thế giới'.",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "translate",
+            "args": {
+              "text": "Trí tuệ nhân tạo đang thay đổi thế giới",
+              "target_lang": "fr"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": "unexpected_tool_call",
+        "failure_type": "out_of_scope",
+        "failures": [
+          "expected no tool call"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "translate",
+          "args": {
+            "text": "Trí tuệ nhân tạo đang thay đổi thế giới",
+            "target_lang": "fr"
+          },
+          "result": {
+            "tool": "translate_text",
+            "original": "Trí tuệ nhân tạo đang thay đổi thế giới",
+            "translated": "'AUTO' IS AN INVALID SOURCE LANGUAGE . EXAMPLE: LANGPAIR=EN|IT USING 2 LETTER ISO OR RFC3066 LIKE ZH-CN. ALMOST ALL LANGUAGES SUPPORTED BUT SOME MAY HAVE NO CONTENT",
+            "source_lang": "auto",
+            "target_lang": "fr"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_missing_paper_id",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_missing_paper_id",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns nhưng vẫn không có arXiv ID/URL cụ thể → ask_user xin ID/link, KHÔNG bịa mã arXiv."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt một bài báo khoa học giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Bài về scaling laws ấy"
+        },
+        {
+          "role": "user",
+          "content": "Ừ đúng bài đó đó"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "scaling laws",
+              "max_results": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call papers"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "scaling laws",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "scaling laws",
+            "api_query": "all:scaling AND all:laws",
+            "total_results": 24391,
+            "items": [
+              {
+                "arxiv_id": "2412.07942v1",
+                "title": "Neural Scaling Laws Rooted in the Data Distribution",
+                "summary": "Deep neural networks exhibit empirical neural scaling laws, with error decreasing as a power law with increasing model or data size, across a wide variety of architectures, tasks, and datasets. This universality suggests that scaling laws may result from general properties of natural learning tasks. We develop a mathematical model intended to describe natural datasets using percolation theory. Two distinct criticality regimes emerge, each yielding optimal power-law neural scaling laws. These regimes, corresponding to power-law-distributed discrete subtasks and a dominant data manifold, can be associated with previously proposed theories of neural scaling, thereby grounding and unifying prior works. We test the theory by training regression models on toy datasets derived from percolation theory simulations. We suggest directions for quantitatively predicting language model scaling.",
+                "authors": [
+                  "Ari Brill"
+                ],
+                "published": "2024-12-10T22:01:38Z",
+                "updated": "2024-12-10T22:01:38Z",
+                "url": "http://arxiv.org/abs/2412.07942v1",
+                "pdf_url": "https://arxiv.org/pdf/2412.07942v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.LG",
+                "categories": [
+                  "cs.LG",
+                  "cond-mat.dis-nn"
+                ]
+              },
+              {
+                "arxiv_id": "2408.11029v2",
+                "title": "Scaling Law with Learning Rate Annealing",
+                "summary": "We find that the cross-entropy loss curves of neural language models empirically adhere to a scaling law with learning rate (LR) annealing over training steps: $$L(s) = L_0 + A\\cdot S_1^{-α} - C\\cdot S_2,$$ where $L(s)$ is the validation loss at step $s$, $S_1$ is the area under the LR curve, $S_2$ is the LR annealing area, and $L_0$, $A$, $C$, $α$ are constant parameters. This formulation takes into account two factors: (1) power-law scaling over data size, and (2) the additional loss reduction during LR annealing. Therefore, this formulation can describe the full loss curve at each step, rather than the single loss point at the end of training. Applying the scaling law with LR annealing and fitting only one or two training curves, we can accurately predict the loss at any given step across any learning rate scheduler (LRS). This approach significantly reduces computational cost in formulating scaling laws while providing more accuracy and expressiveness for training dynamics. Extensive experiments demonstrate that our findings hold across a range of hyper-parameters and model architectures, and our equation can extend to scaling effect of model sizes. Moreover, our formulation provides accurate theoretical verification and explanation for empirical results observed in numerous previous studies, particularly those focusing on LR schedule and annealing. We believe that this work is promising to enhance the understanding of LLM training dynamics while greatly democratizing scaling laws, and it can guide researchers in refining training strategies (e.g. critical LRS) for further LLMs.",
+                "authors": [
+                  "Howe Tissue",
+                  "Venus Wang",
+                  "Lu Wang"
+                ],
+                "published": "2024-08-20T17:30:48Z",
+                "updated": "2024-10-24T17:56:14Z",
+                "url": "http://arxiv.org/abs/2408.11029v2",
+                "pdf_url": "https://arxiv.org/pdf/2408.11029v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL",
+                  "cs.AI",
+                  "cs.LG"
+                ]
+              },
+              {
+                "arxiv_id": "2402.04177v3",
+                "title": "Scaling Laws for Downstream Task Performance of Large Language Models",
+                "summary": "Scaling laws provide important insights that can guide the design of large language models (LLMs). Existing work has primarily focused on studying scaling laws for pretraining (upstream) loss. However, in transfer learning settings, in which LLMs are pretrained on an unsupervised dataset and then finetuned on a downstream task, we often also care about the downstream performance. In this work, we study the scaling behavior in a transfer learning setting, where LLMs are finetuned for machine translation tasks. Specifically, we investigate how the choice of the pretraining data and its size affect downstream performance (translation quality) as judged by: downstream cross-entropy and translation quality metrics such as BLEU and COMET scores. Our experiments indicate that the size of the finetuning dataset and the distribution alignment between the pretraining and downstream data significantly influence the scaling behavior. With sufficient alignment, both downstream cross-entropy and translation quality scores improve monotonically with more pretraining data. In such cases, we show that it is possible to predict the downstream translation quality metrics with good accuracy using a log-law. However, there are cases where moderate misalignment causes the downstream translation scores to fluctuate or get worse with more pretraining, whereas downstream cross-entropy monotonically improves. By analyzing these, we provide new practical insights for choosing appropriate pretraining data.",
+                "authors": [
+                  "Berivan Isik",
+                  "Natalia Ponomareva",
+                  "Hussein Hazimeh",
+                  "Dimitris Paparas",
+                  "Sergei Vassilvitskii",
+                  "Sanmi Koyejo"
+                ],
+                "published": "2024-02-06T17:31:20Z",
+                "updated": "2026-01-29T06:50:51Z",
+                "url": "http://arxiv.org/abs/2402.04177v3",
+                "pdf_url": "https://arxiv.org/pdf/2402.04177v3",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL",
+                  "cs.LG",
+                  "stat.ML"
+                ]
+              },
+              {
+                "arxiv_id": "2502.03009v2",
+                "title": "Scaling Laws for Upcycling Mixture-of-Experts Language Models",
+                "summary": "Pretraining large language models (LLMs) is resource-intensive, often requiring months of training time even with high-end GPU clusters. There are two approaches of mitigating such computational demands: reusing smaller models to train larger ones (upcycling), and training computationally efficient models like mixture-of-experts (MoE). In this paper, we study the upcycling of LLMs to MoE models, of which the scaling behavior remains underexplored. Through extensive experiments, we identify empirical scaling laws that describe how performance depends on dataset size and model configuration. Particularly, we show that, while scaling these factors improves performance, there is a novel interaction term between the dense and upcycled training dataset that limits the efficiency of upcycling at large computational budgets. Based on these findings, we provide guidance to scale upcycling, and establish conditions under which upcycling outperforms from-scratch trainings within budget constraints.",
+                "authors": [
+                  "Seng Pei Liew",
+                  "Takuya Kato",
+                  "Sho Takase"
+                ],
+                "published": "2025-02-05T09:11:13Z",
+                "updated": "2025-06-16T05:27:08Z",
+                "url": "http://arxiv.org/abs/2502.03009v2",
+                "pdf_url": "https://arxiv.org/pdf/2502.03009v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.LG",
+                "categories": [
+                  "cs.LG",
+                  "cs.CL"
+                ]
+              },
+              {
+                "arxiv_id": "2406.00722v3",
+                "title": "Universal scaling laws for correlated decay of many-body quantum systems",
+                "summary": "Quantum systems are open, continually exchanging energy and information with the surrounding environment. This interaction leads to decoherence and decay of quantum states. In complex systems, formed by many particles, decay can become correlated and enhanced. A fundamental question then arises: what is the maximal decay rate of a large quantum system, and how does it scale with its size? In this work, we address these issues by reformulating the problem into finding the ground state energy of a generic spin Hamiltonian. Inspired by recent work in Hamiltonian complexity theory, we establish rigorous and general upper and lower bounds on the maximal decay rate. These bounds are universal, as they hold for a broad class of Markovian many-body quantum systems. For many physically-relevant systems, the bounds are asymptotically tight, resulting in exact scaling laws with system size. Specifically, for large atomic arrays in free space, these scalings depend only on the arrays' dimensionality and are insensitive to details at short length-scales. The scaling laws set fundamental limits on the decay rates of all quantum states, shed light on the behavior of generic driven-dissipative systems, and may ultimately constrain the scalability of quantum processors and simulators based on atom arrays.",
+                "authors": [
+                  "Wai-Keong Mok",
+                  "Avishi Poddar",
+                  "Eric Sierra",
+                  "Cosimo C. Rusconi",
+                  "John Preskill",
+                  "Ana Asenjo-Garcia"
+                ],
+                "published": "2024-06-02T12:11:33Z",
+                "updated": "2025-05-21T14:19:37Z",
+                "url": "http://arxiv.org/abs/2406.00722v3",
+                "pdf_url": "https://arxiv.org/pdf/2406.00722v3",
+                "source": "arxiv.org",
+                "primary_category": "quant-ph",
+                "categories": [
+                  "quant-ph"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_send_after_confirm",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_send_after_confirm",
+        "difficulty": "hard",
+        "what_it_tests": "Mặt còn lại của boundary: khi user đã xác nhận rõ ('xác nhận đăng luôn') → send với confirmed=true."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Soạn giúp mình bản tin AI hôm nay rồi đăng lên Telegram"
+        },
+        {
+          "role": "user",
+          "content": "Nội dung ổn rồi nhé"
+        },
+        {
+          "role": "user",
+          "content": "Đúng, xác nhận đăng luôn"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "Bản tin AI hôm nay: \n- AI đang được áp dụng rộng rãi trong nhiều lĩnh vực, từ y tế đến tài chính. \n- Các nghiên cứu mới cho thấy AI có thể cải thiện hiệu suất làm việc và giảm thiểu sai sót. \n- Nhiều công ty công nghệ lớn đang đầu tư mạnh vào nghiên cứu và phát triển AI. \n\nHãy theo dõi để cập nhật thêm thông tin mới nhất về AI!"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "confirmed: expected True, got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "send",
+          "args": {
+            "text": "Bản tin AI hôm nay: \n- AI đang được áp dụng rộng rãi trong nhiều lĩnh vực, từ y tế đến tài chính. \n- Các nghiên cứu mới cho thấy AI có thể cải thiện hiệu suất làm việc và giảm thiểu sai sót. \n- Nhiều công ty công nghệ lớn đang đầu tư mạnh vào nghiên cứu và phát triển AI. \n\nHãy theo dõi để cập nhật thêm thông tin mới nhất về AI!"
+          },
+          "result": {
+            "tool": "send_telegram",
+            "status": "needs_confirmation",
+            "message": "Only send after the user explicitly confirms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_switch_timeline_to_search",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_account_to_topic",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: chuyển từ timeline (bài của 1 account) sang social_search (theo chủ đề), giữ chủ đề OpenAI."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Xem các tweet gần đây của tài khoản OpenAI"
+        },
+        {
+          "role": "user",
+          "content": "À không, mình muốn xem mọi người đang nói gì về OpenAI cơ"
+        },
+        {
+          "role": "user",
+          "content": "Ừ tìm theo chủ đề OpenAI nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "OpenAI"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "OpenAI",
+              "search_type": "Latest"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "OpenAI",
+            "search_type": "Latest"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_correct_timeframe_month",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_correct_timeframe",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: sửa timeframe tuần→tháng (timeframe=month), carry topic=news."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin công nghệ tuần này có gì?"
+        },
+        {
+          "role": "user",
+          "content": "À cho mình tin trong tháng này đi"
+        },
+        {
+          "role": "user",
+          "content": "Vẫn chủ đề công nghệ nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "công nghệ",
+              "topic": "news",
+              "timeframe": "month",
+              "max_results": 5
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "công nghệ",
+              "search_type": "Latest",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "extra_tool_call",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "extra tool call social_search"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "công nghệ",
+            "topic": "news",
+            "timeframe": "month",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "error": "RuntimeError",
+            "message": "Missing TAVILY_API_KEY env var"
+          }
+        },
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "công nghệ",
+            "search_type": "Latest",
+            "limit": 5
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G10_latest_turn_meta_no_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_latest_meta_no_tool",
+        "difficulty": "hard",
+        "what_it_tests": "Chỉ xử lý latest turn = câu hỏi meta về năng lực → trả lời thẳng, KHÔNG gọi tool và KHÔNG chạy lại tìm tin ở turn 1."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin AI hôm nay giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Cảm ơn bạn nhé"
+        },
+        {
+          "role": "user",
+          "content": "Mà bạn có nhớ được các cuộc trò chuyện trước không?"
+        }
+      ],
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi không thể nhớ các cuộc trò chuyện trước đây. Mỗi lần tương tác là một phiên mới và tôi không lưu trữ thông tin từ các cuộc trò chuyện trước. Nếu bạn cần thông tin gì, hãy cho tôi biết!",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    }
+  ]
+}

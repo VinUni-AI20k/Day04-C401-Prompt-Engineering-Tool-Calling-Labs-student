@@ -1,0 +1,21 @@
+run_id,version,artifact_version,suite,case_id,is_multiturn,case_failure_type,observed_mismatch,expected_tool,actual_tool,passed,routing_correct,args_correct,failures
+v1_B_group_openrouter_20260602T134803610080,v1,v1+p91ebfaa94479+tb13e2821fc3a,group,G01_no_url_use_lookup,False,wrong_tool,extra_tool_call,lookup,lookup|lookup,False,False,False,extra tool call lookup
+v1_B_group_openrouter_20260602T134803610080,v1,v1+p91ebfaa94479+tb13e2821fc3a,group,G02_timeframe_year,False,wrong_arg_value,wrong_arg_value,lookup,lookup|social_search,False,False,False,"query: expected 'AI', got 'AI news'; extra tool call social_search"
+v1_B_group_openrouter_20260602T134803610080,v1,v1+p91ebfaa94479+tb13e2821fc3a,group,G03_format_bullets,False,wrong_tool,missing_tool_call,format,clarify,False,False,False,missing tool call format; extra tool call clarify
+v1_B_group_openrouter_20260602T134803610080,v1,v1+p91ebfaa94479+tb13e2821fc3a,group,G04_thanks_no_tool,False,unnecessary_tool,,no_tool,,True,True,True,
+v1_B_group_openrouter_20260602T134803610080,v1,v1+p91ebfaa94479+tb13e2821fc3a,group,G05_translation_out_of_scope,False,out_of_scope,unexpected_tool_call,no_tool,translate,False,False,False,expected no tool call
+v1_B_group_openrouter_20260602T134803610080,v1,v1+p91ebfaa94479+tb13e2821fc3a,group,G06_missing_paper_id,True,missing_info,missing_tool_call,clarify,papers,False,False,False,missing tool call clarify; extra tool call papers
+v1_B_group_openrouter_20260602T134803610080,v1,v1+p91ebfaa94479+tb13e2821fc3a,group,G07_send_after_confirm,True,wrong_boundary,wrong_arg_value,send,send,False,True,False,"confirmed: expected True, got None"
+v1_B_group_openrouter_20260602T134803610080,v1,v1+p91ebfaa94479+tb13e2821fc3a,group,G08_switch_timeline_to_search,True,wrong_tool,,social_search,social_search,True,True,True,
+v1_B_group_openrouter_20260602T134803610080,v1,v1+p91ebfaa94479+tb13e2821fc3a,group,G09_correct_timeframe_month,True,wrong_arg_value,extra_tool_call,lookup,lookup|social_search,False,False,False,extra tool call social_search
+v1_B_group_openrouter_20260602T134803610080,v1,v1+p91ebfaa94479+tb13e2821fc3a,group,G10_latest_turn_meta_no_tool,True,unnecessary_tool,,no_tool,,True,True,True,
+v1_B_extension_openrouter_20260602T134826374382,v1,v1+p91ebfaa94479+tb13e2821fc3a,extension,E01_company_source_policy,False,wrong_tool,wrong_arg_value,policy,policy,False,True,False,"policy_area: expected 'source_citation', got 'all'"
+v1_B_extension_openrouter_20260602T134826374382,v1,v1+p91ebfaa94479+tb13e2821fc3a,extension,E02_company_data_privacy,False,wrong_tool,,policy,policy,True,True,True,
+v1_B_extension_openrouter_20260602T134826374382,v1,v1+p91ebfaa94479+tb13e2821fc3a,extension,E03_company_telegram_approval,False,wrong_tool,wrong_arg_value,policy,policy,False,True,False,"policy_area: expected 'external_publishing', got 'all'"
+v1_B_extension_openrouter_20260602T134826374382,v1,v1+p91ebfaa94479+tb13e2821fc3a,extension,E04_arxiv_search_topic,False,wrong_tool,,papers,papers,True,True,True,
+v1_B_extension_openrouter_20260602T134826374382,v1,v1+p91ebfaa94479+tb13e2821fc3a,extension,E05_arxiv_paper_text,False,wrong_tool,,paper_text,paper_text,True,True,True,
+v1_B_extension_openrouter_20260602T134826374382,v1,v1+p91ebfaa94479+tb13e2821fc3a,extension,E06_briefing_live_plus_style,False,wrong_tool,missing_tool_call,lookup|policy,policy,False,False,False,missing tool call lookup
+v1_B_extension_openrouter_20260602T134826374382,v1,v1+p91ebfaa94479+tb13e2821fc3a,extension,E07_paper_scan_template_plus_arxiv,False,wrong_tool,,papers|policy,papers|policy,True,True,True,
+v1_B_extension_openrouter_20260602T134826374382,v1,v1+p91ebfaa94479+tb13e2821fc3a,extension,E08_specific_url_not_arxiv,False,wrong_tool,wrong_arg_value,fetch|policy,fetch|policy,False,True,False,"policy_area: expected 'ai_research', got None"
+v1_B_extension_openrouter_20260602T134826374382,v1,v1+p91ebfaa94479+tb13e2821fc3a,extension,E09_two_links_parallel,False,wrong_tool,,fetch|fetch,fetch|fetch,True,True,True,
+v1_B_extension_openrouter_20260602T134826374382,v1,v1+p91ebfaa94479+tb13e2821fc3a,extension,E10_arxiv_research_search,False,wrong_tool,,papers,papers,True,True,True,
