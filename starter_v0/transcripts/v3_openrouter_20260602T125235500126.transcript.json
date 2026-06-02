@@ -1,0 +1,28 @@
+{
+  "transcript_id": "v3_openrouter_20260602T125235500126",
+  "version": "v3",
+  "artifact_version": "v3+peb1c8179815b+t6cdb53d5d7b8",
+  "prompt_hash": "eb1c8179815bd79d34de7d326420bb99b3072e6e8ae96464c02d4411f905fc68",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "E:\\AI_Thucchien\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\AI_Thucchien\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T12:52:35",
+  "updated_at": "2026-06-02T12:54:01",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T12:53:06",
+      "user": "xin chào ngày nay nắng k",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "RuntimeError: Install live provider dependency first: pip install openai",
+      "ended_at": "2026-06-02T12:53:06"
+    }
+  ]
+}
