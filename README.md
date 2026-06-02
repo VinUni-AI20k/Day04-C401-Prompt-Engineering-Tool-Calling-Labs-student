@@ -26,6 +26,7 @@ Nhiệm vụ bắt buộc:
 - Tự viết thêm 10 eval case vào `data/eval_group.json`, trong đó 5 single turn và 5 multi turn.
 - Nộp run JSON, transcript JSON, report.
 - Bắt buộc có UI chạy được bằng Streamlit hoặc Vercel.
+- Hoàn thành `artifacts/REPORT.md`: Phần A (debate poster 1 trang) xong **trước 16:30** để dùng trong Team showdown; Phần B (chi tiết) hoàn thiện sau để nộp bài.
 
 Bonus:
 
@@ -47,7 +48,7 @@ starter_v0/
     system_prompt.md          # student edits
     tools.yaml                # student edits
     version_log.csv           # student fills
-    REPORT.md                 # final report template
+    REPORT.md                 # report: Phần A debate poster + Phần B chi tiết
   data/
     eval_base.json            # fixed base eval, do not edit the cases
     eval_group.json           # team adds at least 5 cases
@@ -239,6 +240,17 @@ Try at least 3 live turns, for example:
 - A request thiếu thông tin (không nói rõ account/URL), rồi lượt sau bổ sung.
 - Một request "đăng/gửi bản tin lên Telegram" — quan sát agent có hành động ngay hay hỏi lại trước, rồi tự quyết định hành vi nào mới đúng và sửa prompt cho khớp.
 
+## Step 6 — Report + Debate Poster
+
+Hoàn thành `artifacts/REPORT.md`. File này có 2 phần với deadline khác nhau:
+
+- **Phần A — Debate Poster** (1 trang) — **phải xong trước 16:30 để dùng trong Team showdown**. Mục tiêu: team khác đọc 2 phút là hiểu **nhóm bạn cải thiện gì, thêm tool mới như nào, vì sao tin là đúng**. Gồm: một dòng tóm tắt, bảng metric baseline → final, ba thay đổi quan trọng nhất, tool mới, một bằng chứng before/after dán từ log thật, một quan điểm nhóm sẵn sàng bảo vệ + một câu hỏi mở.
+- **Phần B — Chi tiết / Bằng chứng** — **có thể hoàn thiện sau Team showdown để nộp bài**. Bảng đầy đủ v0–v3, failure analysis, eval cases, live chat, reflection.
+
+Cả hai phần phải dựa trên log thật (run JSON, version_log), không phải cảm tính.
+
+**Format Phần A khi debate:** nộp tối thiểu bản markdown trong `REPORT.md`. Khuyến khích team biến Phần A thành **poster HTML/SVG 1 trang** để show trực tiếp cho các team cùng zone (ví dụ `artifacts/poster.html` hoặc `artifacts/poster.svg`) — cùng nội dung, trình bày dễ nhìn hơn. Poster HTML/SVG là tùy chọn, không thay thế nội dung markdown.
+
 ## Submit
 
 Submit `starter_v0/` with:
@@ -246,7 +258,8 @@ Submit `starter_v0/` with:
 - `artifacts/system_prompt.md`
 - `artifacts/tools.yaml`
 - `artifacts/version_log.csv` with at least `v0`, `v1`, `v2`, `v3`
-- `artifacts/REPORT.md`
+- `artifacts/REPORT.md` (Phần A debate poster — xong trước 16:30; Phần B chi tiết — nộp sau)
+- `artifacts/poster.html` hoặc `artifacts/poster.svg` nếu team làm poster để debate (tùy chọn)
 - `data/eval_group.json` with at least 5 team cases
 - `runs/*.json`
 - `analysis/*.csv` if you parsed run logs
@@ -260,5 +273,5 @@ Do not submit `.env` or API keys.
 - 15:00 - Run baseline + build UI
 - 15:30 - Improve prompt/tools for v1 + build at least 1 tool
 - 16:00 - Write team eval cases + improve v2
-- 16:30 - Team showdown
-- 17:30 - Improve v3 + Write report
+- 16:30 - Team showdown (mỗi team dùng REPORT.md Phần A / poster để trình bày)
+- 17:30 - Improve v3 + hoàn thiện report Phần B
