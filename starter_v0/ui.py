@@ -346,6 +346,54 @@ api_keys_status = {
     "Anthropic": "ANTHROPIC_API_KEY" in os.environ or os.getenv("ANTHROPIC_API_KEY")
 }
 
+# --- Lịch sử chat Sidebar ---
+st.sidebar.markdown("---")
+st.sidebar.subheader("📜 Lịch sử chat")
+
+def get_all_transcripts():
+    transcripts_dir = ROOT / "transcripts"
+    if not transcripts_dir.exists():
+        return []
+    files = list(transcripts_dir.glob("*.transcript.json"))
+    # Sort by modification time (newest first)
+    files.sort(key=lambda x: x.stat().st_mtime, reverse=True)
+    return files
+
+all_transcripts = get_all_transcripts()
+if not all_transcripts:
+    st.sidebar.info("Chưa có lịch sử chat.")
+else:
+    for t_path in all_transcripts:
+        try:
+            with open(t_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                # Get title from first user query or transcript_id
+                title = data.get("transcript_id", t_path.stem)
+                if data.get("turns") and len(data["turns"]) > 0:
+                    first_query = data["turns"][0].get("user", "")
+                    if first_query:
+                        title = first_query[:30] + ("..." if len(first_query) > 30 else "")
+                
+                # Highlight current session
+                is_current = st.session_state.get("transcript_id") == data.get("transcript_id")
+                label = f"{'🟢' if is_current else '📄'} {title}"
+                
+                if st.sidebar.button(label, key=f"hist_{t_path.stem}", use_container_width=True):
+                    # Load this transcript into session messages
+                    st.session_state.messages = []
+                    for turn in data.get("turns", []):
+                        st.session_state.messages.append({"role": "user", "content": turn["user"]})
+                        st.session_state.messages.append({
+                            "role": "assistant", 
+                            "content": turn["assistant_text"],
+                            "rounds": turn.get("rounds", [])
+                        })
+                    st.session_state.transcript_id = data.get("transcript_id")
+                    st.rerun()
+        except Exception:
+            continue
+st.sidebar.markdown("---")
+
 # Determine default provider
 available_providers = []
 for name, is_set in api_keys_status.items():
