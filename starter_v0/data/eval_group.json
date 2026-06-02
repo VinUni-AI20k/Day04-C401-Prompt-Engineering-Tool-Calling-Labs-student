@@ -3,5 +3,141 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [{
+      "id": "R15_github_analyze_basic",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "single_tool_call",
+        "difficulty": "medium",
+        "what_it_tests": "Kiểm tra khả năng phân tích một tệp tin cụ thể trong repo GitHub và trích xuất đúng filter extension."
+      },
+      "input": "Phân tích giúp tôi các file code python trong thư mục models của repo này: https://github.com/ultralytics/ultralytics",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "github_analyze",
+            "args": {
+              "repo_url": "https://github.com/ultralytics/ultralytics",
+              "path": "models",
+              "file_extension_filter": ["py"]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "R16_github_boundary_check",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "confirm_before_write",
+        "difficulty": "hard",
+        "what_it_tests": "Kiểm tra ranh giới an toàn (wrong_boundary). Không có URL cụ thể thì AI PHẢI gọi clarify xin link chứ KHÔNG được đoán mò repo."
+      },
+      "input": "Xem hộ tôi cấu trúc mã nguồn của thư mục src dự án YOLOv8 với",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Vui lòng cung cấp đường dẫn URL chính xác đến kho lưu trữ GitHub chứa dự án YOLOv8 để tôi tiến hành phân tích.",
+              "response_type": "text"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "R17_youtube_basic_transcript",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "single_tool_call",
+        "difficulty": "medium",
+        "what_it_tests": "Trích xuất phụ đề video YouTube thông thường kèm theo ngôn ngữ chỉ định và cờ tắt timestamp."
+      },
+      "input": "Lấy phụ đề tiếng Anh của video này để tôi đọc tóm tắt nhé: https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "youtube_transcript",
+            "args": {
+              "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+              "language": "en",
+              "include_timestamps": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "R18_youtube_carryover_timestamp",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_carryover",
+        "difficulty": "hard",
+        "what_it_tests": "Hội thoại đa lượt: Turn 2 ép AI phải giữ nguyên URL video ở Turn 1 nhưng đổi trạng thái cấu hình include_timestamps sang True."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tôi muốn lấy phụ đề of video hội thảo này: https://www.youtube.com/watch?v=GTC2026"
+        },
+        {
+          "role": "user",
+          "content": "À, xuất kèm cả mốc thời gian chi tiết từng đoạn (timestamps) nữa nhé để tôi làm timeline."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "youtube_transcript",
+            "args": {
+              "video_url": "https://www.youtube.com/watch?v=GTC2026",
+              "language": "en",
+              "include_timestamps": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "R19_parallel_research_and_code",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "parallel_tool_calls",
+        "difficulty": "hard",
+        "what_it_tests": "Gọi tool song song đa tác vụ (Parallel): Vừa tra cứu bài báo khoa học vừa bóc tách repository được đính kèm trong câu lệnh."
+      },
+      "input": "Tìm hộ tôi các bài báo về mạng Neural sinh học trên arxiv và đồng thời phân tích luôn kho mã nguồn này giúp tôi: https://github.com/karpathy/micrograd",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "mạng Neural sinh học"
+            }
+          },
+          {
+            "name": "github_analyze",
+            "args": {
+              "repo_url": "https://github.com/karpathy/micrograd"
+            }
+          }
+        ]
+      }
+    }]
 }
