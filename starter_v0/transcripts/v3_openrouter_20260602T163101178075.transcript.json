@@ -1,0 +1,89 @@
+{
+  "transcript_id": "v3_openrouter_20260602T163101178075",
+  "version": "v3",
+  "artifact_version": "v3+pda7f4ce4ea04+t4ab691d2eb2e",
+  "prompt_hash": "da7f4ce4ea04600907eee005eeaad9bbf7045ab7b682f04f89ae4504f58875e1",
+  "tools_hash": "4ab691d2eb2e2b665ddfa1d5ccb7970ef73e9989acf209b36a246fd333000541",
+  "provider": "openrouter",
+  "model": null,
+  "system_prompt": "live_edited",
+  "tools": "live_edited",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-06-02T16:31:10",
+  "updated_at": "2026-06-02T16:33:11",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-06-02T16:31:06",
+      "user": "hello",
+      "status": "answered",
+      "assistant_text": "Hello! How can I assist you today?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Hello! How can I assist you today?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-06-02T16:31:10"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-06-02T16:33:09",
+      "user": "Dịch câu \"xin chào mọi người trong kênh\" thành tiếng anh rồi gửi vào trong telegram và tag tất cả mọi người ở đó",
+      "status": "waiting_for_user",
+      "assistant_text": "Bạn có thể cung cấp tên kênh Telegram mà bạn muốn gửi tin nhắn không?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "clarify",
+              "args": {
+                "question": "Bạn có thể cung cấp tên kênh Telegram mà bạn muốn gửi tin nhắn không?",
+                "response_type": "text"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "clarify",
+              "args": {
+                "question": "Bạn có thể cung cấp tên kênh Telegram mà bạn muốn gửi tin nhắn không?",
+                "response_type": "text"
+              },
+              "result": {
+                "tool": "ask_user",
+                "question": "Bạn có thể cung cấp tên kênh Telegram mà bạn muốn gửi tin nhắn không?",
+                "response_type": "text",
+                "options": [],
+                "awaiting_user": true
+              }
+            }
+          ]
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cung cấp tên kênh Telegram mà bạn muốn gửi tin nhắn không?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cung cấp tên kênh Telegram mà bạn muốn gửi tin nhắn không?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ],
+      "ended_at": "2026-06-02T16:33:11"
+    }
+  ]
+}

@@ -1,0 +1,334 @@
+{
+  "run_id": "v4_B_group_openrouter_20260602T163459479420",
+  "version": "v4",
+  "artifact_version": "v4+p086e937d41fd+t2013635d8284",
+  "prompt_hash": "086e937d41fdb4716cdd8a5823d126588eafe791751819d7d913f21d2ecdebea",
+  "tools_hash": "2013635d8284e7cbba8e90780b954c10e1d8dd3576e153edd64c56cfdc2f1609",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "/Users/nhduongss/VinUni Project/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0/artifacts/system_prompt.md",
+  "tools": "/Users/nhduongss/VinUni Project/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0/artifacts/tools.yaml",
+  "eval_cases": "data/eval_trends.json",
+  "dataset_id": "day04_v2_research_trends",
+  "dataset_role": "group",
+  "description": "Eval for twitter_trends tool.",
+  "generated_at": "2026-06-02T16:34:59",
+  "summary": {
+    "total_cases": 2,
+    "measured_cases": 2,
+    "provider_error_cases": 0,
+    "passed_cases": 2,
+    "case_accuracy": 1.0,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 1.0,
+    "multiturn_accuracy": null,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "T01_trends",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {},
+      "input": "Trên Twitter hiện tại đang có gì hot?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "twitter_trends"
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "twitter_trends",
+          "args": {},
+          "result": {
+            "tool": "twitter_trends",
+            "status": "success",
+            "trends": [
+              {
+                "name": "#Cocktail2",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Pune Police",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#GOOD_",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#JusticeForHarvannshChawla",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#rrb_groupd_result_do",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#MadeInPlay",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "प्रेमानंद महाराज",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Vrindavan",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "अनिल अग्रवाल",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Vedanta",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Anil Agarwal",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Premanand Ji Maharaj",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Auqib Nabi",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Virat Kohli and Anushka Sharma",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "अभिषेक मिश्रा",
+                "query": null,
+                "tweet_volume": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "T02_trends_and_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {},
+      "input": "Xem các xu hướng đang hot trên X và tìm tin tức về AI trên web.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "twitter_trends"
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "twitter_trends",
+            "args": {}
+          },
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "twitter_trends",
+          "args": {},
+          "result": {
+            "tool": "twitter_trends",
+            "status": "success",
+            "trends": [
+              {
+                "name": "#هشتاقك_هنا_θθ212۷۸6o6з165",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "الكويت",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#BLUE_LIGHT_GUIDES_US_HOME",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#OUR_SEVEN_LIGHTS",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#RCBvsGT",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Abu Dhabi",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "#صباح_الخير",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "فرنسا",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "لبنان",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Saylor",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Lebanon",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Hezbollah",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "شهر جديد",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "بيروت",
+                "query": null,
+                "tweet_volume": null
+              },
+              {
+                "name": "Kuwait",
+                "query": null,
+                "tweet_volume": null
+              }
+            ]
+          }
+        },
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "AI is rewiring the oilfield - Oil & Gas 360",
+                "url": "https://www.oilandgas360.com/ai-is-rewiring-the-oilfield/",
+                "source": "oilandgas360.com",
+                "summary": "# AI is rewiring the oilfield. * AI, geology, oil and gas, operators, technology. (By Oil & Gas 360) Part I – For decades, the oilfield was built on horsepower, steel, and geology. Now it is increasingly being built on algorithms. Artificial intelligence and digital technologies are rapidly transforming how oil and gas companies drill wells, complete reservoirs, manage production, and reduce operational costs. Operators can now analyze millions of data points in real time to improve drilling performance, optimize completions, predict failures, and automate operational decisions. Machine learning systems are helping companies identify the most productive drilling zones, reduce nonproductive time, and improve recovery rates from existing wells. Operators are increasingly deploying AI-assisted drilling systems capable of adjusting drilling parameters in real time, optimizing weight-on-bit, drilling speed, and well placement without constant human intervention. Analysts project that AI and digital technologies could generate hundreds of billions of dollars in additional value across oil and gas over the next decade through improved recovery, operational efficiencies, predictive maintenance, and optimized drilling.",
+                "score": 0.33665863
+              },
+              {
+                "title": "So you’ve heard these AI terms and nodded along; let’s fix that - TechCrunch",
+                "url": "https://techcrunch.com/2026/05/29/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms/",
+                "source": "techcrunch.com",
+                "summary": "Artificial intelligence is changing the world, and simultaneously inventing a whole new language to describe how it’s doing it. But it generally refers to AI that’s more capable than the average human at many, if not most, tasks. OpenAI CEO Sam Altman once described AGI as the “equivalent of a median human that you could hire as a co-worker.” Meanwhile, OpenAI’s charter defines AGI as “highly autonomous systems that outperform humans at most economically valuable work.” Google DeepMind’s understanding differs slightly from these two definitions; the lab views AGI as “AI that’s at least as capable as humans at most cognitive tasks.” Confused? An AI agent refers to a tool that uses AI technologies to perform a series of tasks on your behalf — beyond what a more basic AI chatbot could do — such as filing expenses, booking tickets or a table at a restaurant, or even writing and maintaining code.",
+                "score": 0.38762134
+              },
+              {
+                "title": "AI emerging as top driver of overall Internet traffic growth – study - Light Reading",
+                "url": "https://www.lightreading.com/ai-machine-learning/ai-emerging-as-top-driver-of-overall-internet-traffic-growth-study",
+                "source": "lightreading.com",
+                "summary": "AI is poised to boost consumer-driven traffic by about 6.6x by the mid-2030s and reshape infrastructure requirements, Cisco found in its first WAN-focused AI report. Consumer-driven AI traffic currently represents a small portion of overall Internet traffic today, but the accelerating adoption of AI, including agentic AI, will make AI the dominant driver in the decade to come, Cisco predicts in a new study. As consumer AI adoption reaches \"near-universal usage\" in the coming years, AI and agentic AI are projected to increase consumer-driven network traffic by about 6.6x by the mid-2030s, Cisco projects in its first-ever \"AI Impact on Wide Area Networks\" report. That expansion represents about 63% of additional growth compared to non-AI scenarios, Cisco projects in the study, which aims to evaluate AI's impact on the WAN rather than in areas such as GPUs and data center fabrics, and provide guidance on network designs and capacity planning.",
+                "score": 0.3421763
+              },
+              {
+                "title": "The $500 Million AI Mistake Every Company Is Rushing to Avoid - inc.com",
+                "url": "https://www.inc.com/kevin-haynes/the-500-million-ai-mistake-every-company-is-rushing-to-avoid/91353205",
+                "source": "inc.com",
+                "summary": "# The $500 Million AI Mistake Every Company Is Rushing to Avoid. Enterprise software companies have been raking in a fortune with the same sales spiel: Flip the switch on generative AI and thousands of employees will instantly become hyper-productive, operations will run smoothly on autopilot, and corporate debt will soon vanish. Axios reports that an unnamed corporation managed to “accidentally” torch roughly $500 million in a single month. While that specific $500 million anecdote stems from a single consultant’s client, it is undoubtedly the proverbial canary in a coal mine. AI sticker shock is stunning corporate America, exposing a fundamental failure to recognize that modern technology costs real money. Ali Ansari, chief executive of the model training firm Micro1, said he’s now seeing a “healthy swing” away from AI overuse, or “tokenmaxxing”—the push to burn as many AI tokens as possible. “The reality of AI right now is that it only works for coding,” he said.",
+                "score": 0.25676486
+              },
+              {
+                "title": "The AI Governance Gap: Verizon's 2026 DBIR Shows Attackers Scaling AI While Employees Leak Data Through It - securityboulevard.com",
+                "url": "https://securityboulevard.com/2026/05/the-ai-governance-gap-verizons-2026-dbir-shows-attackers-scaling-ai-while-employees-leak-data-through-it/",
+                "source": "securityboulevard.com",
+                "summary": "# The AI Governance Gap: Verizon’s 2026 DBIR Shows Attackers Scaling AI While Employees Leak Data Through It. On May 20, 2026, Verizon published the 2026 Data Breach Investigations Report with a dedicated AI section built on original research conducted with Anthropic. The study examined 793 threat actors and found the median actor used AI across 15 MITRE ATT&CK techniques. The report highlighted VoidLink, a malware framework an AI agent assembled in six days, and PromptLock, described as the first AI powered ransomware to dynamically generate cross platform encryption scripts through local large language models. Sixty seven percent of employees access AI from non corporate accounts on corporate devices. Source code is the number one data type uploaded to unauthorized AI services. Regular AI users tripled from 15 percent to 45 percent in a single year. At the same time, employees are creating new data loss paths through ungoverned AI usage that most organizations cannot even inventory.",
+                "score": 0.24254677
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
