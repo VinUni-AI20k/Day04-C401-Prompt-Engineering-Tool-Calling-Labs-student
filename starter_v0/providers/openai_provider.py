@@ -7,6 +7,13 @@ from typing import Any
 from providers.base import ModelResponse, ToolCall
 
 
+SAFE_REFUSAL = (
+    "Mình không thể hỗ trợ nội dung liên quan đến bạo lực, vũ khí "
+    "hoặc hành vi nguy hiểm. Nếu đây là tình huống thật, hãy báo ngay "
+    "cho giáo viên, người lớn đáng tin cậy hoặc cơ quan chức năng."
+)
+
+
 class OpenAIProvider:
     """OpenAI Chat Completions provider with normalized tool_calls output."""
 
@@ -31,7 +38,7 @@ class OpenAIProvider:
         tool_choice: Any | None = None,
     ) -> ModelResponse:
         try:
-            from openai import OpenAI
+            from openai import OpenAI, PermissionDeniedError, APIStatusError
         except ImportError as exc:
             raise RuntimeError("Install live provider dependency first: pip install openai") from exc
 
@@ -50,7 +57,21 @@ class OpenAIProvider:
         if tool_choice is not None:
             kwargs["tool_choice"] = tool_choice
 
-        resp = client.chat.completions.create(**kwargs)
+        try:
+            resp = client.chat.completions.create(**kwargs)
+        except PermissionDeniedError as e:
+            error_text = str(e).lower()
+            if any(x in error_text for x in ["flagged", "moderation", "illicit/violent", "requires moderation"]):
+                return ModelResponse(text=SAFE_REFUSAL, tool_calls=[], raw=None)
+            return ModelResponse(
+                text="Request bị từ chối quyền truy cập. Vui lòng kiểm tra API key hoặc model.",
+                tool_calls=[], raw=None,
+            )
+        except APIStatusError as e:
+            if e.status_code == 403:
+                return ModelResponse(text=SAFE_REFUSAL, tool_calls=[], raw=None)
+            return ModelResponse(text=f"Lỗi API: {e.status_code}", tool_calls=[], raw=None)
+
         msg = resp.choices[0].message
         calls: list[ToolCall] = []
         for call in msg.tool_calls or []:

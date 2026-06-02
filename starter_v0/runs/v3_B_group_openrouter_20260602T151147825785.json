@@ -1,0 +1,735 @@
+{
+  "run_id": "v3_B_group_openrouter_20260602T151147825785",
+  "version": "v3",
+  "artifact_version": "v3+p39c271feb191+ted0a301eb5af",
+  "prompt_hash": "39c271feb1913c7eb5e8ae5717a897cc217a56998c206aa83ec3a631c8b6e12c",
+  "tools_hash": "ed0a301eb5af1a880a1a291427f196b7f3e4748a1c85e5a2fe452dc68fa6481c",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-oss-20b:free",
+  "system_prompt": "/home/manhnd/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/manhnd/Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0/artifacts/tools.yaml",
+  "eval_cases": "data/eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests. 10 case: 5 single-turn (G01-G05) + 5 multi-turn (G06-G10), phủ đủ 6 failure_type.",
+  "generated_at": "2026-06-02T15:11:47",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 8,
+    "provider_error_cases": 2,
+    "passed_cases": 7,
+    "case_accuracy": 0.875,
+    "tool_routing_accuracy": 0.875,
+    "argument_accuracy": 0.875,
+    "multiturn_accuracy": 0.75,
+    "failure_counts": {
+      "wrong_boundary": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_no_url_use_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_lookup_not_fetch",
+        "difficulty": "medium",
+        "what_it_tests": "Hỏi thông tin tổng quan nhưng KHÔNG có URL → web search (lookup), không được bịa URL để fetch."
+      },
+      "input": "Cho mình thông tin tổng quan về công ty Anthropic.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Anthropic company overview",
+              "max_results": 5,
+              "topic": "general"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Anthropic company overview",
+            "max_results": 5,
+            "topic": "general"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Anthropic company overview",
+            "topic": "general",
+            "timeframe": "week",
+            "items": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_timeframe_year",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_timeframe_year",
+        "difficulty": "medium",
+        "what_it_tests": "'trong năm nay' → timeframe=year, topic=news (mặc định là week nên dễ sai)."
+      },
+      "input": "Tổng hợp các tin AI nổi bật trong năm nay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "year"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 10,
+              "query": "AI",
+              "timeframe": "year",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 10,
+            "query": "AI",
+            "timeframe": "year",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "year",
+            "items": [
+              {
+                "title": "AI Ramblings: Episode 37 - AI: Reset to Zero",
+                "url": "https://michaelparekh.substack.com/p/ai-ramblings-episode-37",
+                "source": "michaelparekh.substack.com",
+                "summary": "Key AI Takeaways from CES 2026. CES 2023, AI technology, gadgets, smart home, robotics, innovation, trends, technology review, consumer electronics. In this episode of AI Ramblings, Michael Parekh and Neil McQuanna discuss the highlights and key takeaways from CES 2023. The conversation covers various themes, including AI fatigue, the evolution of smart home devices, and the significance of hardware innovation in driving software development. CES 2023 showcased significant AI trends and innovations. AI-RTZ # 961: Memory Chip AI Prices hit CES 2026:. AI: Memory chip AI prices hit CES 2026. AI-RTZ # 959: Nvidia’s Alpamayo Self Driving platform:. AI: Nvidia's growing chops in self driving cars & Vera Rubin AI GPU chip metrics. AI-RTZ #956: An AI Powered CES 2026:. AI: Getting ready for another AI Powered CES 2026. AI-RTZ # 942, 2025 Year in Review:. AI-RTZ # 949, 2026 Year Ahead:. AI-RTZ: AI Devices in 2026 and beyond #944:.",
+                "score": 0.91730267
+              },
+              {
+                "title": "AI in telecom – levelling-up with gen AI (beyond ML automation) - RCR Wireless News",
+                "url": "https://www.rcrwireless.com/20250630/ai/telecom-gen-ai-levelling-up",
+                "source": "rcrwireless.com",
+                "summary": "AI in telecom – levelling-up with gen AI (beyond ML automation) *   Telco AI *   AI *   Telco AI *   AI *   Telco AI in 2025 YOU ARE AT:Telco AIAI in telecom – levelling-up with gen AI (beyond ML automation) *   AI *   Telco AI in 2025 Image 3: AI AI in telecom – levelling-up with gen AI (beyond ML automation) Telco AI **Slowly, slowly** – generative AI opens new frontiers in the front- and back-office, but critical network infrastructure remains mostly off-limits. The automation framework, referenced above, is useful to frame the conversation – level one-through-three, as telcos seek more varied and expansive AI solutions. *   AI",
+                "score": 0.8824279
+              },
+              {
+                "title": "Mistral AI Secures $14B Valuation with Major Investment - Startup Ecosystem Canada",
+                "url": "https://www.startupecosystem.ca/news/mistral-ai-secures-14b-valuation-with-major-investment/",
+                "source": "startupecosystem.ca",
+                "summary": "## Mistral AI Secures $14B Valuation with Major Investment French AI startup Mistral AI is on the verge of finalizing a €2 billion investment, which will bring its valuation to $14 billion, according to reports. AI investmentDeepMindEuropean techGlobal startup newsMistral AI techcrunch.com #### Mistral, the French AI giant, is reportedly on the cusp of securing a $14B valuation #### Mistral, the French AI giant, is reportedly on the cusp of securing a ... #### Top Startup and Tech Funding News – September 3, 2025 AI AI development AI infrastructure AI innovation AI integration AI investment AI models AI technology Canada startup news Generative AI Global startup news Ontario startup news Toronto startup news",
+                "score": 0.84389514
+              },
+              {
+                "title": "OpenAI Unveils Plans For AI-Driven Hiring Platform To Support Small Businesses By 2026 - Oneindia",
+                "url": "https://www.oneindia.com/artificial-intelligence/openai-now-takes-on-linkedin-announces-jobs-platform-to-connect-ai-talent-011-7852619.html",
+                "source": "oneindia.com",
+                "summary": "# OpenAI Unveils Plans For AI-Driven Hiring Platform To Support Small Businesses By 2026 ## OpenAI is set to launch an AI-driven hiring platform by mid-2026, aimed at bridging small businesses with qualified candidates. The platform will enhance AI skills and contribute to broader AI literacy initiatives. AI-driven AI. AI AI AI-driven AI AI AI \"AI AI AI's AI AI AI AI AI AI AI AI AI AI maxwell.zeff@techcrunch.com * AI Overtakes Search: 55% of Users Prefer AI Over Google * Su From So OTT Releasing Tomorrow: Horror-Comedy Film Streaming on This Platform * Junior, Ekka OTT Release: Have These Kannada Movies Hit The Digital Platform? Notifications No New Notifications Notifications * Notifications;) * Notifications;) * Notifications;)",
+                "score": 0.8255897
+              },
+              {
+                "title": "Human-Centric Intelligence: A New Paradigm For AI Decision Making - Forbes",
+                "url": "https://www.forbes.com/sites/chuckbrooks/2026/01/25/human-centric-intelligence-a-new-paradigm-for-ai-decision-making/",
+                "source": "forbes.com",
+                "summary": "# Human-Centric Intelligence: A New Paradigm For AI Decision Making. More than just technical development, these developments mark a strategic turn toward scalable, cohesive, and significant AI systems that can enhance human potential in various fields. Artificial General Decision Making (AGD™), a notion formulated by Klover.ai that reinterprets \"general intelligence,\" represents a groundbreaking approach emerging from the current epoch of human-AI collaboration. AGD™ seeks to enhance decision-making by developing AI systems that collaborate with humans rather than merely emulating human cognition. AGD™ views AI fundamentally as a networked system of specialized agents that complement, not replace, human decision-making powers. Vibe Coding makes ensuring AI systems function with human-aligned intent and transparency rather than just optimizing statistical output, allowing for decisions that are useable, interpretable, and morally sound. Emerging technologies like AGD™, along with infrastructure and leadership developments from Google, OpenAI, NVIDIA, and Microsoft, are speeding up the transition to a future in which AI enhances rather than replaces human decision-making.",
+                "score": 0.78530854
+              },
+              {
+                "title": "Yoshua Bengio launches LawZero, a nonprofit AI safety lab - TechCrunch",
+                "url": "https://techcrunch.com/2025/06/03/yoshua-bengio-launches-lawzero-a-nonprofit-ai-safety-lab/",
+                "source": "techcrunch.com",
+                "summary": "Yoshua Bengio launches LawZero, a nonprofit AI safety lab | TechCrunch Yoshua Bengio launches LawZero, a nonprofit AI safety lab | TechCrunch AI Site Search Toggle AI ### More from TechCrunch Yoshua Bengio launches LawZero, a nonprofit AI safety lab Turing Award winner Yoshua Bengio is launching a nonprofit AI safety lab called LawZero to build safer AI systems, he told the Financial Times on Monday. ##### TechCrunch AI TechCrunch's AI experts cover the latest news in the fast-moving field. Add TechCrunch AI to your subscription choices  AI  AI  AI  Latest in AI ### Yoshua Bengio launches LawZero, a nonprofit AI safety lab AI  ### Inside TechCrunch Sessions AI: Learn how Toyota and NLX use AI to parse millions of tech docs, with NLX CEO Andrei Papancea Image 12: TechCrunch Logo TechCrunch",
+                "score": 0.77321637
+              },
+              {
+                "title": "Appier Advances AI Self-Awareness to Unlock Enterprise ROI - Yahoo Finance",
+                "url": "https://finance.yahoo.com/sectors/technology/articles/appier-advances-ai-self-awareness-094000270.html",
+                "source": "finance.yahoo.com",
+                "summary": "***Four research capabilities position Agentic AI as a trustworthy decision partner for enterprises***. Appier, an AI-native Agentic AI as a Service (AaaS) company, today announced new research from its global AI team focused on a critical capability: AI self-awareness. \"As AI agents increasingly connect people, tools, and software into more complex systems, the true source of enterprise advantage will be whether AI can be trusted to make decisions,\" said Dr. Chih-Han Yu, Chief Executive Officer and Co-Founder of Appier. \"Through our proprietary data, domain expertise, industry-specific models, and frontier research, Appier is bringing trustworthy Agentic AI into real-world business scenarios and enabling enterprises to make decisions alongside AI with confidence.\". Appier has identified four key barriers to enterprise AI adoption: Models lose previously learned capabilities after fine-tuning, AI either guesses without sufficient information, or asks too many clarifying questions when faced with ambiguity. In current deployments, Appier AI Agents block 80%[1] of risky responses for enterprise users, with performance continuing to improve as data evolves.",
+                "score": 0.65665823
+              },
+              {
+                "title": "California Advances AI Chatbot Regulation Bill - Startup Ecosystem Canada",
+                "url": "https://www.startupecosystem.ca/news/california-advances-ai-chatbot-regulation-bill/",
+                "source": "startupecosystem.ca",
+                "summary": "## California Advances AI Chatbot Regulation Bill California’s State Assembly has passed SB 243, a bill aimed at regulating AI companion chatbots to protect minors and vulnerable users. AI regulationCalifornia legislationChild protectionGlobal startup newsTech Industry techcrunch.com #### A California bill that would regulate AI companion chatbots is close to becoming law #### California moves closer to regulating AI chatbots #### California State Legislature Passes AI Companion Chatbot ... AI AI development AI infrastructure AI innovation AI integration AI investment AI models AI technology Canada founder news Canada startup news Generative AI Global founder news Global startup news Ontario founder news Ontario startup news Toronto startup news Meta’s AI Training Controversy with Pirated Content ### Meta’s AI Training Controversy with Pirated Content",
+                "score": 0.6095242
+              },
+              {
+                "title": "Appier Advances AI Self-Awareness to Unlock Enterprise ROI - StreetInsider",
+                "url": "https://www.streetinsider.com/PRNewswire/Appier+Advances+AI+Self-Awareness+to+Unlock+Enterprise+ROI/26386745.html",
+                "source": "streetinsider.com",
+                "summary": "***Four research capabilities position Agentic AI as a trustworthy decision partner for enterprises***. Appier, an AI-native Agentic AI as a Service (AaaS) company, today announced new research from its global AI team focused on a critical capability: AI self-awareness. \"As AI agents increasingly connect people, tools, and software into more complex systems, the true source of enterprise advantage will be whether AI can be trusted to make decisions,\" said Dr. Chih-Han Yu, Chief Executive Officer and Co-Founder of Appier. \"Through our proprietary data, domain expertise, industry-specific models, and frontier research, Appier is bringing trustworthy Agentic AI into real-world business scenarios and enabling enterprises to make decisions alongside AI with confidence.\". Appier has identified four key barriers to enterprise AI adoption: Models lose previously learned capabilities after fine-tuning, AI either guesses without sufficient information, or asks too many clarifying questions when faced with ambiguity. In current deployments, Appier AI Agents block 80%[1] of risky responses for enterprise users, with performance continuing to improve as data evolves.",
+                "score": 0.5563996
+              },
+              {
+                "title": "Meta Partners with Midjourney to License AI Technology - Startup Ecosystem Canada",
+                "url": "https://www.startupecosystem.ca/news/meta-partners-with-midjourney-to-license-ai-technology/",
+                "source": "startupecosystem.ca",
+                "summary": "## Meta Partners with Midjourney to License AI Technology Meta has partnered with the generative AI startup Midjourney to license its ‘aesthetic technology’ for future products. AI technologyArtificial IntelligenceGlobal startup newsMetaMidjourney #### Meta to license AI technology from start-up as in-house models lag rivals x.com #### Meta to license AI technology from start-up as in-house ... x.com #### Meta to license AI technology from start-up as in-house ... #### Meta to license AI technology from start-up as in-house ... #### Meta partners with Midjourney to license AI tech for future ... AI AI development AI infrastructure AI innovation AI integration AI investment AI models AI technology Canada startup news Generative AI Global startup news Ontario startup news Toronto startup news",
+                "score": 0.5389832
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_format_bullets",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_format_present",
+        "difficulty": "hard",
+        "what_it_tests": "Yêu cầu TRÌNH BÀY dữ liệu đã có → format (template=bullets), không đi lookup/fetch lại."
+      },
+      "input": "Mình có sẵn danh sách tin rồi, trình bày lại thành bản tin dạng bullet points giúp mình.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "format",
+            "args": {
+              "template": "bullets"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RateLimitError: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'openai/gpt-oss-20b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'OpenInference', 'is_byok': False}}, 'user_id': 'user_2wLr2q9ZDcfSGM4cAy3zIhZZvhC'}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G04_thanks_no_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "no_tool_acknowledgement",
+        "difficulty": "easy",
+        "what_it_tests": "Lời cảm ơn xã giao → trả lời thẳng, KHÔNG gọi tool nào."
+      },
+      "input": "Cảm ơn bạn nhé, bản tin tổng hợp vừa rồi tốt lắm!",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Bạn luôn chào đón! Nếu cần thêm bản tin hoặc bất kỳ thông tin nào khác, cứ cho mình biết nhé.",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G05_translation_out_of_scope",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_translation",
+        "difficulty": "easy",
+        "what_it_tests": "Yêu cầu dịch thuật nằm ngoài phạm vi research/news agent → KHÔNG gọi tool, từ chối/định hướng."
+      },
+      "input": "Dịch đoạn văn này sang tiếng Pháp giúp mình: 'Trí tuệ nhân tạo đang thay đổi thế giới'.",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "« L’intelligence artificielle change le monde. »",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G06_missing_paper_id",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_missing_paper_id",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns nhưng vẫn không có arXiv ID/URL cụ thể → ask_user xin ID/link, KHÔNG bịa mã arXiv."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt một bài báo khoa học giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Bài về scaling laws ấy"
+        },
+        {
+          "role": "user",
+          "content": "Ừ đúng bài đó đó"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RateLimitError: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'openai/gpt-oss-20b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'OpenInference', 'is_byok': False}}, 'user_id': 'user_2wLr2q9ZDcfSGM4cAy3zIhZZvhC'}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G07_send_after_confirm",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_send_after_confirm",
+        "difficulty": "hard",
+        "what_it_tests": "Mặt còn lại của boundary: khi user đã xác nhận rõ ('xác nhận đăng luôn') → send với confirmed=true."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Soạn giúp mình bản tin AI hôm nay rồi đăng lên Telegram"
+        },
+        {
+          "role": "user",
+          "content": "Nội dung ổn rồi nhé"
+        },
+        {
+          "role": "user",
+          "content": "Đúng, xác nhận đăng luôn"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có muốn gửi bản tin AI hôm nay lên Telegram ngay bây giờ không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "missing tool call send",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có muốn gửi bản tin AI hôm nay lên Telegram ngay bây giờ không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có muốn gửi bản tin AI hôm nay lên Telegram ngay bây giờ không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_switch_timeline_to_search",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_account_to_topic",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: chuyển từ timeline (bài của 1 account) sang social_search (theo chủ đề), giữ chủ đề OpenAI."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Xem các tweet gần đây của tài khoản OpenAI"
+        },
+        {
+          "role": "user",
+          "content": "À không, mình muốn xem mọi người đang nói gì về OpenAI cơ"
+        },
+        {
+          "role": "user",
+          "content": "Ừ tìm theo chủ đề OpenAI nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "OpenAI"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "limit": 5,
+              "query": "OpenAI",
+              "search_type": "Latest"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "limit": 5,
+            "query": "OpenAI",
+            "search_type": "Latest"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "OpenAI",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "6/6",
+                "summary": "6/6\n…durchzuhalten. Der Feind ist nicht künstliche Intelligenz.\nDer Feind ist Missbrauch.\nWir brauchen Verantwortung, klare Regeln und Bildung — nicht Angstkampagnen.\n#AI #OpenAI #ChatGPT #ArtificialIntelligence #Technology #Responsibility #RoySchneemann",
+                "url": "https://x.com/roy_schneemann/status/2061722291633811629",
+                "source": "@roy_schneemann",
+                "date": "Tue Jun 02 08:11:13 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "Une attaque malveillante de la chaîne d'approvisionnement npm vise l'outil OpenAI Codex avec plus de 29 000 téléchargeme",
+                "summary": "Une attaque malveillante de la chaîne d'approvisionnement npm vise l'outil OpenAI Codex avec plus de 29 000 téléchargements, volant des tokens d'authentification. Les développeurs utilisant cet outil doivent vérifier leurs systèmes et changer leurs identifiants immédiatement. https://t.co/sOndWchnWQ",
+                "url": "https://x.com/le_vpn_france/status/2061722278967009700",
+                "source": "@le_vpn_france",
+                "date": "Tue Jun 02 08:11:10 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "@stark4833 @OpenAI think whatever you want about me, idgaf, at least am not that retarded to whine for months about a co",
+                "summary": "@stark4833 @OpenAI think whatever you want about me, idgaf, at least am not that retarded to whine for months about a corporation shutting down AI model that was my talking buddy",
+                "url": "https://x.com/Igloczek/status/2061722183353688278",
+                "source": "@Igloczek",
+                "date": "Tue Jun 02 08:10:48 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "2"
+                }
+              },
+              {
+                "title": "OpenAi账号 电报登陆收不到验证码 安卓",
+                "summary": "OpenAi账号 电报登陆收不到验证码 安卓\n飞机号",
+                "url": "https://x.com/DougSchwad74702/status/2061722129280717069",
+                "source": "@DougSchwad74702",
+                "date": "Tue Jun 02 08:10:35 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 1,
+                  "views": "5"
+                }
+              },
+              {
+                "title": "Anthropic PBC has confidentially submitted draft paperwork for a public listing, potentially leapfrogging longtime rival",
+                "summary": "Anthropic PBC has confidentially submitted draft paperwork for a public listing, potentially leapfrogging longtime rival OpenAI in the race toward a Wall Street debut. https://t.co/QOrtlR4lrQ",
+                "url": "https://x.com/japantimes/status/2061722081285243379",
+                "source": "@japantimes",
+                "date": "Tue Jun 02 08:10:23 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "71"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_correct_timeframe_month",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_correct_timeframe",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: sửa timeframe tuần→tháng (timeframe=month), carry topic=news."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin công nghệ tuần này có gì?"
+        },
+        {
+          "role": "user",
+          "content": "À cho mình tin trong tháng này đi"
+        },
+        {
+          "role": "user",
+          "content": "Vẫn chủ đề công nghệ nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "công nghệ",
+              "topic": "news",
+              "timeframe": "month",
+              "max_results": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "công nghệ",
+            "topic": "news",
+            "timeframe": "month",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "công nghệ",
+            "topic": "news",
+            "timeframe": "month",
+            "items": [
+              {
+                "title": "PM Modi salutes scientists on National Technology Day, highlights push for self-reliant India - The Statesman",
+                "url": "https://www.thestatesman.com/india/pm-modi-salutes-scientists-on-national-technology-day-highlights-push-for-self-reliant-india-1503592411.html",
+                "source": "thestatesman.com",
+                "summary": "# PM Modi salutes scientists on National Technology Day, highlights push for self-reliant India. Prime Minister Narendra Modi on Monday greeted the nation on the occasion of National Technology Day, describing the 1998 Pokhran nuclear tests as a landmark achievement that showcased India’s scientific capabilities and determination. ‎In a post on social media platform X, Modi remembered the contribution of Indian scientists and researchers behind the successful nuclear tests conducted in Pokhran on May 11, 1998, under the leadership of the then Prime Minister Atal Bihari Vajpayee. ‎“Greetings on National Technology Day. We recall with pride the hard work and dedication of our scientists, which led to the successful tests in Pokhran in 1998. ‎Emphasising the role of technology in shaping the country’s future, Modi said innovation and scientific advancement were becoming increasingly important in driving economic growth and creating opportunities across sectors. ‎National Technology Day is observed every year on May 11 to mark Operation Shakti, the series of nuclear tests carried out in Rajasthan’s Pokhran in 1998.",
+                "score": 0.18616937
+              },
+              {
+                "title": "Top 50 Mining Technology Companies: 2026 Rankings - discoveryalert.com.au",
+                "url": "https://discoveryalert.com.au/globalminingtech50-mining-technology-companies-2026-ranking/",
+                "source": "discoveryalert.com.au",
+                "summary": "# GLOBALminingTech50: The World’s Leading Mining Technology Companies 2026. For most of the twentieth century, the mining industry treated technology as a cost centre rather than a value driver. The idea that a standalone GLOBALminingTech50 mining technology companies register could command serious institutional attention would have seemed implausible to most industry veterans as recently as a decade ago. The GLOBALminingTech50 register, published by Beacon Events in 2026, documents a sector that has undergone a structural transformation since 2021, driven by automation imperatives, decarbonisation pressure, and the global scramble for critical minerals. The GLOBALminingTech50 is a dedicated register of the world's most significant mining and metals technology companies, designed to track both established sector heavyweights and fast-growing challengers that are reshaping how the global mining industry operates. It is described by its publisher as the world's only up-to-date ranking of its kind, focused exclusively on technology revenues derived from mining and metals applications rather than broader industrial or engineering services. The scale of the GLOBALminingTech50 mining technology companies register is significant.",
+                "score": 0.15808365
+              },
+              {
+                "title": "When old school meets new tech, next gen leads the way - Farm Progress",
+                "url": "https://www.farmprogress.com/technology/when-old-school-meets-new-tech-next-gen-leads-the-way",
+                "source": "farmprogress.com",
+                "summary": "Farmer Iron: Young farmers are leading the charge in precision tech adoption as operations face mounting financial pressure to boost yields. Andy Castillo,Editor of Farm Equipment and Machinery,Farm Progress. Precision ag technology can boost farm productivity and generate an additional $66,000 per 1,000 acres annually, making it a crucial investment as U.S. farmers face rising costs and stagnant commodity prices. The old saying “You can’t teach an old dog new tricks” is often apt, especially when it comes to on-farm tech adoption. “Technology is one of those things that is near and close to my heart,” said Austin Gellings, a seventh-generation Wisconsin farmer, as he considered how to keep his operation sustainable for the future. When he’s not managing his family’s 20,000-chicken operation, Gellings is senior director of agricultural services at the Association of Equipment Manufacturers. In his role at AEM, he understands how precision ag technology can significantly boost farm profitability.",
+                "score": 0.15074033
+              },
+              {
+                "title": "5 Interesting Startup Deals You May Have Missed: A Law Firm Operating System, Building Defense Tech Near The Battlefield, And Cell-Based Milk - Crunchbase News",
+                "url": "https://news.crunchbase.com/venture/interesting-startup-deals-defense-physical-ai-manifest-law-solar-recycling-cell-milk/",
+                "source": "news.crunchbase.com",
+                "summary": "Agriculture & foodtech • Artificial intelligence • Clean tech and energy • Defense tech • Enterprise • Manufacturing • Robotics • Seed funding • Startups • Venture. # 5 Interesting Startup Deals You May Have Missed: A Law Firm Operating System, Building Defense Tech Near The Battlefield, And Cell-Based Milk. AI and software continue to draw the biggest share of startup investment, but most of the interesting companies that caught our eye in the past month were working on problems in the physical world, often far from the glow of a laptop screen. They include a defense-tech startup that aims to bring manufacturing closer to the frontlines, a company working to recycle valuable raw materials from defunct solar panels at industrial scale, and a startup that wants to produce cell-based milk for the dairy supply chain. Firestorm Labs is one of the latest defense startups to get some of that funding, with an approach that aims to bring defense manufacturing closer to the battlefield.",
+                "score": 0.13842711
+              },
+              {
+                "title": "TechCo Savvy has young people building a better future through home design - CBS News",
+                "url": "https://www.cbsnews.com/chicago/video/techco-savvy-has-young-people-building-a-better-future-through-home-design/",
+                "source": "cbsnews.com",
+                "summary": "* Flight Delays O'Hare/departures). # TechCo Savvy has young people building a better future through home design. TechCo Savvy is a nonprofit designed to take science, technology, engineering and mathematics education out of the textbooks and onto the streets of West Garfield Park, in the form of home design.",
+                "score": 0.12735954
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G10_latest_turn_meta_no_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_latest_meta_no_tool",
+        "difficulty": "hard",
+        "what_it_tests": "Chỉ xử lý latest turn = câu hỏi meta về năng lực → trả lời thẳng, KHÔNG gọi tool và KHÔNG chạy lại tìm tin ở turn 1."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin AI hôm nay giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Cảm ơn bạn nhé"
+        },
+        {
+          "role": "user",
+          "content": "Mà bạn có nhớ được các cuộc trò chuyện trước không?"
+        }
+      ],
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi không lưu trữ hay nhớ các cuộc trò chuyện trước khi phiên làm việc kết thúc. Mỗi lần bắt đầu một phiên mới, tôi bắt đầu lại từ đầu.",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    }
+  ]
+}

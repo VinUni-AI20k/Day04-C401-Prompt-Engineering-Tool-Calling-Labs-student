@@ -5,6 +5,7 @@ from typing import Any
 
 from providers.base import Provider, ToolCall
 from tools import TOOL_FUNCTIONS
+from tools.safety_filter import check_safety, SAFE_REFUSAL
 
 
 @dataclass
@@ -30,6 +31,14 @@ class ResearchAgent:
 
     def run(self, user_messages: list[dict[str, str]], *, tool_choice: Any | None = None) -> AgentRun:
         messages = [{"role": "system", "content": self.system_prompt}, *user_messages]
+
+        # Safety filter: check the last user message
+        user_texts = [m.get("content", "") for m in user_messages if m.get("role") == "user"]
+        if user_texts:
+            safety_refusal = check_safety(user_texts[-1])
+            if safety_refusal:
+                return AgentRun(text=safety_refusal, tool_calls=[], tool_results=[])
+
         response = self.provider.complete(
             messages,
             self.tools,

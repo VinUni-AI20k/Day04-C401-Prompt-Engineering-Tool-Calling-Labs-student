@@ -21,12 +21,7 @@ from .summarize.tool import summarize_text
 from .translate.tool import translate_text
 from .extract_entities.tool import extract_entities
 from .rank_items.tool import rank_items
-
-# New bonus tools
-from .summarize.tool import summarize_text
 from .dedupe.tool import dedupe_items
-from .rank_items.tool import rank_items
-from .extract_entities.tool import extract_entities
 
 
 # NOTE (starter_v0): tool names here are intentionally vague. These keys are the
@@ -50,11 +45,7 @@ TOOL_FUNCTIONS = {
     "dedupe": dedupe_items,
     "rank_items": rank_items,
     "extract_entities": extract_entities,
-
-    "summarize": summarize_text,
     "translate": translate_text,
-    "extract_entities": extract_entities,
-    "rank_items": rank_items,
 }
 
 
