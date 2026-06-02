@@ -27,8 +27,12 @@ Preflight:
 
 ```bash
 cd starter_v0
-python scripts/preflight_provider.py --provider openrouter
+py scripts/preflight_provider.py --provider openrouter
 ```
+
+Gemini is also supported, but its endpoint can return temporary `503 UNAVAILABLE`
+during demand spikes. If you use Gemini, wait a bit and rerun the preflight, or
+fall back to the recommended OpenRouter path for class.
 
 ## 2. Tavily — `lookup`
 
