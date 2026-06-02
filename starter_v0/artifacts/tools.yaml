@@ -9,14 +9,24 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Gửi một câu hỏi hoặc hộp thoại yêu cầu người dùng làm rõ, cung cấp thêm thông tin thiếu hoặc xác nhận hành động."
     parameters:
       type: object
       properties:
-        question: {type: string, default: "", description: "Câu hỏi"}
-        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Kiểu trả lời"}
-        options: {type: array, default: [], items: {type: string}, description: "Các lựa chọn"}
-      required: [question]
+        question: 
+          type: string
+          description: "Nội dung câu hỏi hoặc thông báo hiển thị cho người dùng."
+        response_type: 
+          type: string 
+          enum: [text, yes_no, choice]
+          default: "text" 
+          description: "Kiểu tương tác bắt buộc: Chọn 'yes_no' KHI VÀ CHỈ KHI cần xác nhận trước khi thực hiện hành động ghi/gửi dữ liệu nguy hiểm (Telegram, Slack). Chọn 'choice' nếu yêu cầu người dùng chọn từ danh sách options cung cấp sẵn. Chọn 'text' cho các câu hỏi mở xin thêm thông tin (URL, từ khóa)."
+        options: 
+          type: array 
+          default: [] 
+          items: {type: string} 
+          description: "Danh sách các lựa chọn (chỉ cung cấp khi response_type là 'choice')."
+    required: [question]
 
   - name: timeline
     description: "Lấy các bài đăng gần đây của một tài khoản mạng xã hội cụ thể."
@@ -87,24 +97,31 @@ tools:
       required: [url]
 
   - name: format
-    description: "Trình bày dữ liệu đã có thành văn bản."
+    description: "Trình bày cấu trúc dữ liệu đã thu thập được thành văn bản hoàn chỉnh theo khuôn mẫu (template) quy định."
     parameters:
       type: object
       properties:
         items:
           type: array
           default: []
-          description: "Danh sách item"
+          description: "Mảng danh sách các bài viết hoặc bài đăng hợp lệ thu thập từ các công cụ tìm kiếm."
           items:
             type: object
             properties:
-              title: {type: string}
-              url: {type: string}
-              source: {type: string}
-              summary: {type: string}
-              section: {type: string}
-        template: {type: string, enum: [brief, sections, bullets, thread, daily_ai_vn], default: "sections", description: "Khuôn"}
-        headline: {type: string, default: "", description: "Tiêu đề"}
+              title: {type: string, description: "Tiêu đề chính xác của bài viết hoặc bài đăng."}
+              url: {type: string, description: "Đường dẫn URL nguồn. TUYỆT ĐỐI KHÔNG để trống hoặc tự bịa ra link giả lập nếu không có."}
+              source: {type: string, description: "Tên nguồn bài viết hoặc tên tài khoản đăng bài."}
+              summary: {type: string, description: "Tóm tắt ngắn gọn nội dung cốt lõi của bài viết."}
+              section: {type: string, description: "Tên phân đoạn chuyên mục phù hợp với bài viết."}
+        template: 
+          type: string 
+          enum: [brief, sections, bullets, thread, daily_ai_vn] 
+          default: "sections" 
+          description: "Khuôn mẫu định dạng văn bản đầu ra theo yêu cầu cụ thể của người dùng."
+        headline: 
+          type: string 
+          default: "" 
+          description: "Tiêu đề lớn bao quát của toàn bộ bản tin văn bản."
       required: [items, template]
 
   # ---------------- Bonus tools ----------------
@@ -124,31 +141,97 @@ tools:
       required: [text, confirmed]
 
   - name: policy
-    description: "Tìm trong tài liệu nội bộ."
+    description: "Tra cứu, tìm kiếm quy định và thông tin hướng dẫn trong kho tài liệu nội bộ."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Nhóm"}
-        top_k: {type: integer, default: 3, description: "Số mục"}
+        query: 
+          type: string 
+          default: "" 
+          description: "Từ khóa chính cần tra cứu. Lọc bỏ các từ chỉ hành động hoặc từ rác không liên quan."
+        policy_area: 
+          type: string 
+          enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage] 
+          default: "all" 
+          description: "Phân vùng tài liệu nội bộ để thu hẹp phạm vi tìm kiếm."
+        top_k: 
+          type: integer 
+          default: 3 
+          description: "Số lượng mục tài liệu tối đa cần trả về."
       required: [query]
 
   - name: papers
-    description: "Tìm bài báo khoa học."
+    description: "Tìm kiếm các bài báo, công trình nghiên cứu khoa học từ cơ sở dữ liệu học thuật."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Từ khóa"}
-        max_results: {type: integer, default: 5, description: "Số lượng"}
-        sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Sắp xếp"}
+        query: 
+          type: string 
+          default: "" 
+          description: "Từ khóa khoa học hoặc tên mô hình/thuật toán (Ví dụ: 'YOLOv8', 'RAG'). TUYỆT ĐỐI KHÔNG chứa các cụm từ chỉ thời gian (như 'mới nhất', 'gần đây') hoặc từ chỉ cách sắp xếp vào đây vì đã được xử lý bởi tham số sort_by."
+        max_results: 
+          type: integer 
+          default: 5 
+          description: "Số lượng bài báo tối đa cần lấy."
+        sort_by: 
+          type: string 
+          enum: [relevance, lastUpdatedDate, submittedDate] 
+          default: "relevance" 
+          description: "Tiêu chí sắp xếp kết quả. Chọn 'lastUpdatedDate' hoặc 'submittedDate' nếu người dùng yêu cầu bài báo 'mới nhất'."
       required: [query]
 
   - name: paper_text
-    description: "Lấy nội dung text của một bài báo."
+    description: "Trích xuất và lấy toàn bộ nội dung văn bản chi tiết từ một bài báo khoa học thông qua URL Arxiv."
     parameters:
       type: object
       properties:
-        arxiv_url: {type: string, default: "", description: "ID hoặc địa chỉ"}
-        max_pages: {type: integer, default: 5, description: "Số trang"}
-        max_chars: {type: integer, default: 8000, description: "Số ký tự"}
+        arxiv_url: 
+          type: string 
+          default: "" 
+          description: "Đường dẫn URL chính xác hoặc ID của bài báo trên hệ thống Arxiv (Ví dụ: 'https://arxiv.org/abs/...'). KHÔNG tự ý đoán mò link nếu thiếu."
+        max_pages: 
+          type: integer 
+          default: 5 
+          description: "Giới hạn số lượng trang cần đọc."
+        max_chars: 
+          type: integer 
+          default: 8000 
+          description: "Giới hạn tổng số lượng ký tự tối đa cần trích xuất."
       required: [arxiv_url]
+      
+  - name: github_analyze
+    description: "Trích xuất và phân tích cấu trúc, mã nguồn (source code) của một tệp tin hoặc thư mục cụ thể từ kho lưu trữ GitHub công khai."
+    parameters:
+      type: object
+      properties:
+        repo_url: 
+          type: string
+          description: "Đường dẫn URL chính xác dẫn đến kho lưu trữ GitHub (Ví dụ: 'https://github.com/ultralytics/ultralytics'). TUYỆT ĐỐI KHÔNG tự bịa ra link nếu người dùng không cung cấp."
+        path: 
+          type: string
+          default: ""
+          description: "Đường dẫn cụ thể đến tệp tin hoặc thư mục cần đọc bên trong repo (Ví dụ: 'models/yolov8.py'). Nếu để trống, hệ thống sẽ đọc cấu trúc thư mục gốc (root directory)."
+        file_extension_filter:
+          type: array
+          default: []
+          items: {type: string}
+          description: "Danh sách các đuôi mở rộng của tệp tin cần lọc ra để phân tích (Ví dụ: ['py', 'cpp', 'json']). Chừa trống nếu muốn đọc mọi loại file."
+      required: [repo_url]
+
+  - name: youtube_transcript
+    description: "Lấy toàn bộ nội dung văn bản phụ đề (transcript) và mốc thời gian (timestamps) của một video cụ thể trên YouTube để phục vụ việc tóm tắt hoặc tra cứu nội dung."
+    parameters:
+      type: object
+      properties:
+        video_url: 
+          type: string
+          description: "Đường dẫn URL chính xác hoặc mã ID của video YouTube cần trích xuất (Ví dụ: 'https://www.youtube.com/watch?v=abc123xyz' hoặc 'abc123xyz')."
+        language: 
+          type: string
+          default: "en"
+          description: "Mã ngôn ngữ của phụ đề cần lấy (Ví dụ: 'en' cho tiếng Anh, 'vi' cho tiếng Việt). Nếu không tìm thấy ngôn ngữ yêu cầu, hệ thống sẽ tự động lấy phụ đề được tạo tự động (auto-generated)."
+        include_timestamps:
+          type: boolean
+          default: false
+          description: "Đặt là True nếu người dùng yêu cầu làm mốc thời gian chi tiết (timeline/timestamps) cho từng đoạn hội thoại trong video."
+      required: [video_url]
