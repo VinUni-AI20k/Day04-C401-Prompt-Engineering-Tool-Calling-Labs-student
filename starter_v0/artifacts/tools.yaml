@@ -116,3 +116,14 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  # ---------------- Custom tool ----------------
+  - name: summarize
+    description: "Tóm tắt văn bản dài thành ngắn bằng cách trích xuất các câu quan trọng. Hữu ích khi user gửi một bài viết dài và muốn tóm tắt nhanh."
+    parameters:
+      type: object
+      properties:
+        text: {type: string, default: "", description: "Văn bản cần tóm tắt"}
+        max_sentences: {type: integer, default: 5, description: "Số câu tối đa trong bản tóm tắt"}
+        max_chars: {type: integer, default: 500, description: "Số ký tự tối đa trong bản tóm tắt"}
+      required: [text]

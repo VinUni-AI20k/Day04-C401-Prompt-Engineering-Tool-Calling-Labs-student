@@ -3,5 +3,113 @@
   "dataset_role": "group",
   "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_summarize_text",
+      "phase": "B", "suite": "group",
+      "query": "Tóm tắt giúp mình đoạn văn bản sau: AI đang thay đổi cách chúng ta làm việc. Nhiều công ty đang đầu tư mạnh vào trí tuệ nhân tạo. Công nghệ này hứa hẹn sẽ tự động hóa nhiều nhiệm vụ. Tuy nhiên, có những lo ngại về việc làm và đạo đức. Các chuyên gia gợi ý rằng AI sẽ tạo ra loại công việc mới trong khi làm cho một số loại khác trở nên lỗi thời.",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "summarize", "args": {}}]},
+      "metadata": {"skill": "routing_summarize", "difficulty": "easy", "what_it_tests": "User gửi văn bản dài và yêu cầu tóm tắt → gọi summarize tool."}
+    },
+    {
+      "id": "G02_lookup_timeframe_month",
+      "phase": "B", "suite": "group",
+      "query": "Tin tức về blockchain trong tháng này có gì?",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "blockchain", "topic": "news", "timeframe": "month"}}]},
+      "metadata": {"skill": "arg_timeframe_month", "difficulty": "medium", "what_it_tests": "'tháng này' → timeframe=month (không phải week hoặc day)."}
+    },
+    {
+      "id": "G03_social_search_top_vietnamese",
+      "phase": "B", "suite": "group",
+      "query": "Những tweet phổ biến nhất về bóng đá Việt Nam",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "social_search", "args": {"query": "bóng đá Việt Nam", "search_type": "Top"}}]},
+      "metadata": {"skill": "arg_search_type_top_vn", "difficulty": "medium", "what_it_tests": "'phổ biến nhất' → search_type=Top, query tiếng Việt."}
+    },
+    {
+      "id": "G04_fetch_url_then_format",
+      "phase": "B", "suite": "group",
+      "query": "Đọc bài viết này rồi tóm tắt cho mình: https://arxiv.org/abs/2301.00001",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "fetch", "args": {"url": "https://arxiv.org/abs/2301.00001"}}]},
+      "metadata": {"skill": "routing_fetch_url", "difficulty": "easy", "what_it_tests": "Có link cụ thể → fetch, không phải lookup."}
+    },
+    {
+      "id": "G05_timeline_vietnamese_name",
+      "phase": "B", "suite": "group",
+      "query": "Tweet mới nhất của Nguyễn Hà Đông là gì?",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "metadata": {"skill": "clarify_unknown_handle", "difficulty": "medium", "what_it_tests": "Tên người Việt không nổi tiếng trên Twitter → clarify xin handle, không đoán bừa."}
+    },
+    {
+      "id": "G06_multiturn_summarize_then_send",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tóm tắt bài viết này cho mình: https://openai.com/blog/gpt-5"},
+        {"role": "user", "content": "Hay đấy, gửi lên Telegram giúp mình"},
+        {"role": "user", "content": "OK gửi đi"}
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {"tool_calls": [
+        {"name": "fetch", "args": {"url": "https://openai.com/blog/gpt-5"}},
+        {"name": "send", "args": {"confirmed": true}}
+      ]},
+      "metadata": {"skill": "multiturn_summarize_send", "difficulty": "hard", "what_it_tests": "3 turns: fetch bài viết → user xác nhận 'OK gửi đi' → send confirmed=true. Không cần clarify vì user đã xác nhận rõ ràng."}
+    },
+    {
+      "id": "G07_multiturn_correct_topic",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm tweet về AI trên Twitter"},
+        {"role": "user", "content": "Không phải AI, chuyển sang blockchain đi"},
+        {"role": "user", "content": "Tìm tweet mới nhất thôi"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "social_search", "args": {"query": "blockchain", "search_type": "Latest"}}]},
+      "metadata": {"skill": "multiturn_correct_topic", "difficulty": "hard", "what_it_tests": "3 turns: sửa chủ đề AI→blockchain, giữ Latest (mới nhất)."}
+    },
+    {
+      "id": "G08_multiturn_clarify_then_summarize",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tóm tắt giúp mình"},
+        {"role": "user", "content": "À sorry, đoạn này: Machine learning là một nhánh của AI. Nó cho phép máy tính học từ dữ liệu mà không cần được lập trình rõ ràng. Có nhiều loại machine learning khác nhau."},
+        {"role": "user", "content": "Tóm tắt ngắn thôi, 2 câu là được"}
+      ],
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "summarize", "args": {"max_sentences": 2}}]},
+      "metadata": {"skill": "multiturn_clarify_summarize", "difficulty": "hard", "what_it_tests": "3 turns: thiếu text → clarify → user cung cấp text + yêu cầu 2 câu → summarize(max_sentences=2)."}
+    },
+    {
+      "id": "G09_multiturn_switch_news_to_tweets",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm tin tức về Elon Musk trên web"},
+        {"role": "user", "content": "Thôi bỏ web, tìm trên Twitter xem mọi người nói gì về ổng"},
+        {"role": "user", "content": "Tìm tweet phổ biến nhất"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "social_search", "args": {"query": "Elon Musk", "search_type": "Top"}}]},
+      "metadata": {"skill": "multiturn_switch_web_to_twitter", "difficulty": "hard", "what_it_tests": "3 turns: lookup→social_search, giữ query Elon Musk, search_type=Top."}
+    },
+    {
+      "id": "G10_multiturn_parallel_then_format",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm cả tin tức trên web và tweet về ChatGPT"},
+        {"role": "user", "content": "Gộp lại thành bản tin ngắn gọn cho mình"},
+        {"role": "user", "content": "Dạng bullets nhé"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [
+        {"name": "lookup", "args": {"query": "ChatGPT"}},
+        {"name": "social_search", "args": {"query": "ChatGPT"}},
+        {"name": "format", "args": {"template": "bullets"}}
+      ]},
+      "metadata": {"skill": "multiturn_parallel_format", "difficulty": "hard", "what_it_tests": "3 turns: lookup+social_search song song → format(template=bullets). Kiểm tra gọi đúng format sau khi có data."}
+    }
+  ]
 }
