@@ -116,3 +116,39 @@ tools:
         filename: {type: string, default: "", description: "Optional custom filename, with or without .pdf extension."}
         download_folder: {type: string, default: "downloads", description: "Folder to save file, relative to project root."}
       required: [url]
+
+  - name: wikipedia
+    description: "Search Wikipedia for articles, concepts, definitions, or general knowledge lookup."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Search keyword or topic, e.g. Quantum mechanics."}
+        limit: {type: integer, default: 3, description: "Max matching articles to retrieve."}
+      required: [query]
+
+  - name: github_search
+    description: "Search GitHub for repositories, libraries, tools, or open-source projects."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Search keyword, e.g. react native."}
+        limit: {type: integer, default: 5, description: "Max repositories to return."}
+      required: [query]
+
+  - name: crypto_price
+    description: "Get real-time price, market cap, and 24h change of a cryptocurrency."
+    parameters:
+      type: object
+      properties:
+        coin: {type: string, default: "", description: "Symbol or name of the coin, e.g. BTC, Solana, ETH."}
+      required: [coin]
+
+  - name: youtube_search
+    description: "Search YouTube for videos, explainer clips, or tutorials related to a topic."
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Search keywords or topic."}
+        limit: {type: integer, default: 5, description: "Max video results to return."}
+      required: [query]
+
