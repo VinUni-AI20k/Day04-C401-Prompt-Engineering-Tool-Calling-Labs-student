@@ -12,5 +12,5 @@ class OpenRouterProvider(OpenAIProvider):
         super().__init__(
             api_key_env="OPENROUTER_API_KEY",
             base_url=os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
-            default_model="openai/gpt-4o-mini",
+            default_model="qwen/qwen3-next-80b-a3b-instruct:free",
         )
