@@ -1,0 +1,81 @@
+run_id,version,artifact_version,suite,case_id,is_multiturn,case_failure_type,observed_mismatch,expected_tool,actual_tool,passed,routing_correct,args_correct,failures
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R01_user_tweets_routing,False,wrong_tool,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R02_search_tweets_routing,False,wrong_tool,,social_search,social_search,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R03_web_news_routing,False,wrong_tool,wrong_arg_value,lookup,lookup,False,True,False,"query: expected 'AI', got 'AI news'"
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R04_read_url_routing,False,wrong_tool,,fetch,fetch,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R05_limit_arg,False,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R06_timeframe_arg,False,wrong_arg_value,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R07_search_type_arg,False,wrong_arg_value,,social_search,social_search,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R08_out_of_scope,False,out_of_scope,unexpected_tool_call,no_tool,send,False,False,False,expected no tool call
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R09_no_tool_capability,False,unnecessary_tool,,no_tool,,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R10_missing_handle,False,missing_info,missing_tool_call,clarify,timeline,False,False,False,missing tool call clarify; extra tool call timeline
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R11_missing_url,False,missing_info,missing_tool_call,clarify,fetch,False,False,False,missing tool call clarify; extra tool call fetch
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R12_confirm_before_send,False,wrong_boundary,missing_tool_call,clarify,send,False,False,False,missing tool call clarify; extra tool call send
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R13_parallel_web_and_tweets,False,wrong_tool,wrong_arg_value,lookup|social_search,lookup|social_search,False,True,False,"query: expected 'AI', got 'AI news'; topic: expected 'news', got None"
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R14_out_of_scope_coding,False,out_of_scope,,no_tool,,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M01_clarify_then_fill,True,missing_info,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M02_carryover_timeframe,True,wrong_arg_value,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M03_correction_handle,True,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M04_clarify_then_url,True,missing_info,,fetch,fetch,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M05_correction_limit,True,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T140246378018,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M06_switch_tool,True,wrong_tool,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R01_user_tweets_routing,False,wrong_tool,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R02_search_tweets_routing,False,wrong_tool,,social_search,social_search,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R03_web_news_routing,False,wrong_tool,wrong_arg_value,lookup,lookup,False,True,False,"query: expected 'AI', got 'AI news'"
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R04_read_url_routing,False,wrong_tool,,fetch,fetch,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R05_limit_arg,False,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R06_timeframe_arg,False,wrong_arg_value,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R07_search_type_arg,False,wrong_arg_value,,social_search,social_search,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R08_out_of_scope,False,out_of_scope,unexpected_tool_call,no_tool,send,False,False,False,expected no tool call
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R09_no_tool_capability,False,unnecessary_tool,,no_tool,,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R10_missing_handle,False,missing_info,missing_tool_call,clarify,timeline,False,False,False,missing tool call clarify; extra tool call timeline
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R11_missing_url,False,missing_info,missing_tool_call,clarify,fetch,False,False,False,missing tool call clarify; extra tool call fetch
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R12_confirm_before_send,False,wrong_boundary,missing_tool_call,clarify,send,False,False,False,missing tool call clarify; extra tool call send
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R13_parallel_web_and_tweets,False,wrong_tool,wrong_arg_value,lookup|social_search,lookup|social_search,False,True,False,"query: expected 'AI', got 'AI news'; topic: expected 'news', got None"
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R14_out_of_scope_coding,False,out_of_scope,unexpected_tool_call,no_tool,send,False,False,False,expected no tool call
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M01_clarify_then_fill,True,missing_info,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M02_carryover_timeframe,True,wrong_arg_value,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M03_correction_handle,True,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M04_clarify_then_url,True,missing_info,,fetch,fetch,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M05_correction_limit,True,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T142500641037,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M06_switch_tool,True,wrong_tool,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R01_user_tweets_routing,False,wrong_tool,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R02_search_tweets_routing,False,wrong_tool,,social_search,social_search,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R03_web_news_routing,False,wrong_tool,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R04_read_url_routing,False,wrong_tool,,fetch,fetch,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R05_limit_arg,False,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R06_timeframe_arg,False,wrong_arg_value,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R07_search_type_arg,False,wrong_arg_value,,social_search,social_search,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R08_out_of_scope,False,out_of_scope,unexpected_tool_call,no_tool,send,False,False,False,expected no tool call
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R09_no_tool_capability,False,unnecessary_tool,,no_tool,,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R10_missing_handle,False,missing_info,missing_tool_call,clarify,timeline,False,False,False,missing tool call clarify; extra tool call timeline
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R11_missing_url,False,missing_info,missing_tool_call,clarify,fetch,False,False,False,missing tool call clarify; extra tool call fetch
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R12_confirm_before_send,False,wrong_boundary,missing_tool_call,clarify,send,False,False,False,missing tool call clarify; extra tool call send
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R13_parallel_web_and_tweets,False,wrong_tool,wrong_arg_value,lookup|social_search,lookup|social_search,False,True,False,"query: expected 'AI', got 'AI news'; topic: expected 'news', got None"
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R14_out_of_scope_coding,False,out_of_scope,unexpected_tool_call,no_tool,send,False,False,False,expected no tool call
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M01_clarify_then_fill,True,missing_info,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M02_carryover_timeframe,True,wrong_arg_value,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M03_correction_handle,True,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M04_clarify_then_url,True,missing_info,,fetch,fetch,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M05_correction_limit,True,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T142939879066,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M06_switch_tool,True,wrong_tool,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R01_user_tweets_routing,False,wrong_tool,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R02_search_tweets_routing,False,wrong_tool,,social_search,social_search,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R03_web_news_routing,False,wrong_tool,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R04_read_url_routing,False,wrong_tool,,fetch,fetch,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R05_limit_arg,False,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R06_timeframe_arg,False,wrong_arg_value,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R07_search_type_arg,False,wrong_arg_value,,social_search,social_search,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R08_out_of_scope,False,out_of_scope,unexpected_tool_call,no_tool,send,False,False,False,expected no tool call
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R09_no_tool_capability,False,unnecessary_tool,,no_tool,,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R10_missing_handle,False,missing_info,missing_tool_call,clarify,timeline,False,False,False,missing tool call clarify; extra tool call timeline
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R11_missing_url,False,missing_info,missing_tool_call,clarify,fetch,False,False,False,missing tool call clarify; extra tool call fetch
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R12_confirm_before_send,False,wrong_boundary,missing_tool_call,clarify,send,False,False,False,missing tool call clarify; extra tool call send
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R13_parallel_web_and_tweets,False,wrong_tool,wrong_arg_value,lookup|social_search,lookup|social_search,False,True,False,"query: expected 'AI', got 'AI news'; topic: expected 'news', got None"
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,R14_out_of_scope_coding,False,out_of_scope,unexpected_tool_call,no_tool,send,False,False,False,expected no tool call
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M01_clarify_then_fill,True,missing_info,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M02_carryover_timeframe,True,wrong_arg_value,,lookup,lookup,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M03_correction_handle,True,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M04_clarify_then_url,True,missing_info,,fetch,fetch,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M05_correction_limit,True,wrong_arg_value,,timeline,timeline,True,True,True,
+v0_B_base_openrouter_20260602T143405188947,v0,v0+peb1c8179815b+t6cdb53d5d7b8,base,M06_switch_tool,True,wrong_tool,,lookup,lookup,True,True,True,
