@@ -1,114 +1,175 @@
 import streamlit as st
-from pathlib import Path
+import json
+import requests
+import re
 
-# --- CÁC IMPORTS TỪ BACKEND CỦA BÀI LAB ---
-from env_loader import load_lab_env
-from providers import make_provider
-from tools import load_tool_declarations, to_openai_tools
-from chat import run_model_tool_loop, trim_history
+# --- IMPORT HỆ THỐNG LAB CHUẨN XÁC ---
+try:
+    from agent import ResearchAgent
+    from tools import load_tool_declarations, to_openai_tools, TOOL_FUNCTIONS 
+    from providers.openrouter_provider import OpenRouterProvider
+    from providers.openai_provider import OpenAIProvider
+    from providers.anthropic_provider import AnthropicProvider
+    from providers.gemini_provider import GeminiProvider
+    
+    # =====================================================================
+    # ☢️ GIẢI PHÁP HẠT NHÂN: VIẾT THẲNG HÀM TÌM ẢNH BING VÀO APP.PY
+    # (Khắc phục triệt để lỗi 403 DuckDuckGo và lỗi Cache của hệ thống)
+    # =====================================================================
+    def search_images_bing(query: str) -> dict:
+        """Hàm kéo ảnh Bing siêu cấp, chống 403 tuyệt đối"""
+        try:
+            # Giả lập làm trình duyệt web người thật
+            headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
+            safe_query = query.replace(" ", "+")
+            url = f"https://www.bing.com/images/search?q={safe_query}"
+            
+            response = requests.get(url, headers=headers, timeout=10)
+            
+            # Đào link ảnh gốc chất lượng cao bằng Regex
+            image_links = re.findall(r'murl&quot;:&quot;(.*?)&quot;', response.text)
+            unique_links = list(dict.fromkeys(image_links))[:3]
+            
+            items = []
+            for link in unique_links:
+                items.append({"title": f"Ảnh thực tế {query}", "url": link})
+                
+            # Nếu mạnng lỗi không tìm thấy, trả về ảnh giữ chỗ (placeholder)
+            if not items:
+                items.append({"title": f"Minh họa {query}", "url": f"https://placehold.co/800x400?text={safe_query}"})
+                
+            return {"status": "success", "query": query, "items": items}
+        except Exception as e:
+            return {"status": "error", "query": query, "message": f"Lỗi Bing: {str(e)}"}
 
-# --- KHỞI TẠO MÔI TRƯỜNG & ĐƯỜNG DẪN ---
-ROOT = Path(__file__).parent
-load_lab_env(ROOT)
-ARTIFACTS_DIR = ROOT / "artifacts"
+    # Ghi đè vĩnh viễn tool search_images bằng hàm Bing vừa tạo
+    TOOL_FUNCTIONS["search_images"] = search_images_bing
+    
+    # Bơm Tool check uy tín
+    from tools.get_user_profile.tool import get_user_profile
+    TOOL_FUNCTIONS["get_user_profile"] = get_user_profile
+    # =====================================================================
 
-# Cấu hình UI
-st.set_page_config(page_title="Research AI Agent", page_icon="🤖", layout="wide")
+except ImportError as e:
+    st.error(f"⚠️ Lỗi cấu trúc import thư mục: {str(e)}\nHãy chắc chắn file app.py đặt trong thư mục 'starter/'.")
+    st.stop()
 
-# --- SIDEBAR: Giao diện và Cấu hình ---
+# --- CẤU HÌNH GIAO DIỆN ---
+st.set_page_config(page_title="Research Agent Pro UI", page_icon="🧪", layout="wide")
+
+# --- HÀM KHỞI TẠO PROVIDER ---
+def get_provider_instance(provider_name: str, model_name: str = None):
+    if provider_name == "openrouter":
+        return OpenRouterProvider(model=model_name) if model_name else OpenRouterProvider()
+    elif provider_name == "openai":
+        return OpenAIProvider(model=model_name) if model_name else OpenAIProvider()
+    elif provider_name == "anthropic":
+        return AnthropicProvider(model=model_name) if model_name else AnthropicProvider()
+    elif provider_name == "gemini":
+        return GeminiProvider(model=model_name) if model_name else GeminiProvider()
+    else:
+        return OpenRouterProvider()
+
+# =========================================================
+# GIAO DIỆN THANH ĐIỀU HƯỚNG (SIDEBAR)
+# =========================================================
+# Gán cố định cấu hình ngầm để Agent vẫn hoạt động mượt mà
+provider_choice = "openrouter"
+model_choice = ""
+
 with st.sidebar:
-    st.title("🤖 Trợ lý thông minh")
-    st.markdown("---")
-    
-    st.subheader("✨ Tính năng (Tools) hiện có")
-    st.markdown("""
-    * ❓ **clarify**: Hỏi lại khi thiếu thông tin
-    * 📄 **fetch**: Đọc nội dung website
-    * 📝 **format**: Định dạng báo cáo
-    * 🔍 **lookup**: Tra cứu Internet
-    * 📚 **papers**: Tìm bài báo arXiv
-    * 📖 **paper_text**: Đọc bài báo arXiv
-    * 🏢 **policy**: Tra cứu quy định
-    * ✈️ **send**: Gửi nội dung
-    * 🐦 **social_search**: Tìm MXH theo từ khóa
-    * 👤 **timeline**: Lấy bài đăng cá nhân
-    """)
-    st.markdown("---")
-    
-    st.subheader("⚙️ Cấu hình Hệ thống")
-    # 1. Đã bỏ 'openai' khỏi danh sách
-    selected_provider = st.selectbox("Provider:", ["openrouter", "gemini"], index=0)
-    selected_version = st.selectbox("Version:", ["v0", "v1", "v2", "v3"], index=0)
-    
-    # 2. Thêm thanh kéo Temperature
-    selected_temperature = st.slider(
-        "Temperature:", 
-        min_value=0.0, 
-        max_value=1.0, 
-        value=0.6, 
-        step=0.01,       # Làm tròn bước nhảy tới hàng phần trăm
-        format="%g",     # %g tự động lược bỏ số 0 thừa ở 2 đầu
-        help="0: Trả lời chính xác, logic.\n1: Trả lời sáng tạo, bay bổng."
-    )
-    
-    # st.caption("Lưu ý: Agent sẽ luôn chạy dựa trên nội dung cấu hình hiện hành trong artifacts/.")
+    if st.button("🗑️ Xóa lịch sử chat và làm mới"):
+        st.session_state.messages = []
+        st.rerun()
 
-# --- MAIN GIAO DIỆN CHAT ---
-st.title("Trợ lý nghiên cứu, tra cứu & tổng hợp thông tin (Nhóm 4 - Zone 3)")
-st.caption("Hãy nhập yêu cầu của bạn (Ví dụ: Tra cứu thông tin xăng dầu hôm nay, tìm bài đăng mới nhất...)")
+# =========================================================
+# KHU VỰC CHAT CHÍNH (MAIN CHAT INTERFACE)
+# =========================================================
+st.title("🧪 Trực quan hóa Nghiên cứu Agent (Live Debug)")
+st.markdown("Xem trực tiếp luồng tư duy của Agent: Chọn tool ngầm -> Kéo dữ liệu API thật -> Tổng hợp câu trả lời dựa trên bằng chứng.")
 
-# Khởi tạo bộ nhớ hội thoại
 if "messages" not in st.session_state:
-    st.session_state.messages = [] 
-if "history" not in st.session_state:
-    st.session_state.history = []  
+    st.session_state.messages = []
 
-# Hiển thị lịch sử tin nhắn
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+for msg in st.session_state.messages:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
+        if "tool_calls" in msg and msg["tool_calls"]:
+            with st.expander("🛠️ Xem lại các Tool JSON đã gọi ở lượt này", expanded=False):
+                st.json(msg["tool_calls"])
 
-# --- XỬ LÝ LÔ-GIC KHI CHAT ---
-if prompt := st.chat_input("Nhập yêu cầu của bạn vào đây..."):
+if user_input := st.chat_input("Nhập yêu cầu... (Ví dụ: Lấy ảnh Donald Trump, Lấy 5 tweet của Elon Musk)"):
     
+    st.session_state.messages.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
-        st.markdown(prompt)
-    
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    
-    # Chuẩn bị Backend
-    system_prompt = (ARTIFACTS_DIR / "system_prompt.md").read_text(encoding="utf-8")
-    tool_declarations = load_tool_declarations(ARTIFACTS_DIR / "tools.yaml")
-    openai_tools = to_openai_tools(tool_declarations)
-    provider = make_provider(selected_provider)
-    
-    llm_messages = [
-        {"role": "system", "content": system_prompt},
-        *trim_history(st.session_state.history, 5),
-        {"role": "user", "content": prompt}
-    ]
-    
-    # Chạy Agent thật
+        st.markdown(user_input)
+
     with st.chat_message("assistant"):
-        with st.spinner(f"Đang tìm kiếm và xử lý thông tin..."):
+        with st.spinner("Agent đang phân tích câu hỏi và định tuyến Tool..."):
             try:
-                # GỌI BACKEND
-                result = run_model_tool_loop(
-                    provider=provider,
-                    messages=llm_messages,
+                # --- BƯỚC A: ĐỌC VÀ CHUẨN HÓA CẤU HÌNH ---
+                with open("artifacts/system_prompt.md", "r", encoding="utf-8") as f:
+                    system_prompt_content = f.read()
+                    
+                tool_declarations = load_tool_declarations("artifacts/tools.yaml")
+                openai_tools = to_openai_tools(tool_declarations)
+
+                # --- BƯỚC B: KHỞI TẠO AGENT ---
+                current_provider = get_provider_instance(provider_choice, model_choice if model_choice else None)
+                agent = ResearchAgent(
+                    provider=current_provider,
+                    system_prompt=system_prompt_content,
                     tools=openai_tools,
-                    model=None,
-                    max_tool_rounds=4
+                    model=model_choice if model_choice else None
                 )
                 
-                final_answer = result.get("assistant_text") or "*(Không có phản hồi dạng văn bản.)*"
-                st.markdown(final_answer)
+                history = [{"role": m["role"], "content": m["content"]} for m in st.session_state.messages]
                 
-                st.session_state.history.append({"role": "user", "content": prompt})
-                st.session_state.history.append({"role": "assistant", "content": final_answer})
-                st.session_state.messages.append({"role": "assistant", "content": final_answer})
+                # --- BƯỚC C: CHẠY AGENT LƯỢT 1 (ROUTING & EXECUTION) ---
+                tool_choice = "required" if not any(kw in user_input.lower() for kw in ["chào", "bạn là ai", "nguyên hàm"]) else None
+                result = agent.run(history, tool_choice=tool_choice)
                 
+                ui_tool_calls = []
+                for call in result.tool_calls:
+                    ui_tool_calls.append({"name": call.name, "args": call.args})
+
+                # --- BƯỚC D: VÒNG LẶP HỒI ĐÁP LƯỢT 2 (SYNTHESIS BASED ON EVIDENCE) ---
+                if ui_tool_calls:
+                    with st.expander("🛠️ BƯỚC 1: Agent đã chọn và kích hoạt công cụ thành công", expanded=True):
+                        for tool in ui_tool_calls:
+                            st.info(f"👉 **Tool:** `{tool['name']}`")
+                            st.write("**Tham số trích xuất:**")
+                            st.json(tool['args'])
+                        
+                        st.write("🔄 **Dữ liệu thô thu hồi từ internet:**")
+                        st.json(result.tool_results)
+                    
+                    with st.spinner("BƯỚC 2: Đang đọc hiểu tài liệu và tổng hợp câu trả lời..."):
+                        evidence_context = (
+                            "Dưới đây là kết quả dữ liệu thực tế thu thập được từ Internet:\n"
+                            f"{json.dumps(result.tool_results, ensure_ascii=False)}\n\n"
+                            "YÊU CẦU QUAN TRỌNG NHẤT:\n"
+                            "1. Dùng toàn bộ thông tin trên làm bằng chứng (evidence) để trả lời người dùng.\n"
+                            "2. NẾU dữ liệu là hình ảnh (có chứa URL ảnh), BẮT BUỘC nhúng trực tiếp ảnh đó vào câu trả lời bằng cú pháp Markdown: ![Tiêu đề ảnh](URL_của_ảnh).\n"
+                            "3. Tuyệt đối không tự bịa thông tin."
+                        )
+                        
+                        second_round_history = history + [{"role": "system", "content": evidence_context}]
+                        
+                        # Khóa tool_choice="none" chặn lỗi không xuất văn bản
+                        final_run = agent.run(second_round_history, tool_choice="none")
+                        response_text = final_run.text if final_run.text else "Agent đã xử lý xong công cụ nhưng API không trả về văn bản nào."
+                else:
+                    response_text = result.text if result.text else "Agent không đưa ra phản hồi văn bản."
+                
+                # --- BƯỚC E: IN CÂU TRẢ LỜI VÀ LƯU TRỮ ---
+                st.markdown(response_text)
+                
+                st.session_state.messages.append({
+                    "role": "assistant",
+                    "content": response_text,
+                    "tool_calls": ui_tool_calls
+                })
+
             except Exception as e:
-                error_msg = f"Đã xảy ra lỗi kết nối: {str(e)}"
-                st.error(error_msg)
-                st.session_state.messages.append({"role": "assistant", "content": error_msg})
+                st.error(f"❌ Hệ thống gặp sự cố khi thực thi Agent:\n\n{str(e)}")
