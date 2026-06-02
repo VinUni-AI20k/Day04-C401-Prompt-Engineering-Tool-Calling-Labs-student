@@ -6,8 +6,8 @@
 
 ## Team
 
-- Team: Research Agent Lab
-- Members: AnhThang
+- Team: Zone 4 nhóm 5
+- Members: Phan Anh Thắng 2A202600844, Vũ Minh Duy 2A202600806
 - Provider/model: Anthropic — `claude-haiku-4-5-20251001`
 
 ---
