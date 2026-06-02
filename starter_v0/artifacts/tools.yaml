@@ -116,3 +116,51 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  # ---------------- New tools ----------------
+  - name: summarize
+    description: "Tóm tắt extractive một đoạn văn bản dài thành vài câu ngắn gọn. Dùng sau khi đã fetch/paper_text để rút gọn kết quả."
+    parameters:
+      type: object
+      properties:
+        text: {type: string, default: "", description: "Văn bản cần tóm tắt"}
+        max_sentences: {type: integer, default: 3, description: "Số câu tối đa trong bản tóm tắt"}
+        language: {type: string, default: "auto", description: "Ngôn ngữ gợi ý (auto = tự nhận diện)"}
+      required: [text]
+
+  - name: translate
+    description: "Dịch văn bản sang ngôn ngữ khác. Dùng khi user yêu cầu dịch nội dung hoặc kết quả cần trình bày bằng ngôn ngữ cụ thể."
+    parameters:
+      type: object
+      properties:
+        text: {type: string, default: "", description: "Văn bản cần dịch"}
+        target_lang: {type: string, default: "en", description: "Mã ngôn ngữ đích (en, vi, fr, ja, zh, ...)"}
+        source_lang: {type: string, default: "auto", description: "Mã ngôn ngữ nguồn (auto = tự nhận diện)"}
+      required: [text]
+
+  - name: extract_entities
+    description: "Trích xuất thực thể từ văn bản: @mentions, #hashtags, URLs, email. Dùng khi cần phân tích cấu trúc của một đoạn text."
+    parameters:
+      type: object
+      properties:
+        text: {type: string, default: "", description: "Văn bản cần phân tích"}
+        entity_types:
+          type: array
+          default: ["mentions", "hashtags", "urls", "emails"]
+          items: {type: string, enum: [mentions, hashtags, urls, emails]}
+          description: "Loại thực thể cần trích xuất"
+      required: [text]
+
+  - name: rank_items
+    description: "Xếp hạng danh sách item theo mức độ liên quan với một query. Dùng sau lookup/papers/social_search để lọc kết quả quan trọng nhất."
+    parameters:
+      type: object
+      properties:
+        items:
+          type: array
+          default: []
+          description: "Danh sách object cần xếp hạng"
+          items: {type: object}
+        query: {type: string, default: "", description: "Từ khóa để tính điểm liên quan"}
+        top_k: {type: integer, default: 5, description: "Số item trả về"}
+      required: [items, query]

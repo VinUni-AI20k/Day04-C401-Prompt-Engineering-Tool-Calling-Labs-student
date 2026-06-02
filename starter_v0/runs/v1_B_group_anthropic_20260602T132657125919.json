@@ -1,0 +1,447 @@
+{
+  "run_id": "v1_B_group_anthropic_20260602T132657125919",
+  "version": "v1",
+  "artifact_version": "v1+peb1c8179815b+t6cdb53d5d7b8",
+  "prompt_hash": "eb1c8179815bd79d34de7d326420bb99b3072e6e8ae96464c02d4411f905fc68",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "phase": "B",
+  "suite": "group",
+  "provider": "anthropic",
+  "model": "claude-haiku-4-5-20251001",
+  "system_prompt": "C:\\Users\\admin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\admin\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests. 10 case: 5 single-turn (G01-G05) + 5 multi-turn (G06-G10), phủ đủ 6 failure_type.",
+  "generated_at": "2026-06-02T13:26:57",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 0,
+    "provider_error_cases": 10,
+    "passed_cases": 0,
+    "case_accuracy": 0.0,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "G01_no_url_use_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_lookup_not_fetch",
+        "difficulty": "medium",
+        "what_it_tests": "Hỏi thông tin tổng quan nhưng KHÔNG có URL → web search (lookup), không được bịa URL để fetch."
+      },
+      "input": "Cho mình thông tin tổng quan về công ty Anthropic.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: ANTHROPIC_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G02_timeframe_year",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_timeframe_year",
+        "difficulty": "medium",
+        "what_it_tests": "'trong năm nay' → timeframe=year, topic=news (mặc định là week nên dễ sai)."
+      },
+      "input": "Tổng hợp các tin AI nổi bật trong năm nay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "year"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: ANTHROPIC_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G03_format_bullets",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_format_present",
+        "difficulty": "hard",
+        "what_it_tests": "Yêu cầu TRÌNH BÀY dữ liệu đã có → format (template=bullets), không đi lookup/fetch lại."
+      },
+      "input": "Mình có sẵn danh sách tin rồi, trình bày lại thành bản tin dạng bullet points giúp mình.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "format",
+            "args": {
+              "template": "bullets"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: ANTHROPIC_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G04_thanks_no_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "no_tool_acknowledgement",
+        "difficulty": "easy",
+        "what_it_tests": "Lời cảm ơn xã giao → trả lời thẳng, KHÔNG gọi tool nào."
+      },
+      "input": "Cảm ơn bạn nhé, bản tin tổng hợp vừa rồi tốt lắm!",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: ANTHROPIC_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G05_translation_out_of_scope",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_translation",
+        "difficulty": "easy",
+        "what_it_tests": "Yêu cầu dịch thuật nằm ngoài phạm vi research/news agent → KHÔNG gọi tool, từ chối/định hướng."
+      },
+      "input": "Dịch đoạn văn này sang tiếng Pháp giúp mình: 'Trí tuệ nhân tạo đang thay đổi thế giới'.",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: ANTHROPIC_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G06_missing_paper_id",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_missing_paper_id",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns nhưng vẫn không có arXiv ID/URL cụ thể → ask_user xin ID/link, KHÔNG bịa mã arXiv."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt một bài báo khoa học giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Bài về scaling laws ấy"
+        },
+        {
+          "role": "user",
+          "content": "Ừ đúng bài đó đó"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: ANTHROPIC_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G07_send_after_confirm",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_send_after_confirm",
+        "difficulty": "hard",
+        "what_it_tests": "Mặt còn lại của boundary: khi user đã xác nhận rõ ('xác nhận đăng luôn') → send với confirmed=true."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Soạn giúp mình bản tin AI hôm nay rồi đăng lên Telegram"
+        },
+        {
+          "role": "user",
+          "content": "Nội dung ổn rồi nhé"
+        },
+        {
+          "role": "user",
+          "content": "Đúng, xác nhận đăng luôn"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: ANTHROPIC_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G08_switch_timeline_to_search",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_account_to_topic",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: chuyển từ timeline (bài của 1 account) sang social_search (theo chủ đề), giữ chủ đề OpenAI."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Xem các tweet gần đây của tài khoản OpenAI"
+        },
+        {
+          "role": "user",
+          "content": "À không, mình muốn xem mọi người đang nói gì về OpenAI cơ"
+        },
+        {
+          "role": "user",
+          "content": "Ừ tìm theo chủ đề OpenAI nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "OpenAI"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: ANTHROPIC_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G09_correct_timeframe_month",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_correct_timeframe",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: sửa timeframe tuần→tháng (timeframe=month), carry topic=news."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin công nghệ tuần này có gì?"
+        },
+        {
+          "role": "user",
+          "content": "À cho mình tin trong tháng này đi"
+        },
+        {
+          "role": "user",
+          "content": "Vẫn chủ đề công nghệ nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: ANTHROPIC_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G10_latest_turn_meta_no_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_latest_meta_no_tool",
+        "difficulty": "hard",
+        "what_it_tests": "Chỉ xử lý latest turn = câu hỏi meta về năng lực → trả lời thẳng, KHÔNG gọi tool và KHÔNG chạy lại tìm tin ở turn 1."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin AI hôm nay giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Cảm ơn bạn nhé"
+        },
+        {
+          "role": "user",
+          "content": "Mà bạn có nhớ được các cuộc trò chuyện trước không?"
+        }
+      ],
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: ANTHROPIC_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    }
+  ]
+}
