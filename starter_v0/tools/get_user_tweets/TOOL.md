@@ -1,5 +1,5 @@
 ---
-name: timeline
+name: get_user_tweets
 track: core
 kind: live_api
 provider: RapidAPI Twitter API45
@@ -8,7 +8,8 @@ inputs: [screenname, limit]
 outputs: [items]
 side_effect: false
 ---
-# timeline
+# get_user_tweets
 
-Fetches recent posts from a single account. `screenname` is an account handle
-without `@`.
+Use for tweets from one known account. The input `screenname` is the handle
+without `@`, for example `sama`, `elonmusk`, or `karpathy`.
+

@@ -45,11 +45,7 @@ try:
     # Ghi đè vĩnh viễn tool search_images bằng hàm Bing vừa tạo
     TOOL_FUNCTIONS["search_images"] = search_images_bing
     
-    # Bơm Tool check uy tín
-    from tools.get_user_profile.tool import get_user_profile
-    TOOL_FUNCTIONS["get_user_profile"] = get_user_profile
-    # =====================================================================
-
+    
 except ImportError as e:
     st.error(f"⚠️ Lỗi cấu trúc import thư mục: {str(e)}\nHãy chắc chắn file app.py đặt trong thư mục 'starter/'.")
     st.stop()
