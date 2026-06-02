@@ -1,1 +1,5 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_before,metric_after,run_file
+v0,Student,-,v0+peb1c8179815b+t6cdb53d5d7b8,eb1c8179815b,6cdb53d5d7b8,Baseline run,-,0,0.70,runs\v0_B_base_openrouter_20260602T142806360184.json
+v1,Student,system_prompt.md+tools.yaml,v1+pf4bfe3172c0a+t3700f69c1db3,f4bfe3172c0a,3700f69c1db3,AI guesses args and sends without confirmation,Adding strict rules to system prompt and clearer descriptions in tools.yaml will stop hallucinations,0.70,0.90,runs\v1_B_base_openrouter_20260602T150548285161.json
+v2,Student,system_prompt.md,v2+p5b41ec8b6fd3+t3700f69c1db3,5b41ec8b6fd3,3700f69c1db3,AI fails to ask yes_no for send and ignores cancellation in multi-turn,Adding explicit Send Priority and Negation rules will fix R12 and M06,0.90,0.95,runs\v2_B_base_openrouter_20260602T154433866753.json
+v3,Student,system_prompt.md,v3+p4652ee3e4616+t3700f69c1db3,4652ee3e4616,3700f69c1db3,M06 failed in v2 due to weak negation rule,Stronger negation rule will fix M06 but may cause strictness regressions,0.95,0.90,runs\v3_B_base_openrouter_20260602T160426889590.json

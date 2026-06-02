@@ -19,7 +19,7 @@ tools:
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: "Lấy bài đăng/tweet của MỘT TÀI KHOẢN cụ thể (screenname)."
     parameters:
       type: object
       properties:
@@ -28,7 +28,7 @@ tools:
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: "Tìm các bài đăng/tweet trên mạng xã hội THEO CHỦ ĐỀ/TỪ KHÓA."
     parameters:
       type: object
       properties:
@@ -38,7 +38,7 @@ tools:
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Tra cứu web chung hoặc tin tức (news). Tham số timeframe bắt buộc phải là day, week, month hoặc year."
     parameters:
       type: object
       properties:
@@ -116,3 +116,11 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  - name: crypto_price
+    description: "Lấy giá hiện tại của một loại tiền điện tử (cryptocurrency)."
+    parameters:
+      type: object
+      properties:
+        coin_id: {type: string, default: "bitcoin", description: "Tên hoặc ID của đồng coin (vd: bitcoin, ethereum, solana)"}
+      required: [coin_id]
