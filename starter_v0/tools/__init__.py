@@ -18,6 +18,7 @@ from .social_search.tool import search_tweets
 from .send.tool import send_telegram
 from .lookup.tool import web_search
 from .weather.tool import get_weather
+from .currency.tool import convert_currency
 from .calculator.tool import calculate
 
 
@@ -38,6 +39,7 @@ TOOL_FUNCTIONS = {
     "papers": arxiv_search,
     "paper_text": get_arxiv_paper_text,
     "weather": get_weather,
+    "currency": convert_currency,
     "calculator": calculate,
 }
 

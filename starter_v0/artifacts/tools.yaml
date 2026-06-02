@@ -141,3 +141,29 @@ tools:
         max_pages: {type: integer, default: 5, description: "Number of pages"}
         max_chars: {type: integer, default: 8000, description: "Maximum characters"}
       required: [arxiv_url]
+
+  - name: weather
+    description: "Lấy thông tin thời tiết hiện tại của một địa điểm."
+    parameters:
+      type: object
+      properties:
+        location: {type: string, description: "Tên địa điểm, thành phố"}
+      required: [location]
+
+  - name: currency
+    description: "Chuyển đổi tiền tệ."
+    parameters:
+      type: object
+      properties:
+        amount: {type: number, description: "Số tiền cần chuyển"}
+        from_currency: {type: string, description: "Loại tiền tệ gốc (VD: USD)"}
+        to_currency: {type: string, description: "Loại tiền tệ đích (VD: VND)"}
+      required: [amount, from_currency, to_currency]
+
+  - name: calculator
+    description: "Thực hiện các phép tính toán học cơ bản."
+    parameters:
+      type: object
+      properties:
+        expression: {type: string, description: "Biểu thức toán học cần tính toán (vd: 12 + 3 * 4)"}
+      required: [expression]

@@ -43,13 +43,13 @@
     {
       "id": "grp_B_004",
       "phase": "B",
-      "query": "Tính cho tôi 12345 * 67890",
+      "query": "100 USD bằng bao nhiêu VND?",
       "failure_type": "out_of_scope",
       "expect": {
-        "tool_calls": [{"name": "calculator", "args": {"expression": "12345 * 67890"}}]
+        "tool_calls": [{"name": "currency", "args": {"amount": 100, "from_currency": "USD", "to_currency": "VND"}}]
       },
       "metadata": {
-        "what_it_tests": "Hỏi tính toán → dùng calculator thay vì báo out of scope"
+        "what_it_tests": "Hỏi chuyển đổi tiền tệ → dùng currency thay vì báo out of scope"
       }
     },
     {
